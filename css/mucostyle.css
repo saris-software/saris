@@ -1,0 +1,229 @@
+<style>
+
+.formfield
+{
+text-align:right;
+text-decoration:norwap;
+}
+.error
+{
+font-size:8pt;
+}
+
+.style2 {color: #FF0000}
+/* calendar icon */
+img.tcalIcon {
+	cursor: pointer;
+	margin-left: 1px;
+	vertical-align: middle;
+}
+/* calendar container element */
+div#tcal {
+	position: absolute;
+	visibility: hidden;
+	z-index: 100;
+	width: 158px;
+	padding: 2px 0 0 0;
+}
+/* all tables in calendar */
+div#tcal table {
+	width: 100%;
+	border: 1px solid silver;
+	border-collapse: collapse;
+	background-color: white;
+}
+/* navigation table */
+div#tcal table.ctrl {
+	border-bottom: 0;
+}
+/* navigation buttons */
+div#tcal table.ctrl td {
+	width: 15px;
+	height: 20px;
+}
+/* month year header */
+div#tcal table.ctrl th {
+	background-color: white;
+	color: black;
+	border: 0;
+}
+/* week days header */
+div#tcal th 
+{
+	border: 1px solid silver;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 3px 0;
+	font-family: tahoma, verdana, arial;
+	font-size: 10px;
+	background-color: #D7D7FF;
+	color: #054d87;
+}
+
+div#tcal th:hover 
+{
+background-color: silver;
+color: white;
+}
+/* date cells */
+div#tcal td 
+{
+	border:1px solid #D7D7FF;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 2px 0;
+	font-family: tahoma, verdana, arial;
+	font-size: 11px;
+	width: 22px;
+	cursor: pointer;
+}
+ div#tcal td:hover
+ {
+background-color: #D7D7FF;
+color: #054d87;
+ }
+
+/* date highlight
+   in case of conflicting settings order here determines the priority from least to most important */
+div#tcal td.othermonth {
+	color: silver;
+}
+div#tcal td.weekend {
+	background-color: #d2d2d2;
+}
+div#tcal td.today {
+	border: 1px solid #fcfcfcfc;
+	background-color: lightblue;
+}
+div#tcal td.selected {
+	background-color: #FFB3BE;
+}
+/* iframe element used to suppress windowed controls in IE5/6 */
+iframe#tcalIF {
+	position: absolute;
+	visibility: hidden;
+	z-index: 98;
+	border: 0;
+}
+/* transparent shadow */
+div#tcalShade {
+	position: absolute;
+	visibility: hidden;
+	z-index: 99;
+}
+div#tcalShade table {
+	border: 0;
+	border-collapse: collapse;
+	width: 100%;
+}
+div#tcalShade table td {
+	border: 0;
+	border-collapse: collapse;
+	padding: 0;
+}
+table.ztable{
+border:0px solid green;
+border-left:0px dotted #CCC;
+border-top:0px dotted #CCC;
+border-bottom:0px dotted #CCC;
+}
+.resView{
+border:1px solid #CCC;
+border-left:1px solid #CCC;
+border-top:1px solid #CCC;
+border-bottom:1px solid #CCC;
+margin-left:10px;
+
+}
+.resViewtd{
+padding:5px 0px 0px 0px;
+border-right:1px solid #CCC;
+border-bottom:1px solid #CCC;
+border-top:1px solid #CCC;
+border-left:1px solid #CCC;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 13px;
+}
+
+.midtd {
+padding:12px 0px 0px 0px;
+border:1px solid #CCC;
+background-color:#F7F7F7;
+font-weight:bold;
+ }
+
+.resViewhd{
+padding:3px 3px 3px 3px;
+border-right:1px solid #CCC;
+border-bottom:1px solid #CCC;
+border-top:1px solid #CCC;
+border-left:1px solid #CCC;
+/*background-color:#D9D9FF; */
+background-color:#E6E6FA;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 14px;
+font-weight: normal;
+}
+.ztable{
+border-bottom:1px dotted #CCC;
+border-right:0px dotted #CCC;
+background-color: #F7F7F7; 
+}
+.formfield{
+border-bottom:1px dotted #CCC;
+}
+
+.hseparator {
+border:1px solid #CCC;
+ width:98%;
+ background-color:#CCC;
+ font-weight:bold;
+ }
+
+
+a{
+text-decoration:none;
+}
+img { border:0px;}
+
+/* form elements */
+	
+label {
+	display:block;
+	font-weight:bold;
+	margin:50px 0;
+	}
+	
+/*input {
+	border:1px solid #ccc;
+	margin-bottom: 2px;
+	font-family: Verdana,Helvetica,Sans-Serif;
+	font-size: 12px;
+	color:#777;
+	background-color:#fff;
+	} */
+	
+textarea {
+	width:300px;
+	padding:2px;
+	font-family: Verdana,Helvetica,Sans-Serif;
+	height:70px;
+	display:block;
+	color:#777;
+	border: 1px solid #ccc;
+	}
+	
+select { 
+	border:1px solid #ccc;
+	margin-bottom: 2px;
+	} 
+
+option { 
+	/*width: 200px;*/
+	border:0px solid #ccc;   
+	}
+
+  
+
+</style>
+

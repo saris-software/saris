@@ -1,0 +1,81 @@
+--------------------------------------------------------------
+PHP DataGrid documentation for version 6.x.x
+--------------------------------------------------------------
+
+
+1. System Requirements
+------------------------------
+PHP DataGrid is operating system independent. You get it works 
+on both Linux and Windows. You need following components are 
+installed:
+
+- PHP 5.0 script engine or later 
+- Apache 1.3 or above 
+- mySQL 4.00 or above 
+
+
+2. Licensing
+------------------------------
+GNU LGPL 3. See the GNU Lesser General Public License.txt file.
+
+
+3. Installation 
+------------------------------
+See more info about installation: 
+http://apphp.com/php-datagrid/index.php?page=installation
+
+
+4. Getting Started
+------------------------------
+See more info about getting started: 
+http://apphp.com/php-datagrid/index.php?page=getting_started
+
+
+5. Main Features
+------------------------------
+- CSS embedded templates 
+- Column's Sorting 
+- Column's Filtering 
+- Pagging 
+- Automatic validation 
+  -- Client side 
+- View mode 
+  -- Tabular layout 
+  -- Columnar layout 
+  -- Template layout
+- Add new mode
+- Edit mode
+  -- Tabular layout
+  -- Columnar layout
+  -- Template layout
+- Details mode 
+  -- Columnar layout
+  -- Template layout
+- Delete mode
+- Printing
+- Multi-row operations
+  -- View
+  -- Edit
+  -- Delete
+- Exporting
+- Columns functions (SUM/AVG)
+- Image magnifying
+- Resizing uploaded images
+- Multi-Database support
+- Multi-Language support
+- Multi-Browser support
+- W3C CSS validation
+- W3C HTML 4.01 validation
+- WYSIWYG editor 
+- Columns summarizating
+  -- AVG function
+  -- SUM function
+- Muilti-row operations 
+  -- Delete  (embedded)
+  -- Details (embedded)
+  -- Edit    (embedded)
+  -- custom
+- AJAX autocomplete function
+- AJAX enabled
+  -- on sorting operations
+  -- on paging operations

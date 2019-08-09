@@ -1,0 +1,114 @@
+<html>
+<head>
+    <base href="http://apphp.com/php-datagrid/" />    
+</head>
+<body>    
+<!-- last update 08.08.2009 -->
+<A id=top name=top></A>
+<div class="post">
+    <h2 id="post-1">Installation of PHP DataGrid</h2>  
+    <div class="storycontent">
+ 
+        <TABLE class=toc id=toc summary=Contents>
+        <TBODY>
+        <TR>
+            <TD>
+                <DIV id=toctitle>
+                <UL>
+                    <LI class=toclevel-1>
+                    <A href="index.php?page=installation#Installation_of_PHP_DataGrid"><SPAN class=tocnumber>1.</SPAN> <SPAN class=toctext>Installation of PHP DataGrid</SPAN></A> 
+                    <UL>
+                        <LI class=toclevel-2><A href="index.php?page=installation#Step_1._Uncompressing_downloaded_file."><SPAN class=tocnumber>1.1</SPAN> <SPAN class=toctext>Step 1. Uncompressing downloaded file.</SPAN></A> 
+                        <LI class=toclevel-2><A href="index.php?page=installation#Step_2._Uploading_files."><SPAN class=tocnumber>1.2</SPAN> <SPAN class=toctext>Step 2. Uploading files.</SPAN></A> 
+                        <LI class=toclevel-2><A href="index.php?page=installation#Step_3._Creating_database."><SPAN class=tocnumber>1.3</SPAN> <SPAN class=toctext>Step 3. Creating database.</SPAN></A> 
+                        <LI class=toclevel-2><A href="index.php?page=installation#Step_4._Editing_some_important_values."><SPAN class=tocnumber>1.4</SPAN> <SPAN class=toctext>Step 4. Editing some important values.</SPAN></A> 
+                        <LI class=toclevel-2><A href="index.php?page=installation#Step_5._Renaming_code_template.php_file."><SPAN class=tocnumber>1.5</SPAN> <SPAN class=toctext>Step 5. Renaming code_template.php file.</SPAN></A></LI>
+                        <LI class=toclevel-2><A href="index.php?page=installation#Step_6._Additional_settings."><SPAN class=tocnumber>1.6</SPAN> <SPAN class=toctext>Step 6. Configure settings (optional).</SPAN></A></LI>
+                    </UL>
+                    </LI>
+                </UL>
+            </TD>
+        </TR>
+        </TBODY>
+        </TABLE>
+
+
+        <A name=Installation_of_PHP_DataGrid></A>
+        <P>(for version 6.0.0 or above) </P>
+        <P>A new installation of PHP DataGrid is a very straight forward process: </P>
+        
+        <DIV class=editsection style="FLOAT: right; MARGIN-LEFT: 5px">[<A href="#top">top</A>]</DIV>
+        <A name=Step_1._Uncompressing_downloaded_file.></A>
+        <H3><B>Step 1. Uncompressing downloaded file.</B></H3>
+        <HR>
+        <P>Uncompress the PHP DataGrid version 6.x.x script archive. The archive will create a directory called "datagrid_6_x_x" </P>
+        <P><BR></P>
+        
+        <DIV class=editsection style="FLOAT: right; MARGIN-LEFT: 5px">[<A href="#top">top</A>]</DIV>
+        <A name=Step_2._Uploading_files.></A>
+        <H3><B>Step 2. Uploading files.</B></H3>
+        <HR>
+        <P>Upload content of this folder (all files and directories it includes) to your 
+        document root (public_html, www, httpdocs etc.) using FTP.</P>
+        <P><BR>For example: </P><PRE><FONT color="black">
+        public_html/your_site/datagrid
+        </FONT></PRE>
+        <P>Rename default.htaccess into .htaccess if you need to add PHP5 handler.</P>
+        <P><BR></P>
+
+        <DIV class=editsection style="FLOAT: right; MARGIN-LEFT: 5px">[<A href="#top">top</A>]</DIV>
+        <A name=Step_3._Creating_database.></A>
+        <H3><B>Step 3. Creating database.</B></H3>
+        <HR>
+        <P>Using phpMyAdmin or another tool, create your database and user, and assign 
+        that user to the database. Write down the name of the database, username, and 
+        password for the database installation procedure. </P>
+        <P>Create all appropriate database tables. </P>
+        <p><br></p>
+
+        <DIV class=editsection style="FLOAT: right; MARGIN-LEFT: 5px">[<A href="#top">top</A>]</DIV>
+        <A name=Step_4._Editing_some_important_values.></A>
+        <H3><B>Step 4. Editing some important values.</B></H3>
+        <HR>
+        <P>Open <b>code_template.php</b> file, uncomment these 4 lines and change variable 
+        values on yours (saved on step 3). </P><PRE><FONT color=darkblue><B>
+        $DB_USER='user_username'; </B></FONT><FONT color=green>/* usually like this: prefix_name           */</FONT><FONT color=darkblue><B>
+        $DB_PASS='user_password'; </B></FONT><FONT color=green>/* must be already encrypted (recommended)  */</FONT><FONT color=darkblue><B>
+        $DB_HOST='localhost';     </B></FONT><FONT color=green>/* usually localhost                        */</FONT><FONT color=darkblue><B>
+        $DB_NAME='db_name';       </B></FONT><FONT color=green>/* usually like this: prefix_dbName         */</FONT>
+        </PRE>
+        <P><BR>Define a <B>relative path</B> to datagrid.class.php file and "pear" 
+        directory (relatively to the code_template.php file). </P><PRE>
+        <FONT color=green>/* Ex.: "datagrid/" or "../datagrid/" */</FONT>
+        <FONT color=green>/* Ex.: "datagrid/pear/" or "../datagrid/pear/" */</FONT>
+        <FONT color=darkblue><B>define ("DATAGRID_DIR", "");    </B></FONT>
+        <FONT color=darkblue><B>define ("PEAR_DIR", "pear/");   </B></FONT>        
+        <FONT color=darkblue><B>
+        require_once(DATAGRID_DIR.'datagrid.class.php');
+        require_once(PEAR_DIR.'PEAR.php');
+        require_once(PEAR_DIR.'DB.php');</B></FONT>
+        </PRE>
+        <p><br /></p>
+
+        <DIV class=editsection style="FLOAT: right; MARGIN-LEFT: 5px">[<A href="#top">top</A>]</DIV>
+        <A name=Step_5._Renaming_code_template.php_file.></A>
+        <H3><B>Step 5. Renaming code_template.php file.</B></H3>
+        <HR>
+        <P>Rename <b>code_template.php</b> file according to your needs, such as <b>first_example.php</b> and then
+        type in your browser: </P>
+        <PRE><FONT color="black">
+        http://your_site/datagrid/first_example.php
+        </FONT></PRE>        
+        <p><br /></p>
+
+        <DIV class=editsection style="FLOAT: right; MARGIN-LEFT: 5px">[<A href="#top">top</A>]</DIV>
+        <A name=Step_6._Additional_settings.></A>
+        <H3><B>Step 6. Additional settings (optional).</B></H3>
+        <HR>
+        <P>Set allow_call_time_pass_reference to true in your INI file. </P>
+
+        Congratulations, you now have PHP DataGrid v.6.x.x. Installed!
+
+    </DIV>
+
+</DIV>

@@ -1,0 +1,7 @@
+.empty_dg_caption {TEXT-ALIGN:center;}
+.df_left { TEXT-ALIGN: left; }
+.df_center { TEXT-ALIGN: center; }
+.df_right { TEXT-ALIGN: right; }
+.df_nowrap { WHITE-SPACE: nowrap; }
+.df_underline { TEXT-DECORATION: underline; }
+.resizable-textarea .grippie { BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #ddd 0px solid;  OVERFLOW: hidden; BORDER-LEFT: #ddd 1px solid; CURSOR: s-resize; BORDER-BOTTOM: #ddd 1px solid; HEIGHT:6px; }

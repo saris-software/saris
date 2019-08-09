@@ -1,0 +1,28 @@
+PRE			    { background-color:#f1f2f3; border:1px solid #cccccc; text-align:left; padding:10px;}
+FIELDSET	    { padding:10px;	margin-bottom:5px; }
+FIELDSET.big	{ height:170px; padding-top:5px; margin-top:5px; }
+LEGEND		    { font-weight:bold;	font-size:14px;	color:#306090;}
+LEGEND.big		{ font-weight:bold;	font-size:18px;	color:#306090;}
+
+A 			    { text-decoration: underline}
+A:hover 	    { text-decoration: none}
+
+A.blue 		 	{ color:#0000a6; text-decoration: none; }
+A.link 		 	{ color:#0000a6; text-decoration: none; }
+A.blue:hover 	{ color:#a60000; text-decoration: underline; }
+A.blue:visited 	{ color:#0000a6; text-decoration: none; }
+A.blue:visited:hover { color:#0000a6; text-decoration: underline; }
+
+.textform       { font-size: 11px; color: #000000; font-family: verdana, geneva, arial, helvetica, sans-serif}
+.textform A     { color: #2971c1}
+.text           { font-size: 12px; color: #515151; font-family: arial, helvetica, sans-serif}
+.text H1        { margin-top: 0px; font-weight: normal; font-size: 18px; margin-bottom: 15px; color: #000000; line-height: 15px}
+.text H2        { margin-top: 0px; font-size: 16px; margin-bottom: 15px; color: #000000}
+.text H3        { margin-top: 0px; margin-bottom: 10px; margin-top: 5px;	font-size:13px;	color:#444444;	}
+.text H4        { margin-top: 0px; font-size: 12px; margin-bottom: 15px; color: #000000}
+.text A.sublink { font-size: 11px; color: #666666}
+.text B.black   { color: #000000}
+.text SPAN.black { color: #000000}
+
+.table 			{ padding-right: 15px; padding-left: 5px; font-size: 12px; padding-bottom: 2px; color: #515151; padding-top: 2px; font-family: arial, helvetica, sans-serif }
+.form_button	{ cursor: pointer; border:1px solid #afafaf;}

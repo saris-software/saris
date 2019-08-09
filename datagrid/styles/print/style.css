@@ -1,0 +1,58 @@
+/* common classes */
+pre {
+ PADDING: 0px; MARGIN: 0px;
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.dg_left { TEXT-ALIGN: left; }
+.dg_center { TEXT-ALIGN: center; }
+.dg_right { TEXT-ALIGN: right; }
+.dg_nowrap { WHITE-SPACE: nowrap; }
+.dg_underline { TEXT-DECORATION: underline; }
+.resizable-textarea .grippie {  }
+
+a.print_dg_a { }
+a.print_dg_a:link { }
+a.print_dg_a:hover { }
+a.print_dg_a:visited { }
+a.print_dg_a2 { }
+a.print_dg_a2:link { }
+a.print_dg_a2:hover { }
+a.print_dg_a2:visited { }
+/* columns header links */
+a.print_dg_a_header { }
+a.print_dg_a_header:link { }
+a.print_dg_a_header:hover { }
+a.print_dg_a_header:visited { }
+
+.print_dg_fieldset { MARGIN: 0px; BORDER: #dddddd 1px solid;}
+.print_dg_filter_table { BORDER: #d0d0d0 0px solid; FONT: normal 12px Tahoma;}
+.print_dg_filter_table tr td { FONT-SIZE: 12px; }
+.print_dg_legend { FONT: normal 12px Tahoma;}
+.print_dg_paging_table { BORDER: #d0d0d0 0px solid; FONT: normal 12px Tahoma;}
+.print_dg_table { BORDER-COLLAPSE: collapse; BORDER: #d0d0d0 1px solid; FONT: normal 12px Tahoma;}
+
+.print_dg_th { BORDER-BOTTOM: #d0d0d0 1px solid; BORDER-RIGHT: #d0d0d0 1px solid; PADDING-RIGHT: 2px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; FONT: bold 13px Tahoma; COLOR: #333333; PADDING-TOP: 2px; }
+.print_dg_th_normal { BORDER-BOTTOM: #d0d0d0 1px solid; BORDER-RIGHT: #d0d0d0 1px solid; BORDER-LEFT: #e1e2e3 2px solid; MARGIN-LEFT: 0px; PADDING-RIGHT: 2px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; FONT: bold 13px Tahoma; COLOR: #333333; PADDING-TOP: 2px; }
+.print_dg_th_selected { BORDER-BOTTOM: #d0d0d0 1px solid; BORDER-RIGHT: #d0d0d0 1px solid; PADDING-RIGHT: 2px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; FONT: bold 13px Tahoma; COLOR: #333333; PADDING-TOP: 2px; }
+
+.print_dg_td { BORDER: #d0d0d0 1px solid; PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; FONT: normal 12px Tahoma;  }
+.print_dg_td_main { BORDER-TOP: #d0d0d0 1px solid; BORDER-RIGHT: #d0d0d0 1px solid; BORDER-LEFT: #d0d0d0 1px solid; PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; FONT: normal 12px Tahoma; }
+.print_dg_td_selected { BORDER: #d0d0d0 1px solid; PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 2px; FONT: normal 12px Tahoma; PADDING-TOP: 2px; }
+
+.print_dg_button { }
+.print_dg_select { }
+.print_dg_label { }
+.print_dg_textbox { }
+.print_dg_checkbox { }
+.print_dg_radiobutton { }
+.print_dg_caption { FONT: normal 14px Tahoma; FONT-WEIGHT: bold; TEXT-ALIGN:center;  PADDING-BOTTOM: 0;}
+.print_dg_error_message { }
+.print_dg_warning_message { }
+.print_dg_ok_message { }
+
+

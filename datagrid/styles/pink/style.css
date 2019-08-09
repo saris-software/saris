@@ -1,0 +1,47 @@
+/* common classes */
+pre { PADDING: 0px; MARGIN: 0px; }
+
+.dg_left { TEXT-ALIGN: left; }
+.dg_center { TEXT-ALIGN: center; }
+.dg_right { TEXT-ALIGN: right; }
+.dg_nowrap { WHITE-SPACE: nowrap; }
+.dg_underline { TEXT-DECORATION: underline; }
+.resizable-textarea .grippie { BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #ddd 0px solid; OVERFLOW: hidden; BORDER-LEFT: #ddd 1px solid; CURSOR: s-resize; BORDER-BOTTOM: #ddd 1px solid; HEIGHT:6px; }
+
+a.pink_dg_a { BACKGROUND: transparent; COLOR: #333333; TEXT-DECORATION: none; FONT-SIZE: 12px; FONT-FAMILY: Tahoma; }
+a.pink_dg_a:link { BACKGROUND: transparent; COLOR: #333333; TEXT-DECORATION: none; FONT-SIZE: 12px; FONT-FAMILY: Tahoma; }
+a.pink_dg_a:hover { BACKGROUND: transparent; COLOR: #be0a2f; TEXT-DECORATION: none; FONT-SIZE: 12px; FONT-FAMILY: Tahoma; }
+a.pink_dg_a:visited { }
+a.pink_dg_a2 { BACKGROUND: transparent; COLOR: #333333; TEXT-DECORATION: none; FONT-SIZE: 12px; FONT-FAMILY: Tahoma; }
+a.pink_dg_a2:link { BACKGROUND: transparent; COLOR: #333333; TEXT-DECORATION: none; FONT-SIZE: 12px; FONT-FAMILY: Tahoma; }
+a.pink_dg_a2:hover { BACKGROUND: transparent; COLOR: #be0a2f; TEXT-DECORATION: none; FONT-SIZE: 12px; FONT-FAMILY: Tahoma; }
+a.pink_dg_a2:visited { BACKGROUND: transparent; COLOR: #333333; TEXT-DECORATION: none; FONT-SIZE: 12px; FONT-FAMILY: Tahoma; }
+
+.pink_dg_fieldset { MARGIN: 0px;BORDER: #ffcfb4 1px solid;}
+.pink_dg_filter_table { BORDER: #bfcde1 0px solid; FONT: normal 12px Tahoma;}
+.pink_dg_filter_table tr td { FONT-SIZE: 12px; }
+.pink_dg_legend {FONT: normal 12px Tahoma;}
+.pink_dg_paging_table { BORDER: #bfcde1 0px solid; FONT: normal 12px Tahoma;}
+.pink_dg_paging_table tr td { FONT-SIZE: 12px; }
+.pink_dg_table { BORDER: 1px solid #ffcfb4; FONT: normal 12px Tahoma; border-style: solid solid solid solid; border-collapse: collapse; }
+
+.pink_dg_th          { background: url(images/header_background.jpg) repeat-x right bottom; border-right: #ffcfb4 1px solid; border-top: #ffcfb4 1px solid;  font: bold 13px tahoma; border-left: #ffcfb4 1px solid; color: #333333;  border-bottom: #ffcfb4 1px solid; padding:4px 5px 4px 5px; }
+.pink_dg_th_normal   { background: url(images/header_background.jpg) repeat-x right bottom; border-right: #ffcfb4 1px solid; border-top: #ffcfb4 1px solid;  font: bold 13px tahoma; border-left: #ffcfb4 1px solid; color: #333333;  border-bottom: #ffcfb4 1px solid; background-color: #ffcfb4; padding:4px 5px 4px 5px; }
+.pink_dg_th_selected { background: url(images/header_background.jpg) repeat-x right bottom; border-right: #ffcfb4 1px solid; border-top: #ffcfb4 1px solid;  font: bold 13px tahoma; border-left: #ffcfb4 1px solid; color: #333333;  border-bottom: #ffcfb4 1px solid; padding:4px 5px 4px 5px; }
+
+.pink_dg_td {      BORDER-RIGHT: #ffcfb4 1px solid; PADDING-RIGHT: 2px; PADDING-LEFT: 5px; PADDING-BOTTOM: 4px;PADDING-TOP: 3px; FONT: Tahoma; BORDER-LEFT:  #ffcfb4 1px solid; BORDER-BOTTOM: #ffcfb4 1px solid; }
+.pink_dg_td_main {     BORDER-RIGHT: #ffcfb4 1px solid;  PADDING-RIGHT: 2px; PADDING-LEFT: 5px; PADDING-BOTTOM: 4px; PADDING-TOP: 3px; FONT: Tahoma; BORDER-LEFT:  #ffcfb4 1px solid;  BORDER-BOTTOM: #ffcfb4 1px solid; BACKGROUND-COLOR: #ffd6c2;}
+.pink_dg_td_selected { BORDER-RIGHT: #ffcfb4 1px solid; PADDING-RIGHT: 2px; PADDING-LEFT: 5px; PADDING-BOTTOM: 4px; PADDING-TOP: 3px; FONT: Tahoma; BORDER-LEFT:  #ffcfb4 1px solid;  BORDER-BOTTOM: #ffd6c2 1px solid; BACKGROUND-COLOR: #f1f0e8;} /*FFeFd4*/
+
+.pink_dg_button { FONT: bold 12px Tahoma; border: 1px solid #FE9C6B; PADDING-RIGHT: 2px; PADDING-LEFT: 5px; PADDING-TOP: 2px; PADDING-BOTTOM: 2px; BACKGROUND-COLOR: #ffcfb4; margin-left: 1px; margin-right: 1px; margin-top: 1px; margin-bottom: 1px; }
+.pink_dg_select { BORDER: #FFCFB4 1px solid; FONT: normal 12px Tahoma;BACKGROUND-COLOR: #F8F7EF;  }
+.pink_dg_label { FONT-SIZE: 12px; FONT-FAMILY: Tahoma; }
+.pink_dg_textbox { BORDER: #FFCFB4 1px solid; FONT: normal 12px Tahoma;WIDTH:210px;PADDING-LEFT:3px;PADDING-BOTTOM: 3px;PADDING-TOP: 3px;}
+.pink_dg_checkbox { BORDER:0px; FONT: normal 12px Tahoma;WIDTH:20px;}
+.pink_dg_radiobutton { BORDER:0px; FONT: normal 12px Tahoma;WIDTH:20px;}
+.pink_dg_caption { FONT: normal 14px Tahoma; FONT-WEIGHT: bold; TEXT-ALIGN:center; PADDING-BOTTOM: 0;}
+.pink_dg_error_message { FONT: normal 12px Tahoma; COLOR: #a61100; }
+.pink_dg_warning_message { FONT: normal 12px Tahoma; COLOR: #d2791e; }
+.pink_dg_ok_message { FONT: normal 12px Tahoma; COLOR: #009a00; }
+
+

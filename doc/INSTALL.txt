@@ -1,0 +1,199 @@
+ZALONGWA Installation
+
+/* ZALONGWA Version: 4.0.1 */
+
+/* Juma Lungo, 13th January 2006*/
+
+***************New Installations***************
+
+Note: It is worth printing this document off and checking off the steps as you go.
+
+Pre-requisites:
+
+- A working PHP web server - v 4.3 or later - with support for mysql or postgres databases, gd, gettext and ftp
+- A working MySQL or Postgres server (MySql version 4.1 or above - innodb tables must be enabled - this needs a my.cnf file - see the MySQL manual. Postgres v 7.4 or later).
+
+Installing these components are well covered elsewhere.
+
+Another is that php must have register globals off.  This is the default and how it is set on almost all servers.  This flag can be set in the php.ini on the server.  If it can't be changed, it is possible for apache web servers to create a file called .htaccess in the root of the ZALONGWA system.  In that file put the line:
+
+php_flag register_globals off
+
+One more issue with php setup - by default the setting session.use_cookies is set to 1, if it is set to 0 this can also cause problems.
+
+The system can be used with either MySQL or Postgres database servers - both work well. Instructions here are for mysql. 
+
+
+The installation consists of:
+
+1. Copying all the PHP scripts and include files to a directory under the web server root directory
+2. Creating the database and populating with initial data
+3. Editing zalongwa.php for the database connection information and any other requirements
+4. Logging into the system for the first time
+
+1.  Copying all the PHP Scripts to the correct directory
+
+You must have downloaded the archive to be reading this file INSTALL.txt file!
+However, all files in this archive should be copied to a directory under the web server root directory. This varies between installations but
+
+In Windows it could be 
+
+C:\Program Files\Apache Group\Apache\htdocs
+
+Under Linux:
+
+/usr/local/httpd/htdocs/
+
+was common
+
+/srv/www/htdocs
+
+is the apache root directory under SuSE Linux.
+
+Normally the Apache document root directory is called "htdocs". However other web-servers can be used and their document root directory names will vary.
+
+Under windows use WinRAR (or XP's native abilities) to extract the archive under the web server root directory.
+
+Under *nix copy the archive to the web server's root directory and then run:
+
+unzip zalongwa_XXX.zip
+
+this will create the zalongwa directory under the web server root directory and put all the scripts in that directory.
+
+
+2. Creating the Database
+
+The installation steps for MySQL are described here - similar steps are required with Postgres.
+
+MySQL version 4.x or above is required - Foreign Keys are implemented in the database as from version 2.8 these only became an option in MySQL version 3.23.51. 
+
+INNODB TABLES MUST BE ENABLED IN THE MYSQL SERVER. 
+These tables allow database transactions which are a critical component of ZALONGWA software. Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
+
+When using mysql both windows and *nix have the mysql command line client. The command line client is run in a DOS window under Windows. Open a DOS window using Start, Run, cmd ENTER for Windows XP and 2000. Normally the mysql client mysql.exe file is under C:\mysql\bin\mysql.exe by default if this path is not in the default path then commands referred to below as mysql will need to be prefixed by C:\mysql\bin
+
+You need to know the user name and password for the MySQL server. If you have not set these up the default is
+
+user root
+password ""
+
+BUT.... you should not use this account - you should set up another user for you mysql installation and change the root password to something other than "". There are a number of front ends that allow the mysql user accounts to be maintained and if you are familiar with one of these, it should be used in preference to the mysql command line client discussed below.
+
+From the MySQL manual (edited):
+
+	The MySQL root user is created as a superuser who can do anything. Connections must be made from the local host.
+	NOTE: The initial root password is empty, so anyone can connect as root without a password and be granted all privileges.
+
+	Because your installation is initially wide open, one of the first things you should do is specify a password for the MySQL root user. You can do this as follows (note that you specify the password using the PASSWORD() function):
+
+	You can, in MySQL Version 3.22 and above, use the SET PASSWORD statement:
+
+	shell> mysql -u root mysql
+	mysql> SET PASSWORD=PASSWORD('new_password');
+
+where 'new_password' is the new password you chose for the root user.
+
+Also from the MySQL manual (edited):
+
+	Also, if you have changed the root user password, you must specify it for the mysql commands below.
+
+	You can add new users by issuing GRANT statements:
+
+	shell> mysql --user=root  -p 'new_password' mysql
+
+	mysql> GRANT ALL PRIVILEGES ON *.* TO weberp_db_user@localhost
+        	   IDENTIFIED BY 'some_pass' WITH GRANT OPTION;
+
+Where 'some_pass' is a password of your choice for the new user 'zalongwa_db_user'. Note that this user zalongwa_db_user can only connect from the local machine so if the web server is on a different machine to the MySQL server then you need to give privileges to connect from other computers. See the MySQL manual.
+
+If you have an account set up already in MySQL and innodb tables enabled, then all you need to do is to run one of the sql scripts - under the sql directory as unpacked from the archive.
+
+Note: The scripts provided are created using mysqldump and contain comments. Unfortunately, phpMyAdmin doesn't like these comments so it is recommended to follow the instructions below.
+
+Two scripts are provided:
+
+1. zalongwa-demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the system works.
+2. zalongwa-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on zalongwa then this is the script to use.
+
+This creates a zalongwa database and populates it with only the very basic data to start off.
+The files zalongwa-demo.sql and zalongwa-new.sql should be in zalongwa/sql/mysql and the zalongwa/sql/pg directories.
+
+shell > mysql --user=zalongwa_db_user --password='some_pass' < /path_to_the_sql_script/zalongwa-demo.sql
+
+or
+
+shell > mysql --user=zalongwa_db_user --password='some_pass' < /path_to_the_sql_script/zalongwa-new.sql
+
+as required.
+
+An important consideration for lanugage encodings other ISO-8859-1 was contributed by Chan Wai Lun with postgres we may modify the PostgreSQL config file postgresql.conf to add a key "client_encoding=big5" or using "createdb -E EUC_TW" to create a database with suitable encoding. MySQL may have a similar configuration parameter.
+
+3. Editing zalongwa.php
+
+zalongwa.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the database connection and the type of database server being used. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file - this is a common installation pitfall since some editors add a character at the end of the file.
+
+// User configurable variables
+//---------------------------------------------------
+
+The file appears as follows for reference purposes. The actual file ‘zalongwa.php’ under the ‘Connection’ directory with all the other scripts must be edited and saved. As you can see the file is well commented, the critical items are the computer $hostname, the $database, the $username and the $password - other variables can in most cases be left at their defaults. Lines commencing with // are comments and not interpreted by PHP.
+
+NOTE: the username and password are entered in the reverse case, for example, if the username is ‘jlungo’ you should enter ‘ognulj’
+
+@$hostname_zalongwa = "localhost";
+@$database_zalongwa = "zalongwa"; //use the exact name of your database
+@$username_zalongwa = "emanemos"; //i.e. somename
+@$password_zalongwa = "drowssapemos"; //somepassword
+
+You need also to set the site title and email of the webmaster, the default is
+
+$szSiteTitle = 'Zalongwa Computer Systems';
+$szWebmasterEmail = '< admin@zalongwa.com >'; 
+
+
+4. Logging In For the First Time
+
+Open a browser and enter the URL for the web server directory where zalongwa is installed if the browser is on the same machine as the server perhaps
+
+http://localhost/zalongwa/index.php
+
+ZALONGWA requires that a user must be first registered in the database, then, will be given a privilege. Thus, you two initial accounts to start with ZALONGWA: 
+
+(1) Registrar Account (this account allows you to register other users)
+       enter the user name of 'firstuser'
+       password 'zalongwa'
+       (the quotation marks are not required).
+	
+	Once logged in Click ‘Help’. 
+	YOU MUST REGISTER DO THE FOLLOWING: REGISTER INSTITUTE NAME, FACULTY NAME, AND TWO USERS (REGISTRAR AND DATABASE ADMINISTRATOR)
+
+(2) Administrator Account (this allows you to give privilege to users)
+       enter the user name of 'firstadmin'
+       password 'zalongwa'
+       (the quotation marks are not required).
+	
+	Once logged in Click ‘Help’. 
+	YOU MUST CREATE ACCOUNT AND GIVE RESPECTIVE PRIVILEGES THE TWO USERS YOU CREATED IN (2) STEP.
+
+Be careful not to delete the ‘firstuser’ and ‘firstadmin’ until a new user has been set up. If there are no users defined the next time you try to login you won't be able to! The only way then to create a user to login with is to manually edit the SQL table ‘security’ to insert a user. While creating new user manually, the password must be encrypted please use 
+
+‘{jlungo-hash}HdtNbxCN++TqcRvgNzxvp/bhJV8=’ which reads ‘zalongwa’ 
+
+If for some reason the firstuser and firstadmin are deleted before creating a new system administrator account, the following SQL can be used to create a new user with system administrator privileges - assuming a stock location 'DEN' exists - this should be changes to a valid stock location otherwise:
+
+
+INSERT INTO `security` VALUES 
+('firstadmin','{jlungo-hash}HdtNbxCN++TqcRvgNzxvp/bhJV8=','Juma Lungo','21791/T.97','Administrator','jlungo','2005-12-28 17:41:28','2004-02-07','admin',5,1,0,0);
+
+INSERT INTO `security` VALUES 
+(' firstuser','{jlungo-hash}HdtNbxCN++TqcRvgNzxvp/bhJV8=','CHACHA, Robert','04830/T.06','Administrator','rchacha@yahoo.com','2005-12-28 16:37:43','2005-09-29','user',4,2,30,2),
+
+NB See the importance of setting a password to use the SQL server otherwise anyone could modify security and gain access to private company information.
+
+A pdf reader - Acrobat should be installed on the client machines that will access the system. It is recommended that the preferences of Acrobat Reader be changed so as to open a separate window for acrobat documents rather than display them in the browser.
+
+
+Now the student information system starts....
+
+I wish you good luck on using Zalongwa
+
+Copyright Juma Hemed Lungo: jlungo@udsm.ac.tz

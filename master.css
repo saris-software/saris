@@ -1,0 +1,8 @@
+.normaltext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px}
+
+.username {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #FFFFFF}
+.detaillabels {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #993300; line-height: 16px}
+.listname { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #993300}
+.listtop {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 16px; color: #006699}
+.form {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000}
+body {  background-color: #FFFFCC; letter-spacing: normal; text-align: left; word-spacing: normal; font-family: Verdana, Arial, Helvetica, sans-serif; font-style: normal; line-height: normal; font-weight: normal; list-style-type: square; font-size: 12px; color: #000000}

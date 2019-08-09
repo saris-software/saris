@@ -1,0 +1,35 @@
+<?php
+include('./Connections/zalongwa_data.php');
+include("phpgraphlib.php"); 
+$graph=new PHPGraphLib(650,200);
+$data=array();
+$sql="SELECT faculty.FacultyID, COUNT(*) AS 'count' FROM student,faculty where faculty.FacultyName=student.Faculty and student.Sex='M' GROUP BY student.Faculty";
+$result = mysql_query($sql) or die('Query failed: ' . mysql_error());	
+if($result)
+{
+while($row = mysql_fetch_assoc($result))
+{	
+$salesgroup=$row["FacultyID"];
+$count=$row["count"];
+//ADD TO ARRAY
+$data[$salesgroup]=$count;
+}
+}
+
+$graph->setBackgroundColor("white");
+$graph->addData($data);
+$graph->setBarColor("255,255,204");
+$graph->setTitle("PLOT BAR GRAPH FOR STUDENT AGAINST DEPARTMENTS");
+$graph->setTitleColor("blue");
+$graph->setupYAxis(12, "blue");
+$graph->setupXAxis(20, "blue");
+$graph->setGrid(true);
+$graph->setGradient("silver", "gray");
+$graph->setBarOutlineColor("black");
+$graph->setTextColor("black");
+$graph->setDataPoints(true);
+$graph->setDataPointColor("blue");
+$graph->setLine(true);
+$graph->setLineColor("blue");
+$graph->createGraph();
+?>

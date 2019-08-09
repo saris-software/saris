@@ -1,0 +1,119 @@
+DataGrid is not the most ideal software in the world, so here are some restrictions on it's use. 
+It's a cost for versatility through effectiveness.
+
+[#001] [Limitation] 
+--------------------------------------------------------------------------------
+Description: 
+    DataGrid can not be used for tables with Multi Primary Key
+Solution:
+    If you already use tables with Multi Primary Key - add new Single Primary Key field.
+
+
+[#002] [Limitation]  
+--------------------------------------------------------------------------------
+Description: 
+    DataGrid can not be nested into another HTML form: <form>...</form> 
+Solution:
+    Always put DataGrid code outside another HTML form: <form>...</form>
+     
+
+[#003] [Issue]  
+--------------------------------------------------------------------------------
+Description: 
+    Resize property for all "Simple" textareas disappears, if "WYSIWYG" text area was defined before.
+Browsers: IE 6/7    
+Solution:
+    If you use some mixed ("Simple" and "WYSIWYG") textares on the same page just arrange them so 
+    that all "Simple" will be first and all "WYSIWYG" will be underneath.
+
+   
+[#004] [Issue]  
+--------------------------------------------------------------------------------
+Description: 
+    SQL error when using customized template for details mode and sorting in view mode was by virtual field, 
+    because dataGrid automatically adds SORT BY at the end of SQL statement.        
+Browsers: IE 6/7, FF    
+Solution:
+    Don't use a virtual field for sorting or simply comment Issue [#123] : start/end lines of code in datagrid.class.php   
+
+
+[#005] [Issue]  
+--------------------------------------------------------------------------------
+Description: 
+    Using single or double quotes in dropdown list values leads to error.
+Browsers: IE 6/7, FF    
+Solution:
+    Using indexes (numeric) or strings without quotes in value of dropdown list. 	
+
+
+[#006] [Issue] - FIXED in versions 6.x.x  
+--------------------------------------------------------------------------------
+Description:
+    WYSIWYG editor looses new value when uploading images.
+Solution:
+    Upload images before adding/editing text in WYSIWYG editor.
+
+     
+[#007] [Limitation] 
+--------------------------------------------------------------------------------
+Description: 
+    Multirow features don't work with customized templates
+Solution:
+    Write your own multi-row operations code.
+
+
+[#008] [Limitation] 
+--------------------------------------------------------------------------------
+Description:      
+    DataGrid cannot distinguish fields with the same name, if the are 2 or more
+    DataGrids working on one page in Master-Details structure. It may lead to 
+    problems, when both DataGrids opened in Edit mode.     
+Solution:
+    Don't work with fields that have same name in mentioned case.
+
+
+[#009] [Limitation] 
+--------------------------------------------------------------------------------
+Description:      
+    DataGrid sorts records in Edit Mode for multi-row operation only by primary
+    key with descending order.
+Solution:
+    Unknown. Take it into account when editing with milti-rows selected.
+
+
+[#010] [Limitation] 
+--------------------------------------------------------------------------------
+Description:      
+    DataGrid multi-row operations don't work with Tabular layout in Edit mode.
+Solution:
+    Unknown. Take it into account when working with milti-row operations.
+
+
+[#011] [Limitation] 
+--------------------------------------------------------------------------------
+Description:      
+    Attribute "on_item_created" doesn't work with "enum" fields in Edit mode.
+Solution:
+    Unknown. Take it into account when working with "on_item_created" attributes.
+
+
+[#012] [Limitation] 
+--------------------------------------------------------------------------------
+Description:      
+    If defined ENUM field with display type - radiobutton, checking doesn't work
+    if the field was defined as a "required".
+Solution:
+    Define "false_value" as empty string.
+
+
+[#013] [Limitation] 
+--------------------------------------------------------------------------------
+Description:      
+    If in defining ENUM values in database used apostrophes (single quotes - for ex.: editor''s award),
+    the ENUM field type with "source"=>"self" doesn't work properly, because in database it saved
+    as 'editor''s award'.
+Solution:
+    Create and use foreign keys, linked to the separate table with ENUM values.
+
+
+

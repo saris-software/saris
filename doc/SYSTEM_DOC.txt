@@ -1,0 +1,33 @@
+ZALONGWA Installation
+
+/* ZALONGWA Version: 4.0.1 */
+
+/* Juma Lungo, 13th January 2006*/
+
+***************System Documentation***************
+
+Note: It is worth printing this document off and checking off the steps as you go.
+
+This document should help all those who would like to add new system functions and or to fix system bugs.
+
+ZALONGWA make use one ‘Database’ and ‘Application’ which is over 2,600 files.
+
+1. ZALONGWA DATABASE
+
+The database tables are named natively to reflect the data contained in it. For example, table ‘faculty’ store faculty names. The database is a MySQL 4.0x and higher but you can use PostgreSQL database.
+
+2. ZALONGWA APPLICATION
+
+The application contains two main types of files: .html and .php. The application is structured as follows:
+
+(a) Starting up files in the root folder. Important files are Login.php, ReLogin.php and userlogin.php. these files are the one which handles user login and redirecting users to specific module.
+(b) Module folders: ZALONGWA is a five module application: Admission, Academic, Administrator, Accommodation/Accounting and Student. All files related to specific module are packed together named ‘modulenameFilename’. For example, all files in Admission module are named ‘admissionPrpfile.php’ (scripts to display the profile of the user). In some cases the filename does not start with modulename but what is important is that the file is located in the module folder.
+(c) Images folder: all images are located in ‘images’ folder this is important when one wants to change for example, the banner of the application. Just make sure you name the new image in the same name as the old one (for example banner.jpg can be replaced by another image but with the same name banner.jpg
+(d) Connections files: Two important files are located in Connections folder.ZALONGWA connects to the database and selects the database using ‘zalongwa.php’. ZALONGWA control user sessions using ‘sessioncontrol.php’. 
+(e) Other folders: the header.css file is located in ‘css’ folder. The ‘doc’ folder contains the manual, system documentation and installation guide, ‘download’ folder contains all uploaded files and ‘footer’ contains the page footer.php. The folder ‘stats’ contain images of dynamically created statistics files. The remaining folders are used by the application to store temporary files.
+
+In most cases, when developing new files, try to avoid the use of JavaScript as much as possible. JavaScripts requires thick clients and ZALONGWA is designed to work with minimum client computers and network. It is aimed to work with old machines and using even dialup networks.
+
+I wish you good luck on using Zalongwa
+
+Copyright Juma Hemed Lungo: jlungo@udsm.ac.tz

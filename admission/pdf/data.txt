@@ -1,0 +1,312 @@
+# this is the text which will end up within readme.pdf, when processed
+# by readme.php.
+1<Introduction>
+
+This class is designed to provide a non-module, non-commercial alternative to dynamically creating pdf documents from within PHP.
+Obviously this will not be quite as quick as the module alternatives, but it is surprisingly fast, this demonstration page is almost a worst case due to the large number of fonts which are displayed.
+There are a number of features which can be within a Pdf document that it is not at the moment possible to use with this class, but I feel that it is useful enough to be released.
+
+The bulk of this document will describe the major calls to the class, the readme.php file (which will create this pdf) should be sufficient as an introduction.
+
+Note that this document was generated using the demo script 'readme.php' which came with this package.
+
+1<Changes>
+
+2<version 005>
+Contains a few bug fixes from 004, and the addition of the capability to draw arbitrary bezier curves, and ellipses at arbitrary angles.
+
+2<version 004>
+This release includes a certain amount of functinality which should have been in 003. The enhancements are:
+- page numbering easily done within ezpdf, they can be started and stopped on any page, uses an arbitrary template for the format, and can be set to start numbering pages from a given number.
+- can now pass content-disposition through to the headers, for what it is worth
+- having the 'Accept-Ranges' header set is optional, and off by default - seemed to cause problems.
+- lines can now have their width, dash patterns, join types and endings set.
+- there is now a reopenObject function which will allow adding content to previous objects, as long as the id has been stored. This function will also now work on pages, and the newpage() function now returns an id so that these can be accessed. 
+- the first page of course does not return an id, so there is a getFirstPageId() function to find that one.
+
+2<notes from version 003>
+This is the document accompanying version 003 of this pdf class, the significant changes in this class version are:
+Creation of the ezpdf class, an extension to the base class to make life simpler.
+Inclusion of compression within the content streams, code from Andrea Gagliardi (thanks).
+A new image function which will include a jpeg file straight from the file, so image inclusion without using GD.
+An extra content header, might improve life on some browsers (thanks John Arthur).
+
+
+1<Use>
+
+It is free for use for any purpose, though you must retain the notes at the top of the class containing the authorship, and feedback location.
+
+1<Extensions>
+
+We have developed a number of extensions to this class in the works of wrappers, giving additional functionality for specific purposes.
+For example a wrapper which has the same command set as GD, so that our present dynamic graph drawing routines can be upgraded to output pdf documents easily.
+Unfortunately these are not really tidy enough for public consumption, so will not be released immediatly.
+
+Our table presentation class is in its first release, this has taken the form of an extension to the pdf class which is being called 'ezpdf'. To use it, the base class 'class.pdf.php' is also required.
+
+The functions of ezpdf are described in the next section, though as it is a class extension, all of the basic functions from the original class are still available.
+
+Please excuse this blatant 'plug', but if your company wishes some customization of these routines for your purposes, R&OS can do this at very reasonable rates, just drop us a line at info@ros.co.nz.
+
+#NP
+1<EZPDF Class Function>
+
+(note that the creation of this document in readme.php was converted to ezpdf with the saving of many lines of code).
+
+2<Cezpdf([paper='a4'],[orientation='portrait'])>
+
+This is the constructor function, and allows the user to set up a basic page without having to know exactly how many units across and up the page is going to be.
+Valid values for paper are 'a4','letter'.
+Valid values for orientation are 'portrait','landscape'.
+Starting ezpdf with the code below will create an a4 portrait document.
+
+$pdf =& new Cezpdf();
+
+2<ezSetMargins(top,bottom,left,right)>
+
+Sets the margins for the document, this command is optional and they will all be set to 30 by default. Setting these margins does not stop you writing outside them using the base class functions, but the ezpdf functions will wrap onto a new page when they hit the bottom margin, and will not write over the side margins when using the eztext command below.
+
+2<ezNewPage()>
+
+Starts a new page. This is subtly different to the newPage command in the base class as it also places the ezpdf writing pointer back to the top of the page.
+
+2<ezSetY(y)>
+
+Positions the ezpdf writing pointer to a particular height on the page, don't forget that pdf documents have y-coordinates which are zero at the bottom of the page and increase as they go up the page.
+
+2<ezSetDy(dy)>
+
+Changes the height of the writing pointer by a set amount, so to move the pointer 10 units down the page (making a gap in the writing), use:
+
+ezSetDy(-10)
+
+2<ezTable(array data,[array cols],[title],[array options]>
+
+The easy way to throw a table of information onto the page, can be used with just the data variable, which must contain a two dimensional array of data.
+
+The table will start writing from the current writing point, and will proceed until the all the data has been presented, by default, borders will be drawn, alternate limes will be shaded gray, and the table will wrap over pages, re-printing the headers at the top of each page.
+
+The other options are described here:
+
+$cols (optional) is an associative array, the keys are the names of the columns from $data to be presented (and in that order), the values are the titles to be given to the columns
+$title (optional) is the title to be put on the top of the table
+
+$options is an associative array which can contain:
+ 'showLines'=> 0 or 1, default is 1 (1->alternate lines are shaded, 0->no shading)
+ 'showHeadings' => 0 or 1
+ 'shaded'=> 0 or 1, default is 1 (1->alternate lines are shaded, 0->no shading)
+ 'shadeCol' => (r,g,b) array, defining the colour of the shading, default is (0.8,0.8,0.8)
+ 'fontSize' => 10
+ 'textCol' => (r,g,b) array, text colour
+ 'titleFontSize' => 12
+ 'titleGap' => 5 , the space between the title and the top of the table
+ 'lineCol' => (r,g,b) array, defining the colour of the lines, default, black.
+ 'xPos' => 'left','right','center','centre',or coordinate, reference coordinate in the x-direction
+ 'xOrientation' => 'left','right','center','centre', position of the table w.r.t 'xPos' 
+
+note that the user will have had to make a font selection already or this will not produce a valid pdf file.
+
+2<ezText(text,[size],[array options])>
+
+This is designed for putting blocks of text onto the page. It will add a string of text to the document (note that the string can be very large, spanning multiple pages), starting at the current drawing position. It will wrap to keep within the margins, including optional offsets from the left and the right, if $size is not specified, then it will be the last one used, or the default value (12 I think). The text will go to the start of the next line when a return code "\n" is found.
+
+possible options are:
+ 'left'=> number, gap to leave from the left margin
+ 'right'=> number, gap to leave from the right margin
+ 'justification' => 'left','right','center','centre','full'
+
+2<ezStartPageNumbers(x,y,size,[pos],[pattern],[num])>
+ Add page numbers on the pages from here, place then on the 'pos' side of the coordinates (x,y) (pos can be 'left' or 'right').
+ Use the given 'pattern' for display, where {PAGENUM} and {TOTALPAGENUM} are replaced as required, by default the pattern is set to '{PAGENUM} of {TOTALPAGENUM}'
+ If $num is set, then make the first page this number, the number of total pages will be adjusted to account for this.
+
+ the following code produces a seven page document, numbered from the second page (which will be labelled '1 of 6'), and numbered until the 6th page (labelled '5 of 6')
+
+$pdf = new Cezpdf();
+$pdf->selectFont('./fonts/Helvetica');
+$pdf->ezNewPage();
+$pdf->ezStartPageNumbers(300,500,20,'','',1);
+$pdf->ezNewPage();
+$pdf->ezNewPage();
+$pdf->line(300,400,300,600); // line drawn to check 'pos' is working
+$pdf->ezNewPage();
+$pdf->ezNewPage();
+$pdf->ezNewPage();
+$pdf->ezStopPageNumbers(); 
+$pdf->ezStream();
+
+ 
+2<ezStopPageNumbers()>
+  Stop adding page numbers from this page (the current page will not be numbered).
+ 
+2<ezOutput([debug])>
+
+Very similar to the output function from the base class, but performs any closing tasks that ezpdf requires, such as adding the page numbers.
+If you are using ezpdf, then you should use this function, rather than the one from the base class.
+
+2<ezStream([options])>
+
+Very similar to the stream function from the base class (all the same options), but performs any closing tasks that ezpdf requires, such as adding the page numbers.
+If you are using ezpdf, then you should use this function, rather than the one from the base class.
+
+ 
+#NP
+1<Major Class Functions>
+
+2<addText(x,y,size,text,[angle=0],[adjust=0])>
+
+Add the text at a particular location on the page, noting that the origin on the axes in a pdf document is in the lower left corner by default.
+An angle can be supplied as this will do the obvious.
+
+'adjust', added in version 3, gives the value of units to be added to the width of each space within the text. This is used mainly to support the justification options within the ezpdf ezText function.
+
+2<setColor(r,g,b,[force=0])>
+
+Set the fill colour to the r,g,b triplet, each in the range 0->1.
+If force is set, then the entry will be forced into the pdf file, otherwise it will only be put in if it is different from the current state.
+
+2<setStrokeColor(r,g,b,[force=0])>
+
+Set the stroke color, see the notes for the fill color.
+
+2<setLineStyle([width],[cap],[join],[dash],[phase])>
+This sets the line drawing style.
+ width, is the thickness of the line in user units
+ cap is the type of cap to put on the line, values can be 'butt','round','square' where the diffference between 'square' and 'butt' is that 'square' projects a flat end past the end of the line.
+ join can be 'miter', 'round', 'bevel'
+ dash is an array which sets the dash pattern, is a series of length values, which are the lengths of the on and off dashes.
+   for example: (2) represents 2 on, 2 off, 2 on , 2 off ...
+      (2,1) is 2 on, 1 off, 2 on, 1 off.. etc
+ phase is a modifier on the dash pattern which is used to shift the point at which the pattern starts. 
+
+2<line(x1,y1,x2,y2)>
+
+Draw a line from (x1,y1) to (x2,y2), set the line width using setLineStyle.
+
+2<curve(x0,y0,x1,y1,x2,y2,x3,y3)>
+
+Draw a bezier curve. The end points are (x0,y0)->(x3,y3), and the control points are the other two.
+
+2<ellipse(x0,y0,r1,[r2=0],[angle=0],[nSeg=8])>
+
+Draw an ellipse, centred ay (x0,y0), with radii (r1,r2), oriented at 'angle' (anti-clockwise), and formed from nSeg bezier curves (the default 8 gives a reasonable approximation to the required shape).
+
+If r2 is left out, or set to zero, then it is assumed that a circle is being drawn.
+
+2<polygon(p,np,[f=0])>
+
+Draw a polygon, where there are np points, and p is an array containing (x0,y0,x1,y1,x2,y2,...,x(np-1),y(np-1)).
+If f=1 then fill the area.
+
+2<filledRectangle(x1,y1,width,height)>
+
+Obvious.
+
+2<rectangle(x1,y1,width,height)>
+
+Obvious.
+
+2<id=newPage()>
+
+Starts a new page and returns the id of the page, this can be safely ignnored, but storing it will allow the insertion of more information back into the page later, through the use of the 'reopenObject' function.
+
+2<id=getFirstPageId()>
+
+A related command is this which returns the id of the first page, this page is created during the class instantiation and so does not have its id returned to the user, this is the only way to fetch it, but it can be done at any point.
+
+2<stream([array options])>
+
+Used for output, this will set the required headers and output the pdf code.
+
+The options array can be used to set a number of things about the output:
+
+ 'Content-Disposition'=>'filename' sets the filename, though not too sure how well this will work as in my trial the browser seems to use the filename of the php file with .pdf on the end.
+ 'Accept-Ranges'=>1 or 0 - if this is not set to 1, then this header is not included, off by default this header seems to have caused some problems despite the fact that it is supposed to solve them, so I am leaving it off by default.
+ 'compress'=> 1 or 0 - apply content stream compression, this is on (1) by default.
+
+2<x=getFontHeight(size)>
+
+Returns the height of the current font, in the given size. This is the distance from the bottom of the descender to the top of the Capitals.
+
+2<x=getFontDecender(size)>
+
+Returns a number which is the distance that the descender goes beneath the Baseline, for a normal character set this is a negative number. 
+
+2<x=getTextWidth(size,text)>
+
+Returns the width of the given text string at the given size.
+
+2<a=addTextWrap(x,y,width,size,text,[justification='left'])>
+
+Will print the text string to the page at the position (x,y), if the string is longer than width, then it will print only the part which will fit within that width (attempting to truncate at a space if possible) and will return the remainder of the string. 
+
+'justification' is optional and can be set to 'left','right','center','centre','full'. It provides for the justification of the text and though quite usable here, was implemented for the ezpdf class.
+
+2<saveState()>
+
+Save the graphic state.
+
+2<restoreState()>
+
+Restore a saved graphics state.
+
+2<id=openObject()>
+
+Start an independent object. This will return an object handle, and all further writes to a page will actually go into this object, until a closeObject call is made.
+
+2<reopenObject(id)>
+
+Makes the point of current content insertion the numbered object, this 'id' must have been returned from a call to 'openObject' or 'newPage' for it to be a valid object to insert content into. Do not forget to call 'closeObject' to close off input to this object and return it to where it was beforehand (most likely the current page).
+This will allow the user to add information to previous pages, as long as they have stored the id of the pages.
+
+2<closeObject()>
+
+Close the currently open object. Further writes will now go to the current page.
+
+2<addObject(id,[options='add'])>
+
+Add the object specified by id to the current page (default). If a string is supplied in options, then the following may be specified:
+'add' - add to the current page only.
+'all' - add to every page from the current one on.
+'odd' - add to all odd numbered pages from now on.
+'even' - add to all even numbered pages from now on.
+
+There are not yet any options to allow the stopping of an object appearing on subsequent page, though this is on the list of things to be added in the near future.
+
+2<stopObject(id)>
+
+If the object (id) has been appearing on pages up to now, then stop it, this page will be the last one that could contian it.
+
+2<addInfo(label,value)>
+
+Add document information, the valid values for label are:
+Title, Author, Subject, Keywords, Creator, Producer, CreationDate, ModDate, Trapped
+
+modified in version 003 so that 'label' can also be an array of key->value pairs, in which case 'value' should not be set.
+
+2<setPreferences(label,value)>
+
+Set some document preferences, the valid values for label are:
+HideToolbar, HideMenuBar, HideWindoUI, FitWindow, CenterWindow, NonFullScreenPageMode, Direction
+
+modified in version 003 so that 'label' can also be an array of key->value pairs, in which case 'value' should not be set.
+
+2<addImage(img,x,y,[w=0],[h=0],[quality=75])>
+
+Add an image to the document, this feature needs some development. But as it stands, img must be a handle to a GD graphics object, and one or both of w or h must be specified, if only one of them is specified, then the other is calculated by keeping the ratio of the height and width of the image constant.
+The image will be placed with its lower left corner at (x,y), and w and h refer to page units, not pixels.
+
+2<addJpegFromFile(imgFileName,x,y,[w=0],[h=0])>
+
+Add a JPEG image to the document, this function does not require the GD functionality, so should be usable to more people, interestingly it also seems to 
+be more reliable and better quality. The syntax of the command is similar to the above 'addImage' function, though 'img' is a string containing the file name of the jpeg image.
+
+2<a=output([debug=0])>
+
+As an alternative to streaming the output directly to the browser, this function simply returns the pdf code. No headers are set, so if you wish to stream at a later time, then you will have to manually set them. This is ideal for saving the code to make a pdf file, or showing the code on the screen for debug purposes.
+
+If the 'debug' parameter is set to 1, then the only effect at the moment is that the compression option is not used for the content streams, so that they can be viewed clearly.
+
+2<notes>
+
+The units used for positioning within this class are the default pdf user units, in which each unit is equivalent to 1/72 of an inch.
