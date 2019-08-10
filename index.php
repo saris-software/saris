@@ -3,11 +3,11 @@
 	session_cache_limiter('nocache');       
 	@$loginerror  = $_SESSION['loginerror'];
 	
-	require_once('Connections/zalongwa.php');
+	require_once('Connections/zalongwa_sample.php');
 	#Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+	$dborg = mysqli_query($qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
 	$org = $row_org['Name'];
 	$post = $row_org['Address'];
 	$phone = $row_org['tel'];

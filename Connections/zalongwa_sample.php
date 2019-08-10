@@ -11,9 +11,16 @@ if (!$zalongwa){
 	 printf(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
-else {
-	mysqli_select_db($database_zalongwa, $zalongwa);
-}
+	@mysqli_select_db($database_zalongwa, $zalongwa);
+
+
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
+if (!$zalongwa){
+	 printf(mysqli_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 exit;
+	}
+@mysqli_select_db ($database_zalongwa, $zalongwa); 
+
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
 global $szDBName,$szDBUsername,$szDBPassword,$szDiscussionAdmin,$szDiscussionPassword;
@@ -27,7 +34,7 @@ if (!$zalongwa){
 		2 => array( 'name' => 'Kiswahili', 'shortname' => 'Sw'),
 	);
 	
-$arrVariationPreference = array (
+	$arrVariationPreference = array (
 		1 => 1,
 		2 => 2
 	);
