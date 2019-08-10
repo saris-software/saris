@@ -3,7 +3,7 @@
 	session_cache_limiter('nocache');       
 	@$loginerror  = $_SESSION['loginerror'];
 	
-	require_once('Connections/zalongwa.php');
+	require_once('Connections/zalongwa_sample.php');
 	#Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
 	$dborg = mysql_query($qorg);

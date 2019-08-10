@@ -6,12 +6,12 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 @$database_zalongwa = "zalongwamnma";
 @$username_zalongwa = "toor";
 @$password_zalongwa = "toor";
-$zalongwa = mysql_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
 if (!$zalongwa){
-	 printf(mysql_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 printf(mysqli_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
-@mysql_select_db ($database_zalongwa, $zalongwa); 
+@mysqli_select_db ($database_zalongwa, $zalongwa); 
 
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
@@ -26,7 +26,7 @@ if (!$zalongwa){
 		2 => array( 'name' => 'Kiswahili', 'shortname' => 'Sw'),
 	);
 	
-$arrVariationPreference = array (
+	$arrVariationPreference = array (
 		1 => 1,
 		2 => 2
 	);
