@@ -53,8 +53,8 @@ if (!$zalongwa){
 
 #get current year
 $qcyear = "SELECT AYear FROM academicyear where status=1";
-$dbcyear = mysql_query($qcyear);
-$row_cyear = mysql_fetch_array($dbcyear);
+$dbcyear = mysqli_query($qcyear);
+$row_cyear = mysqli_fetch_array($dbcyear);
 $cyear=$row_cyear['AYear'];
 	
 ?>
