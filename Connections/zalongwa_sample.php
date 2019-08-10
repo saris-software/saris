@@ -6,12 +6,14 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 @$database_zalongwa = "zalongwamnma";
 @$username_zalongwa = "toor";
 @$password_zalongwa = "toor";
-$zalongwa = mysql_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
+//change mysql to mysqli
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
 if (!$zalongwa){
-	 printf(mysql_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 die(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
-@mysql_select_db ($database_zalongwa, $zalongwa); 
+//@mysql_select_db ($database_zalongwa, $zalongwa);
+echo "Connected successfully"; 
 
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
