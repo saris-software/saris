@@ -9,7 +9,8 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 //change mysql to mysqli
 $zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
 if (!$zalongwa){
-	 die(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	
+ die(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
 //@mysql_select_db ($database_zalongwa, $zalongwa);
