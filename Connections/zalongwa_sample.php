@@ -9,12 +9,11 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 //change mysql to mysqli
 $zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
 if (!$zalongwa){
-	
  die(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
-//@mysql_select_db ($database_zalongwa, $zalongwa);
-echo "Connected successfully"; 
+//change in selection of database as mysqli
+mysqli_select_db ($database_zalongwa, $zalongwa); 
 
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
