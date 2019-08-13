@@ -11,15 +11,15 @@ if (!$zalongwa){
 	 printf(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
-	@mysqli_select_db($database_zalongwa, $zalongwa);
+	@mysqli_select_db($zalongwa, "zalongwamnma");
 
 
 $zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
 if (!$zalongwa){
-	 printf(mysqli_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 printf(mysqli_error($zalongwa)."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
-@mysqli_select_db ($database_zalongwa, $zalongwa); 
+@mysqli_select_db ($zalongwa, "zalongwamnma");
 
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
