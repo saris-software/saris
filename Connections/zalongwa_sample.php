@@ -56,9 +56,9 @@ if (!$zalongwa){
 
 	#Get Organisation Name and address
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysqli_query($qorg);
+	$dborg = mysqli_query($zalongwa,$qorg);
 	$row_org = mysqli_fetch_assoc($dborg);
-	$dborg = mysqli_query ($qorg);
+	$dborg = mysqli_query ($zalongwa,$qorg);
 	$row_org = mysqli_fetch_assoc ($dborg);
 	$org = $row_org['Name'];
 	$post = $row_org['Address'];
@@ -70,12 +70,11 @@ if (!$zalongwa){
 
 #get current year
 $qcyear = "SELECT AYear FROM academicyear where status=1";
-$dbcyear = mysqli_query($qcyear);
+$dbcyear = mysqli_query($zalongwa,$qcyear);
 $row_cyear = mysqli_fetch_array($dbcyear);
 $cyear=$row_cyear['AYear'];
-	
- ?>
-$dbcyear = mysqli_query ($qcyear);
+
+$dbcyear = mysqli_query ($zalongwa,$qcyear);
 $row_cyear = mysqli_fetch_array ($dbcyear);
 $cyear=$row_cyear['AYear'];
   mysqli_close($zalongwa);
