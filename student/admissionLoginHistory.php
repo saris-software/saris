@@ -101,7 +101,7 @@ $row_cyear = mysqli_fetch_array($dbcyear);
 $cyear=$row_cyear['AYear'];
 
  ?>
-$dbcyear = mysqli_query ($qcyear);
+$dbcyear = mysqli_query ($zalongwa,$qcyear);
 $row_cyear = mysqli_fetch_array ($dbcyear);
 $cyear=$row_cyear['AYear'];
   mysqli_close($zalongwa);
