@@ -7,21 +7,21 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 
 @$hostname_zalongwa = "localhost";
 @$database_zalongwa = "zalongwadit";
-@$username_zalongwa = "toor";
-@$password_zalongwa = "01tid02";
-$zalongwa = mysql_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
-if (!$zalongwa){
-	 printf(mysql_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
-	 exit;
+@$username_zalongwa = "password";
+@$password_zalongwa = "password";
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
+if (!$zalongwa)
+	 echo("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!".mysqli_connect_error());
+	 exit();
 	}
-@mysql_select_db ($database_zalongwa, $zalongwa); 
+mysqli_select_db ($database_zalongwa, $zalongwa);
 
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
 global $szDBName,$szDBUsername,$szDBPassword,$szDiscussionAdmin,$szDiscussionPassword;
 if (!$zalongwa){
-	 printf("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
-	 exit;
+	 echo("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 exit();
 	}
 
 	$arrVariations = array (
@@ -44,8 +44,8 @@ $arrVariationPreference = array (
 
 	#Get Organisation Name and address
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+	$dborg = mysqli_query($qorg,$database_zalongwa);
+	$row_org = mysqli_fetch_assoc($dborg);
 	$org = $row_org['Name'];
 	$post = $row_org['Address'];
 	$phone = $row_org['tel'];
