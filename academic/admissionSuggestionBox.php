@@ -43,18 +43,18 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_lecturer = "SELECT UserName, FullName, Position FROM security WHERE Position = 'Lecturer' ORDER BY FullName";
-$lecturer = mysql_query($query_lecturer, $zalongwa) or die(mysql_error());
-$row_lecturer = mysql_fetch_assoc($lecturer);
-$totalRows_lecturer = mysql_num_rows($lecturer);
+$lecturer = mysqli_query($zalongwa, $query_lecturer) or die(mysqli_error($zalongwa));
+$row_lecturer = mysqli_fetch_assoc($lecturer);
+$totalRows_lecturer = mysqli_num_rows($lecturer);
 
 
 	#chas
 	//populate message receipient
-	$chas = mysql_query("SELECT moduleid, modulename FROM modules");
-	$row_fetch = mysql_fetch_assoc($chas);
-	$num_fetch = mysql_num_rows($chas);
+	$chas = mysqli_query($zalongwa,"SELECT moduleid, modulename FROM modules");
+	$row_fetch = mysqli_fetch_assoc($chas);
+	$num_fetch = mysqli_num_rows($chas);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
 
@@ -70,8 +70,8 @@ $error = urlencode("<p style='color:maroon'>Please write a message</p>");
                        GetSQLValueString($_POST['toid'], "text"),
                        GetSQLValueString($_POST['message'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa);
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL);
 
   $insertGoTo = "studentindex.php";
   if($Result1){
@@ -89,11 +89,11 @@ $error = urlencode("<p style='color:maroon'>Message Failed!!</p>");
 
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_suggestionbox = "SELECT suggestion.received, suggestion.fromid, suggestion.toid, suggestion.message FROM suggestion";
-$suggestionbox = mysql_query($query_suggestionbox, $zalongwa) or die(mysql_error());
-$row_suggestionbox = mysql_fetch_assoc($suggestionbox);
-$totalRows_suggestionbox = mysql_num_rows($suggestionbox);
+$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error($zalongwa));
+$row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
+$totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
 ?>
 <style type="text/css">
 <!--
@@ -131,11 +131,11 @@ echo '<option value="'.$reg.'" selected="selected">'.$reg.'</option>';
             		<option value="<?php echo $row_fetch['moduleid']?>"><?php echo $row_fetch['modulename']?></option>
            				 <?php
 									}
-								} while ($row_fetch = mysql_fetch_assoc($chas));
-  								$rows = mysql_num_rows($chas);
+								} while ($row_fetch = mysqli_fetch_assoc($chas));
+  								$rows = mysqli_num_rows($chas);
   								if($rows > 0) {
-      								mysql_data_seek($chas, 0);
-	  								$row_chas = mysql_fetch_assoc($chas);
+      								mysqli_data_seek($chas, 0);
+	  								$row_chas = mysqli_fetch_assoc($chas);
   								}
 						
 						
@@ -144,11 +144,11 @@ echo '<option value="'.$reg.'" selected="selected">'.$reg.'</option>';
 ?>
                     <option value="<?php echo $row_lecturer['UserName']?>"><?php echo $row_lecturer['FullName']?></option>
                     <?php
-} while ($row_lecturer = mysql_fetch_assoc($lecturer));
-  $rows = mysql_num_rows($lecturer);
+} while ($row_lecturer = mysqli_fetch_assoc($lecturer));
+  $rows = mysqli_num_rows($lecturer);
   if($rows > 0) {
-      mysql_data_seek($lecturer, 0);
-	  $row_lecturer = mysql_fetch_assoc($lecturer);
+      mysqli_data_seek($lecturer, 0);
+	  $row_lecturer = mysqli_fetch_assoc($lecturer);
   }
 ?>
                 </select></td>
@@ -171,5 +171,5 @@ echo '<option value="'.$reg.'" selected="selected">'.$reg.'</option>';
 <?php
 //}
 include('../footer/footer.php');
-mysql_free_result($suggestionbox);
+mysqli_free_result($suggestionbox);
 ?>

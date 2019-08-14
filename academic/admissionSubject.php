@@ -18,14 +18,14 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmInst")) {
 $rawcode = $_POST['txtCode'];
 $rawprog = $_POST['cmbprog'];
-$code = ereg_replace("[[:space:]]+", " ",$rawcode);
-$prog = ereg_replace("[[:space:]]+", " ",$rawprog);
+$code = preg_replace("[[:space:]]+", " ",$rawcode);
+$prog = preg_replace("[[:space:]]+", " ",$rawprog);
 
 #check if coursecode exist
 $sql ="SELECT course.CourseCode 			
 	  FROM course WHERE (course.CourseCode  = '$code')";
-$result = mysql_query($sql);
-$coursecodeFound = mysql_num_rows($result);
+$result = mysqli_query($zalongwa, $sql);
+$coursecodeFound = mysqli_num_rows($result);
 if ($coursecodeFound) {
           $coursefound   = mysql_result($result,0,'CourseCode');
 			print " This Course Code: '".$coursefound."' Do Exists!!"; 
@@ -44,8 +44,8 @@ if ($coursecodeFound) {
                        GetSQLValueString($_POST['cmbprog'], "text"),
                        GetSQLValueString($_POST['cmbLevel'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa);
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL);
   }
 }
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
@@ -60,8 +60,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
                        GetSQLValueString($_POST['txtCapacity'], "text"),
 					    GetSQLValueString($_POST['id'], "int"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($updateSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
  }
  
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -91,37 +91,37 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 //control the display table
 @$new=2;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_prog = "SELECT ProgrammeCode, Title FROM programme ORDER BY Title ASC";
-$prog = mysql_query($query_prog, $zalongwa) or die(mysql_error());
-$row_prog = mysql_fetch_assoc($prog);
-$totalRows_prog = mysql_num_rows($prog);
+$prog = mysqli_query($zalongwa, $query_prog) or die(mysqli_error($zalongwa));
+$row_prog = mysqli_fetch_assoc($prog);
+$totalRows_prog = mysqli_num_rows($prog);
 $progcode = $row_prog['ProgrammeCode'];
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_campus = "SELECT FacultyID, FacultyName FROM faculty ORDER BY FacultyName ASC";
-$campus = mysql_query($query_campus, $zalongwa) or die(mysql_error());
-$row_campus = mysql_fetch_assoc($campus);
-$totalRows_campus = mysql_num_rows($campus);
+$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error($zalongwa));
+$row_campus = mysqli_fetch_assoc($campus);
+$totalRows_campus = mysqli_num_rows($campus);
 $facultyid = $row_campus['FacultyID'];
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_faculty = "SELECT DeptName FROM department ORDER BY DeptName ASC";
-$faculty = mysql_query($query_faculty, $zalongwa) or die(mysql_error());
-$row_faculty = mysql_fetch_assoc($faculty);
-$totalRows_faculty = mysql_num_rows($faculty);
+$faculty = mysqli_query($zalongwa, $query_faculty) or die(mysqli_error($zalongwa));
+$row_faculty = mysqli_fetch_assoc($faculty);
+$totalRows_faculty = mysqli_num_rows($faculty);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_semester = "SELECT Semester FROM terms ORDER BY Semester ASC";
-$semester = mysql_query($query_semester, $zalongwa) or die(mysql_error());
-$row_semester = mysql_fetch_assoc($semester);
-$totalRows_semester = mysql_num_rows($semester);
+$semester = mysqli_query($zalongwa, $query_semester) or die(mysqli_error($zalongwa));
+$row_semester = mysqli_fetch_assoc($semester);
+$totalRows_semester = mysqli_num_rows($semester);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_studylevel = "SELECT * FROM programmelevel ORDER BY Code ASC";
-$studylevel = mysql_query($query_studylevel, $zalongwa) or die(mysql_error());
-$row_studylevel = mysql_fetch_assoc($studylevel);
-$totalRows_studylevel = mysql_num_rows($studylevel);
+$studylevel = mysqli_query($zalongwa, $query_studylevel) or die(mysqli_error($zalongwa));
+$row_studylevel = mysqli_fetch_assoc($studylevel);
+$totalRows_studylevel = mysqli_num_rows($studylevel);
 
 
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -136,7 +136,7 @@ if (isset($_GET['pageNum_inst'])) {
 }
 $startRow_inst = $pageNum_inst * $maxRows_inst;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 if (isset($_GET['course'])) {
   $key=$_GET['course'];
   $query_inst = "SELECT * FROM course WHERE CourseCode Like '%$key%' ORDER BY CourseCode ASC";
@@ -145,14 +145,14 @@ $query_inst = "SELECT * FROM course ORDER BY CourseCode ASC";
 }
 //$query_inst = "SELECT * FROM course ORDER BY CourseCode ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysql_query($query_limit_inst, $zalongwa) or die(mysql_error());
-$row_inst = mysql_fetch_assoc($inst);
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
+$row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
-  $all_inst = mysql_query($query_inst);
-  $totalRows_inst = mysql_num_rows($all_inst);
+  $all_inst = mysqli_query($zalongwa, $query_inst);
+  $totalRows_inst = mysqli_num_rows($all_inst);
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 
@@ -213,7 +213,7 @@ if (@$new<>1){
 	  <td nowrap><?php echo "<a href=\"lecturerCoursedelete.php?id=$id&code=$name\">Delete</a>"?></td>
 	  <?php } ?>
   </tr>
-  <?php } while ($row_inst = mysql_fetch_assoc($inst)); ?>
+  <?php } while ($row_inst = mysqli_fetch_assoc($inst)); ?>
 </table>
 <a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a><span class="style1"><span class="style2">......</span><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> <span class="style1"></span><span class="style2">..........</span></span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
     			
@@ -228,11 +228,11 @@ do {
 ?>
   <option value="<?php echo $row_prog['ProgrammeCode']?>"><?php echo $row_prog['Title']?></option>
   <?php
-} while ($row_prog = mysql_fetch_assoc($prog));
-  $rows = mysql_num_rows($prog);
+} while ($row_prog = mysqli_fetch_assoc($prog));
+  $rows = mysqli_num_rows($prog);
   if($rows > 0) {
-      mysql_data_seek($prog, 0);
-	  $row_prog = mysql_fetch_assoc($prog);
+      mysqli_data_seek($prog, 0);
+	  $row_prog = mysqli_fetch_assoc($prog);
   }
 ?>
       </select></td>
@@ -245,11 +245,11 @@ do {
 ?>
   <option value="<?php echo $row_campus['FacultyID']?>"><?php echo $row_campus['FacultyName']?></option>
   <?php
-} while ($row_campus = mysql_fetch_assoc($campus));
-  $rows = mysql_num_rows($campus);
+} while ($row_campus = mysqli_fetch_assoc($campus));
+  $rows = mysqli_num_rows($campus);
   if($rows > 0) {
-      mysql_data_seek($campus, 0);
-	  $row_campus = mysql_fetch_assoc($campus);
+      mysqli_data_seek($campus, 0);
+	  $row_campus = mysqli_fetch_assoc($campus);
   }
 ?>
       </select></td>
@@ -262,11 +262,11 @@ do {
 ?>
         <option value="<?php echo $row_faculty['DeptName']?>"><?php echo $row_faculty['DeptName']?></option>
         <?php
-} while ($row_faculty = mysql_fetch_assoc($faculty));
-  $rows = mysql_num_rows($faculty);
+} while ($row_faculty = mysqli_fetch_assoc($faculty));
+  $rows = mysqli_num_rows($faculty);
   if($rows > 0) {
-      mysql_data_seek($faculty, 0);
-	  $row_faculty = mysql_fetch_assoc($faculty);
+      mysqli_data_seek($faculty, 0);
+	  $row_faculty = mysqli_fetch_assoc($faculty);
   }
 ?>
       </select></td>
@@ -294,11 +294,11 @@ do {
 ?>
         <option value="<?php echo $row_studylevel['Code']?>"><?php echo $row_studylevel['StudyLevel']?></option>
         <?php
-} while ($row_studylevel = mysql_fetch_assoc($studylevel));
-  $rows = mysql_num_rows($studylevel);
+} while ($row_studylevel = mysqli_fetch_assoc($studylevel));
+  $rows = mysqli_num_rows($studylevel);
   if($rows > 0) {
-      mysql_data_seek($studylevel, 0);
-	  $row_studylevel = mysql_fetch_assoc($studylevel);
+      mysqli_data_seek($studylevel, 0);
+	  $row_studylevel = mysqli_fetch_assoc($studylevel);
   }
 ?>
       </select></td>
@@ -311,11 +311,11 @@ do {
 ?>
         <option value="<?php echo $row_semester['Semester']?>"><?php echo $row_semester['Semester'];?></option>
         <?php
-} while ($row_semester = mysql_fetch_assoc($semester));
-  $rows = mysql_num_rows($semester);
+} while ($row_semester = mysqli_fetch_assoc($semester));
+  $rows = mysqli_num_rows($semester);
   if($rows > 0) {
-      mysql_data_seek($semester, 0);
-	  $row_semester = mysql_fetch_assoc($semester);
+      mysqli_data_seek($semester, 0);
+	  $row_semester = mysqli_fetch_assoc($semester);
   }
 ?>
       </select></td>
@@ -334,11 +334,11 @@ if (isset($_GET['edit'])){
 #get post variables
 $key = $_GET['edit'];
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_instEdit = "SELECT * FROM course WHERE Id ='$key'";
-$instEdit = mysql_query($query_instEdit, $zalongwa) or die(mysql_error());
-$row_instEdit = mysql_fetch_assoc($instEdit);
-$totalRows_instEdit = mysql_num_rows($instEdit);
+$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalongwa));
+$row_instEdit = mysqli_fetch_assoc($instEdit);
+$totalRows_instEdit = mysqli_num_rows($instEdit);
 
 $queryString_inst = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
@@ -365,8 +365,8 @@ $queryString_inst = sprintf("&totalRows_inst=%d%s", $totalRows_inst, $queryStrin
 #get programme title
 $progcode = $row_instEdit['Programme'];
 $qprogtitle = "SELECT Title FROM programme WHERE ProgrammeCode = '$progcode'";
-$dbprogtitle = mysql_query($qprogtitle);
-$row_progtitle = mysql_fetch_assoc($dbprogtitle);
+$dbprogtitle = mysqli_query($zalongwa, $qprogtitle);
+$row_progtitle = mysqli_fetch_assoc($dbprogtitle);
 $progtitle = $row_progtitle['Title'];
 ?>
 <td><select name="cmbprog" id="cmbprog" title="<?php echo $row_prog['ProgrammeCode']; ?>">
@@ -376,11 +376,11 @@ do {
 ?>
 <option value="<?php echo $row_prog['ProgrammeCode']?>"><?php echo $row_prog['Title']?></option>
   <?php
-} while ($row_prog = mysql_fetch_assoc($prog));
-  $rows = mysql_num_rows($prog);
+} while ($row_prog = mysqli_fetch_assoc($prog));
+  $rows = mysqli_num_rows($prog);
   if($rows > 0) {
-      mysql_data_seek($prog, 0);
-	  $row_prog = mysql_fetch_assoc($prog);
+      mysqli_data_seek($prog, 0);
+	  $row_prog = mysqli_fetch_assoc($prog);
   }
 ?>
       </select></td>
@@ -391,8 +391,8 @@ do {
 #get faculty name
 $facultyid = $row_instEdit['Faculty'];
 $qfacultytitle = "SELECT FacultyName FROM faculty WHERE FacultyID = '$facultyid'";
-$dbfacultytitle = mysql_query($qfacultytitle);
-$row_facultytitle = mysql_fetch_assoc($dbfacultytitle);
+$dbfacultytitle = mysqli_query($zalongwa, $qfacultytitle);
+$row_facultytitle = mysqli_fetch_assoc($dbfacultytitle);
 $facultytitle = $row_facultytitle['FacultyName'];
 ?>
 <td><select name="cmbInst" id="cmbInst" title="<?php echo $row_campus['FacultyID']; ?>">
@@ -402,11 +402,11 @@ do {
 ?>
 <option value="<?php echo $row_campus['FacultyID']?>"><?php echo $row_campus['FacultyName']?></option>
   <?php
-} while ($row_campus = mysql_fetch_assoc($campus));
-  $rows = mysql_num_rows($campus);
+} while ($row_campus = mysqli_fetch_assoc($campus));
+  $rows = mysqli_num_rows($campus);
   if($rows > 0) {
-      mysql_data_seek($campus, 0);
-	  $row_campus = mysql_fetch_assoc($campus);
+      mysqli_data_seek($campus, 0);
+	  $row_campus = mysqli_fetch_assoc($campus);
   }
 ?>
       </select></td>
@@ -420,11 +420,11 @@ do {
 ?>
         <option value="<?php echo $row_faculty['DeptName']?>"><?php echo $row_faculty['DeptName']?></option>
         <?php
-} while ($row_faculty = mysql_fetch_assoc($faculty));
-  $rows = mysql_num_rows($faculty);
+} while ($row_faculty = mysqli_fetch_assoc($faculty));
+  $rows = mysqli_num_rows($faculty);
   if($rows > 0) {
-      mysql_data_seek($faculty, 0);
-	  $row_faculty = mysql_fetch_assoc($faculty);
+      mysqli_data_seek($faculty, 0);
+	  $row_faculty = mysqli_fetch_assoc($faculty);
   }
 ?>
       </select></td>
@@ -450,8 +450,8 @@ do {
 		#get programme title
 		$studycode = $row_instEdit['StudyLevel'];
 		$qstudytitle = "SELECT StudyLevel FROM programmelevel WHERE Code = '$studycode'";
-		$dbstudytitle = mysql_query($qstudytitle);
-		$row_studytitle = mysql_fetch_assoc($dbstudytitle);
+		$dbstudytitle = mysqli_query($zalongwa, $qstudytitle);
+		$row_studytitle = mysqli_fetch_assoc($dbstudytitle);
 		$studytitle = $row_studytitle['StudyLevel'];
 		?>
       <td><select name="cmbLevel" id="cmbLevel" title="<?php echo $row_studylevel['StudyLevel']; ?>">
@@ -461,11 +461,11 @@ do {
 ?>
         <option value="<?php echo $row_studylevel['Code']?>"><?php echo $row_studylevel['StudyLevel']?></option>
         <?php
-} while ($row_studylevel = mysql_fetch_assoc($studylevel));
-  $rows = mysql_num_rows($studylevel);
+} while ($row_studylevel = mysqli_fetch_assoc($studylevel));
+  $rows = mysqli_num_rows($studylevel);
   if($rows > 0) {
-      mysql_data_seek($studylevel, 0);
-	  $row_studylevel = mysql_fetch_assoc($studylevel);
+      mysqli_data_seek($studylevel, 0);
+	  $row_studylevel = mysqli_fetch_assoc($studylevel);
   }
 ?>
       </select></td>
@@ -481,11 +481,11 @@ do {
 		?>
 				<option value="<?php echo $row_semester['Semester']?>"><?php echo $row_semester['Semester'];?></option>
 				<?php
-		} while ($row_semester = mysql_fetch_assoc($semester));
-		  $rows = mysql_num_rows($semester);
+		} while ($row_semester = mysqli_fetch_assoc($semester));
+		  $rows = mysqli_num_rows($semester);
 		  if($rows > 0) {
-			  mysql_data_seek($semester, 0);
-			  $row_semester = mysql_fetch_assoc($semester);
+			  mysqli_data_seek($semester, 0);
+			  $row_semester = mysqli_fetch_assoc($semester);
 		  }
 		?>
       </select></td>
@@ -504,11 +504,11 @@ do {
 	# include the footer
 	include("../footer/footer.php");
 
-@mysql_free_result($inst);
+@mysqli_free_result($inst);
 
-@mysql_free_result($instEdit);
+@mysqli_free_result($instEdit);
 
-@mysql_free_result($faculty);
+@mysqli_free_result($faculty);
 
-@mysql_free_result($campus);
+@mysqli_free_result($campus);
 ?>
