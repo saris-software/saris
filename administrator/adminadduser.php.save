@@ -1,63 +1,6 @@
-<?php 
-#get connected to the database and verfy current session
-	require_once('../Connections/sessioncontrol.php');
-    require_once('../Connections/zalongwa.php');
-	
-	# initialise globals
-	include('administratorMenu.php');
-	
-	# include the header
-	global $szSection, $szSubSection;
-	$szSection = 'Manage Users';
-	$szSubSection = 'New User';
-	$szTitle = 'List of Database Users';
-	include('administratorheader.php')
-?>
-<form action="adminmanageuser.php" method="get" class="style24" xmlns:background-color="http://www.w3.org/1999/xhtml"
-      xmlns:width="http://www.w3.org/1999/xhtml">
-            <div text-align="right"><span class="style67"><span style="Verdana"><b>Search</b></span></span>
-              <span style="Verdana color: 006699 ; "><b>
-             <label>
-<input type="text" name="content" size="15">
-</label>
-              </b></span>
-                <span family="Verdana color: #FFFF00; "><b>
-              <input type="submit" value="GO" name="go">
-              </b></span>            </div>
-        </form>
-        <?php
- if(isset($_POST['Submit']) && $_POST['Submit'] !=""){
-		$today = date("F j, Y");   
-		$LastName = addslashes($_POST['txtLastName']);
-		$FirstName = addslashes($_POST['txtFirstName']);
-		$byear = addslashes($_POST['txtYear']);
-		$bmon = addslashes($_POST['txtMonth']);
-		$bday = addslashes($_POST['txtDay']);
-		$id = addslashes($_POST['txtRegNo']);
-		$selectPosition = $_POST['selectPosition'];
-		$username = addslashes($_POST['txtLogin']);
-		$PWD = addslashes($_POST['txtPWD']);
-		$Login=$username.$PWD;
-		$Email = addslashes($_POST['txtEmail']);
-		$fullname = $LastName . ", " . $FirstName;
-		$bdate = $bday . " - " . $bmon . " - " . $byear;
-		
-		if(strlen($bdate)<>14){
-		$_SESSION['loginerror'] = $bdate. ' - is Invalid Date of Birth! '; 
-  		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
-		}
-	
-		#check username
-		if (!ereg("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $username)){
-		$_SESSION['loginerror'] = $username.' - is a Bad Username! '; 
-  		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
-		 }
-	   
-		#check username
-		if (!ereg("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $PWD)){
+`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $PWD)){
 		$_SESSION['loginerror'] = $PWD.' - is a Bad Password! '; 
-  		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
-		 }
+  		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';		 }
 		#check if use has submitted valid email address
 		function check_email_address($Email) {
 		  // First, we check that there's one @ symbol, and that the lengths are right
@@ -69,17 +12,17 @@
 	  $email_array = explode("@", $Email);
 	  $local_array = explode(".", $email_array[0]);
 	  for ($i = 0; $i < sizeof($local_array); $i++) {
-		 if (!preg_("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
+		 if (!ereg("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
 		  return false;
 		}
 	  }  
-	  if (!preg_("^\[?[0-9\.]+\]?$", $email_array[1])) { // Check if domain is IP. If not, it should be valid domain name
+	  if (!ereg("^\[?[0-9\.]+\]?$", $email_array[1])) { // Check if domain is IP. If not, it should be valid domain name
 		$domain_array = explode(".", $email_array[1]);
 		if (sizeof($domain_array) < 2) {
 			return false; // Not enough parts to domain
 		}
 		for ($i = 0; $i < sizeof($domain_array); $i++) {
-		  if (!preg_("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
+		  if (!ereg("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
 			return false;
 		  }
 		}
@@ -128,7 +71,7 @@
 	   $result = mysqli_query($sql);
 	   $noFound = mysqli_num_rows($result);
 	   if ($noFound>0) {
-			$userregno = mysqli_result($result,0,'userregno');
+			$userregno = mysql_result($result,0,'userregno');
 					$_SESSION['loginerror'] = "Registration NOT Successful! <br>
 											  Re-registration is not allowed in ZALONGWA DATABASE<br>
 											  There is already a user using this RegNo: ".$id."<br>
@@ -146,7 +89,7 @@
 			//create account
 			$query = "INSERT INTO security (UserName, Password, FullName, RegNo, Position, AuthLevel, Email, LastLogin, Registered)
 					 VALUES ('$username', '$hash', '$fullname', '$id', '$selectPosition', 'user', '$Email', now(), now())";
-			$result = mysqli_query($query) or die("Query Failed, Words like Ng'ombe are not accepted <br>" . mysqli_query_error());
+			$result = mysql_query($query) or die("Query Failed, Words like Ng'ombe are not accepted <br>");
 		}
 }
 ?>
@@ -182,12 +125,12 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
 	<td align=center><br>
 	  <br>
 		<!-- Registration Form Starts -->
-		<table border="0" border-spacing="0px" border-padding="0px" width=540 style="border:2px solid rgb(119,119,119)">
+		<table border="0" cellspacing="0" cellpadding="0" width=540 style="border:2px solid rgb(119,119,119)">
 		<tr>
 			<td align=left>
 			
 			
-			<table border="0" border-spacing="0px" border-padding="0px" width='100%' background="themes/images/loginTopHeaderBg.gif">
+			<table border="0" cellspacing="0" cellpadding='0' width='100%' background="themes/images/loginTopHeaderBg.gif">
 			<tr>
 				<td text-align=left>&nbsp;</td>
 				<td text-align=right><!--img src="themes/images/loginTopVersion.gif"--></td>
@@ -200,15 +143,14 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
 					<div text-align="center"><br>
 				  USER REGISTRATION FORM</div>
 					<FORM action="<?php echo $_SERVER['PHP_SELF']?>" method=post enctype="application/x-www-form-urlencoded" name=fmAdd id=fmAdd onsubmit="return fmAdd_onsubmit()" LANGUAGE=javascript>
-       <TABLE width="100%" BORDER=0 text-align="center" BORDER-PADDING=0px BORDER-SPACING=0 border-color="#006600" bachground-color="#FFFFCC">
+       <TABLE width="100%" BORDER=0 text-align="center" BORDER-PADDING=0 CELLSPACING=0 border-color="#006600" bachground-color="#FFFFCC">
 							<?php
 							if ($_SESSION['loginerror']!="")
 							{
 							?>
 							<tr>
 								<td colspan="6"><b class="small"><span style="color: Brown; ">
-								<div text-align="center"></div><?php echo $_SESSION['loginerror']?></div>
-								</span>
+								<div text-align="center"></div><?php echo $_SESSION['loginerror']?></d								</span>
 								</b>
 								</td>
 							</tr>
@@ -248,7 +190,6 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
                               <option value="02">02</option>
                               <option value="03">03</option>
                               <option value="04">04</option>
-
                               <option value="05">05</option>
                               <option value="06">06</option>
                               <option value="07">07</option>
@@ -359,50 +300,4 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
                                               family="Verdana, Arial, Helvetica, sans-serif"
                                               style="font-size: x-small; color: #0000CC; ">
 
-                                            <label>
-<input type="text" size="29" name="txtEmail" value="<?php echo((isset($_POST["txtEmail"]))?$_POST["txtEmail"]:"") ?>">
-</label>
-
-                                    </span></div></TD>
-                           
-                          </tr>
-
-
-           <table>
-                          <TR>
-                            <TD height="19"><div  style="text-align:right"></div></TD>
-                            <TD  style="width:113%" text-align="right" vertical-align="bottom"><div text-align="right"><span class="style2"></span></div></TD>
-                            <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=LEFT BACKGROUND-COLOR="#FFFFCC"><div text-align="right"><span class="style2"><span class="style3"><span class="style2"><span class="style2"></span></span></span></span></div></TD>
-                            <TD VERTICAL-ALIGN=TOP TEXT-ALIGN=LEFT><div text-align="right"><span class="style2"><span class="style3"><span class="style2"><span class="style2"></span></span></span></span></div></TD>
-                            <TD vertical-align="top" nowrap background-color="#FFFFCC">                              <div text-align=left" class="style2">
-                                  <div text-align="center">
-                                    <input type="submit" value="Submit" name="Submit">
-                                    <span class="style45 style16"> ...............</span>
-                                    <input type="reset" value=" Reset" name="Reset">
-                                  </div>
-                            </div></TD>
-                            
-                            <td vertical-align="top"> nowrap background-color="#FFFFCC"><div text-align="right"></div></td>
-                          </TR>
-          </table>
-          <input type="hidden" name="MM_insert" value="true">
-          </FORM>				
-			 </td>
-			  </table>
-			
-			</td>
-		</tr>
-	  </table>
-	
-			<!-- Shadow -->
-			<table> border:0; celling=0; celling=0; width=640;
-			<tr>
-				<td>&nbsp;</td>
-				<td> width="100%" background="themes/images/loginBottomShadowBg.gif">&nbsp;</td>
-        &nbsp;
-			</tr>
-	  </table>
-	</td>
-
-</tr>
-</table>
+                    
