@@ -28,6 +28,8 @@ $sql ="SELECT SubjectID
 $result = mysqli_query($zalongwa, $sql) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
 $coursecodeFound = mysqli_num_rows($result);
 if ($coursecodeFound) {
+
+//    This mysql result function need to be modified
           $coursefound   = mysql_result($result,0,'SubjectID');
 			print " This Combination Code: '".$coursefound."' Do Exists!!"; 
 			exit;
