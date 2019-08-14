@@ -14,10 +14,10 @@
 <div style="height:30px; color:blue; width:900px;"><?php
      
 $key = $_GET['edit'];
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $prog_sql = "SELECT * FROM programme WHERE ProgrammeCode ='$key'";
-$prog_result = mysql_query($prog_sql, $zalongwa);
-$fetc_prog = mysql_fetch_assoc($prog_result);
+$prog_result = mysqli_query($zalongwa, $prog_sql);
+$fetc_prog = mysqli_fetch_assoc($prog_result);
 
 echo 'Course Configuration - '.$fetc_prog['ProgrammeName'].' : '.$fetc_prog['Title'];
 ?></div>
@@ -25,10 +25,10 @@ echo 'Course Configuration - '.$fetc_prog['ProgrammeName'].' : '.$fetc_prog['Tit
 <?php 
 echo '<div style="display:block; padding:10px; 0px 0px 10px;"><a style="color:black; text-decoration:underline;" href="lecturerProgrammecourselist.php?edit='.$key.'&ayear=no">Set New Configuration </a></div>';
 $sql = "SELECT DISTINCT AYear FROM courseprogramme WHERE ProgrammeID='$key'";
-$result = mysql_query($sql);
-$num_row = mysql_num_rows($result);
+$result = mysqli_query($zalongwa, $sql);
+$num_row = mysqli_num_rows($result);
 if($num_row > 0){
-	while ($row = mysql_fetch_array($result)) {
+	while ($row = mysqli_fetch_array($result)) {
 		echo '<div style="display:block; padding:10px; 0px 0px 10px;"><a style="color:black; text-decoration:underline;" href="lecturerProgrammecourselist.php?edit='.$key.'&ayear='.$row['AYear'].'">Configuration Academic Year - '. $row['AYear'].' </a></div>';
 	}
 }
