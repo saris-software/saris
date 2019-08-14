@@ -6,21 +6,34 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 @$database_zalongwa = "zalongwamnma";
 @$username_zalongwa = "toor";
 @$password_zalongwa = "toor";
-//change mysql to mysqli
-$zalongwa = mysqli_connect ($hostname_zalongwa, strrev ($username_zalongwa), strrev ($password_zalongwa)); 
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
 if (!$zalongwa){
- die (mysqli_connect_error ()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 printf(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
+	@mysqli_select_db($zalongwa, "zalongwamnma");
+
+
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
+if (!$zalongwa){
+	 printf(mysqli_error($zalongwa)."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 exit;
+	}
+mysqli_select_db ($zalongwa, "zalongwamnma")
+$zalongwa = mysqli_connect ($hostname_zalongwa, strrev ($username_zalongwa), strrev ($password_zalongwa)); 
+if (!$zalongwa){
+ die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+	 exit();
+	}
 //change in selection of database as mysqli
-mysqli_select_db ($database_zalongwa, $zalongwa); 
+mysqli_select_db ($zalongwa, "zalongwamnma");
 
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
 global $szDBName,$szDBUsername,$szDBPassword,$szDiscussionAdmin,$szDiscussionPassword;
 if (!$zalongwa){
-	 echo("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
-	 exit;
+	 echo("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+	 exit();
 	}
 
 	$arrVariations = array (
@@ -28,7 +41,7 @@ if (!$zalongwa){
 		2 => array( 'name' => 'Kiswahili', 'shortname' => 'Sw'),
 	);
 	
-$arrVariationPreference = array (
+	$arrVariationPreference = array (
 		1 => 1,
 		2 => 2
 	);
@@ -43,7 +56,9 @@ $arrVariationPreference = array (
 
 	#Get Organisation Name and address
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysqli_query ($qorg);
+	$dborg = mysqli_query($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
+	$dborg = mysqli_query ($zalongwa,$qorg);
 	$row_org = mysqli_fetch_assoc ($dborg);
 	$org = $row_org['Name'];
 	$post = $row_org['Address'];
@@ -55,8 +70,13 @@ $arrVariationPreference = array (
 
 #get current year
 $qcyear = "SELECT AYear FROM academicyear where status=1";
-$dbcyear = mysqli_query ($qcyear);
+$dbcyear = mysqli_query($zalongwa,$qcyear);
+$row_cyear = mysqli_fetch_array($dbcyear);
+$cyear=$row_cyear['AYear'];
+
+ ?>
+$dbcyear = mysqli_query ($zalongwa,$qcyear);
 $row_cyear = mysqli_fetch_array ($dbcyear);
 $cyear=$row_cyear['AYear'];
-	
+  mysqli_close($zalongwa);
 ?>

@@ -19,13 +19,94 @@ $sql = "SELECT stats.ip,
 FROM stats WHERE stats.page LIKE '$username%'  ORDER BY stats.received DESC LIMIT 10";
 
 //(((roomapplication.Hall)='$hall') And
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
 
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($zalongwa,$query);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
+if (mysqli_num_rows($query) >// User configurable variables
+$szSiteTitle = 'zalongwaSARIS';
+$szWebmasterEmail = '< jlungo@udsm.ac.tz >';
+@$hostname_zalongwa = "localhost";
+@$database_zalongwa = "zalongwamnma";
+@$username_zalongwa = "toor";
+@$password_zalongwa = "toor";
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
+if (!$zalongwa){
+	 printf(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 exit;
+	}
+	@mysqli_select_db($zalongwa, "zalongwamnma");
+
+
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
+if (!$zalongwa){
+	 printf(mysqli_error($zalongwa)."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 exit;
+	}
+mysqli_select_db ($zalongwa, "zalongwamnma")
+$zalongwa = mysqli_connect ($hostname_zalongwa, strrev ($username_zalongwa), strrev ($password_zalongwa));
+if (!$zalongwa){
+ die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+	 exit();
+	}
+//change in selection of database as mysqli
+mysqli_select_db ($zalongwa, "zalongwamnma");
+
+
+global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
+global $szDBName,$szDBUsername,$szDBPassword,$szDiscussionAdmin,$szDiscussionPassword;
+if (!$zalongwa){
+	 echo("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+	 exit();
+	}
+
+	$arrVariations = array (
+		1 => array( 'name' => 'English', 'shortname' => 'Eng'),
+		2 => array( 'name' => 'Kiswahili', 'shortname' => 'Sw'),
+	);
+
+	$arrVariationPreference = array (
+		1 => 1,
+		2 => 2
+	);
+
+	if (!isset ($_SESSION['arrVariationPreference'])){
+		// store it in the session variable
+		$_SESSION['arrVariationPreference']=$arrVariationPreference;
+	}
+
+	// define the default variation
+	$intDefaultVariation = 1;
+
+	#Get Organisation Name and address
+	$qorg = "SELECT * FROM organisation";
+	$dborg = mysqli_query($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
+	$dborg = mysqli_query ($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc ($dborg);
+	$org = $row_org['Name'];
+	$post = $row_org['Address'];
+	$phone = $row_org['tel'];
+	$fax = $row_org['fax'];
+	$email = $row_org['email'];
+	$website = $row_org['website'];
+	$city = $row_org['city'];
+
+#get current year
+$qcyear = "SELECT AYear FROM academicyear where status=1";
+$dbcyear = mysqli_query($zalongwa,$qcyear);
+$row_cyear = mysqli_fetch_array($dbcyear);
+$cyear=$row_cyear['AYear'];
+
+ ?>
+$dbcyear = mysqli_query ($zalongwa,$qcyear);
+$row_cyear = mysqli_fetch_array ($dbcyear);
+$cyear=$row_cyear['AYear'];
+  mysqli_close($zalongwa);
+?>
+ 0){
 echo "Frequencies of User \"$username\" in Visiting the Website";
 echo "<table border='1'>";
 echo "<tr><td> S/No </td><td> Computer Used</td><td> Webpage </td><td> Date of Visit </td></tr>";
@@ -48,6 +129,87 @@ echo "User \"$username\" has never visited the Website <br>";
 mysql_close($zalongwa);
 ?>
 <?php
+// User configurable variables
+$szSiteTitle = 'zalongwaSARIS';
+$szWebmasterEmail = '< jlungo@udsm.ac.tz >';
+@$hostname_zalongwa = "localhost";
+@$database_zalongwa = "zalongwamnma";
+@$username_zalongwa = "toor";
+@$password_zalongwa = "toor";
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
+if (!$zalongwa){
+	 printf(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 exit;
+	}
+	@mysqli_select_db($zalongwa, "zalongwamnma");
+
+
+$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
+if (!$zalongwa){
+	 printf(mysqli_error($zalongwa)."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 exit;
+	}
+mysqli_select_db ($zalongwa, "zalongwamnma")
+$zalongwa = mysqli_connect ($hostname_zalongwa, strrev ($username_zalongwa), strrev ($password_zalongwa));
+if (!$zalongwa){
+ die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+	 exit();
+	}
+//change in selection of database as mysqli
+mysqli_select_db ($zalongwa, "zalongwamnma");
+
+
+global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
+global $szDBName,$szDBUsername,$szDBPassword,$szDiscussionAdmin,$szDiscussionPassword;
+if (!$zalongwa){
+	 echo("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+	 exit();
+	}
+
+	$arrVariations = array (
+		1 => array( 'name' => 'English', 'shortname' => 'Eng'),
+		2 => array( 'name' => 'Kiswahili', 'shortname' => 'Sw'),
+	);
+
+	$arrVariationPreference = array (
+		1 => 1,
+		2 => 2
+	);
+
+	if (!isset ($_SESSION['arrVariationPreference'])){
+		// store it in the session variable
+		$_SESSION['arrVariationPreference']=$arrVariationPreference;
+	}
+
+	// define the default variation
+	$intDefaultVariation = 1;
+
+	#Get Organisation Name and address
+	$qorg = "SELECT * FROM organisation";
+	$dborg = mysqli_query($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
+	$dborg = mysqli_query ($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc ($dborg);
+	$org = $row_org['Name'];
+	$post = $row_org['Address'];
+	$phone = $row_org['tel'];
+	$fax = $row_org['fax'];
+	$email = $row_org['email'];
+	$website = $row_org['website'];
+	$city = $row_org['city'];
+
+#get current year
+$qcyear = "SELECT AYear FROM academicyear where status=1";
+$dbcyear = mysqli_query($zalongwa,$qcyear);
+$row_cyear = mysqli_fetch_array($dbcyear);
+$cyear=$row_cyear['AYear'];
+
+ ?>
+$dbcyear = mysqli_query ($qcyear);
+$row_cyear = mysqli_fetch_array ($dbcyear);
+$cyear=$row_cyear['AYear'];
+  mysqli_close($zalongwa);
+?>
 
 	# include the footer
 	include("../footer/footer.php");
