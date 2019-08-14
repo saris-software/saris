@@ -2,6 +2,7 @@
 #get connected to the database and verfy current session
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
+    include('includes/choose_studylevel.php');
 	
 	# initialise globals
 	include('lecturerMenu.php');
@@ -46,11 +47,11 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if (isset($_POST['search']) && ($_POST['search'] == "Search")) {
 #get post variables
 $rawkey = trim(addslashes($_POST['key']));
-$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+$key = preg_replace("[[:space:]]+", " ",$rawkey);
 #get student info
 $qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE regno = '$key'";
-$dbstudent = mysql_query($qstudent); 
-$row_result = mysql_fetch_array($dbstudent);
+$dbstudent = mysqli_query($zalongwa, $qstudent);
+$row_result = mysqli_fetch_array($dbstudent);
 $name = $row_result['Name'];
 $regno = $row_result['RegNo'];
 $degree = $row_result['ProgrammeofStudy'];
@@ -80,8 +81,8 @@ $qcourse="SELECT DISTINCT course.Units,
           WHERE 
 				(RegNo='$key')
 		  ORDER BY examresult.AYear";	
-$dbcourse = mysql_query($qcourse) or die("No Exam Results for the Candidate - $key ");
-$total_rows = mysql_num_rows($dbcourse);
+$dbcourse = mysqli_query($zalongwa,$qcourse) or die("No Exam Results for the Candidate - $key ");
+$total_rows = mysqli_num_rows($dbcourse);
 
 if($total_rows>0){
 #initialise s/no
@@ -89,8 +90,8 @@ $sn=0;
 	
 	//get degree name
 	$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-	$dbdegree = mysql_query($qdegree);
-	$row_degree = mysql_fetch_array($dbdegree);
+	$dbdegree = mysqli_query($zalongwa, $qdegree);
+	$row_degree = mysqli_fetch_array($dbdegree);
 	$programme = $row_degree['Title'];
 	echo  "$name - $regno <br> $programme";	
 ?>
@@ -112,7 +113,7 @@ $sn=0;
                     <td><div align="center"><strong>Remarks</strong></div></td>
                   </tr>
 <?php
-		while($row_course = mysql_fetch_array($dbcourse)){
+		while($row_course = mysqli_fetch_array($dbcourse)){
 				$course= $row_course['CourseCode'];
 				$units= $row_course['Units'];
 				$ayear= $row_course['AYear'];
@@ -165,8 +166,8 @@ $sn=0;
 $key = $_SESSION['search'];
 #get student info
 $qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE regno = '$key'";
-$dbstudent = mysql_query($qstudent); 
-$row_result = mysql_fetch_array($dbstudent);
+$dbstudent = mysqli_query($zalongwa, $qstudent);
+$row_result = mysqli_fetch_array($dbstudent);
 $name = $row_result['Name'];
 $regno = $row_result['RegNo'];
 $degree = $row_result['ProgrammeofStudy'];
@@ -196,8 +197,8 @@ $qcourse="SELECT DISTINCT course.Units,
           WHERE 
 				(RegNo='$key')
 		  ORDER BY examresult.AYear";	
-$dbcourse = mysql_query($qcourse) or die("No Exam Results for the Candidate - $key ");
-$total_rows = mysql_num_rows($dbcourse);
+$dbcourse = mysqli_query($zalongwa, $qcourse) or die("No Exam Results for the Candidate - $key ");
+$total_rows = mysqli_num_rows($dbcourse);
 
 if($total_rows>0){
 #initialise s/no
@@ -205,8 +206,8 @@ $sn=0;
 	
 	//get degree name
 	$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-	$dbdegree = mysql_query($qdegree);
-	$row_degree = mysql_fetch_array($dbdegree);
+	$dbdegree = mysqli_query($zalongwa,$qdegree);
+	$row_degree = mysqli_fetch_array($dbdegree);
 	$programme = $row_degree['Title'];
 	echo  "$name - $regno <br> $programme";	
 ?>
@@ -228,7 +229,7 @@ $sn=0;
                     <td><div align="center"><strong>Remarks</strong></div></td>
                   </tr>
 <?php
-		while($row_course = mysql_fetch_array($dbcourse)){
+		while($row_course = mysqli_fetch_array($dbcourse)){
 				$course= $row_course['CourseCode'];
 				$units= $row_course['Units'];
 				$ayear= $row_course['AYear'];

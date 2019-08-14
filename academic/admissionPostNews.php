@@ -1,48 +1,93 @@
-<?php 
-#get connected to the database and verfy current session
-	require_once('../Connections/sessioncontrol.php');
-    require_once('../Connections/zalongwa.php');
-	
-	# initialise globals
-	include('lecturerMenu.php');
-	
-	# include the header
-	global $szSection, $szSubSection;
-	$szSection = 'Communication';
-	$szSubSection = 'News & Events';
-	$szTitle = 'Institute News & Events';
-	include('lecturerheader.php');
-
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
-
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
-
+<?php 
+
+#get connected to the database and verfy current session
+
+	require_once('../Connections/sessioncontrol.php');
+
+    require_once('../Connections/zalongwa.php');
+
+	
+
+	# initialise globals
+
+	include('lecturerMenu.php');
+
+	
+
+	# include the header
+
+	global $szSection, $szSubSection;
+
+	$szSection = 'Communication';
+
+	$szSubSection = 'News & Events';
+
+	$szTitle = 'Institute News & Events';
+
+	include('lecturerheader.php');
+
+
+
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+
+{
+
+  $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
+
+
+
+  switch ($theType) {
+
+    case "text":
+
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+
+      break;    
+
+    case "long":
+
+    case "int":
+
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+
+      break;
+
+    case "double":
+
+      $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
+
+      break;
+
+    case "date":
+
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+
+      break;
+
+    case "defined":
+
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+
+      break;
+
+  }
+
+  return $theValue;
+
+}
+
+
+
+$editFormAction = $_SERVER['PHP_SELF'];
+
+if (isset($_SERVER['QUERY_STRING'])) {
+
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+
+}
+
+
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
 	
 	if($_POST['specific']=='S'){
@@ -80,26 +125,44 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
                        GetSQLValueString($_POST['recepient'], "text"),
                        GetSQLValueString($_POST['message'], "text"));
              }
-		} 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
-
-  //$insertGoTo = "housingcheckmessage.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  echo '<meta http-equiv = "refresh" content ="0; url = studentNews.php">';
-}
-
-mysql_select_db($database_zalongwa, $zalongwa);
-$query_suggestionbox = "SELECT received, fromid, toid, message FROM news ORDER BY received DESC";
-$suggestionbox = mysql_query($query_suggestionbox, $zalongwa) or die(mysql_error());
-$row_suggestionbox = mysql_fetch_assoc($suggestionbox);
-$totalRows_suggestionbox = mysql_num_rows($suggestionbox);
-$regnos = $RegNo;
-$RegNo = $_GET['from'];
- ?>
+		} 
+
+  mysqli_select_db($zalongwa, $database_zalongwa);
+
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
+
+
+
+  //$insertGoTo = "housingcheckmessage.php";
+
+  if (isset($_SERVER['QUERY_STRING'])) {
+
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+
+    $insertGoTo .= $_SERVER['QUERY_STRING'];
+
+  }
+
+  echo '<meta http-equiv = "refresh" content ="0; url = studentNews.php">';
+
+}
+
+
+
+mysqli_select_db($zalongwa, $database_zalongwa);
+
+$query_suggestionbox = "SELECT received, fromid, toid, message FROM news ORDER BY received DESC";
+
+$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error($zalongwa));
+$row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
+$totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
+
+
+$regnos = $RegNo;
+$RegNo = $_GET['from'];
+
+ ?>
+
 <?php
 function viewers()
 {
@@ -133,8 +196,8 @@ echo"</select>";
 		if(isset($_POST['search'])){
 			$key = stripslashes($_POST['key']);
 			
-			$query = mysql_query("SELECT * FROM security WHERE FullName like '%$key%' OR RegNo like '%$key%'");
-			$rows = mysql_num_rows($query);
+			$query = mysqli_query($zalongwa,"SELECT * FROM security WHERE FullName like '%$key%' OR RegNo like '%$key%'");
+			$rows = mysqli_num_rows($query);
 			if($rows == 0){
 				echo "<p style='color:maroon'>Sorry the user $key is not registered in the SARIS system</p>";
 				}
@@ -147,7 +210,7 @@ echo"</select>";
 							<td nowrap>SARIS Username</td>
 						</tr>";
 				$sn = 1;
-				while($val = mysql_fetch_array($query)){
+				while($val = mysqli_fetch_array($query)){
 					echo "<tr>
 							<td nowrap>$sn</td>
 							<td nowrap>".$val['FullName']."</td>
@@ -213,6 +276,6 @@ echo"</select>";
 
 include('../footer/footer.php');
 
-mysql_free_result($suggestionbox);
+mysqli_free_result($suggestionbox);
 
 ?>
