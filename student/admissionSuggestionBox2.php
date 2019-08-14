@@ -45,9 +45,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 	#chas
 	//populate message receipient
-	$chas = mysql_query("SELECT moduleid, modulename FROM modules");
-	$row_fetch = mysql_fetch_assoc($chas);
-	$num_fetch = mysql_num_rows($chas);
+	$chas = mysqli_query("SELECT moduleid, modulename FROM modules");
+	$row_fetch = mysqli_fetch_assoc($chas);
+	$num_fetch = mysqli_num_rows($chas);
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
   $insertSQL = sprintf("INSERT INTO suggestion (received, fromid, toid, message) VALUES (now(), %s, %s, %s)",
@@ -56,8 +56,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
                        GetSQLValueString($_POST['toid'], "text"),
                        GetSQLValueString($_POST['message'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 
   $insertGoTo = "studentindex.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -68,11 +68,11 @@ echo '<meta http-equiv = "refresh" content ="0;
 	url = studentindex.php">';
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_suggestionbox = "SELECT suggestion.received, suggestion.fromid, suggestion.toid, suggestion.message FROM suggestion";
-$suggestionbox = mysql_query($query_suggestionbox, $zalongwa) or die(mysql_error());
-$row_suggestionbox = mysql_fetch_assoc($suggestionbox);
-$totalRows_suggestionbox = mysql_num_rows($suggestionbox);
+$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error($zalongwa));
+$row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
+$totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
 ?>
 <style type="text/css">
 <!--
@@ -101,11 +101,11 @@ $totalRows_suggestionbox = mysql_num_rows($suggestionbox);
             		<option value="<?php echo $row_fetch['moduleid']?>"><?php echo $row_fetch['modulename']?></option>
            				 <?php
 									}
-								} while ($row_fetch = mysql_fetch_assoc($chas));
-  								$rows = mysql_num_rows($chas);
+								} while ($row_fetch = mysqli_fetch_assoc($chas));
+  								$rows = mysqli_num_rows($chas);
   								if($rows > 0) {
-      								mysql_data_seek($chas, 0);
-	  								$row_chas = mysql_fetch_assoc($chas);
+      								mysqli_data_seek($chas, 0);
+	  								$row_chas = mysqli_fetch_assoc($chas);
   								}
 						?>
                 </select></td>
@@ -128,5 +128,5 @@ $totalRows_suggestionbox = mysql_num_rows($suggestionbox);
 <?php
 //}
 include('../footer/footer.php');
-mysql_free_result($suggestionbox);
+mysqli_free_result($suggestionbox);
 ?>

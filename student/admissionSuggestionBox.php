@@ -93,9 +93,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
 
 
 
-  mysql_select_db($database_zalongwa, $zalongwa);
+  mysqli_select_db($zalongwa, $database_zalongwa);
 
-  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysql_error());
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 
 
 
@@ -174,7 +174,7 @@ if(isset($_GET['ID'])){
 
 include('../footer/footer.php');
 
-//mysql_free_result($suggestionbox);
+//mysqli_free_result($suggestionbox);
 }
 ?>
 

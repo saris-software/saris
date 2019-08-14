@@ -33,9 +33,9 @@
 
 	//find if student already exist to update
 	$qRegNo1 = "SELECT Id FROM student WHERE RegNo = '$RegNo'";
-	$dbRegNo1 = mysql_query($qRegNo1);
-	$total1 = mysql_num_rows($dbRegNo1);
-	$getID = mysql_fetch_array($dbRegNo1);
+	$dbRegNo1 = mysqli_query($zalongwa,$qRegNo1);
+	$total1 = mysqli_num_rows($dbRegNo1);
+	$getID = mysqli_fetch_array($dbRegNo1);
 	$id=$getID['Id'];
 	$x=$total1;
 
