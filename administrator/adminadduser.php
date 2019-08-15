@@ -14,12 +14,14 @@
 	include('administratorheader.php')
 ?>
 <form action="adminmanageuser.php" method="get" class="style24" xmlns:background-color="http://www.w3.org/1999/xhtml"
-      xmlns:width="http://www.w3.org/1999/xhtml">
+      xmlns:width="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml"
+      xmlns:width="http://www.w3.org/1999/xhtml" xmlns:style xmlns:width="http://www.w3.org/1999/xhtml"
+      xmlns:width="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml"
+      xmlns:width="http://www.w3.org/1999/xhtml" xmlns:color="http://www.w3.org/1999/xhtml">
             <div text-align="right"><span class="style67"><span style="Verdana"><b>Search</b></span></span>
               <span style="Verdana color: 006699 ; "><b>
-             <label>
-<input type="text" name="content" size="15">
-</label>
+                content: <input type="text" name="content" size="15"<?php $content =;
+                      echo $content;?>
               </b></span>
                 <span family="Verdana color: #FFFF00; "><b>
               <input type="submit" value="GO" name="go">
@@ -48,20 +50,24 @@
 		}
 	
 		#check username
-		if (!ereg("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $username)){
+		if (!preg_match("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $username)){
 		$_SESSION['loginerror'] = $username.' - is a Bad Username! '; 
   		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
 		 }
 	   
 		#check username
-		if (!ereg("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $PWD)){
+		if (!preg_match("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $PWD)){
 		$_SESSION['loginerror'] = $PWD.' - is a Bad Password! '; 
   		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
 		 }
 		#check if use has submitted valid email address
-		function check_email_address($Email) {
+     /**
+      * @param $Email
+      * @return bool
+      */
+     function check_email_address($Email) {
 		  // First, we check that there's one @ symbol, and that the lengths are right
-		  if (!ereg("[^@]{1,64}@[^@]{1,255}", $Email)) {
+		  if (!preg_match("[^@]{1,64}@[^@]{1,255}", $Email)) {
 			// Email invalid because wrong number of characters in one section, or wrong number of @ symbols.
 			return false;
 	  }
@@ -69,17 +75,17 @@
 	  $email_array = explode("@", $Email);
 	  $local_array = explode(".", $email_array[0]);
 	  for ($i = 0; $i < sizeof($local_array); $i++) {
-		 if (!preg_("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
+		 if (!preg_split("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
 		  return false;
 		}
 	  }  
-	  if (!preg_("^\[?[0-9\.]+\]?$", $email_array[1])) { // Check if domain is IP. If not, it should be valid domain name
+	  if (!preg_split("^\[?[0-9\.]+\]?$", $email_array[1])) { // Check if domain is IP. If not, it should be valid domain name
 		$domain_array = explode(".", $email_array[1]);
 		if (sizeof($domain_array) < 2) {
 			return false; // Not enough parts to domain
 		}
 		for ($i = 0; $i < sizeof($domain_array); $i++) {
-		  if (!preg_("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
+		  if (!preg_split("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
 			return false;
 		  }
 		}
@@ -128,7 +134,7 @@
 	   $result = mysqli_query($sql);
 	   $noFound = mysqli_num_rows($result);
 	   if ($noFound>0) {
-			$userregno = mysqli_result($result,0,'userregno');
+			$userregno = mysqli_result($result,0,"userregno");
 					$_SESSION['loginerror'] = "Registration NOT Successful! <br>
 											  Re-registration is not allowed in ZALONGWA DATABASE<br>
 											  There is already a user using this RegNo: ".$id."<br>
@@ -150,14 +156,15 @@
 		}
 }
 ?>
-<SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript>
+<SCRIPT ID=clientEventHandlersJS LANG=javascript>
 <!--
 function fmAdd_onsubmit() {
-if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.selectPosition.value=="" || fmAdd.txtLogin.value=="" || fmAdd.txtPWD.value=="" || fmAdd.txtRePWD.value=="")
+if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.selectPosition.value==="" || fmAdd.txtLogin.value==="" || fmAdd.txtPWD.value==="" || fmAdd.txtRePWD.value==="")
 	{window.alert("ZALONGWA System Asks You to Fill in the Blank Text Fields");
 	return false;
 	}
-	 if (fmAdd.txtPWD.value != fmAdd.txtRePWD.value){
+    var fmAdd;
+    if (fmAdd.txtPWD.value !== fmAdd.txtRePWD.value){
 		window.alert("Password Texts donot Match, Enter them again, ZALONGWA");
 		return false;
 	}
@@ -168,46 +175,49 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
 <body onLoad="f_setfocus();">
 <style type="text/css">
 <!--
-.style2 {color: #FFFFCC}
-.style3 {color: #FFFFFF}
+.style2 {color:#FFFFCC;}
+.style3 {color:#FFFFFF;}
 .style4 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 }
-.style5 {color: #000000}
+.style5 {color: #000000;
+}
 -->
 </style>
-<table border="0" cellspacing="0" cellpadding="0" width=100%>
+<table style=border:0 border-spacing="0px" padding="0" width=100%>
 <tr>
-	<td align=center><br>
+	<td text-align=center><br>
 	  <br>
 		<!-- Registration Form Starts -->
-		<table border="0" border-spacing="0px" border-padding="0px" width=540 style="border:2px solid rgb(119,119,119)">
+		<table style = border-spacing="0px"; padding="0px;" style="width:540px"; border-collapse="2px solid rgb(119,119,119)">
 		<tr>
-			<td align=left>
+			<td text-align=left>
 			
 			
-			<table border="0" border-spacing="0px" border-padding="0px" width='100%' background="themes/images/loginTopHeaderBg.gif">
+			table {
+                border=0  border-spacing="0px" border-padding="0px" width:100% background="themes/images/loginTopHeaderBg.gif"}
 			<tr>
-				<td text-align=left>&nbsp;</td>
+                &nbsp;
 				<td text-align=right><!--img src="themes/images/loginTopVersion.gif"--></td>
 			</tr>
 			</table>
-			<table border="0" cellspacing="0" cellpadding='6' width='100%'>
+			<table style="border:0;" padding='6' width="100%"
+
 			<tr>
 				<td text-align=left vertical-align=top class=small style="padding:10px">
 					<!-- Sign in box -->
 					<div text-align="center"><br>
 				  USER REGISTRATION FORM</div>
-					<FORM action="<?php echo $_SERVER['PHP_SELF']?>" method=post enctype="application/x-www-form-urlencoded" name=fmAdd id=fmAdd onsubmit="return fmAdd_onsubmit()" LANGUAGE=javascript>
-       <TABLE width="100%" BORDER=0 text-align="center" BORDER-PADDING=0px BORDER-SPACING=0 border-color="#006600" bachground-color="#FFFFCC">
+					<FORM action="<?php echo $_SERVER['PHP_SELF']?>" method=post enctype="application/x-www-form-urlencoded" name=fmAdd id=fmAdd onsubmit="return fmAdd_onsubmit()" LANG=javascript>
+       <TABLE style="width:100%"  text-align="center" BORDER-PADDING=0px BORDER-SPACING=0 border-color="#006600" bachground-color="#FFFFCC">
 							<?php
 							if ($_SESSION['loginerror']!="")
 							{
 							?>
 							<tr>
 								<td colspan="6"><b class="small"><span style="color: Brown; ">
-								<div text-align="center"></div><?php echo $_SESSION['loginerror']?></div>
+								<div text-align="center"><?php echo $_SESSION['loginerror']?></div>
 								</span>
 								</b>
 								</td>
@@ -216,21 +226,22 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
 							}
 							?>
 										 <TR>
-                            <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap <?php echo ($missingLastname)?'style=" color:#990000"':'';?>><div text-align="right" class="large"><font color="#0000CC">LAST NAME:</font></div></TD>
+                            <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap <?php echo $missingLastname?'style=color: rgb(990000)':'';?>><div text-align="right" class="large"><span
+                                            style="color:#0000CC; ">LAST NAME:</span></div></TD>
                             <TD colspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
                                             style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
 
 <label>
-<INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo(($txtLastName=$_POST["txtLastName"]))?$_POST["txtLastName"]?? Null; ?>">
+<INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"])))?$_POST["txtLastName"]?? Null; ?>">
 </label>
-</span><span style="color: #000000; "><span class="large style4"><span style="color: #0000CC; ">(LASTNAME)</span></span> </span></div></TD>
+</span><span style="color: rgb(000000); "><span class="large style4"><span style="color: #0000CC; ">(LASTNAME)</span></span> </span></div></TD>
                             
                           </TR>
                           <TR>
                             <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap><div text-align="right" class="large"><span
                                             style="color: #0000CC; ">FIRST NAME: </span></div></TD>
                             <TD colspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
-                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
+                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: rgb(000000); ">
                                   <label>
 <INPUT TYPE="text" SIZE="29" name="txtFirstName" value="<?php echo((isset($_POST["txtFirstName"]))?$_POST["txtFirstName"]:"") ?>">
 </label>
@@ -277,7 +288,7 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
                               <option value="30">30</option>
                               <option value="31">31</option>
                             </select>
-                            <select name="txtMonth" id="txtMonth">
+                            <label for="txtMonth"></label><select name="txtMonth" id="txtMonth">
 							<option value="<?php echo((isset($_POST["txtMonth"]))?$_POST["txtMonth"]:"") ?>"><?php echo((isset($_POST["txtMonth"]))?$_POST["txtMonth"]:"") ?></option>  
                               <option value=>-----------</option>
                               <option value="01">January</option>
@@ -293,7 +304,7 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
                               <option value="11">November</option>
                               <option value="12">December</option>
                             </select>
-                                        <label for="txtYear"></label><input name="txtYear" type="text" id="txtYear" size="3" maxlength="4" value="<?php echo((isset($_POST["txtYear"]))?$_POST["txtYear"]:"") ?>">
+                                      <label for="txtYear"></label><input name="txtYear" type="text" id="txtYear" size="3" maxlength="4" value="<?php echo((isset($_POST["txtYear"]))?$_POST["txtYear"]:"") ?>">
                             <span style="color: #000000; "><span class="large style4"><span
                                                     style="color: #0000CC; ">(dd-mm-<span
                                                         style="color: #0000CC; ">yyyy</span>)</span></span> </span></div></TD>
@@ -324,16 +335,16 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
                             <TD height="19" colspan="4" TEXT-ALIGN=RIGHT VERTICAL-ALIGN=MIDDLE nowrap><div text-align="right" class="large"><span
                                             style="color: #0000CC; ">USERNAME: </span></div></TD>
                             <TD colspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
-                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
+                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: rgb(000000); ">
                                         <label for="txtLogin"></label><input name="txtLogin" type="text" id="txtLogin" size="29" value="<?php echo((isset($_POST["txtLogin"]))?$_POST["txtLogin"]:"") ?>">
 </span><span style="color: #000000; "><span class="large style4"><span style="color: #0000CC; ">(flastname)</span></span></span></div></TD>
                           </TR>
                           <TR>
                             <TD height="19" colspan="4" rowspan="2" TEXT-ALIGN=RIGHT VERTICAL-ALIGN=MIDDLE><div text-align="right" class="large"><span
-                                            style="color: #0000CC; ">PASSWORD:</span></div></TD>
+                                            style="color: #0000cc;">PASSWORD:</span></div></TD>
                             <TD colspan="2" rowspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
                                             family="Verdana, Arial, Helvetica, sans-serif"
-                                            style="font-size: x-small; color: #000000; ">
+                                            style="font-size: x-small;color: #000000;">
                                         <label for="txtPWD"></label><input name="txtPWD" type="password" id="txtPWD" size="29" >
                             </span></div></TD>
                             
@@ -343,9 +354,9 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
                           </TR>
                           <TR>
                             <TD height="19" colspan="4" rowspan="2" TEXT-ALIGN=RIGHT VERTICAL-ALIGN=MIDDLE nowrap><div text-align="right" class="large"><span
-                                            style="color: #0000CC; ">RE-ENTER PASSWORD: </span></div></TD>
+                                            style="color: rgb(0,0,204); ">RE-ENTER PASSWORD: </span></div></TD>
                             <TD colspan="2" rowspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span family="Verdana, Arial, Helvetica, sans-serif"
-                                                                                                         style="font-size: x-small; color: #000000; ">
+                                                                                                         style="font-size: x-small; color:rgb(000000); ">
                                <label for="txtRePWD"></label><input name="txtRePWD" type="password" id="txtRePWD" size="29" >
                             </span></div></TD>
                            
@@ -354,7 +365,8 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
                            
                           </TR>
                           <tr>
-                            <td colspan="4" rowspan="2"><div text-align="right"></div>                              <div text-align="right"></div>                              <div text-align="right"><font color="#0000CC">EMAIL:</font></div></td>
+                            <td colspan="4" rowspan="2"><div text-align="right"></div>                              <div text-align="right"></div>                              <div text-align="right"><span
+                                            style="color: #0000CC; ">EMAIL:</span></div></td>
                               <TD colspan="2" rowspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
                                               family="Verdana, Arial, Helvetica, sans-serif"
                                               style="font-size: x-small; color: #0000CC; ">
@@ -370,7 +382,7 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
 
            <table>
                           <TR>
-                            <TD height="19"><div  style="text-align:right"></div></TD>
+                            <TD height="19"><div  style="text-align:right;"></div></TD>
                             <TD  style="width:113%" text-align="right" vertical-align="bottom"><div text-align="right"><span class="style2"></span></div></TD>
                             <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=LEFT BACKGROUND-COLOR="#FFFFCC"><div text-align="right"><span class="style2"><span class="style3"><span class="style2"><span class="style2"></span></span></span></span></div></TD>
                             <TD VERTICAL-ALIGN=TOP TEXT-ALIGN=LEFT><div text-align="right"><span class="style2"><span class="style3"><span class="style2"><span class="style2"></span></span></span></span></div></TD>
@@ -382,7 +394,7 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
                                   </div>
                             </div></TD>
                             
-                            <td vertical-align="top"> nowrap background-color="#FFFFCC"><div text-align="right"></div></td>
+                            <td vertical-align="top"> background-color="#FFFFCC"><div text-align="right"></div></td>
                           </TR>
           </table>
           <input type="hidden" name="MM_insert" value="true">
@@ -395,9 +407,8 @@ if (fmAdd.txtLastName.value == "" || fmAdd.txtFirstName.value == "" || fmAdd.sel
 	  </table>
 	
 			<!-- Shadow -->
-			<table> border:0; celling=0; celling=0; width=640;
+			<table> style="border:0" celling=0; celling=0; width=640;
 			<tr>
-				<td>&nbsp;</td>
 				<td> width="100%" background="themes/images/loginBottomShadowBg.gif">&nbsp;</td>
         &nbsp;
 			</tr>
