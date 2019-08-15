@@ -27,13 +27,13 @@ if (isset($_GET['id']))
 	$label_edit="<a href='$_SERVER[PHP_SELF]?id=$id&RegNo=$reg&edit=yes'><img src='../includes/img/edit.png' alt='Click to Edit This Record'>Edit</a>";
 	} 
 	if ($id=='id'){
-	   $sql = "SELECT * FROM student WHERE RegNo='$reg'";
+	   $sql = "SELECT * FROM student WHERE RegNo=$reg";
 	}else{
-	   $sql = "SELECT * FROM student WHERE Id ='$id' and RegNo='$reg'";
+	   $sql = "SELECT * FROM student WHERE Id ='$id' and RegNo=$reg";
 	}
-        $update = mysql_query($sql);
-	$update_row = mysql_fetch_array($update);
-	$totalRows_update = mysql_num_rows($update);
+        $update = mysqli_query($sql);
+	$update_row = mysqli_fetch_array($update);
+	$totalRows_update = mysqli_num_rows($update);
 	$regno = $update_row['RegNo'];
 	$stdid = $update_row['Id'];
 	$AdmissionNo = $update_row['AdmissionNo'];     

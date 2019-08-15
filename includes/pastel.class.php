@@ -9,7 +9,7 @@
 class pastel {
 
     public function currentPayment($pastelurl, $regno, $view_type) {
-		
+
 		try {
 			$ch = curl_init();
 
@@ -21,7 +21,7 @@ class pastel {
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $nvp);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			
+
 			$content = curl_exec($ch);
 
 			if(FALSE !== $content){
@@ -30,7 +30,7 @@ class pastel {
 			elseif (FALSE === $content){
 				throw new Exception(curl_error($ch), curl_errno($ch));
 				}
-			} 
+			}
 		catch(Exception $e) {
 			trigger_error(sprintf('Curl failed with error #%d: %s',$e->getCode(), $e->getMessage()),E_USER_ERROR);
 			}
@@ -43,7 +43,7 @@ class pastel {
 		}
 
     public function currentTransaction($pastelurl, $regno, $view_type) {
-		
+
 		try {
 			$ch = curl_init();
 
@@ -55,7 +55,7 @@ class pastel {
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $nvp);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			
+
 			$content = curl_exec($ch);
 
 			if(FALSE !== $content){
@@ -64,7 +64,7 @@ class pastel {
 			elseif (FALSE === $content){
 				throw new Exception(curl_error($ch), curl_errno($ch));
 				}
-			} 
+			}
 		catch(Exception $e) {
 			trigger_error(sprintf('Curl failed with error #%d: %s',$e->getCode(), $e->getMessage()),E_USER_ERROR);
 			}
@@ -88,33 +88,33 @@ class pastel {
         } else {
             return trim($result);
         }*/
-        
+
         try {
 			$ch = curl_init();
 
 			if (FALSE === $ch)
 				throw new Exception('failed to initialize');
-			
+
 			$nvp = "&regno=$regno&view_type=$view_type";
 			curl_setopt($ch, CURLOPT_URL, $pastelurl);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);			
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $nvp);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			
+
 			$content = curl_exec($ch);
-			
+
 			if(FALSE !== $content){
 				return trim($content);
 				}
 			elseif (FALSE === $content){
 				throw new Exception(curl_error($ch), curl_errno($ch));
 				}
-			} 
+			}
 		catch(Exception $e) {
 			//trigger_error(sprintf('Curl failed with error #%d: %s',$e->getCode(), $e->getMessage()),E_USER_ERROR);
 			echo "Curl failed with error #".$e->getCode()." ".$e->getMessage();
 			}
-		}
+    }
 	}
 
 ?>
