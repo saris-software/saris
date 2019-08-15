@@ -43,11 +43,13 @@ if ($check=='on'){
 ?> 
 
           <form action="adminmanageuser.php" method="get" class="style24">
-            <div align="right"><span class="style42"><span style="font-family: V
+            <div text-align="right"><span class="style42"><span style="font-family: V
             erdana,serif; "><b>Search</b></span></span>
-              <span style="color: #006699; font-family: Verdana,serif; "><b>
-             <input type="text" name="content" size="15">
-              </b></span><span style="color: #FFFF00; font-family: Verdana,serif; "><b>
+              <span style="color: #006699; font-family: Verdana,serif; "><b
+                  <label>
+<input type="text" name="content" size="15">
+</label>
+                  </b></span><span style="color: #FFFF00; font-family: Verdana,serif; "><b>
               <input type="submit" value="GO" name="go">
             </b></span>            </div>
         </form>       
