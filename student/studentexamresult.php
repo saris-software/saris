@@ -40,8 +40,8 @@
 
 	#check if has blocked
 	$qstatus = "SELECT Status FROM student  WHERE (RegNo = '$RegNo')";
-	$dbstatus = mysql_query($qstatus);
-	$row_status = mysql_fetch_array($dbstatus);
+	$dbstatus = mysqli_query($zalongwa,$qstatus);
+	$row_status = mysqli_fetch_array($dbstatus);
 	$status = $row_status['Status'];
 
 	if ($status=='Blocked'){
