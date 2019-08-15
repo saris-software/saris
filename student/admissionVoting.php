@@ -60,7 +60,7 @@
 			}
 		elseif($candfac == $stdfac) {
 			$qins = "INSERT INTO electionvotes VALUES('$RegNo','$name','$key','$post')";
-			$dbins = mysqli_query($qins) or die('Rejected, ZALONGWA Knows that you are attempting to vote once more!');
+			$dbins = mysqli_query($zalongwa,$qins) or die('Rejected, ZALONGWA Knows that you are attempting to vote once more!');
 			
 			echo '<script language="javascript">alert("Vote Recieved");</script>';
 			}
