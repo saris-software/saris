@@ -28,7 +28,7 @@ $id = $_GET['id'];
   $deleteSQL = "DELETE FROM stats";
                      
   mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($deleteSQL, $zalongwa) or die('This Records is Locked by the Examination Officer');
+  $Result1 = mysqli_query($deleteSQL, $zalongwa) or die('This Records is Locked by the Examination Officer' . mysqli_query()_error(();
 echo '<meta http-equiv = "refresh" content ="0; 
 	url = administratorWebStatistics.php">'; 
 	
