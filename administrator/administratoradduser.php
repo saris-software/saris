@@ -16,13 +16,13 @@
 
 #populate module combo box
 	$query_module = "SELECT moduleid, modulename FROM modules";
-	$module = mysqli_query($query_module, $zalongwa) or die(mysql_error());
+	$module = mysqli_query($query_module, $zalongwa) or die(mysqli_error());
 	$row_module = mysqli_fetch_assoc($module);
 	$totalRows_module = mysqli_num_rows($module);
 
 #populate privileges combo box
 	$query_privilege = "SELECT privilegeID, privilegename FROM privilege";
-	$privilege = mysqli_query($query_privilege, $zalongwa) or die(mysql_error());
+	$privilege = mysqli_query($query_privilege, $zalongwa) or die(mysqli_error());
 	$row_privilege = mysqli_fetch_assoc($privilege);
 	$totalRows_privilege = mysqli_num_rows($privilege);
 	
@@ -43,12 +43,13 @@ if ($check=='on'){
 ?> 
 
           <form action="adminmanageuser.php" method="get" class="style24">
-            <div align="right"><span class="style42"><font face="Verdana"><b>Search</b></font></span> 
-              <font color="006699" face="Verdana"><b> 
-              <input type="text" name="content" size="15">
-              </b></font><font color="#FFFF00" face="Verdana"><b> 
+            <div align="right"><span class="style42"><span style="font-family: V
+            erdana,serif; "><b>Search</b></span></span>
+              <span style="color: #006699; font-family: Verdana,serif; "><b>
+             <input type="text" name="content" size="15">
+              </b></span><span style="color: #FFFF00; font-family: Verdana,serif; "><b>
               <input type="submit" value="GO" name="go">
-            </b></font>            </div>
+            </b></span>            </div>
         </form>       
         		 <?php
 
