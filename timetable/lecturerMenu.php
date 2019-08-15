@@ -1,0 +1,111 @@
+<?php
+ #block un privileged users
+ if ($module <> 8) {
+		session_start(); 
+		session_cache_limiter('nocache');
+		$_SESSION = array();
+		session_unset(); 
+		session_destroy(); 
+		echo '<meta http-equiv = "refresh" content ="0;	url = ../index.php">';		
+	}
+	# start the session
+	session_start();
+	
+	# include the global settings
+	
+	require_once('../Connections/zalongwa.php'); 
+	global $blnPrivateArea,$szHeaderPath,$szFooterPath,$szRootPath;
+	$blnPrivateArea = false;
+	$szHeaderPath = 'header.php';
+	$szFooterPath = 'footer.php';
+
+	# define Top level Navigation Array if not defined already
+	
+	$arrStructure = array();$i=1;
+		
+		//Help
+	$arrStructure[$i] = array( 'name1' => 'Help', 'name2' => 'Usalama', 'url' => 'lecturerUserManual.php', 'image' => '',  'width' => '', 'height' => '');
+	$arrStructure[$i]['subsections'] = array(); $j = 1;
+	$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'User Manual', 'name2' => 'Usaidizi', 'url' => 'lecturerUserManual.php', 'width' => '', 'height' => '');
+	$j++;
+	$i++;
+	// Profile
+	$arrStructure[$i] = array( 'name1' => 'Profile', 'name2' => 'Profile', 'url' => 'admissionprofile.php', 'width' => '20', 'height' => '50');
+	$i++;
+	
+	// Database Lookup Tables Setup
+	#check if user is a manager
+	if ($privilege==2){
+			$arrStructure[$i] = array( 'name1' => 'Policy Setup', 'name2' => 'Plicy Setup', 'url' => 'admissionpolicy.php', 'image' => '',  'width' => '2', 'height' => '3');
+			$arrStructure[$i]['subsections'] = array(); $j=1;
+			/*
+			$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Institution', 'name2' => 'Chuo', 'url' => 'admissionInst.php', 'width' => '', 'height' => '');
+			$j++;
+			$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Faculty', 'name2' => 'Kitivo', 'url' => 'admissionFaculty.php', 'width' => '', 'height' => '');
+			$j++;
+			$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Department', 'name2' => 'Kitivo', 'url' => 'admissionDepartment.php', 'width' => '', 'height' => '');
+			$j++;
+			$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Programme', 'name2' => 'Shahada', 'url' => 'admissionProgramme.php', 'width' => '', 'height' => '');
+			$j++;
+			
+			
+			$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Course', 'name2' => 'Somo', 'url' => 'admissionSubject.php', 'width' => '', 'height' => '');
+			$j++;*/
+      $arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Venues', 'name2' => 'Fomu ya Maombi', 'url' => 'lecturerVenuelist.php', 'width' => '', 'height' => '');
+   	$j++;
+			$i++;
+	}
+	
+	// Administration Menus
+/*	$arrStructure[$i] = array( 'name1' => 'Administration', 'name2' => 'Utawala', 'url' => 'lecturerAdministration.php', 'image' => '',  'width' => '2', 'height' => '3');
+	
+	$arrStructure[$i]['subsections'] = array(); $j=1;
+	$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Publish Timetable', 'name2' => 'Orodha ya Maombi', 'url' => 'lecturerexamofficerpublishresults.php', 'width' => '', 'height' => '');
+	$j++;
+	$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Change Semester', 'name2' => 'Orodha ya Maombi', 'url' => 'lecturerexamofficerchangesemester.php', 'width' => '', 'height' => '');
+	$j++;	
+	$i++;*/
+
+	/**********TIMETABLE MENUs************/
+	$arrStructure[$i] = array( 'name1' => 'Timetable', 'name2' => 'Utawala', 'url' => 'lecturerTimetable.php', 'image' => '',  'width' => '2', 'height' => '3');
+	
+	$arrStructure[$i]['subsections'] = array(); $j=1;
+$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Get TimeTable', 'name2' => 'Fomu ya Maombi', 'url' => 'gettimetable.php', 'width' => '', 'height' => '');
+	$j++;
+$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Find Allocated', 'name2' => 'Orodha ya Maombi', 'url' => 'lecturerSearchtimetable.php', 'width' => '', 'height' => '');
+		$j++;
+	if ($privilege==2){
+
+		$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Create Timetable', 'name2' => 'Orodha ya Maombi', 'url' => 'createtimetable.php', 'width' => '', 'height' => '');
+		$j++;	
+
+	}
+	
+$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Venue Utilization', 'name2' => 'Orodha ya Maombi', 'url' => 'roomutilization.php', 'width' => '', 'height' => '');
+	$j++;
+	
+	$i++;
+
+/*************END TIMETABLE****************/
+	
+	// Communication
+	$arrStructure[$i] = array( 'name1' => 'Communication', 'name2' => 'Mawasiliano', 'url' => 'admissionComm.php', 'image' => '',  'width' => '', 'height' => '');
+	$arrStructure[$i]['subsections'] = array(); $j = 1;
+	//$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Suggestion Box', 'name2' => 'Sanduku la Maoni', 'url' => 'admissionSuggestionBox.php', 'width' => '', 'height' => '');
+	//$j++;
+	$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Check Message', 'name2' => 'Pata Habari', 'url' => 'admissionCheckMessage.php', 'width' => '', 'height' => '');
+	$j++;
+	$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'News & Events', 'name2' => 'Pata Habari', 'url' => 'studentNews.php', 'width' => '', 'height' => '');
+	$j++;
+	$i++;
+	//Security
+	$arrStructure[$i] = array( 'name1' => 'Security', 'name2' => 'Usalama', 'url' => 'admissionSecurity.php', 'image' => '',  'width' => '', 'height' => '');
+	$arrStructure[$i]['subsections'] = array(); $j = 1;
+	$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Change Password', 'name2' => 'Badili Password', 'url' => 'admissionChangepassword.php', 'width' => '', 'height' => '');
+	$j++;
+	$arrStructure[$i]['subsections'][$j] = array( 'name1' => 'Login History', 'name2' => 'Historia ya Kulogin', 'url' => 'admissionLoginHistory.php', 'width' => '', 'height' => '');
+	$j++;
+	$i++;
+	$arrStructure[$i] = array( 'name1' => 'Sign Out', 'name2' => 'Funga Program', 'url' => '../signout.php', 'image' => '',  'width' => '', 'height' => '');
+    $i++;
+?>
