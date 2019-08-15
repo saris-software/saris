@@ -173,14 +173,14 @@ a:active {
       </tr>
       <tr>
         <td width="672" vertical-align="top"><div align="left">
-          <table width="669" border="1" border-color="#990000">
+          <table style="width=669" border="1" border-color="#990000">
             <?php do { ?>
             <tr>
                 <td width="66"><?php $id = $row_studentsuggestion['id']; ?><div align="right">Date:</div></td>
                 <td width="593"><?php echo $row_studentsuggestion['received']; ?></td>
             </tr>
             <tr>
-                <td><div align="right">From:</div></td>
+                <td><div lign="right">From:</div></td>
                 <td><?php $from=$row_studentsuggestion['fromid']; echo $row_studentsuggestion['fromid']; ?></td>
             </tr>
             <tr>
