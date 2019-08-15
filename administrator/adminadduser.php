@@ -1,5 +1,5 @@
 <?php 
-#get connected to the database and verfy current session
+#get connected to the database and verify current session
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 	
@@ -48,20 +48,20 @@
 		}
 	
 		#check username
-		if (!ereg("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $username)){
+		if (!preg_match("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $username)){
 		$_SESSION['loginerror'] = $username.' - is a Bad Username! '; 
   		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
 		 }
 	   
 		#check username
-		if (!ereg("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $PWD)){
+		if (!preg_match("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $PWD)){
 		$_SESSION['loginerror'] = $PWD.' - is a Bad Password! '; 
   		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
 		 }
 		#check if use has submitted valid email address
 		function check_email_address($Email) {
 		  // First, we check that there's one @ symbol, and that the lengths are right
-		  if (!ereg("[^@]{1,64}@[^@]{1,255}", $Email)) {
+		  if (!preg_match("[^@]{1,64}@[^@]{1,255}", $Email)) {
 			// Email invalid because wrong number of characters in one section, or wrong number of @ symbols.
 			return false;
 	  }
@@ -69,17 +69,17 @@
 	  $email_array = explode("@", $Email);
 	  $local_array = explode(".", $email_array[0]);
 	  for ($i = 0; $i < sizeof($local_array); $i++) {
-		 if (!preg_("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
+		 if (!preg_split("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
 		  return false;
 		}
 	  }  
-	  if (!preg_("^\[?[0-9\.]+\]?$", $email_array[1])) { // Check if domain is IP. If not, it should be valid domain name
+	  if (!preg_split("^\[?[0-9\.]+\]?$", $email_array[1])) { // Check if domain is IP. If not, it should be valid domain name
 		$domain_array = explode(".", $email_array[1]);
 		if (sizeof($domain_array) < 2) {
 			return false; // Not enough parts to domain
 		}
 		for ($i = 0; $i < sizeof($domain_array); $i++) {
-		  if (!preg_("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
+		  if (!preg_split("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
 			return false;
 		  }
 		}
@@ -116,7 +116,7 @@
 			  FROM security WHERE UserName='$username'";
 	   $result = mysqli_query($sql);
 	   $usernameFound = mysqli_num_rows($result);
-	   if ($usernameFound>0) {ss
+	   if ($usernameFound>0) {
 			$login = mysqli_result($result,0,'UserName');
 					$_SESSION['loginerror'] = " Registration NOT successful! <br> Some one is already using this USERNAME: '".$username."'
 											<br>Please Select Another Username"; 
