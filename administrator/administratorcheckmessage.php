@@ -17,17 +17,18 @@ $colname_studentsuggestion = "1";
 if (isset($_COOKIE['RegNo'])) {
   $colname_studentsuggestion = (get_magic_quotes_gpc()) ? $_COOKIE['RegNo'] : addslashes($_COOKIE['RegNo']);
 }
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_studentsuggestion = "SELECT id, received, fromid, toid, message FROM suggestion WHERE toid = 'admin' ORDER BY received DESC";
 $query_limit_studentsuggestion = sprintf("%s LIMIT %d, %d", $query_studentsuggestion, $startRow_studentsuggestion, $maxRows_studentsuggestion);
-$studentsuggestion = mysql_query($query_limit_studentsuggestion, $zalongwa) or die(mysql_error());
-$row_studentsuggestion = mysql_fetch_assoc($studentsuggestion);
+$studentsuggestion = mysqli_query($query_limit_studentsuggestion, $zalongwa) or die(mysqli_error());
+$row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion);
 
 if (isset($_GET['totalRows_studentsuggestion'])) {
   $totalRows_studentsuggestion = $_GET['totalRows_studentsuggestion'];
 } else {
-  $all_studentsuggestion = mysql_query($query_studentsuggestion);
-  $totalRows_studentsuggestion = mysql_num_rows($all_studentsuggestion);
+
+  $all_studentsuggestion = mysqli_query($query_studentsuggestion);
+  $totalRows_studentsuggestion = mysqli_num_rows($all_studentsuggestion);
 }
 $totalPages_studentsuggestion = ceil($totalRows_studentsuggestion/$maxRows_studentsuggestion)-1;
 
@@ -104,56 +105,60 @@ a:active {
 </style>
 </head>
 
-<body bgcolor="#FFFFCC">
+<body background-color="#FFFFCC">
+
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <tr> 
       <td width="100%" height="48"></td>
     </tr>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
-    <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#990000">
-      <tr bgcolor="#99CCCC">
-        <td height="69" colspan="7" align="center" valign="middle"> <img src="/images/Nkurumah.gif" width="724" height="69" align="left"></td>
+  <div style="text-align: center;">
+    <table width="100%" height="100%" border="0" padding="0" border-spacing="0" border-color="#990000">
+
+      <tr background-color="#99CCCC">
+        <td height="69" colspan="7" text-align="center" vertical-align="middle"> <img src="/images/Nkurumah.gif" width="724" height="69" align="left"></td>
       </tr>
       <tr>
-        <td width="55" rowspan="5" valign="top">
-            <table width="69%" height="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFCC" bgcolor="#99CCCC">
+        <td width="55" rowspan="5" vertical-align="top">
+            <table width="69%" height="100%" border="0" padding="0" border-spacing="0" border-color="#FFFFCC" background-color="#99CCCC">
           <tr class="style35">
-            <td height="0" colspan="2" nowrap><div align="center" class="style47"><img src="/images/bd21312_.gif" alt="Your Profile" width="15" height="15"></div></td>
-            <td colspan="3" nowrap class="style58"><div align="left" class="style58"><?php print "<a href=\"administratorprofile.php?username=$username\">Your Profile</a>";?><span class="style59"> <font face="Verdana">&nbsp;</font> </span></div></td>
+            <td height="0" colspan="2" nowrap><div text-align="center" class="style47"><img src="/images/bd21312_.gif" alt="Your Profile" width="15" height="15"></div></td>
+            <td colspan="3" nowrap class="style58"><div align="left" class="style58"><?php print "<a href=\"administratorprofile.php?username=$username\">Your Profile</a>";?><span class="style59"> <span
+                                style="font-family: Verdana,serif; ">&nbsp;</span> </span></div></td>
+
             </tr>
          		  <tr class="style35">
-            <td height="20" align="right" valign="middle" nowrap><div align="center" class="style47"><img src="/images/bd21312_.gif" alt="Room Application" width="15" height="15"></div></td>
-            <td colspan="4" align="left" valign="middle" nowrap class="style35"><span class="style58"><?php print "<a href=\"administratorcheckconnections.php?username=$username\">Check Connections</a>";?></span></td>
+            <td height="20" align="right" vertical-align="middle" nowrap><div align="center" class="style47"><img src="/images/bd21312_.gif" alt="Room Application" width="15" height="15"></div></td>
+            <td colspan="4" align="left" vertical-align="middle" nowrap class="style35"><span class="style58"><?php print "<a href=\"administratorcheckconnections.php?username=$username\">Check Connections</a>";?></span></td>
             </tr>
 			 <tr class="style35">
-            <td height="20" align="right" valign="middle" nowrap><div align="center" class="style47"><img src="/images/bd21312_.gif" alt="Room Application" width="15" height="15"></div></td>
-            <td colspan="4" align="left" valign="middle" nowrap class="style35"><span class="style58"><?php print "<a href=\"administratoradhocqueries.php?username=$username\">Database Maintenance</a>";?></span></td>
+            <td height="20" align="right" vertical-align="middle" nowrap><div align="center" class="style47"><img src="/images/bd21312_.gif" alt="Room Application" width="15" height="15"></div></td>
+            <td colspan="4" align="left" vertical-align="middle" nowrap class="style35"><span class="style58"><?php print "<a href=\"administratoradhocqueries.php?username=$username\">Database Maintenance</a>";?></span></td>
             </tr>
 				  <tr class="style35">
-            <td height="20" align="right" valign="middle" nowrap><div align="center" class="style47"><img src="/images/bd21312_.gif" alt="Room Application" width="15" height="15"></div></td>
-            <td colspan="4" align="left" valign="middle" nowrap class="style35"><span class="style58"><?php print "<a href=\"adminmanageuser.php?username=$username\">Manage Users</a>";?></span></td>
+            <td height="20" align="right" vertical-align="middle" nowrap><div align="center" class="style47"><img src="/images/bd21312_.gif" alt="Room Application" width="15" height="15"></div></td>
+            <td colspan="4" align="left" vertical-align="middle" nowrap class="style35"><span class="style58"><?php print "<a href=\"adminmanageuser.php?username=$username\">Manage Users</a>";?></span></td>
             </tr>
           <tr class="style35">
-            <td height="20" align="right" valign="middle" nowrap><div align="center" class="style47"><img height=15 alt=Room Allocation 
-                  hspace=4 src="/images/bd21312_.gif" width=15 
-                  vspace=5 border=0></div></td>
+            <td height="20" align="right" vertical-align="middle" nowrap><div align="center" class="style47"><img height=15 alt=Room Allocation
+                  horizontal-space=4 src="/images/bd21312_.gif" width=15
+                  vertical-space=5 border=0></div></td>
             <td colspan="4" align="left" valign="middle" nowrap class="style35"><span class="normaltext style24"><?php print "<a href=\"administratorWebStatistics.php?username=$username\">Web Statistics</a>";?> </span></td>
             </tr>
           <tr class="style35">
-            <td height="20" colspan="2" align="right" valign="middle" nowrap><div align="center" class="style47"><strong><img height=15 alt=Suggestion Box 
-                  hspace=4 src="/images/bd21312_.gif" width=15 
-                  vspace=5 border=0></strong></div></td>
-            <td height="20" colspan="3" align="right" valign="middle" nowrap class="style35"><div align="left" class="style24"><?php print "<a href=\"administratorcheckmessage.php?username=$username\">Suggestion Box</a>";?> </div></td>
+            <td height="20" colspan="2" align="right" vertical-align="middle" nowrap><div align="center" class="style47"><strong><img height=15 alt=Suggestion Box
+                  horizontal-space=4 src="/images/bd21312_.gif" width=15
+                  vertical-space=5 border=0></strong></div></td>
+            <td height="20" colspan="3" align="right" vertical-align="middle" nowrap class="style35"><div align="left" class="style24"><?php print "<a href=\"administratorcheckmessage.php?username=$username\">Suggestion Box</a>";?> </div></td>
             </tr>
            <tr class="style35">
-            <td height="20" colspan="2" align="right" valign="middle" nowrap><div align="center" class="style47"><strong><img height=15 alt=Change Password Network 
-                  hspace=4 src="/images/bd21312_.gif" width=15 
+            <td height="20" colspan="2" align="right" vertical-align="middle" nowrap><div align="center" class="style47"><strong><img height=15 alt=Change Password Network
+                  hspace=4 src="/images/bd21312_.gif" width=15
                   vspace=5 border=0></strong></div></td>
-            <td height="20" align="right" valign="middle" nowrap class="style35"><div align="left" class="style24">
+            <td height="20" align="right" vertical-align="middle" nowrap class="style35"><div align="left" class="style24">
               <div align="left" class="style34"><?php print "<a href=\"changepassword.php?username=$username\">Change Password</a>";?></div>
                               
 </div></td>
@@ -164,11 +169,11 @@ a:active {
             </tr>
         </table></td>
         <td><div align="left">Your Messages: <span class="style64">.......................................<span class="style34"></span></span></div></td>
-        <td bgcolor="#99CCCC">&nbsp;</td>
+        <td background-color="#99CCCC">&nbsp;</td>
       </tr>
       <tr>
-        <td width="672" valign="top"><div align="left">
-          <table width="669" border="1" bordercolor="#990000">
+        <td width="672" vertical-align="top"><div align="left">
+          <table width="669" border="1" border-color="#990000">
             <?php do { ?>
             <tr>
                 <td width="66"><?php $id = $row_studentsuggestion['id']; ?><div align="right">Date:</div></td>
@@ -179,26 +184,26 @@ a:active {
                 <td><?php $from=$row_studentsuggestion['fromid']; echo $row_studentsuggestion['fromid']; ?></td>
             </tr>
             <tr>
-                <td valign="top"><div align="right">Message:</div></td>
+                <td vertical-align="top"><div align="right">Message:</div></td>
                 <td><?php echo $row_studentsuggestion['message']; ?></td>
             </tr>
-            <?php } while ($row_studentsuggestion = mysql_fetch_assoc($studentsuggestion)); ?>
+            <?php } while ($row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion)); ?>
           </table>
 		    <p><a href="<?php printf("%s?pageNum_studentsuggestion=%d%s", $currentPage, max(0, $pageNum_studentsuggestion - 1), $queryString_studentsuggestion); ?>">Previous</a> Message: <?php echo min($startRow_studentsuggestion + $maxRows_studentsuggestion, $totalRows_studentsuggestion) ?> of <?php echo $totalRows_studentsuggestion ?> <span class="style64">...</span><a href="<?php printf("%s?pageNum_studentsuggestion=%d%s", $currentPage, min($totalPages_studentsuggestion, $pageNum_studentsuggestion + 1), $queryString_studentsuggestion); ?>">Next</a> <span class="style64">.......</span><?php echo "<a href=\"administratorsuggestionbox.php?from=$from\">Reply Message</a>" ?> <span class="style64">.......</span><?php echo "<a href=\"administratordeletemessage.php?id=$id\">Delete This Message</a>" ?> </p>
         </div></td>
-        <td width="36" bgcolor="#99CCCC">&nbsp;</td>
+        <td width="36" background-color="#99CCCC">&nbsp;</td>
       </tr>
     </table>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
-  </center>
+  <div style="text-align: center;">
+  </div>
 </div>
 
 </body>
 
 </html>
 <?php
-mysql_free_result($studentsuggestion);
+mysqli_free_result($studentsuggestion);
 ?>
