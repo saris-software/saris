@@ -1238,7 +1238,7 @@ else
 	Class='$class',
 	currentaddaress='$currentaddaress'
 	where Id='$stdid'";
-$dbstudent = mysql_query($sql) or die(mysql_error().' - mmeona wenyewe?');
+$dbstudent = mysqli_query($sql) or die(mysqli_error().' - mmeona wenyewe?');
 if(!$dbstudent)
 {
 echo "Admision Record Cannot be Updated - ".$dbstudent;
