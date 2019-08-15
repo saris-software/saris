@@ -109,7 +109,7 @@ While ($row_dusstudent = mysqli_fetch_assoc($dbdusstudent))
 						Programme = '$degree',
 						EntryYear = '$ayear'
 						";
-		$dbinsertstd =mysql_query($qinsertstd);
+		$dbinsertstd =mysqli_query($qinsertstd);
 		
 		#insert results
 		while ($row_result = mysqli_fetch_assoc($dbresult))
