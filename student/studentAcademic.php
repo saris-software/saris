@@ -40,8 +40,8 @@ if ((isset($_GET['CourseCode'])) && ($_GET['CourseCode'] != "")) {
   $regno = addslashes($_GET['RegNo']);
   $deleteSQL = "DELETE FROM examregister WHERE CourseCode='$coursecode' AND checked=0 AND RegNo='$regno'";
                     
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($deleteSQL, $zalongwa) or die('This Records is Locked by the Examination Officer');
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $deleteSQL) or die('This Records is Locked by the Examination Officer');
 
   //$deleteGoTo = "studentAcademic.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -66,7 +66,7 @@ $colname_coursecandidate = "1";
 if (isset($_COOKIE['RegNo'])) {
   $colname_coursecandidate = (get_magic_quotes_gpc()) ? $_COOKIE['RegNo'] : addslashes($_COOKIE['RegNo']);
 }
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_coursecandidate = "SELECT 
 								examregister.CourseCode, 
 								course.Units, 
@@ -76,14 +76,14 @@ $query_coursecandidate = "SELECT
 						FROM course INNER JOIN examregister ON course.CourseCode = examregister.CourseCode
 							WHERE (((examregister.RegNo)='$RegNo')) ORDER BY AYear DESC, CourseCode ASC";
 $query_limit_coursecandidate = sprintf("%s LIMIT %d, %d", $query_coursecandidate, $startRow_coursecandidate, $maxRows_coursecandidate);
-$coursecandidate = mysql_query($query_limit_coursecandidate, $zalongwa) or die(mysql_error());
-$row_coursecandidate = mysql_fetch_assoc($coursecandidate);
+$coursecandidate = mysqli_query($zalongwa, $query_limit_coursecandidate) or die(mysqli_error($zalongwa));
+$row_coursecandidate = mysqli_fetch_assoc($coursecandidate);
 
 if (isset($_GET['totalRows_coursecandidate'])) {
   $totalRows_coursecandidate = $_GET['totalRows_coursecandidate'];
 } else {
-  $all_coursecandidate = mysql_query($query_coursecandidate);
-  $totalRows_coursecandidate = mysql_num_rows($all_coursecandidate);
+  $all_coursecandidate = mysqli_query($zalongwa,$query_coursecandidate);
+  $totalRows_coursecandidate = mysqli_num_rows($all_coursecandidate);
 }
 $totalPages_coursecandidate = ceil($totalRows_coursecandidate/$maxRows_coursecandidate)-1;
 
@@ -115,8 +115,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmCourseRegister")
                        GetSQLValueString($_POST['regno'], "text"),
                        GetSQLValueString($_POST['coursecode'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die("You have alrady registered for this course, <br>duplicate Records are not allowed");
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die("You have alrady registered for this course, <br>duplicate Records are not allowed");
 
   $insertGoTo = "studentindex.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -150,7 +150,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmCourseRegister")
 				<td nowrap><div align="center"><?php echo $row_coursecandidate['Units']; ?></div></td>
 				<td nowrap><?php echo $row_coursecandidate['CourseName']; ?></td>
             </tr>
-            <?php } while ($row_coursecandidate = mysql_fetch_assoc($coursecandidate)); ?>
+            <?php } while ($row_coursecandidate = mysqli_fetch_assoc($coursecandidate)); ?>
 </table>
           
             <p><a href="<?php printf("%s?pageNum_coursecandidate=%d%s", $currentPage, max(0, $pageNum_coursecandidate - 1), $queryString_coursecandidate); ?>">Previous Page</a> <span class="style64"><span class="style34">Records: <?php echo min($startRow_coursecandidate + $maxRows_coursecandidate, $totalRows_coursecandidate) ?>/<?php echo $totalRows_coursecandidate ?></span> <span class="style1">...</span></span><a href="<?php printf("%s?pageNum_coursecandidate=%d%s", $currentPage, min($totalPages_coursecandidate, $pageNum_coursecandidate + 1), $queryString_coursecandidate); ?>">Next Page</a> <span class="style64 style1"></span>
