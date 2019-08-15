@@ -1,4 +1,5 @@
 <?php
+//include "zalongwa.php";
 /*
 #convert data
 $qresults = "SELECT * FROM examresult";
@@ -61,8 +62,8 @@ while($row_reults = mysql_fetch_assoc($dbresult)){
 */
 #copy dus data
 $qdusstudent = "select * from student";
-$dbdusstudent = mysql_query($qdusstudent);
-While ($row_dusstudent = mysql_fetch_assoc($dbdusstudent))
+$dbdusstudent = mysqli_query($qdusstudent);
+While ($row_dusstudent = mysqli_fetch_assoc($dbdusstudent))
 {
 	$regno = $row_dusstudent['RegNo'];
 	$name = $row_dusstudent['Name'];
@@ -75,8 +76,8 @@ While ($row_dusstudent = mysql_fetch_assoc($dbdusstudent))
 	
 	#find programmename
 	$qdegree = "select * from programme where ProgrammeID ='$prog'";
-	$dbdegree = mysql_query($qdegree);
-	$row_degree = mysql_fetch_assoc($dbdegree);
+	$dbdegree = mysqli_query($qdegree );
+	$row_degree = mysqli_fetch_assoc($dbdegree);
 	$degree = $row_degree ['ProgrammeName'];
 	/*
 	#insert student record
@@ -92,10 +93,10 @@ While ($row_dusstudent = mysql_fetch_assoc($dbdusstudent))
 	$dbinsertstd =mysql_query($qinsertstd);
 	*/
 	#query results
-	$qresult = "select * from examresult where regno ='$regno'";
-	$dbresult = mysql_query($qresult) or die(mysql_error());
-	$dbcount = mysql_query($qresult) or die(mysql_error());
-	$count = mysql_num_rows($dbcount) or die(mysql_error());
+	$qresult = "select * from examresult where regno =$regno";
+	$dbresult = mysqli_query($qresult) or die(mysqli_error());
+	$dbcount = mysqli_query($qresult) or die(mysqli_error());
+	$count = mysqli_num_rows($dbcount) or die(mysqli_error());
 	if ($count > 0)
 	{
 		#insert student record
