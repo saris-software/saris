@@ -42,9 +42,9 @@
 		}
 	
 	$sql = "SELECT * FROM student WHERE Id ='$id' and RegNo='$reg'"; 
-	$update = mysql_query($sql);
-	$update_row = mysql_fetch_array($update);
-	$totalRows_update = mysql_num_rows($update);
+	$update = mysqli_query($zalongwa,$sql);
+	$update_row = mysqli_fetch_array($update);
+	$totalRows_update = mysqli_num_rows($update);
 	
 	$regno = $update_row['RegNo'];
 	$stdid = $update_row['Id'];
@@ -180,8 +180,8 @@ EOD;
 EOD;
 		}
 	else{
-		$query_campus1 = mysql_query("SELECT CampusID, Campus FROM campus where CampusID='$campus'");
-		$camp=mysql_fetch_array($query_campus1);
+		$query_campus1 = mysqli_query($zalongwa,"SELECT CampusID, Campus FROM campus where CampusID='$campus'");
+		$camp=mysqli_fetch_array($query_campus1);
 		
 		$reg_form .=<<<EOD
 				<option value="$campus">$camp[Campus]</option>
@@ -211,8 +211,8 @@ EOD;
 EOD;
 		}
 	else{
-		$take=mysql_query("select * from programme where ProgrammeCode='$degree'")or die(mysql_error());
-		$t=mysql_fetch_array($take);
+		$take=mysqli_query($zalongwa,"select * from programme where ProgrammeCode='$degree'")or die(mysqli_error($zalongwa));
+		$t=mysqli_fetch_array($take);
 		
 		$reg_form .=<<<EOD
 				<option value="$degree">$t[ProgrammeName]</option>
@@ -282,8 +282,8 @@ EOD;
 EOD;
 		}
 	else{
-		$take=mysql_query("select * from studylevel where LevelCode='$studylevel'");
-		$t=mysql_fetch_array($take);
+		$take=mysqli_query($zalongwa,"select * from studylevel where LevelCode='$studylevel'");
+		$t=mysqli_fetch_array($take);
 		
 		$reg_form .=<<<EOD
 				<option value="$studylevel">$t[LevelName]</option>
@@ -304,8 +304,8 @@ EOD;
 EOD;
 		}
 	else{
-		$query_Manner =mysql_query("SELECT ID, MannerofEntry FROM mannerofentry where ID='$manner'");
-		$mana=mysql_fetch_array($query_Manner);
+		$query_Manner =mysqli_query($zalongwa,"SELECT ID, MannerofEntry FROM mannerofentry where ID='$manner'");
+		$mana=mysqli_fetch_array($query_Manner);
 		
 		$reg_form .=<<<EOD
 				<option value="$manner">$mana[MannerofEntry]</option>
@@ -343,12 +343,12 @@ EOD;
 		}  
 
 	$query_denomination2 = "SELECT * FROM religion";
-	$nr=mysql_query($query_denomination2);
+	$nr=mysqli_query($zalongwa,$query_denomination2);
 	
-	while($l=mysql_fetch_array($nr)){
+	while($l=mysqli_fetch_array($nr)){
 		$query_denomination = "SELECT * FROM religion where ReligionID='$l[ReligionID]' ORDER BY Religion ASC";
-		$nm=mysql_query($query_denomination);
-		while($show = mysql_fetch_array($nm)){
+		$nm=mysqli_query($zalongwa,$query_denomination);
+		while($show = mysqli_fetch_array($nm)){
 			$reg_form .=<<<EOD
 				<option value="$show[Religion]">$show[Religion]</option>
 EOD;
@@ -413,17 +413,17 @@ EOD;
 		}
 		 
 	$query_disability3 = "SELECT * FROM disability"; 
-	$nm3=mysql_query($query_disability3);
+	$nm3=mysqli_query($zalongwa,$query_disability3);
 	
-	while($s= mysql_fetch_array($nm3)){
+	while($s= mysqli_fetch_array($nm3)){
 		
 		$reg_form .=<<<EOD
 				<optgroup label="$s[Disability]">
 EOD;
      	$query_disability2 = "SELECT * FROM disabilitycategory where DisabilityCode='$s[DisabilityID]'";
-		$nm2 = mysql_query($query_disability2);
+		$nm2 = mysqli_query($zalongwa,$query_disability2);
 		
-		while($show = mysql_fetch_array($nm2) ){ 	 
+		while($show = mysqli_fetch_array($nm2) ){
 			$reg_form .=<<<EOD
 				<option value="$show[disabilityCategory]">$show[disabilityCategory]</option>
 EOD;
@@ -537,12 +537,12 @@ EOD;
 	
 	//update registration status
 	if(!in_array($status,$registration_status,true)){
-		mysql_query("UPDATE student SET Status='$acc_id' WHERE RegNo='$regno' AND Id='$id'");
+		mysqli_query($zalongwa,"UPDATE student SET Status='$acc_id' WHERE RegNo='$regno' AND Id='$id'");
 		$status = $acc_id;
 		}
 		
-	$query_studentStatus1 = mysql_query("SELECT StatusID,Status FROM studentstatus where StatusID='$status'");
-	$stat=mysql_fetch_array($query_studentStatus1);
+	$query_studentStatus1 = mysqli_query($zalongwa,"SELECT StatusID,Status FROM studentstatus where StatusID='$status'");
+	$stat=mysqli_fetch_array($query_studentStatus1);
 	$status2 = ($stat['Status'] == '')? "Active":$stat[Status];
 	
 	$reg_form .=<<<EOD
@@ -733,10 +733,10 @@ if(isset($_POST['actionupdate'])){
 		
 	$qRegNo = "SELECT RegNo FROM student WHERE Id = '$stdid'";//chas WHERE RegNo = '$regno'
 	//$qRegNo = "SELECT RegNo FROM student WHERE RegNo = '$regno'";
-	$dbRegNo = mysql_query($qRegNo);
-	$dbRegNof = mysql_fetch_assoc($dbRegNo);
+	$dbRegNo = mysqli_query($zalongwa,$qRegNo);
+	$dbRegNof = mysqli_fetch_assoc($dbRegNo);
 	$dbRegNofs = $dbRegNof['RegNo'];
-	$total = mysql_num_rows($dbRegNo);
+	$total = mysqli_num_rows($dbRegNo);
 	
 	if ($total>1) {
 		echo "ZALONGWA SARIS database system has detected that,<br> this Registration ". $regno. " is already in use";
@@ -784,13 +784,13 @@ if(isset($_POST['actionupdate'])){
 		currentaddaress='$currentaddaress'
 		where RegNo='$dbRegNofs'";//Id='$stdid'";
 		
-		$dbstudent = mysql_query($sql);
+		$dbstudent = mysqli_query($zalongwa,$sql);
 		if($dbstudent){
 			//echo "Admision Record Cannot be Updated - ".$dbstudent;
 			echo "Admision Record Updated Successfuly<br/>";
 			}
 		else{
-			echo mysql_error();
+			echo mysqli_error($zalongwa);
 			}		
 		}
 	}
