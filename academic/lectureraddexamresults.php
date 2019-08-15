@@ -105,11 +105,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 			Total ='$total[$c]', Grade = '$grade[$c]', Remarks = '$remark[$c]', Status = '$core[$c]', Comment = '$comment[$c]' 
 			WHERE RegNo='$RegNo[$c]' AND CourseCode='$coursecode'";
             //mysql_select_db($database_zalongwa, $zalongwa);
-  			$Result1 = mysql_query($updateSQL) or die(mysql_error()); 
+  			$Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
 			}
 			
 }	
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_addexam = "SELECT student.Name,        course.CourseCode,        course.CourseName,        examresult.RegNo,       
  examresult.ExamNo,        examresult.CourseCode,        examresult.Coursework,        examresult.Exam,       
   examresult.Total,        examresult.Grade,        examresult.Remarks,        examresult.AYear,        
@@ -117,9 +117,9 @@ $query_addexam = "SELECT student.Name,        course.CourseCode,        course.C
   FROM examresult    INNER JOIN course ON (examresult.CourseCode = course.CourseCode)    
   INNER JOIN student ON (examresult.RegNo = student.RegNo) 
   WHERE (examresult.CourseCode='$key') AND  (examresult.AYear='$ayear') AND (examresult.SemesterID = '$sem')ORDER BY examresult.RegNo ASC";
-$addexam = mysql_query($query_addexam, $zalongwa) or die(mysql_error());
-$row_addexam = mysql_fetch_assoc($addexam);
-$totalRows_addexam = mysql_num_rows($addexam);
+$addexam = mysqli_query($zalongwa, $query_addexam) or die(mysqli_error($zalongwa));
+$row_addexam = mysqli_fetch_assoc($addexam);
+$totalRows_addexam = mysqli_num_rows($addexam);
  
 $browser  =  $_SERVER["HTTP_USER_AGENT"];   
 $ip  =  $_SERVER["REMOTE_ADDR"];   
@@ -128,8 +128,8 @@ require_once('../Connections/zalongwa.php');
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
 //$sqldel = "delete from stats where (YEAR(CURRENT_DATE)-YEAR(received))- (RIGHT(CURRENT_DATE,5)<RIGHT(received,5))>1";
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
-mysql_close($zalongwa);
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
+mysqli_close($zalongwa);
 ?> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang=en-US>
@@ -368,7 +368,7 @@ a:active {
 				 <td><input name="comment[]" type="text" id="comment[]" value="<?php echo $row_addexam['Comment']; ?>"></td>
                 <td><?php print "<a href=\"lecturerexalresultdelete.php?RegNo=$regno&ayear=$ayear&key=$key\">Drop</a>";?></td>
               </tr>
-              <?php $i=$i+1;} while ($row_addexam = mysql_fetch_assoc($addexam)); ?>
+              <?php $i=$i+1;} while ($row_addexam = mysqli_fetch_assoc($addexam)); ?>
             </table>
 		
 		<?php }else{?>
@@ -410,7 +410,7 @@ a:active {
 				 <td><input name="comment[]" type="text" id="comment[]" value="<?php echo $row_addexam['Comment']; ?>"></td>
    
               </tr>
-              <?php $i=$i+1;} while ($row_addexam = mysql_fetch_assoc($addexam)); ?>
+              <?php $i=$i+1;} while ($row_addexam = mysqli_fetch_assoc($addexam)); ?>
             </table> <?php } ?>
             <p></p>
             <p>
@@ -430,5 +430,5 @@ a:active {
 
 </html>
 <?php
-mysql_free_result($addexam);
+mysqli_free_result($addexam);
 ?>

@@ -21,21 +21,21 @@
 	
 	#get registration date of birth
 	$sqldate = "SELECT * FROM security WHERE RegNo='$RegNo'"; 
-	$getd = mysql_query($sqldate) or die(mysql_error());
-	$getdate = mysql_fetch_array($getd)or die(mysql_error());
+	$getd = mysqli_query($zalongwa,$sqldate) or die(mysqli_error($zalongwa));
+	$getdate = mysqli_fetch_array($getd)or die(mysqli_error($zalongwa));
 	$securityDOB=$getdate['DBirth'];
 
 	#get current Academic Year 
 	$qayr = "SELECT AYear FROM academicyear WHERE Status = '1'";
-	$aYearCurrent = mysql_query($qayr);
-	$getcryear=mysql_fetch_array($aYearCurrent);
+	$aYearCurrent = mysqli_query($zalongwa,$qayr);
+	$getcryear=mysqli_fetch_array($aYearCurrent);
 	$cryear=$getcryear['AYear'];
 
 	//find if student already exist to update
 	$qRegNo1 = "SELECT Id FROM student WHERE RegNo = '$RegNo'";
-	$dbRegNo1 = mysql_query($qRegNo1);
-	$total1 = mysql_num_rows($dbRegNo1);
-	$getID = mysql_fetch_array($dbRegNo1);
+	$dbRegNo1 = mysqli_query($zalongwa,$qRegNo1);
+	$total1 = mysqli_num_rows($dbRegNo1);
+	$getID = mysqli_fetch_array($dbRegNo1);
 	$id=$getID['Id'];
 	$x=$total1;
 

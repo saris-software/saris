@@ -10,16 +10,16 @@
 	include("studentheader.php");
 
 	#populate academic year combo box
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-	$AYear = mysql_query($query_AYear, $zalongwa) or die(mysql_error());
-	$row_AYear = mysql_fetch_assoc($AYear);
+	$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error($zalongwa));
+	$row_AYear = mysqli_fetch_assoc($AYear);
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_post = "SELECT * FROM electionpost ORDER BY Post ASC";
-	$post = mysql_query($query_post, $zalongwa) or die(mysql_error());
-	$row_post = mysql_fetch_assoc($post);
-	$totalRows_post = mysql_num_rows($post);
+	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error($zalongwa));
+	$row_post = mysqli_fetch_assoc($post);
+	$totalRows_post = mysqli_num_rows($post);
 
 	if (isset($_POST["save"])) {
 		$values = addslashes($_POST["Candidate"]);
@@ -30,16 +30,16 @@
 		$key = $value_arr[1];
 		$postid = $value_arr[2];
 		
-		$get_postName = mysql_query("SELECT Post FROM electionpost WHERE Id='$postid'");
-		list($post) = mysql_fetch_array($get_postName);
+		$get_postName = mysqli_query("SELECT Post FROM electionpost WHERE Id='$postid'");
+		list($post) = mysqli_fetch_array($get_postName);
 		
 		#get student faculty
 		$qfac = "SELECT Faculty from student where RegNo='$RegNo'";
-		$dbfac = mysql_query($qfac);
-		$row_fac = mysql_fetch_assoc($dbfac);
+		$dbfac = mysqli_query($zalongwa,$qfac);
+		$row_fac = mysqli_fetch_assoc($dbfac);
 		$stdfac = $row_fac['Faculty'];
 		
-		if(@mysql_num_rows($dbfac)<1){
+		if(@mysqli_num_rows($dbfac)<1){
 			$error = urlencode("You are not a student, you are not allowed to vote");
 			$url = "admissionVoting.php?error=$error";
 			echo '<meta http-equiv="refresh" content="0; url='.$url.'">';
@@ -47,8 +47,8 @@
 			}
 
 		$qcandfac = "SELECT Faculty FROM electioncandidate WHERE regno = '$name'";
-		$dbcandfac = mysql_query($qcandfac);
-		@$row_candfac = mysql_fetch_assoc($dbcandfac);
+		$dbcandfac = mysqli_query($zalongwa,$qcandfac);
+		@$row_candfac = mysqli_fetch_assoc($dbcandfac);
 		$candfac = $row_candfac['Faculty'];
 		
 		#insert vote
@@ -60,13 +60,13 @@
 			}
 		elseif($candfac == $stdfac) {
 			$qins = "INSERT INTO electionvotes VALUES('$RegNo','$name','$key','$post')";
-			$dbins = mysql_query($qins) or die('Rejected, ZALONGWA Knows that you are attempting to vote once more!');
+			$dbins = mysqli_query($zalongwa,$qins) or die('Rejected, ZALONGWA Knows that you are attempting to vote once more!');
 			
 			echo '<script language="javascript">alert("Vote Recieved");</script>';
 			}
 		elseif($candfac == '[All Faculties]') {
 			$qins = "INSERT INTO electionvotes VALUES('$RegNo','$name','$key','$post')";
-			$dbins = mysql_query($qins) or die('Rejected, ZALONGWA Knows that you are attempting to vote once more!');
+			$dbins = mysqli_query($zalongwa,$qins) or die('Rejected, ZALONGWA Knows that you are attempting to vote once more!');
 			
 			echo '<script language="javascript">alert("Vote Recieved");</script>';
 			}
@@ -86,23 +86,23 @@
 		#chek if has already voted for this post
 		$qpost = "SELECT RegNo FROM electionvotes WHERE RegNo='$RegNo' AND Period='$key' 
 				  AND Post IN (SELECT Post FROM electionpost WHERE Id='$post')";
-		$dbpost = mysql_query($qpost);
-		$total_rows = mysql_num_rows($dbpost);
+		$dbpost = mysqli_query($zalongwa,$qpost);
+		$total_rows = mysqli_num_rows($dbpost);
 		
 		#check expired election
 		$qedate = "SELECT * FROM electiondate where PostId='$post' AND Period='$key'";
-		$dbedate = mysql_query($qedate);
-		$row_edate = mysql_fetch_assoc($dbedate);
+		$dbedate = mysqli_query($zalongwa, $qedate);
+		$row_edate = mysqli_fetch_assoc($dbedate);
 		$enddate = $row_edate['EndDate'];
 		$today = date("Y-m-d H:i:s");
 		
 		#get student faculty
 		$qfac = "SELECT Faculty from student where RegNo='$RegNo'";
-		$dbfac = mysql_query($qfac);
-		$row_fac = mysql_fetch_assoc($dbfac);
+		$dbfac = mysqli_query($zalongwa, $qfac);
+		$row_fac = mysqli_fetch_assoc($dbfac);
 		$stdfac = $row_fac['Faculty'];
 
-		if($today>$enddate && mysql_num_rows($dbedate)>'0'){
+		if($today>$enddate && mysqli_num_rows($dbedate)>'0'){
 			echo 'Election Days Expired! <br>';
 			echo 'Here are the Election Results';
 			#get all candidates
@@ -112,8 +112,8 @@
 						el.Post IN (SELECT Post FROM electionpost WHERE Id='$post')
 						ORDER BY el.Period,el.Post, st.Name DESC";
 						
-			$dbexamno = mysql_query($qexamno);
-			$totalrec = mysql_num_rows($dbexamno);
+			$dbexamno = mysqli_query($zalongwa, $qexamno);
+			$totalrec = mysqli_num_rows($dbexamno);
 			
 			if ($totalrec>0){
 				echo "<table border=1 cellpadding='3' cellspacing='0'>
@@ -128,14 +128,14 @@
 					  </tr>";
 				
 				$int = 1;
-				while ($row_examno = mysql_fetch_assoc($dbexamno)){
+				while ($row_examno = mysqli_fetch_assoc($dbexamno)){
 					if(($row_examno['Faculty']=="[All Faculties]") || ($row_examno['Faculty']==$stdfac)){
 						$candidateid = trim($row_examno['id']);
 						
 						#count votes
 						$qvote = "select * from electionvotes where CandidateID='$candidateid'";
-						$dbvote =mysql_query($qvote);
-						$vote = mysql_num_rows($dbvote);
+						$dbvote =mysqli_query($zalongwa, $qvote);
+						$vote = mysqli_num_rows($dbvote);
 						
 						echo "<tr>
 								<td nowrap>$int</td>
@@ -157,14 +157,14 @@
 			exit;
 			}
 		
-		elseif($today>$enddate && mysql_num_rows($dbedate)<'1'){
+		elseif($today>$enddate && mysqli_num_rows($dbedate)<'1'){
 			echo "<p style='color:maroon'>Sorry, There was no election monitored by the system in $key</p>";
 			exit;
 			}
 			
 		elseif($total_rows>0){
-			$qpostname = mysql_query("SELECT Post FROM electionpost WHERE Id='$post'");
-			list($postname) = mysql_fetch_array($qpostname);
+			$qpostname = mysqli_query("SELECT Post FROM electionpost WHERE Id='$post'");
+			list($postname) = mysqli_fetch_array($qpostname);
 			
 			$error = urlencode("You have already Voted for the <b>$postname</b> post");
 			$url = "admissionVoting.php?error=$error";
@@ -178,8 +178,8 @@
 						WHERE (st.RegNo=el.RegNo) AND (el.Period='$key') AND 
 						el.Post IN (SELECT Post FROM electionpost WHERE Id='$post')
 						ORDER BY el.Period,el.Post, st.Name DESC";
-		$dbcandidate = mysql_query($qcandidate);
-		$totalrec = mysql_num_rows($dbcandidate);
+		$dbcandidate = mysqli_query($zalongwa,$qcandidate);
+		$totalrec = mysqli_num_rows($dbcandidate);
 
 		if ($totalrec>0){
 			
@@ -197,7 +197,7 @@
 				  </tr>";
 			
 			$index=1;
-			while($results = mysql_fetch_array($dbcandidate)){
+			while($results = mysqli_fetch_array($dbcandidate)){
 				
 				if(($results['Faculty']=="[All Faculties]") || ($results['Faculty']==$stdfac)){
 					$id = $results['RegNo'].'['.$results['Period'];
@@ -247,11 +247,11 @@
 								?>
 								<option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
 								<?php
-									} while ($row_AYear = mysql_fetch_assoc($AYear));
-											$rows = mysql_num_rows($AYear);
+									} while ($row_AYear = mysqli_fetch_assoc($AYear));
+											$rows = mysqli_num_rows($AYear);
 											if($rows > 0) {
-								mysql_data_seek($AYear, 0);
-								$row_AYear = mysql_fetch_assoc($AYear);
+								mysqli_data_seek($AYear, 0);
+								$row_AYear = mysqli_fetch_assoc($AYear);
 							}
 					   ?>
 					
@@ -265,11 +265,11 @@
 		?>
 				<option value="<?php echo $row_post['Id']?>"><?php echo $row_post['Post']?></option>
 				<?php
-		} while ($row_post = mysql_fetch_assoc($post));
-		  $rows = mysql_num_rows($post);
+		} while ($row_post = mysqli_fetch_assoc($post));
+		  $rows = mysqli_num_rows($post);
 		  if($rows > 0) {
-			  mysql_data_seek($post, 0);
-			  $row_post = mysql_fetch_assoc($post);
+			  mysqli_data_seek($post, 0);
+			  $row_post = mysqli_fetch_assoc($post);
 		  }
 		?>
 			  </select></td>

@@ -97,9 +97,9 @@ if ($fileavailable==1){
 		  $sql = "INSERT INTO examresult VALUES ('". 
 		  			  implode("','", $arr) ."')"; 
 		  }
-		  mysql_query($sql);
+		  mysqli_query($zalongwa, $sql);
 		  echo $sql ."<br>\n";
-		  if(mysql_error()) {
+		  if(mysqli_error($zalongwa)) {
 			 echo "....Duplicate Entry -Record Not Imported!<br>\n"; 
 		  }else{
 			 echo "....Record Imported Successfuly!<br>\n"; 

@@ -37,8 +37,8 @@
 	#get organisation name
 	
 	$qname = 'SELECT Name, Address FROM organisation';
-	$dbname = mysql_query($qname);
-	$name_row = mysql_fetch_assoc($dbname);
+	$dbname = mysqli_query($zalongwa,$qname);
+	$name_row = mysqli_fetch_assoc($dbname);
 
 ?>
 
@@ -65,16 +65,16 @@
 				</td>
 				<td align=left valign="middle" style='font-family:Courier New, monospaced; font-size:14px'>
 					<?php
-						$qdetail = mysql_query("SELECT s.Photo, s.Entryyear, p.Title
+						$qdetail = mysqli_query($zalongwa,"SELECT s.Photo, s.Entryyear, p.Title
 												FROM student s, programme p 
 												WHERE s.RegNo='$RegNo' AND p.ProgrammeCode=s.ProgrammeofStudy");
 												
-						list($photo,$entry,$title) = mysql_fetch_array($qdetail);
+						list($photo,$entry,$title) = mysqli_fetch_array($qdetail);
 						
 						echo $name.'<BR/>'.$RegNo.'<BR/>'.$title.'<BR/>'.$entry.'<BR/>';
 						
-						$qyear = mysql_query("SELECT AYear FROM academicyear WHERE Status=1");
-						list($ayear) = mysql_fetch_array($qyear);
+						$qyear = mysqli_query($zalongwa,"SELECT AYear FROM academicyear WHERE Status=1");
+						list($ayear) = mysqli_fetch_array($qyear);
 						echo $ayear;
 					?>
 				</td>

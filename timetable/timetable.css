@@ -1,0 +1,74 @@
+.view_timetable{
+		table-layout:fixed;
+		width:900px;
+		padding:0px;
+		margin:0px;
+		position:relative;
+		border:1px solid #CCCCCC;
+		color:#000000;
+		}
+		
+		.view_timetable tr td{
+		border-bottom:1px solid #CCCCCC;
+		border-right:1px solid #CCCCCC;
+		position:relative;
+		}
+		.one{
+		display:block;
+		background-color:#CCCCCC;
+		border:1px solid blue;
+		text-align:center;
+		padding:5px 0px 0px 0px;
+		height:80px;
+		overflow:hidden;
+		margin:5px 0px 5px 0px;
+		}
+		.wiz{
+		display:block;
+		margin:7px 0px 0px 0px;
+		padding:5px 0px 0px 0px;
+		}
+		
+		.one span{
+		display:block;
+		color:black;
+		}
+		
+		.two{
+		display:block;
+		background-color:#DFD7CF;
+		border:1px solid blue;
+		z-index:100;
+		position:relative;
+		text-align:center;
+		padding:5px 0px 0px 0px;
+		height:80px;
+		overflow:hidden;
+		margin:5px 0px 5px 0px;
+		}
+		
+		.two span{
+		display:block;
+		color:#000000;
+		}
+		
+		.two-clas{
+		  width:130px;
+		}
+		
+		.three{
+		display:block;
+		background-color:#DFD7CF;
+		border:1px solid blue;
+		text-align:center;
+		height:80px;
+		overflow:hidden;
+		padding:5px 0px 0px 0px;
+		margin:5px 0px 5px 0px;
+		}
+		
+		.three span{
+		display:block;
+		color:#000000;
+		}
+		

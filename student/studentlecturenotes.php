@@ -18,21 +18,21 @@ if (isset($_GET['pageNum_Recordset1'])) {
 }
 $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_Recordset1 = "SELECT tbllecturenotes.received, tbllecturenotes.CourseCode, tbllecturenotes.notes FROM tbllecturenotes  
 WHERE (((tbllecturenotes.CourseCode)='$CourseCode')) ORDER BY received DESC";
 //$query_Recordset1 = "SELECT coursecandidate.RegNo, tbllecturenotes.received, tbllecturenotes.CourseCode, tbllecturenotes.notes FROM tbllecturenotes  
 //INNER JOIN coursecandidate ON tbllecturenotes.coursecode = coursecandidate.CourseCode  
 //WHERE (((tbllecturenotes.CourseCode)='$CourseCode')) ORDER BY received DESC";
 $query_limit_Recordset1 = sprintf($query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
-$Recordset1 = mysql_query($query_limit_Recordset1, $zalongwa) or die(mysql_error());
-$row_Recordset1 = mysql_fetch_assoc($Recordset1);
+$Recordset1 = mysqli_query($zalongwa, $query_limit_Recordset1) or die(mysqli_error($zalongwa));
+$row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 
 if (isset($_GET['totalRows_Recordset1'])) {
   $totalRows_Recordset1 = $_GET['totalRows_Recordset1'];
 } else {
-  $all_Recordset1 = mysql_query($query_Recordset1);
-  $totalRows_Recordset1 = mysql_num_rows($all_Recordset1);
+  $all_Recordset1 = mysqli_query($zalongwa,$query_Recordset1);
+  $totalRows_Recordset1 = mysqli_num_rows($all_Recordset1);
 }
 $totalPages_Recordset1 = ceil($totalRows_Recordset1/$maxRows_Recordset1)-1;
 
@@ -74,7 +74,7 @@ echo "Course Notes Report:";
 			  <td><?php echo $row_Recordset1['CourseCode']; ?></td>
               <td><?php echo $row_Recordset1['notes']; ?></td>
           </tr>
-          <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
+          <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
         </table> 
 <?php
 //}
@@ -83,9 +83,9 @@ echo "Course Notes Report:";
             <p><a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, max(0, $pageNum_Recordset1 - 1), $queryString_Recordset1); ?>">Previous</a> <span class="style64"><span class="style1">....</span><span class="style34">Record:<?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> of <?php echo $totalRows_Recordset1 ?> </span><span class="style1">...</span></span><a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, min($totalPages_Recordset1, $pageNum_Recordset1 + 1), $queryString_Recordset1); ?>">Next </a> </p>
         
 <?php
-mysql_free_result($Recordset1);
+mysqli_free_result($Recordset1);
 
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 	# include the footer
 	include("../footer/footer.php");
 ?>

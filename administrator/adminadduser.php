@@ -1,5 +1,5 @@
 <?php 
-#get connected to the database and verfy current session
+#get connected to the database and verify current session
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 	
@@ -122,7 +122,7 @@
 			  FROM security WHERE UserName='$username'";
 	   $result = mysqli_query($sql);
 	   $usernameFound = mysqli_num_rows($result);
-	   if ($usernameFound>0) {ss
+	   if ($usernameFound>0) {
 			$login = mysqli_result($result,0,'UserName');
 					$_SESSION['loginerror'] = " Registration NOT successful! <br> Some one is already using this USERNAME: '".$username."'
 											<br>Please Select Another Username"; 

@@ -22,9 +22,9 @@ $state4="disabled";
 $label_edit="<a href='$_SERVER[PHP_SELF]?id=$id&RegNo=$reg&edit=yes'><img src='../includes/img/edit.png' alt='Click to Edit This Record'>Edit</a>";
 }
 $sql = "SELECT * FROM student WHERE Id ='$id' and RegNo='$reg'"; 
-$update = mysql_query($sql);
-$update_row = mysql_fetch_array($update);
-$totalRows_update = mysql_num_rows($update);
+$update = mysqli_query($sql);
+$update_row = mysqli_fetch_array($update);
+$totalRows_update = mysqli_num_rows($update);
 	$regno = $update_row['RegNo'];
 	$stdid = $update_row['Id'];
 	$AdmissionNo = $update_row['AdmissionNo'];     
@@ -207,7 +207,7 @@ if(!$diploma)
 }
 if(!$degree)
 {
-$degree="<font color='red'>*Study Programme Must be Filled</font>";
+$degree="<style=font-color:'red'>*Study Programme Must be Filled</font>";
 }
  	 
 	 
@@ -1238,7 +1238,7 @@ else
 	Class='$class',
 	currentaddaress='$currentaddaress'
 	where Id='$stdid'";
-$dbstudent = mysql_query($sql) or die(mysql_error().' - mmeona wenyewe?');
+$dbstudent = mysqli_query($sql) or die(mysqli_error().' - mmeona wenyewe?');
 if(!$dbstudent)
 {
 echo "Admision Record Cannot be Updated - ".$dbstudent;

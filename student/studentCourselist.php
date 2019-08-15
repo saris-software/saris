@@ -16,7 +16,7 @@ if (isset($_GET['pageNum_courselist'])) {
   $pageNum_courselist = $_GET['pageNum_courselist'];
 }
 $startRow_courselist = $pageNum_courselist * $maxRows_courselist;
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 if (isset($_GET['course'])) {
   $key=$_GET['course'];
   $query_courselist = "SELECT CourseCode, CourseName, Units FROM course WHERE CourseCode Like '%$key%' ORDER BY CourseCode";
@@ -25,14 +25,14 @@ $query_courselist = "SELECT CourseCode, CourseName, Units FROM course ORDER BY C
 }
 
 $query_limit_courselist = sprintf("%s LIMIT %d, %d", $query_courselist, $startRow_courselist, $maxRows_courselist);
-$courselist = mysql_query($query_limit_courselist, $zalongwa) or die(mysql_error());
-$row_courselist = mysql_fetch_assoc($courselist);
+$courselist = mysqli_query($zalongwa, $query_limit_courselist) or die(mysqli_error($zalongwa));
+$row_courselist = mysqli_fetch_assoc($courselist);
 
 if (isset($_GET['totalRows_courselist'])) {
   $totalRows_courselist = $_GET['totalRows_courselist'];
 } else {
-  $all_courselist = mysql_query($query_courselist);
-  $totalRows_courselist = mysql_num_rows($all_courselist);
+  $all_courselist = mysqli_query($zalongwa,$query_courselist);
+  $totalRows_courselist = mysqli_num_rows($all_courselist);
 }
 $totalPages_courselist = ceil($totalRows_courselist/$maxRows_courselist)-1;
 
@@ -67,7 +67,7 @@ $queryString_courselist = sprintf("&totalRows_courselist=%d%s", $totalRows_cours
                 <td><?php echo $row_courselist['Units']; ?></td>
                 <td><?php echo $row_courselist['CourseName']; ?></td>
             </tr>
-            <?php } while ($row_courselist = mysql_fetch_assoc($courselist)); ?>
+            <?php } while ($row_courselist = mysqli_fetch_assoc($courselist)); ?>
 </table>
 		    <p><a href="<?php printf("%s?pageNum_courselist=%d%s", $currentPage, max(0, $pageNum_courselist - 1), $queryString_courselist); ?>">Previous Page</a> <span class="style66"><span class="style1">....</span><span class="style34">Record: <span class="style67"><span class="style34"><?php echo min($startRow_courselist + $maxRows_courselist, $totalRows_courselist) ?></span></span> of <?php echo $totalRows_courselist ?> </span><span class="style1">......</span></span><a href="<?php printf("%s?pageNum_courselist=%d%s", $currentPage, min($totalPages_courselist, $pageNum_courselist + 1), $queryString_courselist); ?>">Next Page</a></p>
 		    <form name="form1" method="get" action="studentCourselist.php">
@@ -77,5 +77,5 @@ $queryString_courselist = sprintf("&totalRows_courselist=%d%s", $totalRows_cours
             </form>
 		   
 <?php
-mysql_free_result($courselist);
+mysqli_free_result($courselist);
 ?>

@@ -12,8 +12,8 @@ include('studentMenu.php');
 <?php
 #Get all student in this cohot
 $qstudent = "SELECT Name, RegNo from student WHERE RegNo = '$RegNo'";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 
 if ($totalstudent > 0) {
 	?>
@@ -32,28 +32,28 @@ if ($totalstudent > 0) {
 	$grandtotalpaid=0;
 	$grandtotalpenalty=0;
 		
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$totalpaid =0;
 						
 			//query caution fee paid
 			$qcautionfee = "SELECT Amount FROM tblcautionfee WHERE RegNo = '$regno' AND Paytype = 5";
-			$dbcautionfee = mysql_query($qcautionfee);
+			$dbcautionfee = mysqli_query($zalongwa,$qcautionfee);
 						
 			//sum up caution fee payments
-			while ($rowcautionfee = mysql_fetch_array($dbcautionfee)){
+			while ($rowcautionfee = mysqli_fetch_array($dbcautionfee)){
 				$amount = $rowcautionfee['Amount'];
 				$totalpaid = $totalpaid+$amount;
 				}
 				$grandtotalpaid = $grandtotalpaid+$totalpaid;
 			//query penalty fee paid
 			$qpenalty = "SELECT Amount FROM tblcautionfee WHERE RegNo = '$regno' AND Paytype = 6";
-			$dbpenalty = mysql_query($qpenalty);
+			$dbpenalty = mysqli_query($zalongwa,$qpenalty);
 			$totalpenalty =0;
 			
 			//sum up penalty payments
-			while ($rowpenalty = mysql_fetch_array($dbpenalty)){
+			while ($rowpenalty = mysqli_fetch_array($dbpenalty)){
 				$penaltyamount = $rowpenalty['Amount'];
 				$totalpenalty = $totalpenalty+$penaltyamount;
 				}
@@ -70,9 +70,9 @@ if ($totalstudent > 0) {
 				<td> <?php echo number_format($totalpaid - $totalpenalty,2,'.',',') ?> <div align="right"></div></td>
 			  <td nowrap> 
 			  <?php $qrefund = "select RegNo FROM tblcautionfee WHERE (RegNo = '$RegNo' AND Paytype > 9) Order By Received Desc";
-			  		$refund = mysql_query($qrefund);
-					$row_refund= mysql_fetch_array($refund);
-					$row_num = mysql_num_rows($refund);
+			  		$refund = mysqli_query($zalongwa,$qrefund);
+					$row_refund= mysqli_fetch_array($refund);
+					$row_num = mysqli_num_rows($refund);
 						if($row_num>0){
 									echo "<a href=\"housingRefundReport.php?id=$regno\">Yes</a>";
 									}else{

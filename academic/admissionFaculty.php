@@ -30,11 +30,11 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 //control the display table
 @$new=2;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_campus = "SELECT CampusID, Campus FROM campus";
-$campus = mysql_query($query_campus, $zalongwa) or die(mysql_error());
-$row_campus = mysql_fetch_assoc($campus);
-$totalRows_campus = mysql_num_rows($campus);
+$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error($zalongwa));
+$row_campus = mysqli_fetch_assoc($campus);
+$totalRows_campus = mysqli_num_rows($campus);
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -53,8 +53,8 @@ echo '<meta http-equiv = "refresh" content ="0; url = admissionFaculty.php?new=1
                        GetSQLValueString($_POST['txtTel'], "text"),
                        GetSQLValueString($_POST['txtEmail'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 }
 }
 
@@ -68,8 +68,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
                        GetSQLValueString($_POST['txtEmail'], "text"),
                        GetSQLValueString($_POST['id'], "int"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($updateSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
 
   $updateGoTo = "admissionFaculty.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -86,17 +86,17 @@ if (isset($_GET['pageNum_inst'])) {
 }
 $startRow_inst = $pageNum_inst * $maxRows_inst;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_inst = "SELECT * FROM faculty ORDER BY FacultyName ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysql_query($query_limit_inst, $zalongwa) or die(mysql_error());
-$row_inst = mysql_fetch_assoc($inst);
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
+$row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
-  $all_inst = mysql_query($query_inst);
-  $totalRows_inst = mysql_num_rows($all_inst);
+  $all_inst = mysqli_query($zalongwa, $query_inst);
+  $totalRows_inst = mysqli_num_rows($all_inst);
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 
@@ -139,7 +139,7 @@ if (@$new<>1){
     <td><?php echo $row_inst['Tel']; ?></td>
     <td><?php echo $row_inst['Email']; ?></td>
   </tr>
-  <?php } while ($row_inst = mysql_fetch_assoc($inst)); ?>
+  <?php } while ($row_inst = mysqli_fetch_assoc($inst)); ?>
 </table>
 <a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a><span class="style1">......<span class="style2"><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> </span>..........</span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
 <?php }else{
@@ -159,11 +159,11 @@ do {
 ?>
         <option value="<?php echo $row_campus['CampusID']?>"><?php echo $row_campus['Campus']?></option>
         <?php
-} while ($row_campus = mysql_fetch_assoc($campus));
-  $rows = mysql_num_rows($campus);
+} while ($row_campus = mysqli_fetch_assoc($campus));
+  $rows = mysqli_num_rows($campus);
   if($rows > 0) {
-      mysql_data_seek($campus, 0);
-	  $row_campus = mysql_fetch_assoc($campus);
+      mysqli_data_seek($campus, 0);
+	  $row_campus = mysqli_fetch_assoc($campus);
   }
 ?>
       </select></td>
@@ -201,11 +201,11 @@ do {
 if (isset($_GET['edit'])){
 #get post variables
 $key = $_GET['edit'];
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_instEdit = "SELECT * FROM faculty WHERE FacultyID ='$key'";
-$instEdit = mysql_query($query_instEdit, $zalongwa) or die(mysql_error());
-$row_instEdit = mysql_fetch_assoc($instEdit);
-$totalRows_instEdit = mysql_num_rows($instEdit);
+$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalongwa));
+$row_instEdit = mysqli_fetch_assoc($instEdit);
+$totalRows_instEdit = mysqli_num_rows($instEdit);
 
 $queryString_inst = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
@@ -233,11 +233,11 @@ do {
 ?>
         <option value="<?php echo $row_campus['CampusID']?>"><?php echo $row_campus['Campus']?></option>
         <?php
-} while ($row_campus = mysql_fetch_assoc($campus));
-  $rows = mysql_num_rows($campus);
+} while ($row_campus = mysqli_fetch_assoc($campus));
+  $rows = mysqli_num_rows($campus);
   if($rows > 0) {
-      mysql_data_seek($campus, 0);
-	  $row_campus = mysql_fetch_assoc($campus);
+      mysqli_data_seek($campus, 0);
+	  $row_campus = mysqli_fetch_assoc($campus);
   }
 ?>
       </select></td>
@@ -276,9 +276,9 @@ do {
 	# include the footer
 	include("../footer/footer.php");
 
-@mysql_free_result($inst);
+@mysqli_free_result($inst);
 
-@mysql_free_result($instEdit);
+@mysqli_free_result($instEdit);
 
-@mysql_free_result($campus);
+@mysqli_free_result($campus);
 ?>
