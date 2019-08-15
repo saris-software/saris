@@ -19,8 +19,8 @@ $sql = "SELECT stats.ip,
 FROM stats WHERE stats.page LIKE '$username%'  ORDER BY stats.received DESC LIMIT 10";
 
 //(((roomapplication.Hall)='$hall') And
-$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
-$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 
 $all_query = mysqli_query($zalongwa,$query);
 $totalRows_query = mysqli_num_rows($query);
@@ -48,7 +48,7 @@ if (!$zalongwa){
 mysqli_select_db ($zalongwa, "zalongwamnma")
 $zalongwa = mysqli_connect ($hostname_zalongwa, strrev ($username_zalongwa), strrev ($password_zalongwa));
 if (!$zalongwa){
- die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+ die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error($zalongwa));
 	 exit();
 	}
 //change in selection of database as mysqli
@@ -58,7 +58,7 @@ mysqli_select_db ($zalongwa, "zalongwamnma");
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
 global $szDBName,$szDBUsername,$szDBPassword,$szDiscussionAdmin,$szDiscussionPassword;
 if (!$zalongwa){
-	 echo("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+	 echo("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error($zalongwa));
 	 exit();
 	}
 
@@ -138,7 +138,7 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 @$password_zalongwa = "toor";
 $zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
 if (!$zalongwa){
-	 printf(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
+	 printf(mysqli_connect_error($zalongwa)."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
 	@mysqli_select_db($zalongwa, "zalongwamnma");
@@ -152,7 +152,7 @@ if (!$zalongwa){
 mysqli_select_db ($zalongwa, "zalongwamnma")
 $zalongwa = mysqli_connect ($hostname_zalongwa, strrev ($username_zalongwa), strrev ($password_zalongwa));
 if (!$zalongwa){
- die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
+ die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error($zalongwa));
 	 exit();
 	}
 //change in selection of database as mysqli

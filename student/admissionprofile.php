@@ -25,23 +25,23 @@
 	$szSubSection = 'Policy Setup';
 	include("studentheader.php");
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_Recordset1 = "SELECT ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-	$Recordset1 = mysql_query($query_Recordset1, $zalongwa) or die(mysql_error());
-	$row_Recordset1 = mysql_fetch_assoc($Recordset1);
-	$totalRows_Recordset1 = mysql_num_rows($Recordset1);
+	$Recordset1 = mysqli_query($zalongwa, $query_Recordset1) or die(mysqli_error($zalongwa));
+	$row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+	$totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_Recordset2 = "SELECT sex FROM sex ORDER BY sex ASC";
-	$Recordset2 = mysql_query($query_Recordset2, $zalongwa) or die(mysql_error());
-	$row_Recordset2 = mysql_fetch_assoc($Recordset2);
-	$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+	$Recordset2 = mysqli_query($zalongwa, $query_Recordset2) or die(mysqli_error($zalongwa));
+	$row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+	$totalRows_Recordset2 = mysqli_num_rows($Recordset2);
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_Recordset3 = "SELECT FacultyName FROM faculty ORDER BY FacultyName ASC";
-	$Recordset3 = mysql_query($query_Recordset3, $zalongwa) or die(mysql_error());
-	$row_Recordset3 = mysql_fetch_assoc($Recordset3);
-	$totalRows_Recordset3 = mysql_num_rows($Recordset3);
+	$Recordset3 = mysqli_query($zalongwa, $query_Recordset3) or die(mysqli_error($zalongwa));
+	$row_Recordset3 = mysqli_fetch_assoc($Recordset3);
+	$totalRows_Recordset3 = mysqli_num_rows($Recordset3);
 
 	if (isset($_POST['action']) && ($_POST['action'] == 'Update Profile')){
 	//$sex = addslashes($_POST['sex']);
@@ -95,10 +95,10 @@
 
 		//$sql = "UPDATE student SET Sex='$sex', Address='$address', ProgrammeofStudy= '$degree', Faculty= '$faculty' WHERE RegNo = '$RegNo'";
 		$sql = "UPDATE student SET Address='$address' WHERE RegNo = '$RegNo'";
-		$query = mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+		$query = mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 		//$sql = "UPDATE security SET Position='$status', Email='$email' WHERE RegNo = '$RegNo'";
 		$sql = "UPDATE security SET Email='$email' WHERE RegNo = '$RegNo'";
-		$query = mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+		$query = mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 		//echo "Database Updated.";
 		echo '<meta http-equiv = "refresh" content ="0; 
 			url = admissionprofile.php">';
@@ -125,9 +125,9 @@
 			FROM security INNER JOIN student ON security.RegNo = student.RegNo
 			WHERE security.RegNo = '$RegNo'";
 	
-	$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+	$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 
-	while($result = mysql_fetch_array($query)) {
+	while($result = mysqli_fetch_array($query)) {
 			$Name = stripslashes($result["Name"]);
 			$RegNo = stripslashes($result["RegNo"]);
 			$sex = stripslashes($result["Sex"]);
@@ -135,8 +135,8 @@
 			$degree = stripslashes($result["ProgrammeofStudy"]);
 			//get degree name
 				$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-				$dbdegree = mysql_query($qdegree);
-				$row_degree = mysql_fetch_array($dbdegree);
+				$dbdegree = mysqli_query($zalongwa,$qdegree);
+				$row_degree = mysqli_fetch_array($dbdegree);
 				$programme = $row_degree['Title'];
 			$username = stripslashes($result["UserName"]);
 			$position = stripslashes($result["Position"]);
@@ -202,10 +202,10 @@ $sql = "SELECT student.Name,
 			   security.Registered
 	  FROM security INNER JOIN student ON security.RegNo = student.RegNo
  	  WHERE security.RegNo = '$RegNo'";
-$query = @mysql_query($sql) or die("Huduma Hii Kwa Sasa Haipo.<br>");
+$query = @mysqli_query($zalongwa,$sql) or die("Huduma Hii Kwa Sasa Haipo.<br>");
 echo "<table border='1' cellpadding='3' cellspacing='0' id='table' bordercolor='#006600'>";
 echo "<tr><td> Name </td><td> RegNo </td><td> Sex </td><td> Nationality </td><td> Faculty </td><td> Degree </td><td> Login ID </td><td> Status </td><td> Address </td><td> E-Post </td><td> Registered </td></tr>";
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$Name = stripslashes($result["Name"]);
 		$RegNo = stripslashes($result["RegNo"]);
 		$sex = stripslashes($result["Sex"]);
@@ -213,8 +213,8 @@ while($result = mysql_fetch_array($query)) {
 		$degree = stripslashes($result["ProgrammeofStudy"]);
 		//get degree name
 			$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-			$dbdegree = mysql_query($qdegree);
-			$row_degree = mysql_fetch_array($dbdegree);
+			$dbdegree = mysqli_query($zalongwa,$qdegree);
+			$row_degree = mysqli_fetch_array($dbdegree);
 			$programme = $row_degree['Title'];
 		$username = stripslashes($result["UserName"]);
 		$position = stripslashes($result["Position"]);
@@ -237,8 +237,8 @@ while($result = mysql_fetch_array($query)) {
 echo "</table>";
 
  print "<a href=\"admissionprofile.php?RegNo=$RegNo\">Edit Your Contacts</a>";
- mysql_free_result($query);
- mysql_close($zalongwa);
+ mysqli_free_result($query);
+ mysqli_close($zalongwa);
  }
 	# include the footer
 	include("../footer/footer.php");
