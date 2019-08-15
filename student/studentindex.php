@@ -9,7 +9,7 @@
 	include("studentheader.php");
 	
 ?>
-<br>
+    <br>
 	<style type="text/css">
 		#table{
 			border-radius:5px;
@@ -26,16 +26,16 @@
 		.total{
 			background:#bdbdd5;
 			}
-		</style>
+    </style>
 		
 <?php
 	require_once('../Connections/zalongwa.php');
 
 	$sql = "SELECT FullName, Email, Position, UserName, LastLogin FROM security WHERE UserName = '$username'";
-	$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+	$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 	echo "<table border='1' cellpadding='3' cellspacing='0' id='table' bordercolor='#006600'>";
 	echo "<tr><td> Name </td><td> Login ID </td><td> Status </td><td> E-Post </td><td> Last Login </td></tr>";
-	while($result = mysql_fetch_array($query)) {
+	while($result = mysqli_fetch_array($query)) {
 			$Name = stripslashes($result["FullName"]);
 			$username = stripslashes($result["UserName"]);
 			$position = stripslashes($result["Position"]);
@@ -56,7 +56,7 @@
 	$jina = $username." - Visited the Student Page";   
 	//$username = $username." "."Visited ".$szTitle;
 	$sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$jina')";   
-	$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
+	$result = mysqli_query($zalongwa,$sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 	# include the footer
 	include("../footer/footer.php");
 ?>
