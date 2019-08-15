@@ -17,7 +17,8 @@
       xmlns:width="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml"
       xmlns:width="http://www.w3.org/1999/xhtml" xmlns:style xmlns:width="http://www.w3.org/1999/xhtml"
       xmlns:width="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml"
-      xmlns:width="http://www.w3.org/1999/xhtml" xmlns:color="http://www.w3.org/1999/xhtml">
+      xmlns:width="http://www.w3.org/1999/xhtml" xmlns:color="http://www.w3.org/1999/xhtml"
+      xmlns:padding="http://www.w3.org/1999/xhtml">
             <div text-align="right"><span class="style67"><span style="Verdana"><b>Search</b></span></span>
               <span style="Verdana color: 006699 ; "><b>
                 content: <input type="text" name="content" size="15"<?php $content =;
@@ -152,7 +153,7 @@
 			//create account
 			$query = "INSERT INTO security (UserName, Password, FullName, RegNo, Position, AuthLevel, Email, LastLogin, Registered)
 					 VALUES ('$username', '$hash', '$fullname', '$id', '$selectPosition', 'user', '$Email', now(), now())";
-			$result = mysqli_query($query) or die("Query Failed, Words like Ng'ombe are not accepted <br>" . mysqli_query_error());
+			$result = mysqli_query($query) or die("Query Failed, Words like Ng'ombe are not accepted <br>" . mysqli_query_error($query));
 		}
 }
 ?>
@@ -185,12 +186,12 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
 }
 -->
 </style>
-<table style=border:0 border-spacing="0px" padding="0" width=100%>
+<table  border-spacing="0px" padding="0" style="width=100%">
 <tr>
 	<td text-align=center><br>
 	  <br>
 		<!-- Registration Form Starts -->
-		<table style = border-spacing="0px"; padding="0px;" style="width:540px"; border-collapse="2px solid rgb(119,119,119)">
+		<table padding="0px;" style="width:540px" border-collapse="2px solid rgb(119,119,119)">
 		<tr>
 			<td text-align=left>
 			
@@ -202,10 +203,10 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
 				<td text-align=right><!--img src="themes/images/loginTopVersion.gif"--></td>
 			</tr>
 			</table>
-			<table style="border:0;" padding='6' width="100%"
+			<table style="border:0; padding='6' width:100%">
 
 			<tr>
-				<td text-align=left vertical-align=top class=small style="padding:10px">
+				<td text-align=left vertical-align=top class=small border-padding="10" >
 					<!-- Sign in box -->
 					<div text-align="center"><br>
 				  USER REGISTRATION FORM</div>
@@ -241,7 +242,7 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
                             <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap><div text-align="right" class="large"><span
                                             style="color: #0000CC; ">FIRST NAME: </span></div></TD>
                             <TD colspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
-                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: rgb(000000); ">
+                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
                                   <label>
 <INPUT TYPE="text" SIZE="29" name="txtFirstName" value="<?php echo((isset($_POST["txtFirstName"]))?$_POST["txtFirstName"]:"") ?>">
 </label>
@@ -407,13 +408,12 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
 	  </table>
 	
 			<!-- Shadow -->
-			<table> style="border:0" celling=0; celling=0; width=640;
+			<table style="border:0 celling=0; celling=0; width=640px;">
 			<tr>
-				<td> width="100%" background="themes/images/loginBottomShadowBg.gif">&nbsp;</td>
+				<td style="width:100%" background="themes/images/loginBottomShadowBg.gif">&nbsp;</td>
         &nbsp;
 			</tr>
 	  </table>
-	</td>
 
-</tr>
+</body>
 </table>
