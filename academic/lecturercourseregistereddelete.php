@@ -31,8 +31,8 @@ if ((isset($_GET['CourseCode'])) && ($_GET['CourseCode'] != "")) {
   $regno = $_GET['RegNo'];
   $deleteSQL = "DELETE FROM examresult WHERE CourseCode='$coursecode' AND checked=0 AND RegNo='$regno'";
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($deleteSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $deleteSQL) or die(mysqli_error($zalongwa));
 
   $deleteGoTo = "lecturercourseregisteredlist.php";
   if (isset($_SERVER['QUERY_STRING'])) {

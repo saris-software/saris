@@ -9,31 +9,31 @@ if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
 }
 $startRow_ExamOfficerGradeBook = $pageNum_ExamOfficerGradeBook * $maxRows_ExamOfficerGradeBook;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_ExamOfficerGradeBook = "SELECT CourseCode, AYear, SemesterID FROM examresult";
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysql_query($query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysql_error());
-$row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook);
+$ExamOfficerGradeBook = mysqli_query($zalongwa, $query_limit_ExamOfficerGradeBook) or die(mysqli_error($zalongwa));
+$row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {
   $totalRows_ExamOfficerGradeBook = $_GET['totalRows_ExamOfficerGradeBook'];
 } else {
-  $all_ExamOfficerGradeBook = mysql_query($query_ExamOfficerGradeBook);
-  $totalRows_ExamOfficerGradeBook = mysql_num_rows($all_ExamOfficerGradeBook);
+  $all_ExamOfficerGradeBook = mysqli_query($zalongwa, $query_ExamOfficerGradeBook);
+  $totalRows_ExamOfficerGradeBook = mysqli_num_rows($all_ExamOfficerGradeBook);
 }
 $totalPages_ExamOfficerGradeBook = ceil($totalRows_ExamOfficerGradeBook/$maxRows_ExamOfficerGradeBook)-1;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_Ayear = "SELECT AYear FROM academicyear";
-$Ayear = mysql_query($query_Ayear, $zalongwa) or die(mysql_error());
-$row_Ayear = mysql_fetch_assoc($Ayear);
-$totalRows_Ayear = mysql_num_rows($Ayear);
+$Ayear = mysqli_query($zalongwa, $query_Ayear) or die(mysqli_error($zalongwa));
+$row_Ayear = mysqli_fetch_assoc($Ayear);
+$totalRows_Ayear = mysqli_num_rows($Ayear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_semester = "SELECT Description FROM terms ORDER BY Semester ASC";
-$semester = mysql_query($query_semester, $zalongwa) or die(mysql_error());
-$row_semester = mysql_fetch_assoc($semester);
-$totalRows_semester = mysql_num_rows($semester);
+$semester = mysqli_query($zalongwa, $query_semester) or die(mysqli_error($zalongwa));
+$row_semester = mysqli_fetch_assoc($semester);
+$totalRows_semester = mysqli_num_rows($semester);
 
 $queryString_ExamOfficerGradeBook = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
@@ -70,8 +70,8 @@ require_once('../Connections/zalongwa.php');
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
 //$sqldel = "delete from stats where (YEAR(CURRENT_DATE)-YEAR(received))- (RIGHT(CURRENT_DATE,5)<RIGHT(received,5))>1";
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
-mysql_close($zalongwa);
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
+mysqli_close($zalongwa);
 ?> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang=en-US>
@@ -269,11 +269,11 @@ do {
 ?>
                     <option value="<?php echo $row_Ayear['AYear']?>"><?php echo $row_Ayear['AYear']?></option>
                     <?php
-} while ($row_Ayear = mysql_fetch_assoc($Ayear));
-  $rows = mysql_num_rows($Ayear);
+} while ($row_Ayear = mysqli_fetch_assoc($Ayear));
+  $rows = mysqli_num_rows($Ayear);
   if($rows > 0) {
-      mysql_data_seek($Ayear, 0);
-	  $row_Ayear = mysql_fetch_assoc($Ayear);
+      mysqli_data_seek($Ayear, 0);
+	  $row_Ayear = mysqli_fetch_assoc($Ayear);
   }
 ?>
                   </select></td>
@@ -289,11 +289,11 @@ do {
 ?>
                     <option value="<?php echo $row_semester['Description']?>"><?php echo $row_semester['Description']?></option>
                     <?php
-} while ($row_semester = mysql_fetch_assoc($semester));
-  $rows = mysql_num_rows($semester);
+} while ($row_semester = mysqli_fetch_assoc($semester));
+  $rows = mysqli_num_rows($semester);
   if($rows > 0) {
-      mysql_data_seek($semester, 0);
-	  $row_semester = mysql_fetch_assoc($semester);
+      mysqli_data_seek($semester, 0);
+	  $row_semester = mysqli_fetch_assoc($semester);
   }
 ?>
                   </select></td>
@@ -338,9 +338,9 @@ do {
 
 </html>
 <?php
-mysql_free_result($ExamOfficerGradeBook);
+mysqli_free_result($ExamOfficerGradeBook);
 
-mysql_free_result($Ayear);
+mysqli_free_result($Ayear);
 
-mysql_free_result($semester);
+mysqli_free_result($semester);
 ?>
