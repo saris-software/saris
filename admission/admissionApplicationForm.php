@@ -48,19 +48,19 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "applicant")) {
                        GetSQLValueString($_POST['intDisabilityID'], "int"),
                        GetSQLValueString($_POST['intApplicantID'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($updateSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($database_zalongwa, $zalongwa);
+  $Result1 = mysqli_query($updateSQL, $zalongwa) or die(mysqli_error());
 }
 
 $intApplicantID_applicant = "1";
 if (isset($_GET['intApplicantID'])) {
   $intApplicantID_applicant = (get_magic_quotes_gpc()) ? $_GET['intApplicantID'] : addslashes($_GET['intApplicantID']);
 }
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_applicant = sprintf("SELECT * FROM applicant WHERE %s = '$%s'", $intApplicantID_applicant,$intApplicantID_applicant);
-$applicant = mysql_query($query_applicant, $zalongwa) or die(mysql_error());
-$row_applicant = mysql_fetch_assoc($applicant);
-$totalRows_applicant = mysql_num_rows($applicant);
+$applicant = mysqli_query($query_applicant, $zalongwa) or die(mysqli_error());
+$row_applicant = mysqli_fetch_assoc($applicant);
+$totalRows_applicant = mysqli_num_rows($applicant);
 ?>
 <?php 
 require_once('../Connections/sessioncontrol.php');
@@ -138,7 +138,7 @@ include('admissionMenu.php');
 <?php if (isset($_POST['action']) && ($_POST['action'] == "update"))
 {
 		echo "<div style=\"padding:5px;border:1px solid #6666CC\">";
-		echo "<b><center>Applicant Information Updated</center></b>";
+		echo "<b style=\"text-align: center;\">Applicant Information Updated</b>";
 		echo "</div><br>";
 }
 ?>		
@@ -850,5 +850,5 @@ include('admissionMenu.php');
 	include("../footer/footer.php");
 ?>
 <?php
-mysql_free_result($applicant);
+mysqli_free_result($applicant);
 ?>
