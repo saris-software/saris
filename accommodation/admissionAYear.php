@@ -46,15 +46,15 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmAyear")) {
         $year = $_POST['txtYear'];
         $query_year = "SELECT * FROM academicyear WHERE AYear = '$year' ";
-		$result = mysql_query($query_year) or die("Hii ngumu");
-		$totalRows_result = mysql_num_rows($result);
+		$result = mysqli_query($query_year) or die("Hii ngumu");
+		$totalRows_result = mysqli_num_rows($result);
 		if ($totalRows_result == 0) {
   $insertSQL = sprintf("INSERT INTO academicyear (AYear, Status) VALUES (%s, %s)",
                        GetSQLValueString($_POST['txtYear'], "text"),
                        GetSQLValueString(isset($_POST['chStatus']) ? "true" : "", "defined","1","0"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($database_zalongwa, $zalongwa);
+  $Result1 = mysqli_query($insertSQL, $zalongwa) or die(mysqli_error());
   }
 }
 
@@ -65,17 +65,17 @@ if (isset($_GET['pageNum_ayear'])) {
 }
 $startRow_ayear = $pageNum_ayear * $maxRows_ayear;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_ayear = "SELECT * FROM academicyear";
 $query_limit_ayear = sprintf("%s LIMIT %d, %d", $query_ayear, $startRow_ayear, $maxRows_ayear);
-$ayear = mysql_query($query_limit_ayear, $zalongwa) or die(mysql_error());
-$row_ayear = mysql_fetch_assoc($ayear);
+$ayear = mysqli_query($query_limit_ayear, $zalongwa) or die(mysqli_error());
+$row_ayear = mysqli_fetch_assoc($ayear);
 
 if (isset($_GET['totalRows_ayear'])) {
   $totalRows_ayear = $_GET['totalRows_ayear'];
 } else {
-  $all_ayear = mysql_query($query_ayear);
-  $totalRows_ayear = mysql_num_rows($all_ayear);
+  $all_ayear = mysqli_query($query_ayear);
+  $totalRows_ayear = mysqli_num_rows($all_ayear);
 }
 $totalPages_ayear = ceil($totalRows_ayear/$maxRows_ayear)-1;
 
@@ -122,7 +122,7 @@ $queryString_ayear = sprintf("&totalRows_ayear=%d%s", $totalRows_ayear, $querySt
 							echo "Not Current Year" ;
 							}?></td>
   </tr>
-  <?php } while ($row_ayear = mysql_fetch_assoc($ayear)); ?>
+  <?php } while ($row_ayear = mysqli_fetch_assoc($ayear)); ?>
 </table>
 <p>&nbsp;<a href="<?php printf("%s?pageNum_ayear=%d%s", $currentPage, max(0, $pageNum_ayear - 1), $queryString_ayear); ?>">Previous</a><span class="style1"> ..............</span><?php echo min($startRow_ayear + $maxRows_ayear, $totalRows_ayear) ?>/<?php echo $totalRows_ayear ?><span class="style1">...............</span><a href="<?php printf("%s?pageNum_ayear=%d%s", $currentPage, min($totalPages_ayear, $pageNum_ayear + 1), $queryString_ayear); ?>">Next</a> </p>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmAyear" id="frmAyear">
@@ -148,5 +148,5 @@ $queryString_ayear = sprintf("&totalRows_ayear=%d%s", $totalRows_ayear, $querySt
 	# include the footer
 	include("../footer/footer.php");
 
-mysql_free_result($ayear);
+mysqli_free_result($ayear);
 ?>
