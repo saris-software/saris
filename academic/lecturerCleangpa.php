@@ -47,7 +47,7 @@ if (isset($_GET['Counts']) && ($_GET['Counts'] == "yes"))  {
 $course = $_GET['CourseCode'];
 $std = $_GET['RegNo'];
 $qupdate = "UPDATE examresult SET Count=0 WHERE RegNo = '$std' AND CourseCode = '$course'";
-$result = mysql_query($qupdate);
+$result = mysqli_query($zalongwa, $qupdate);
 echo "Database Updated";
 exit;
 }elseif (isset($_GET['CourseCode']))  {
@@ -55,7 +55,7 @@ exit;
 $course = $_GET['CourseCode'];
 $std = $_GET['RegNo'];
 $qupdate = "UPDATE examresult SET Count=1 WHERE RegNo = '$std' AND CourseCode = '$course'";
-$result = mysql_query($qupdate);
+$result = mysqli_query($zalongwa, $qupdate);
 echo "Database Updated";
 exit;
 }
@@ -63,19 +63,19 @@ exit;
 if (isset($_POST['search']) && ($_POST['search'] == "Search")) {
 #get post variables
 $rawkey = $_POST['key'];
-$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+$key = preg_replace("[[:space:]]+", " ",$rawkey);
 //select student
 $qstudent = "SELECT * from student WHERE RegNo = '$key'";
-$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-$row_result = mysql_fetch_array($dbstudent);
+$dbstudent = mysqli_query($zalongwa, $qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
+$row_result = mysqli_fetch_array($dbstudent);
 			$name = $row_result['Name'];
 			$regno = $row_result['RegNo'];
 			$degree = $row_result['ProgrammeofStudy'];
 			
 			//get degree name
 			$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-			$dbdegree = mysql_query($qdegree);
-			$row_degree = mysql_fetch_array($dbdegree);
+			$dbdegree = mysqli_query($zalongwa, $qdegree);
+			$row_degree = mysqli_fetch_array($dbdegree);
 			$programme = $row_degree['Title'];
 			
 			echo  "$name - $regno <br> $programme";	
@@ -83,10 +83,10 @@ $row_result = mysql_fetch_array($dbstudent);
 				
 //query academeic year
 $qayear = "SELECT DISTINCT AYear from examresult WHERE RegNo = '$key' ORDER BY AYear ASC";
-$dbayear = mysql_query($qayear);
+$dbayear = mysqli_query($zalongwa, $qayear);
 
 //query exam results sorted per years
-while($rowayear = mysql_fetch_object($dbayear)){
+while($rowayear = mysqli_fetch_object($dbayear)){
 $currentyear = $rowayear->AYear;
 
 			# get all courses for this candidate
@@ -96,8 +96,8 @@ $currentyear = $rowayear->AYear;
 									(RegNo='$key') AND 
 							 		(course.Programme = '$degree') AND 
 									(AYear='$currentyear')";	
-			$dbcourse = mysql_query($qcourse) or die("No Exam Results for the Candidate - $key ");
-			$total_rows = mysql_num_rows($dbcourse);
+			$dbcourse = mysqli_query($zalongwa, $qcourse) or die("No Exam Results for the Candidate - $key ");
+			$total_rows = mysqli_num_rows($dbcourse);
 			
 			if($total_rows>0){
 			#initialise s/no
@@ -105,16 +105,16 @@ $currentyear = $rowayear->AYear;
 			#print name and degree
 			//select student
 				$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$key'";
-				$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-				$row_result = mysql_fetch_array($dbstudent);
+				$dbstudent = mysqli_query($zalongwa, $qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
+				$row_result = mysqli_fetch_array($dbstudent);
 				$name = $row_result['Name'];
 				$regno = $row_result['RegNo'];
 				$degree = $row_result['ProgrammeofStudy'];
 				
 				//get degree name
 				$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-				$dbdegree = mysql_query($qdegree);
-				$row_degree = mysql_fetch_array($dbdegree);
+				$dbdegree = mysqli_query($zalongwa, $qdegree);
+				$row_degree = mysqli_fetch_array($dbdegree);
 				$programme = $row_degree['Title'];
 							
 				#initialise
@@ -136,7 +136,7 @@ $currentyear = $rowayear->AYear;
     <td scope="col">GPA</td>
   </tr>
   <?php
-				while($row_course = mysql_fetch_array($dbcourse)){
+				while($row_course = mysqli_fetch_array($dbcourse)){
 					$course= $row_course['CourseCode'];
 					$unit = $row_course['Units'];
 					$name = $row_course['CourseName'];
@@ -184,16 +184,16 @@ While calculating GPA, these courses were not taken into consideration!
 <hr>
 <?php //select student
 $qstudent = "SELECT * from student WHERE RegNo = '$key'";
-$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-$row_result = mysql_fetch_array($dbstudent);
+$dbstudent = mysqli_query($zalongwa, $qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
+$row_result = mysqli_fetch_array($dbstudent);
 			$name = $row_result['Name'];
 			$regno = $row_result['RegNo'];
 			$degree = $row_result['ProgrammeofStudy'];
 			
 			//get degree name
 			$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-			$dbdegree = mysql_query($qdegree);
-			$row_degree = mysql_fetch_array($dbdegree);
+			$dbdegree = mysqli_query($zalongwa, $qdegree);
+			$row_degree = mysqli_fetch_array($dbdegree);
 			$programme = $row_degree['Title'];
 			
 			echo  "$name - $regno <br> $programme";	
@@ -201,10 +201,10 @@ $row_result = mysql_fetch_array($dbstudent);
 				
 //query academeic year
 $qayear = "SELECT DISTINCT AYear from examresult WHERE RegNo = '$key' ORDER BY AYear ASC";
-$dbayear = mysql_query($qayear);
+$dbayear = mysqli_query($zalongwa, $qayear);
 
 //query exam results sorted per years
-while($rowayear = mysql_fetch_object($dbayear)){
+while($rowayear = mysqli_fetch_object($dbayear)){
 $currentyear = $rowayear->AYear;
 
 			# get all courses for this candidate
@@ -215,8 +215,8 @@ $currentyear = $rowayear->AYear;
 									(AYear='$currentyear') AND 
 							 		(course.Programme = '$degree') AND 
 									(Count=1)";	
-			$dbcourse = mysql_query($qcourse) or die("No Exam Results for the Candidate - $key ");
-			$total_rows = mysql_num_rows($dbcourse);
+			$dbcourse = mysqli_query($zalongwa, $qcourse) or die("No Exam Results for the Candidate - $key ");
+			$total_rows = mysqli_num_rows($dbcourse);
 			
 			if($total_rows>0){
 			#initialise s/no
@@ -224,16 +224,16 @@ $currentyear = $rowayear->AYear;
 			#print name and degree
 			//select student
 				$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$key'";
-				$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-				$row_result = mysql_fetch_array($dbstudent);
+				$dbstudent = mysqli_query($zalongwa, $qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
+				$row_result = mysqli_fetch_array($dbstudent);
 				$name = $row_result['Name'];
 				$regno = $row_result['RegNo'];
 				$degree = $row_result['ProgrammeofStudy'];
 				
 				//get degree name
 				$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-				$dbdegree = mysql_query($qdegree);
-				$row_degree = mysql_fetch_array($dbdegree);
+				$dbdegree = mysqli_query($zalongwa, $qdegree);
+				$row_degree = mysqli_fetch_array($dbdegree);
 				$programme = $row_degree['Title'];
 							
 ?>
@@ -249,7 +249,7 @@ $currentyear = $rowayear->AYear;
     <td scope="col">GPA</td>
   </tr>
   <?php
-				while($row_course = mysql_fetch_array($dbcourse)){
+				while($row_course = mysqli_fetch_array($dbcourse)){
 					$course= $row_course['CourseCode'];
 					$unit = $row_course['Units'];
 					$name = $row_course['CourseName'];
@@ -292,7 +292,7 @@ $currentyear = $rowayear->AYear;
 </table>
 <?php }
   }//ends while rowayear	
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 
 }else{
 
