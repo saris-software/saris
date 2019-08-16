@@ -16,15 +16,15 @@
 
 #populate module combo box
 	$query_module = "SELECT moduleid, modulename FROM modules";
-	$module = mysql_query($query_module, $zalongwa) or die(mysql_error());
-	$row_module = mysql_fetch_assoc($module);
-	$totalRows_module = mysql_num_rows($module);
+	$module = mysqli_query($query_module, $zalongwa) or die(mysqli_error());
+	$row_module = mysqli_fetch_assoc($module);
+	$totalRows_module = mysqli_num_rows($module);
 
 #populate privileges combo box
 	$query_privilege = "SELECT privilegeID, privilegename FROM privilege";
-	$privilege = mysql_query($query_privilege, $zalongwa) or die(mysql_error());
-	$row_privilege = mysql_fetch_assoc($privilege);
-	$totalRows_privilege = mysql_num_rows($privilege);
+	$privilege = mysqli_query($query_privilege, $zalongwa) or die(mysqli_error());
+	$row_privilege = mysqli_fetch_assoc($privilege);
+	$totalRows_privilege = mysqli_num_rows($privilege);
 	
 @$check = $_POST['checksubmit'];
 if ($check=='on'){
@@ -38,17 +38,17 @@ if ($check=='on'){
 					$module = $_POST['module'];
 			$sql="INSERT INTO security (UserName,password,FullName,RegNo, Position, Email, LastLogin, 
 			Registered, AuthLevel, Module, PrivilegeID) VALUES('$username','$pwd','$name','$reg','$desig','$email','now()','now()','','$authlevel','$module')";   
-			$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
+			$result = mysqli_query($sql,$zalongwa) or die("Siwezi kuingiza data.<br>" . mysqli_error());
 	}
 ?> 
 
           <form action="adminmanageuser.php" method="get" class="style24">
-            <div align="right"><span class="style42"><font face="Verdana"><b>Search</b></font></span> 
-              <font color="006699" face="Verdana"><b> 
+            <div align="right"><span class="style42"><span style="font-family: Verdana; "><b>Search</b></span></span>
+              <span style="color: #006699; font-family: Verdana; "><b>
               <input type="text" name="content" size="15">
-              </b></font><font color="#FFFF00" face="Verdana"><b> 
+              </b></span><span style="color: #FFFF00; font-family: Verdana; "><b>
               <input type="submit" value="GO" name="go">
-            </b></font>            </div>
+            </b></span>            </div>
         </form>       
         		 <?php
 
