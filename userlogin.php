@@ -18,16 +18,16 @@ if (isset($_POST['textusername'])) {
 	$sql=sprintf("SELECT UserName, password, RegNo, Position, Module, PrivilegeID, FullName, Faculty FROM security WHERE UserName='%s' AND password='%s'",
  		get_magic_quotes_gpc() ? $username : addslashes($username), get_magic_quotes_gpc() ? $hash : addslashes($hash)); 
 		
-		$result = @mysql_query($sql, $zalongwa);
-		$loginFoundUser = mysql_num_rows($result);
+		$result = @mysqli_query($zalongwa,$sql);
+		$loginFoundUser = mysqli_num_rows($result);
  		if ($loginFoundUser) {
-       		$loginStrGroup  = mysql_result($result,0,'password');
-    		$loginName		= mysql_result($result,0,'FullName');
-			$position 		= mysql_result($result,0,'Position');
-			$RegNo 		= mysql_result($result,0,'RegNo');
-			$module 	= mysql_result($result,0,'Module');
-			$userFaculty 	= mysql_result($result,0,'Faculty');
-			$privilege  = mysql_result($result,0,'PrivilegeID');
+       		$loginStrGroup  = mysqli_free_result($result,0,'password');
+    		$loginName		= mysqli_result($result,0,'FullName');
+			$position 		= mysqli_result($result,0,'Position');
+			$RegNo 		= mysqli_result($result,0,'RegNo');
+			$module 	= mysqli_result($result,0,'Module');
+			$userFaculty 	= mysqli_result($result,0,'Faculty');
+			$privilege  = mysqli_result($result,0,'PrivilegeID');
 			$mtumiaji = 3;
 			
 			$_SESSION['username'] = $username; 
@@ -39,7 +39,7 @@ if (isset($_POST['textusername'])) {
 			$_SESSION['userFaculty'] = $userFaculty; 
 						
 	 	$update_login = "UPDATE security SET LastLogin = now() WHERE UserName = '$username' AND Password = '$password'";
-	 	$result = mysql_query($update_login) or die("Siwezi ku-update LastLogin, Zalongwa");
+	 	$result = mysqli_query($update_login,$zalongwa) or die("Siwezi ku-update LastLogin, Zalongwa");
 	
 if ($module=='1') 
          {
@@ -83,5 +83,5 @@ if ($module=='1')
 } 
 ?>
 <?php
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?>

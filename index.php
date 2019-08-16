@@ -5,6 +5,7 @@
 	
 	require_once('Connections/zalongwa.php');
 	#Get Organisation Name
+
 	$qorg = "SELECT * FROM organisation";
 //	$dborg = mysqli_query($qorg);
 	$dborg = mysqli_query($zalongwa, $qorg);
@@ -19,4 +20,4 @@
 	
 	include 'loginform.php';
 
-?>
+
