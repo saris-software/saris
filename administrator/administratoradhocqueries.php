@@ -28,11 +28,12 @@
                 </div></td>
         </tr>
     </table>
-    //</p>
+    </p>
 
           <form action="administratoradhocqueryexecute.php" method="post" name="fmSQL" id="fmSQL">
             <p>&nbsp;</p>
-            <table style="width:439px border=0">
+
+            <p><table style="width:439px border=0">
             <tr>
               <td>Please_Enter_your_SQL_Query (don't start or terminate with semicolon { ; } or quotes {&quot;&quot; }) </td>
               <g/tr>
