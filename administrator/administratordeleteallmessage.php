@@ -5,6 +5,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
 
   switch ($theType) {
+    case "date":
     case "text":
       $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
       break;    
@@ -14,9 +15,6 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
       break;
     case "double":
       $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
       break;
     case "defined":
       $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
@@ -29,8 +27,8 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 $id = $_GET['id'];
   $deleteSQL = "DELETE FROM stats";
                      
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($deleteSQL, $zalongwa) or die('This Records is Locked by the Examination Officer');
+  mysqli_select_db($database_zalongwa, $zalongwa);
+  $Result1 = mysqli_query($deleteSQL, $zalongwa) or die('This Records is Locked by the Examination Officer' . mysqli_query()_error(();
 echo '<meta http-equiv = "refresh" content ="0; 
 	url = administratorWebStatistics.php">'; 
 	

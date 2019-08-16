@@ -23,14 +23,14 @@
 //To intrude the MySQL Server in Dar es Salaam so that ZALONGWA Database System will run appropriately
 require_once('../Connections/zalongwa.php'); 
 
-//This is my mysql monitor where i can run different commands to set server variables
+//This is my mysqli monitor where i can run different commands to set server variables
 			    	//Receive SQL STRINGVariable
 					$sql = $_POST['strSQL'];
 					//put it in agreed syntax
 					$strSQL = stripslashes("$sql");
 					echo "Query Executed: $strSQL\n <hr>";
 					// Execute Query
-					$result = @mysql_query($strSQL); 
+					$result = @mysqli_query($strSQL);
 					if(!$result) {
 							echo "Execution Status: \n --Samahani Sana, Query Not Executed!<hr>";
 							exit;
@@ -41,8 +41,8 @@ require_once('../Connections/zalongwa.php');
  
  /* Printing results in HTML */
  echo "Query Execution Results: <hr>";
-    print "<table border=\"1\">\n";
-    while (@$line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    print "<table style=border=\"1\">\n";
+    while (@$line = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
         print "\t<tr>\n";
         foreach ($line as $col_value) {
             print "\t\t<td>$col_value</td>\n";
@@ -52,11 +52,11 @@ require_once('../Connections/zalongwa.php');
     print "</table>\n";
 
     /* Free resultset */
-    @mysql_free_result($result);
+    @mysqli_free_result($result);
 
     /* Closing connection */
-  
-@mysql_close($zalongwa);
+
+@mysqli_close($zalongwa);
 						
 ?>
 

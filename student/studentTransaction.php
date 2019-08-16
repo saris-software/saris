@@ -17,5 +17,5 @@
 	$pastelobj = new pastel();
 	$result = $pastelobj->currentTransaction($pastelurl, $regno, $view_type);
        // echo $result;
-include('../footer/footer.php');
+	include('../footer/footer.php');
 ?>
