@@ -13,16 +13,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmInst")) {
                        GetSQLValueString($_POST['txtPointm'], "double"),
                        GetSQLValueString($_POST['txtPointf'], "double"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($database_zalongwa, $zalongwa);
+  $Result1 = mysqli_query($insertSQL, $zalongwa) or die(mysqli_error());
 }
 
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "")
 {
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
 
   switch ($theType) {
-    case "text":
+      case "date":
+      case "text":
       $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
       break;    
     case "long":
@@ -32,10 +33,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
     case "double":
       $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
       break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
+      case "defined":
       $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
       break;
   }
@@ -44,17 +42,17 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 //control the display table
 @$new=2;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_campus = "SELECT * FROM academicyear WHERE Status = -1";
-$campus = mysql_query($query_campus, $zalongwa) or die(mysql_error());
-$row_campus = mysql_fetch_assoc($campus);
-$totalRows_campus = mysql_num_rows($campus);
+$campus = mysqli_query($query_campus, $zalongwa) or die(mysqli_error());
+$row_campus = mysqli_fetch_assoc($campus);
+$totalRows_campus = mysqli_num_rows($campus);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_faculty = "SELECT ProgrammeID, ProgrammeName FROM programme";
-$faculty = mysql_query($query_faculty, $zalongwa) or die(mysql_error());
-$row_faculty = mysql_fetch_assoc($faculty);
-$totalRows_faculty = mysql_num_rows($faculty);
+$faculty = mysqli_query($query_faculty, $zalongwa) or die(mysqli_error());
+$row_faculty = mysqli_fetch_assoc($faculty);
+$totalRows_faculty = mysqli_num_rows($faculty);
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -69,23 +67,23 @@ if (isset($_GET['pageNum_inst'])) {
 }
 $startRow_inst = $pageNum_inst * $maxRows_inst;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_inst = "SELECT * FROM programmecutoffpint";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysql_query($query_limit_inst, $zalongwa) or die(mysql_error());
-$row_inst = mysql_fetch_assoc($inst);
+$inst = mysqli_query($query_limit_inst, $zalongwa) or die(mysqli_error());
+$row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
-  $all_inst = mysql_query($query_inst);
-  $totalRows_inst = mysql_num_rows($all_inst);
+  $all_inst = mysqli_query($query_inst , $zalongwa);
+  $totalRows_inst = mysqli_num_rows($all_inst);
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 
 require_once('../Connections/sessioncontrol.php');
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_programme = "SELECT academicyear.AYear,       
 							programme.ProgrammeName,
 							programmecutoffpint.Id,
@@ -95,9 +93,9 @@ $query_programme = "SELECT academicyear.AYear,
 							INNER JOIN academicyear ON 
 							(programmecutoffpint.AYear = academicyear.intYearID)    
 							INNER JOIN programme ON (programmecutoffpint.ProgrammeID = programme.ProgrammeID)";
-$programme = mysql_query($query_programme, $zalongwa) or die(mysql_error());
-$row_programme = mysql_fetch_assoc($programme);
-$totalRows_programme = mysql_num_rows($programme);
+$programme = mysqli_query($query_programme, $zalongwa) or die(mysqli_error());
+$row_programme = mysqli_fetch_assoc($programme);
+$totalRows_programme = mysqli_num_rows($programme);
 
 # include the header
 include('admissionMenu.php');
@@ -135,9 +133,14 @@ Cut-off Points for Year: <?php echo $row_programme['AYear']; ?>
     <td><div align="center"><?php echo $row_programme['MCutoffpoint']; ?></div></td>
     <td><div align="center"><?php echo $row_programme['FCutoffpoint']; ?></div></td>
   </tr>
-  <?php } while ($row_programme = mysql_fetch_assoc($programme)); ?>
+  <?php } while ($row_programme = mysqli_fetch_assoc($programme)); ?>
 </table>
-<a href="<?php printf("%s?pageNum_programme=%d%s", $currentPage, max(0, $pageNum_programme - 1), $queryString_programme); ?>">Previous</a> <span class="style1">.................</span><?php echo min($startRow_programme + $maxRows_programme, $totalRows_programme) ?> /<?php echo $totalRows_programme ?> <span class="style1">........................</span><a href="<?php printf("%s?pageNum_programme=%d%s", $currentPage, min($totalPages_programme, $pageNum_programme + 1), $queryString_programme); ?>">Next</a><br>
+    <a href="<?php /** @var pageNum_programme $pageNum_programme */
+    /** @var queryString $queryString_programme */
+    printf("%s?pageNum_programme=%d%s", $currentPage, max(0, $pageNum_programme - 1), $queryString_programme); ?>">Previous</a> <span class="style1">.................</span><?php /** @var startRow_programme $startRow_programme */
+    /** @var maxRows_programme $maxRows_programme */
+    echo min($startRow_programme + $maxRows_programme, $totalRows_programme) ?> /<?php echo $totalRows_programme ?> <span class="style1">........................</span><a href="<?php /** @var totalPages $totalPages_programme */
+    printf("%s?pageNum_programme=%d%s", $currentPage, min($totalPages_programme, $pageNum_programme + 1), $queryString_programme); ?>">Next</a><br>
 <?php }else{?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmInst" id="frmInst">
   <table width="200" border="1" cellpadding="0" cellspacing="0" bordercolor="#006600">
@@ -154,11 +157,11 @@ do {
 ?>
         <option value="<?php echo $row_faculty['ProgrammeID']?>"><?php echo $row_faculty['ProgrammeName']?></option>
         <?php
-} while ($row_faculty = mysql_fetch_assoc($faculty));
-  $rows = mysql_num_rows($faculty);
+} while ($row_faculty = mysqli_fetch_assoc($faculty));
+  $rows = mysqli_num_rows($faculty);
   if($rows > 0) {
-      mysql_data_seek($faculty, 0);
-	  $row_faculty = mysql_fetch_assoc($faculty);
+      mysqli_data_seek($faculty, 0);
+	  $row_faculty = mysqli_fetch_assoc($faculty);
   }
 ?>
       </select></td>
@@ -184,11 +187,11 @@ do {
 if (isset($_GET['edit'])){
 #get post variables
 $key = $_GET['edit'];
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_instEdit = "SELECT * FROM programmecutoffpint WHERE Id ='$key'";
-$instEdit = mysql_query($query_instEdit, $zalongwa) or die(mysql_error());
-$row_instEdit = mysql_fetch_assoc($instEdit);
-$totalRows_instEdit = mysql_num_rows($instEdit);
+$instEdit = mysqli_query($query_instEdit, $zalongwa) or die(mysqli_error());
+$row_instEdit = mysqli_fetch_assoc($instEdit);
+$totalRows_instEdit = mysqli_num_rows($instEdit);
 
 $maxRows_programme = 10;
 $pageNum_programme = 0;
@@ -197,17 +200,17 @@ if (isset($_GET['pageNum_programme'])) {
 }
 $startRow_programme = $pageNum_programme * $maxRows_programme;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_programme = "SELECT academicyear.AYear,        							programme.ProgrammeName, 							programmecutoffpint.MCutoffpoint,  	 programmecutoffpint.Id,						programmecutoffpint.FCutoffpoint FROM programmecutoffpint     							INNER JOIN academicyear ON  							(programmecutoffpint.AYear = academicyear.intYearID)     							INNER JOIN programme ON (programmecutoffpint.ProgrammeID = programme.ProgrammeID)";
 $query_limit_programme = sprintf("%s LIMIT %d, %d", $query_programme, $startRow_programme, $maxRows_programme);
-$programme = mysql_query($query_limit_programme, $zalongwa) or die(mysql_error());
-$row_programme = mysql_fetch_assoc($programme);
+$programme = mysqli_query($query_limit_programme, $zalongwa) or die(mysqli_error());
+$row_programme = mysqli_fetch_assoc($programme);
 
 if (isset($_GET['totalRows_programme'])) {
   $totalRows_programme = $_GET['totalRows_programme'];
 } else {
-  $all_programme = mysql_query($query_programme);
-  $totalRows_programme = mysql_num_rows($all_programme);
+  $all_programme = mysqli_query($query_programme , $zalongwa);
+  $totalRows_programme = mysqli_num_rows($all_programme);
 }
 $totalPages_programme = ceil($totalRows_programme/$maxRows_programme)-1;
 
@@ -258,11 +261,11 @@ do {
 ?>
         <option value="<?php echo $row_faculty['ProgrammeID']?>"><?php echo $row_faculty['ProgrammeName']?></option>
         <?php
-} while ($row_faculty = mysql_fetch_assoc($faculty));
-  $rows = mysql_num_rows($faculty);
+} while ($row_faculty = mysqli_fetch_assoc($faculty));
+  $rows = mysqli_num_rows($faculty);
   if($rows > 0) {
-      mysql_data_seek($faculty, 0);
-	  $row_faculty = mysql_fetch_assoc($faculty);
+      mysqli_data_seek($faculty, 0);
+	  $row_faculty = mysqli_fetch_assoc($faculty);
   }
 ?>
       </select></td>
@@ -289,13 +292,13 @@ do {
 	# include the footer
 	include("../footer/footer.php");
 
-@mysql_free_result($inst);
+@mysqli_free_result($inst);
 
-@mysql_free_result($instEdit);
+@mysqli_free_result($instEdit);
 
-mysql_free_result($programme);
+@mysqli_free_result($programme);
 
-@mysql_free_result($faculty);
+@mysqli_free_result($faculty);
 
-@mysql_free_result($campus);
+@mysqli_free_result($campus);
 ?>
