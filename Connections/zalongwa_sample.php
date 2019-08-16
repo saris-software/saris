@@ -6,12 +6,12 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 @$database_zalongwa = "saris_students";
 @$username_zalongwa = "siras";
 @$password_zalongwa = "54321otod";
-$zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
+$zalongwa = new mysqli($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa), $database_zalongwa );
 if (!$zalongwa){
     printf(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
     exit;
 }
-@mysqli_select_db($zalongwa, "zalongwamnma");
+@mysqli_select_db($zalongwa, $database_zalongwa);
 
 
 $zalongwa = mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
@@ -19,14 +19,14 @@ if (!$zalongwa){
     printf(mysqli_error($zalongwa)."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
     exit;
 }
-mysqli_select_db ($zalongwa, "zalongwamnma");
+mysqli_select_db ($zalongwa, $database_zalongwa);
 $zalongwa = mysqli_connect ($hostname_zalongwa, strrev ($username_zalongwa), strrev ($password_zalongwa));
 if (!$zalongwa){
     die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
     exit();
 }
 //change in selection of database as mysqli
-mysqli_select_db ($zalongwa, "zalongwamnma");
+mysqli_select_db ($zalongwa, $database_zalongwa);
 
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
