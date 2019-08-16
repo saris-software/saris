@@ -38,14 +38,14 @@
 	#get organisation name
 	
 	$qname = 'SELECT Name, Address FROM organisation';
-	$dbname = mysql_query($qname);
-	$name_row = mysql_fetch_assoc($dbname);
+	$dbname = mysqli_query($qname);
+	$name_row = mysqli_fetch_assoc($dbname);
 
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
-<html>
+<!DOCTYPE html>
 <head>
 	<title>SARIS -> <?php echo  $szSection ?> -> <?php echo  $szSubSection ?></title>
 	<!-- include style sheet -->
@@ -63,12 +63,12 @@
     </style>
 </head>
 <body leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
-<table border="0" cellspacing="0" cellpadding='0' width='100%' background="../themes/images/loginTopHeaderBg.gif" style="border:2px solid rgb(119,119,119)">
+<table border="0" border-spacing="0" padding='0' width='100%' background="../themes/images/loginTopHeaderBg.gif" style="border:2px solid rgb(119,119,119)">
 <tr>
-	<td align=left valign="middle"><span class="style5"><?php include '../includes/pagetitle.php'?></span></td>
+	<td align=left vertical-align="middle"><span class="style5"><?php include '../includes/pagetitle.php'?></span></td>
 </tr>
 </table>
-<table border="0" cellspacing="0" cellpadding="0" width=100% height=100% style="border:2px solid rgb(119,119,119)">
+<table border="0" border-spacing="0" padding="0" width=100% height=100% style="border:2px solid rgb(119,119,119)">
 <tr>
 </tr>
 <tr><td height=30 colspan=2 bgcolor="#CCCCCC" class="style6">
@@ -80,10 +80,10 @@
 	</td>
 </tr>
 <tr>
-    <td rowspan=2 width=180 valign=top align=center style="padding:5px" bgcolor="#CCCCCC"><span class="white"></span>
+    <td rowspan=2 width=180 valign=top align=center bgcolor="#CCCCCC"><span class="white"></span>
       <table cellspacing="0" cellpadding="0" border="0">
 		  <tr>
-		      <td align="left" style="padding-left: 1px;" valign=top>
+		      <td align="left" valign=top>
 			  
 			<div class="EnclosureBox">
 			  <?php # loop around and write out the Sections
@@ -193,13 +193,13 @@
 			  <?php } ?>
 			  </td>
 		  </tr>
-  </table></td><td valign=top style="font-size:12pt;"><div style="width:550;padding:15px 10px 15px 20px">
+  </table></td><td vertical-align=top style="font-size:12pt;"><div style="width:550px;padding:15px 10px 15px 20px">
 		<?php if (strlen($szTitle)){
-				echo '<div class="header1">'.$szTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
+				echo '<div class="header1">'.$szTitle.'</div><hr style="height: 2px; border-width=0;  color:#B9C2C6; size:px">
 			}elseif (strlen($szSubSubSectionTitle)){
-				echo '<div class="header1">'.$szSubSubSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
+				echo '<div class="header1">'.$szSubSubSectionTitle.'</div> <hr style="height:2px;border-width:0 color:#B9C2C6 size=1">
 			}elseif (strlen($szSubSectionTitle)){
-				echo '<div class="header1">'.$szSubSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
+				echo '<div class="header1">'.$szSubSectionTitle.'</div><hr style="height: 2px border-width:0 color:#B9C2C6 size=1">'
 			}elseif (strlen($szSectionTitle)){
-				echo '<div class="header1">'.$szSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
+				echo '<div class="header1">'.$szSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1">;
 			} ?>
