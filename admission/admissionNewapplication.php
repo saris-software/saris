@@ -18,7 +18,7 @@ include('admissionMenu.php');
 		
 		#check if RegNo Exist
 			$sql = "SELECT intApplicantID FROM applicant WHERE intApplicantID = '$intApplicantID'";
-			$result = mysql_query($sql) or die("kuna tatizo");
+			$result = mysqli_query($sql) or die("kuna tatizo");
 			$intApplicantIDFound = mysql_num_rows($result);
 			if ($intApplicantIDFound) {
 					echo "ZALONGWA Database System Imegundua Kuwa,<br> Registration Number Hii Ina Mtu Tayari";

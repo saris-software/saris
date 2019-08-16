@@ -12,8 +12,8 @@ $editFormAction = $_SERVER['PHP_SELF'];
 
 #check if has blocked
 $qstatus = "SELECT Status FROM student  WHERE (RegNo = '$RegNo')";
-$dbstatus = mysql_query($qstatus);
-$row_status = mysql_fetch_array($dbstatus);
+$dbstatus = mysqli_query($zalongwa,$qstatus);
+$row_status = mysqli_fetch_array($dbstatus);
 $status = $row_status['Status'];
 if ($status=='Blocked')
 {
@@ -29,8 +29,8 @@ $sn=0;
 #print name and degree
 //select student
 	$qstudent = "SELECT Name, RegNo, EntryYear, ProgrammeofStudy, Status from student WHERE RegNo = '$RegNo'";
-	$dbstudent = mysql_query($qstudent); 
-	$row_result = mysql_fetch_array($dbstudent);
+	$dbstudent = mysqli_query($zalongwa,$qstudent);
+	$row_result = mysqli_fetch_array($dbstudent);
 	$name = $row_result['Name'];
 	$regno = $row_result['RegNo'];
 	$degree = $row_result['ProgrammeofStudy'];
@@ -46,8 +46,8 @@ $sn=0;
 	
 	//get degree name
 	$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-	$dbdegree = mysql_query($qdegree);
-	$row_degree = mysql_fetch_array($dbdegree);
+	$dbdegree = mysqli_query($zalongwa,$qdegree);
+	$row_degree = mysqli_fetch_array($dbdegree);
 	$programme = $row_degree['Title'];
 	echo  "$name - $regno <br> $programme";	
 	
@@ -56,10 +56,10 @@ require_once('../billing/includes/getgrandtotalpaid.php');
 if($due<=$debtorlimit){
 		#query academeic year
 		$qayear = "SELECT DISTINCT AYear from examresult WHERE RegNo = '$RegNo' ORDER BY examresult.AYear ASC";
-		$dbayear = mysql_query($qayear);
+		$dbayear = mysqli_query($zalongwa,$qayear);
 
 		//query exam results sorted per years
-		while($rowayear = mysql_fetch_object($dbayear))
+		while($rowayear = mysqli_fetch_object($dbayear))
 		{
 			$currentyear = $rowayear->AYear;
 			$entryyear = substr($entryyear,0,4);
@@ -84,8 +84,8 @@ if($due<=$debtorlimit){
 					WHERE  (ProgrammeID='$degree') AND 
 						(YearofStudy='$yearofstudy') ORDER BY semester, CourseCode";
 													  
-			$dbcourse_total = mysql_query($qcourse_total) or die("No Exam Results for the Candidate - $RegNo ");
-			$total_rows = mysql_num_rows($dbcourse_total);
+			$dbcourse_total = mysqli_query($zalongwa,$qcourse_total) or die("No Exam Results for the Candidate - $RegNo ");
+			$total_rows = mysqli_num_rows($dbcourse_total);
 		
 		?>
 		
@@ -105,7 +105,7 @@ if($due<=$debtorlimit){
 		  <?php
 			$subjecttaken=0;
 			$x=0;
-			while($row_course_total = mysql_fetch_array($dbcourse_total))
+			while($row_course_total = mysqli_fetch_array($dbcourse_total))
 			{
 				$course= $row_course_total['CourseCode'];
 				$coption = $row_course_total['Status']; 
@@ -259,6 +259,6 @@ if($due<=$debtorlimit){
 		echo '			<br>Programme Debtor Limit: '.number_format($debtorlimit,2,'.',',');
 		echo '<br>===============&&&&&&&&================== ';
 	}
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 include('../footer/footer.php');
 ?>

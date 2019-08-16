@@ -14,17 +14,33 @@
 	include('administratorheader.php');
 
 ?>
+    <p>&nbsp;</p>
+    <table width=439 border=0 >
+        <tr>
+            <td>Please Enter your SQL Query (don't start or terminate with semicolon { ; } or quotes {&quot;&quot; }) </td>
+        </tr>
+        <tr>
+            <td><textarea name="strSQL" cols="95" rows="6" id="strSQL"></textarea></td>
+        </tr>
+        <tr>
+            <td><div align="center">
+                    <input type="submit" name="Submit" value="Execute Query">
+                </div></td>
+        </tr>
+    </table>
+    //</p>
+
           <form action="administratoradhocqueryexecute.php" method="post" name="fmSQL" id="fmSQL">
             <p>&nbsp;</p>
-            <table width="439" border="0">
+            <table style="width:439px border=0">
             <tr>
-              <td>Please Enter your SQL Query (don't start or terminate with semicolon { ; } or quotes {&quot;&quot; }) </td>
+              <td>Please_Enter_your_SQL_Query (don't start or terminate with semicolon { ; } or quotes {&quot;&quot; }) </td>
+              <g/tr>
+            <tr>
+              <td><label for="strSQL"></label><textarea name="strSQL" cols="95" rows="6" id="strSQL"></textarea></td>
               </tr>
             <tr>
-              <td><textarea name="strSQL" cols="95" rows="6" id="strSQL"></textarea></td>
-              </tr>
-            <tr>
-              <td><div align="center">
+              <td><div text-align ="center">
                 <input type="submit" name="Submit" value="Execute Query">
               </div></td>
               </tr>

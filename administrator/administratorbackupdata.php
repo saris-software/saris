@@ -9,23 +9,23 @@ $username = addslashes($_GET['username']);
 require_once('../Connections/zalongwa.php'); 
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'Data Backup')";   
-$result = mysql_query($sql);// or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($sql);// or die("Siwezi kuingiza data.<br>" . mysqli_error());
 
-//$result = @mysql_query("show tables"); 
-    //while (@$line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+//$result = @mysqli_query("show tables");
+    //while (@$line = mysqli_fetch_array($result, MYSQL_ASSOC)) {
        // foreach ($line as $tablename) {
               
 $tablename = "examresult";
 						$select = "SELECT * FROM  $tablename";     
 								  
-						$export = mysql_query($select); 
-						$fields = mysql_num_fields($export); 
+						$export = mysqli_query($select);
+						$fields = mysqli_num_fields($export);
 						
 						for ($i = 0; $i < $fields; $i++) { 
-							@$header .= mysql_field_name($export, $i) . "\t"; 
+							@$header = mysqli_field_name($export, $i) . "\t";
 						} 
 						
-						while($row = mysql_fetch_row($export)) { 
+						while($row = mysqli_fetch_row($export)) {
 							$line = ''; 
 							foreach($row as $value) {                                             
 								if ((!isset($value)) OR ($value == "")) { 
@@ -55,5 +55,5 @@ $tablename = "examresult";
        
 //}
   
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?> 

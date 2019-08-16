@@ -37,7 +37,7 @@ while($row_reults = mysql_fetch_assoc($dbresult)){
 							Count = '$count',
 							Comment = '$comment'
 							";
-	$dbinsertexam = mysql_query($qinsertexam);
+	$dbinsertexam = mysqli_query($qinsertexam);
 	
 	#insert Coursework Marks into SUZA table
 	$qinsertexam = "INSERT INTO examresultsuza SET 
@@ -57,7 +57,7 @@ while($row_reults = mysql_fetch_assoc($dbresult)){
 							Count = '$count',
 							Comment = '$comment'
 							";
-	$dbinsertexam = mysql_query($qinsertexam);
+	$dbinsertexam = mysqli_query($qinsertexam);
 }
 */
 #copy dus data
@@ -109,10 +109,10 @@ While ($row_dusstudent = mysqli_fetch_assoc($dbdusstudent))
 						Programme = '$degree',
 						EntryYear = '$ayear'
 						";
-		$dbinsertstd =mysql_query($qinsertstd);
+		$dbinsertstd =mysqli_query($qinsertstd);
 		
 		#insert results
-		while ($row_result = mysql_fetch_assoc($dbresult))
+		while ($row_result = mysqli_fetch_assoc($dbresult))
 		{
 			$coursecode = $row_result ['CourseCode'];
 			$examno = $row_result ['ExamNo'];
@@ -129,7 +129,7 @@ While ($row_dusstudent = mysqli_fetch_assoc($dbdusstudent))
 							Status = '$marital',
 							AYear = '$year'
 							";
-			$dbinsertexam =mysql_query($qinsertstd);
+			$dbinsertexam =mysqli_query($qinsertstd);
 		}
 	}
 }

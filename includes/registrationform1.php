@@ -22,9 +22,9 @@ $state4="disabled";
 $label_edit="<a href='$_SERVER[PHP_SELF]?id=$id&RegNo=$reg&edit=yes'><img src='../includes/img/edit.png' alt='Click to Edit This Record'>Edit</a>";
 }
 $sql = "SELECT * FROM student WHERE Id ='$id' and RegNo='$reg'"; 
-$update = mysql_query($sql);
-$update_row = mysql_fetch_array($update);
-$totalRows_update = mysql_num_rows($update);
+$update = mysqli_query($sql);
+$update_row = mysqli_fetch_array($update);
+$totalRows_update = mysqli_num_rows($update);
 	$regno = $update_row['RegNo'];
 	$stdid = $update_row['Id'];
 	$AdmissionNo = $update_row['AdmissionNo'];     
@@ -207,7 +207,7 @@ if(!$diploma)
 }
 if(!$degree)
 {
-$degree="<font color='red'>*Study Programme Must be Filled</font>";
+$degree="<style=font-color:'red'>*Study Programme Must be Filled</font>";
 }
  	 
 	 
@@ -218,7 +218,7 @@ if(!$faculty)
 	  
 if(!$ayear)
 {
-$ayear_error="<font color='red'>*Date Must be Filled</font>";
+$ayear_error="<style=font-color:'red'>*Date Must be Filled</font>";
 }
 	 
 if(!$combi)
@@ -227,7 +227,7 @@ if(!$combi)
 } 	 
 if(!$campus)
 {
-$campus_error="<font color='red'>*Campus Name Must be Filled</font>";
+$campus_error="<style=font-color:'red'>*Campus Name Must be Filled</font>";
 }	 
 if(!$manner)
 {
@@ -254,17 +254,17 @@ if(!$bday)
 }	
 if(!$dtDOB)
 {
-$dtDOB_error="<font color='red'>*Date of birth Must be Filled</font>";
+$dtDOB_error="<style=font-color:'red'>*Date of birth Must be Filled</font>";
 }
 	 
 if(!$surname)
 {
-$surname_error="<font color='red'>*Surname Must be Filled</font>";
+$surname_error="<style=font-color:'red'>*Surname Must be Filled</font>";
 }	 
 	
 if(!$firstname)
 {
-$firstname_error="<font color='red'>*First Name Must be Filled</font>";
+$firstname_error="<style=font-color:'red'>*First Name Must be Filled</font>";
 }
 /* 
 if(!$middlename)
@@ -275,11 +275,11 @@ $middlename_error="<font color='red'>*Middle Name Must be Filled</font>";
  
 if(!$sponsor)
 {
-$sponsor_error="<font color='red'>*Sponsor Must be Filled</font>";
+$sponsor_error="<style=font-color:'red'>*Sponsor Must be Filled</font>";
 }
 if(!$country)
 {
-$country_error="<font color='red'>*Country Must be Filled</font>";
+$country_error="<style=font-color:'red'>*Country Must be Filled</stylefont>";
 }
 if(!$region)
 {
@@ -287,11 +287,11 @@ if(!$region)
 }
 if(!$maritalstatus)
 {
-$maritalstatus_error="<font color='red'>*Marital Status Must be Filled</font>";
+$maritalstatus_error="<style=font-color:'red'>*Marital Status Must be Filled</font>";
 }
 if(!$address)
 {
-$address_error="<font color='red'>*Address Must be Filled</font>";
+$address_error="<style=font-color:'red'>*Address Must be Filled</font>";
 }
 if(!$religion)
 {
@@ -303,11 +303,11 @@ if(!$denomination)
 }
 if(!$postaladdress)
 {
-$postaladdress_error="<font color='red'>*Postal Address Must be Filled</font>";
+$postaladdress_error="<style=font-color:'red'>*Postal Address Must be Filled</font>";
 }
 if(!$residenceaddress)
 {
-$residenceaddress_error="<font color='red'>*Residentaddress Address Must be Filled</font>";
+$residenceaddress_error="<style=font-color:'red'>*Residentaddress Address Must be Filled</font>";
 }
 /*
 if(!$disability)
@@ -317,7 +317,7 @@ $disability_error="<font color='red'>*Disability Must be Filled</font>";
 */
 if(!$status)
 {
-$status_error="<font color='red'>*Status Address Must be Filled</font>";
+$status_error="<style=font-color:'red'>*Status Address Must be Filled</font>";
 }
 if(!$gyear)
 {
@@ -332,8 +332,8 @@ if(!$name)
 form();
 #check if RegNo Exist
 $qRegNo = "SELECT RegNo FROM student WHERE RegNo = '$regno'";
-$dbRegNo = mysql_query($qRegNo);
-$total = mysql_num_rows($dbRegNo);
+$dbRegNo = mysqli_query($qRegNo);
+$total = mysqli_num_rows($dbRegNo);
 if ($total==1)
 {
 echo"
@@ -422,7 +422,7 @@ VALUES
 '$studylevel'
 )";   
 //echo $sql;
-$dbstudent = mysql_query($sql);
+$dbstudent = mysqli_query($sql);
 if(!$dbstudent)
 {
 echo "Admision Record Cannot be Saved";
@@ -1189,8 +1189,8 @@ if(isset($_POST['actionupdate']))
 		$currentaddaress=$_POST['currentaddaress'];
 
 $qRegNo = "SELECT RegNo FROM student WHERE RegNo = '$regno'";
-$dbRegNo = mysql_query($qRegNo);
-$total = mysql_num_rows($dbRegNo);
+$dbRegNo = mysqli_query($qRegNo);
+$total = mysqli_num_rows($dbRegNo);
 if ($total>1) 
 {
 echo "ZALONGWA SARIS database system has detected that,<br> this Registration ". $regno. " is already in use";
@@ -1238,7 +1238,7 @@ else
 	Class='$class',
 	currentaddaress='$currentaddaress'
 	where Id='$stdid'";
-$dbstudent = mysql_query($sql) or die(mysql_error().' - mmeona wenyewe?');
+$dbstudent = mysqli_query($sql) or die(mysqli_error().' - mmeona wenyewe?');
 if(!$dbstudent)
 {
 echo "Admision Record Cannot be Updated - ".$dbstudent;
