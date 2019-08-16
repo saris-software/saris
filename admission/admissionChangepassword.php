@@ -14,7 +14,8 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
 
   switch ($theType) {
-    case "text":
+      case "date":
+      case "text":
       $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
       break;    
     case "long":
@@ -24,10 +25,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
     case "double":
       $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
       break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
+      case "defined":
       $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
       break;
   }
@@ -54,15 +52,15 @@ echo ("Password too short, Password must be at least 5 characters!");
 exit;
 }
 $sql = "SELECT * FROM security WHERE password ='$hashold'";
-$Result1 = mysql_query($sql, $zalongwa) or die(mysql_error());
-if(!mysql_num_rows($Result1)){
+$Result1 = mysqli_query($sql, $zalongwa) or die(mysqli_error());
+if(!mysqli_num_rows($Result1)){
 		echo 'Invalid Password, 
 		<br> Click the Back Button to Try'; 
 		exit;
 }else
   $updateSQL = "UPDATE security SET password='$hashnew' WHERE UserName='$txtusername' AND password ='$hashold'";
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($updateSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($database_zalongwa, $zalongwa);
+  $Result1 = mysqli_query($updateSQL, $zalongwa) or die(mysqli_error());
 
   $updateGoTo = "../Login.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -79,9 +77,9 @@ if (isset($_COOKIE['UserName'])) {
   $colname_changepassword = (get_magic_quotes_gpc()) ? $_COOKIE['UserName'] : addslashes($_COOKIE['UserName']);
 }
 $query_changepassword = sprintf("SELECT * FROM security WHERE UserName = '$username'", $colname_changepassword);
-$changepassword = mysql_query($query_changepassword, $zalongwa) or die(mysql_error());
-$row_changepassword = mysql_fetch_assoc($changepassword);
-$totalRows_changepassword = mysql_num_rows($changepassword);
+$changepassword = mysqli_query($query_changepassword, $zalongwa) or die(mysqli_error());
+$row_changepassword = mysqli_fetch_assoc($changepassword);
+$totalRows_changepassword = mysqli_num_rows($changepassword);
 ?>
 <SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript>
 <!--
@@ -140,8 +138,8 @@ function check_form() {
             <tr>
               <td valign=TOP align=LEFT width=1 bgcolor="#993300"></td>
               <td valign=MIDDLE align=RIGHT width=100% bgcolor="#006699">
-                <div align="left"><font color="#FFFF33"><b>USER CHANGE PASSWORD FORM</b></font></div></td>
-              <td valign=TOP align=RIGHT width=1 bgcolor="#993300"></td>
+                <div align="left"><span style="color: #FFFF33; "><b>USER CHANGE PASSWORD FORM</b></span></div></td>
+              <td align=RIGHT bgcolor="#993300" valign=TOP width=1></td>
             </tr>
             <tr>
               <td></td>
@@ -170,37 +168,41 @@ function check_form() {
                             <TD VALIGN=MIDDLE ALIGN=RIGHT colspan="2" height="28" nowrap><div align="right"><font color="#0000CC"> </font></div></TD>
                             <TD ROWSPAN=7><div align="right"></div></TD>
                             <TD VALIGN=MIDDLE ALIGN=LEFT><div align="right"></div></TD>
-                            <TD VALIGN=MIDDLE ALIGN=LEFT><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">
-                            </font></div></TD>
+                            <TD VALIGN=MIDDLE ALIGN=LEFT><div align="left"><span
+                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
+                            </span></div></TD>
                             <td></td>
                           </TR>
                           <TR>
                             <TD VALIGN=MIDDLE ALIGN=RIGHT colspan="2" height="28" nowrap><div align="right"><font color="#0000CC"> NAME: </font></div></TD>
                             <TD VALIGN=MIDDLE ALIGN=LEFT><div align="right"></div></TD>
-                            <TD VALIGN=MIDDLE ALIGN=LEFT><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">
+                            <TD VALIGN=MIDDLE ALIGN=LEFT><div align="left"><span
+                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
                                   <?php echo $row_changepassword['FullName']; ?>
-                            </font></div></TD>
+                            </span></div></TD>
                             <td></td>
                           </TR>
                           <TR>
                             <TD VALIGN=middle height="28" colspan="2" ALIGN=right>
-                              <div align="right"><font color="#0000CC">ID REGNO:</font></div></TD>
+                              <div align="right"><span style="color: #0000CC; ">ID REGNO:</span></div></TD>
                             <TD VALIGN=MIDDLE ALIGN=LEFT rowspan="2"><div align="right"></div></TD>
-                            <TD VALIGN=TOP ALIGN=LEFT><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">
+                            <TD VALIGN=TOP ALIGN=LEFT><div align="left"><span
+                                            style="color: #000000; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; ">
                                   <?php echo $row_changepassword['RegNo']; ?>
-                            </font><font color="#0000CC"></font></div></TD>
+                            </span><span style="color: #0000CC; "></span></div></TD>
                             <td></td>
                           </TR>
                           <TR>
                             <TD colspan="2" VALIGN=MIDDLE rowspan="2" ALIGN=RIGHT nowrap><div align="right"><font color="#0000CC">POSITION:</font></div></TD>
-                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">
+                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><span
+                                            style="color: #000000; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; ">
                                   <select name="selectPosition" id="selectPosition">
                                     <option value="student">student</option>
                                     <option value="student">Lecturer</option>
                                     <option value="student">Administrator</option>
                                     <option value="student">Technician</option>
                                   </select>
-                            </font></div></TD>
+                            </span></div></TD>
                             <td height="9"></td>
                           </TR>
                           <TR>
@@ -209,10 +211,11 @@ function check_form() {
                           </TR>
                           <TR>
                             <TD colspan="2" rowspan="2" ALIGN=RIGHT VALIGN=MIDDLE nowrap><div align="right"><font color="#0000CC">LOGIN (eg. jlungo for Juma Lungo): </font></div></TD>
-                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">
+                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><span
+                                            style="color: #000000; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; ">
                                   <?php echo $row_changepassword['UserName']; ?>
                                   <input name="username" type="hidden" id="username" value="<?php echo $row_changepassword['UserName']; ?>">
-                            </font></div></TD>
+                            </span></div></TD>
                             <td height="9"></td>
                           </TR>
                           <TR>
@@ -222,9 +225,10 @@ function check_form() {
                           <TR>
                             <TD colspan="2" VALIGN=MIDDLE rowspan="2" ALIGN=RIGHT><div align="right"><font color="#0000CC">Old Password:</font></div></TD>
                             <TD height="9"><div align="right"></div></TD>
-                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">
+                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><span
+                                            style="color: #000000; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; ">
                                   <input name="txtoldPWD" type="password" id="txtoldPWD" size="30" >
-                            </font></div></TD>
+                            </span></div></TD>
                             <td></td>
                           </TR>
                           <TR>
@@ -235,22 +239,25 @@ function check_form() {
                           <TR>
                             <TD colspan="2" rowspan="2" ALIGN=RIGHT VALIGN=MIDDLE nowrap><div align="right"><font color="#0000CC">New Password: </font></div></TD>
                             <TD height="9"><div align="right"></div></TD>
-                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">
+                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><span
+                                            style="color: #000000; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; ">
                                   <input name="txtnewPWD" type="password" id="txtnewPWD" size="30" >
-                            </font></div></TD>
+                            </span></div></TD>
                             <td></td>
                           </TR>
                           <TR>
                             <TD height="19"><div align="right"></div></TD>
-                            <TD VALIGN=MIDDLE ALIGN=LEFT rowspan="2"><div align="right"><font color="#0000CC"></font></div></TD>
+                            <TD VALIGN=MIDDLE ALIGN=LEFT rowspan="2"><div align="right"><span
+                                            style="color: #0000CC; "></span></div></TD>
                             <td></td>
                           </TR>
                           <TR>
                             <TD WIDTH=1 height="9"><div align="right"></div></TD>
                             <TD colspan="2" rowspan="2" VALIGN=MIDDLE ALIGN=RIGHT><div align="right"><font color="#0000CC">Comfirm Password: </font></div></TD>
-                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#0000CC">
+                            <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT><div align="left"><span
+                                            style="color: #0000CC; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; ">
                                   <input name="txtrenewPWD" type="password" id="txtrenewPWD" size="30" >
-                            </font></div></TD>
+                            </span></div></TD>
                             <td></td>
                           </TR>
                           <TR>
@@ -262,7 +269,7 @@ function check_form() {
                             <TD height="19"><div align="right"></div></TD>
                             <TD width="126" valign="bottom" align="right"><div align="right"></div></TD>
                             <TD VALIGN=MIDDLE ALIGN=LEFT BGCOLOR="#993300"><div align="right"></div></TD>
-                            <TD VALIGN=TOP ALIGN=LEFT><div align="right"><font color="#0000CC"></font></div></TD>
+                            <TD VALIGN=TOP ALIGN=LEFT><div align="right"><span style="color: #0000CC; "></span></div></TD>
                             <TD valign="top" nowrap bgcolor="#FFE5B2">
                                 <div align="left">
                                   <input type="submit" value="Submit" name="Submit">
@@ -287,7 +294,7 @@ function check_form() {
                       </table></TD>
                     </TR>
                   </TABLE>
-                  <font color="#FFE5B2"> ........... </font> </div></TD>
+                  <span style="color: #FFE5B2; "> ........... </span> </div></TD>
               <TD VALIGN=TOP ALIGN=LEFT BGCOLOR="#993300"></TD>
             </TR>
             <tr>
