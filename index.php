@@ -20,4 +20,4 @@
 	
 	include 'loginform.php';
 
-
+	?>
