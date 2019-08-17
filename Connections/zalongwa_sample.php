@@ -19,7 +19,7 @@ if (!$zalongwa){
 	 printf(mysqli_error($zalongwa)."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
 	 exit;
 	}
-mysqli_select_db ($zalongwa, "zalongwamnma")
+mysqli_select_db ($zalongwa, "zalongwamnma");
 $zalongwa = mysqli_connect ($hostname_zalongwa, strrev ($username_zalongwa), strrev ($password_zalongwa)); 
 if (!$zalongwa){
  die("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!" . mysqli_connect_error());
