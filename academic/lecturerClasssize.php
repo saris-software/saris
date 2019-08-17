@@ -16,22 +16,22 @@
 #if not refreshed set refresh = 0
 @$refresh = 0;
 #------------
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AYear = mysql_query($query_AYear, $zalongwa) or die(mysql_error());
-$row_AYear = mysql_fetch_assoc($AYear);
-$totalRows_AYear = mysql_num_rows($AYear);
+$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error($zalongwa));
+$row_AYear = mysqli_fetch_assoc($AYear);
+$totalRows_AYear = mysqli_num_rows($AYear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_dept = "SELECT DeptName FROM department ORDER BY DeptName ASC";
-$dept = mysql_query($query_dept, $zalongwa) or die(mysql_error());
-$row_dept = mysql_fetch_assoc($dept);
-$totalRows_dept = mysql_num_rows($dept);
+$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error($zalongwa));
+$row_dept = mysqli_fetch_assoc($dept);
+$totalRows_dept = mysqli_num_rows($dept);
 
 $browser  =  $_SERVER["HTTP_USER_AGENT"];   
 $ip  =  $_SERVER["REMOTE_ADDR"];   
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 
 #process form submission
 $editFormAction = $_SERVER['PHP_SELF'];
@@ -75,14 +75,14 @@ $query_ExamOfficerGradeBook = "
 		AND course.Department = '$dept' GROUP BY course.CourseCode";
 }
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysql_query($query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysql_error());
-$row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook);
+$ExamOfficerGradeBook = mysqli_query($zalongwa, $query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysqli_error($zalongwa));
+$row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {
   $totalRows_ExamOfficerGradeBook = $_GET['totalRows_ExamOfficerGradeBook'];
 } else {
-  $all_ExamOfficerGradeBook = mysql_query($query_ExamOfficerGradeBook);
-  $totalRows_ExamOfficerGradeBook = mysql_num_rows($all_ExamOfficerGradeBook);
+  $all_ExamOfficerGradeBook = mysqli_query($zalongwa, $query_ExamOfficerGradeBook);
+  $totalRows_ExamOfficerGradeBook = mysqli_num_rows($all_ExamOfficerGradeBook);
 }
 $totalPages_ExamOfficerGradeBook = ceil($totalRows_ExamOfficerGradeBook/$maxRows_ExamOfficerGradeBook)-1;
 
@@ -118,7 +118,7 @@ $queryString_ExamOfficerGradeBook = sprintf("&totalRows_ExamOfficerGradeBook=%d%
                 <td><?php $course = $row_ExamOfficerGradeBook['CourseCode']; echo $row_ExamOfficerGradeBook['CourseCode']; ?></td>
                 <td><div align="center"><?php echo $row_ExamOfficerGradeBook['Total'];?></div></td>
            		  </tr>
-              <?php } while ($row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook)); ?>
+              <?php } while ($row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook)); ?>
 </table>
             <p>
               <?php
@@ -136,11 +136,11 @@ do {
 ?>
                       <option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
                       <?php
-} while ($row_AYear = mysql_fetch_assoc($AYear));
-  $rows = mysql_num_rows($AYear);
+} while ($row_AYear = mysqli_fetch_assoc($AYear));
+  $rows = mysqli_num_rows($AYear);
   if($rows > 0) {
-      mysql_data_seek($AYear, 0);
-	  $row_AYear = mysql_fetch_assoc($AYear);
+      mysqli_data_seek($AYear, 0);
+	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
                   </select></td>
@@ -153,11 +153,11 @@ do {
 ?>
                       <option value="<?php echo $row_dept['DeptName']?>"><?php echo $row_dept['DeptName']?></option>
                       <?php
-} while ($row_dept = mysql_fetch_assoc($dept));
-  $rows = mysql_num_rows($dept);
+} while ($row_dept = mysqli_fetch_assoc($dept));
+  $rows = mysqli_num_rows($dept);
   if($rows > 0) {
-      mysql_data_seek($dept, 0);
-	  $row_dept = mysql_fetch_assoc($dept);
+      mysqli_data_seek($dept, 0);
+	  $row_dept = mysqli_fetch_assoc($dept);
   }
 ?>
                   </select></td>

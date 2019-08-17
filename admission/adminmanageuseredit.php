@@ -1,5 +1,5 @@
 <?php
-#get connected to the database and verfy current session
+#get connected to the database and verify current session
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 	
@@ -14,51 +14,51 @@
 	include('admissionheader.php');
 ?>
 <form action="adminmanageuser.php" method="get" class="style24">
-            <div align="right"><span class="style67"><font face="Verdana"><b>Search</b></font></span> 
-              <font color="006699" face="Verdana"><b> 
+            <div align="right"><span class="style67"><span style="font-family: Verdana; "><b>Search</b></span></span>
+              <span style="color: #006699; font-family: Verdana; "><b>
               <input type="text" name="content" size="15">
-              </b></font><font color="#FFFF00" face="Verdana"><b> 
+              </b></span><span style="color: #FFFF00; font-family: Verdana; "><b>
               <input type="submit" value="GO" name="go">
-              </b></font>            </div>
+              </b></span>            </div>
         </form>
           	<?php
 require_once('../Connections/zalongwa.php');
 
 #populate module combo box
 	$query_module = "SELECT moduleid, modulename FROM modules";
-	$module = mysql_query($query_module, $zalongwa) or die(mysql_error());
-	$row_module = mysql_fetch_assoc($module);
-	$totalRows_module = mysql_num_rows($module);
+	$module = mysqli_query($query_module, $zalongwa) or die(mysqli_error());
+	$row_module = mysqli_fetch_assoc($module);
+	$totalRows_module = mysqli_num_rows($module);
 
 #populate privileges combo box
 	$query_privilege = "SELECT privilegeID, privilegename FROM privilege";
-	$privilege = mysql_query($query_privilege, $zalongwa) or die(mysql_error());
-	$row_privilege = mysql_fetch_assoc($privilege);
-	$totalRows_privilege = mysql_num_rows($privilege);
+	$privilege = mysqli_query($query_privilege, $zalongwa) or die(mysqli_error());
+	$row_privilege = mysqli_fetch_assoc($privilege);
+	$totalRows_privilege = mysqli_num_rows($privilege);
 
 #populate department combo box
 	$query_dept = "SELECT DeptID, DeptName FROM department ORDER BY DeptName";
-	$dept = mysql_query($query_dept, $zalongwa) or die(mysql_error());
-	$row_dept = mysql_fetch_assoc($dept);
-	$totalRows_dept = mysql_num_rows($dept);
+	$dept = mysqli_query($query_dept, $zalongwa) or die(mysqli_error());
+	$row_dept = mysqli_fetch_assoc($dept);
+	$totalRows_dept = mysqli_num_rows($dept);
 #populate faculty combo box
 	$query_faculty = "SELECT FacultyID, FacultyName FROM faculty ORDER BY FacultyName";
-	$faculty = mysql_query($query_faculty, $zalongwa) or die(mysql_error());
-	$row_faculty = mysql_fetch_assoc($faculty);
-	$totalRows_faculty = mysql_num_rows($faculty);
+	$faculty = mysqli_query($query_faculty, $zalongwa) or die(mysqli_error());
+	$row_faculty = mysqli_fetch_assoc($faculty);
+	$totalRows_faculty = mysqli_num_rows($faculty);
 	 
 $login=$_GET['login'];
 $sql = "SELECT FullName, RegNo, UserName, Module, Faculty, Dept, Position, PrivilegeID, LastLogin
 FROM security WHERE UserName='$login' ORDER BY FullName";
 
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($sql , $zalongwa) or die("Cannot query the database.<br>" . mysqli_error());
+$query = @mysqli_query($sql , $zalongwa) or die("Cannot query the database.<br>" . mysqli_error());
 
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($query , $zalongwa);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
-while($result = mysql_fetch_array($query)) {
+if (mysqli_num_rows($query) > 0){
+while($result = mysqli_fetch_array($query)) {
 		$login = stripslashes($result["UserName"]);
 		$Name = stripslashes($result["FullName"]);
 		$RegNo = stripslashes($result["RegNo"]);
@@ -87,12 +87,12 @@ if (isset($_POST['action']) && ($_POST['action'] == "Update"))
 		
 		$sql="UPDATE security Set Position='$position', Module = '$module', Dept = '$dept', Faculty = '$faculty',
 			PrivilegeID='$priv' WHERE UserName='$login'";
-		$result = @mysql_query($sql,$zalongwa) or die("Cannot query the database.<br>" . mysql_error());
+		$result = @mysqli_query($sql, $zalongwa ) or die("Cannot query the database.<br>" . mysqli_error());
 		echo '<meta http-equiv = "refresh" content ="0; 
 		url = adminmanageuser.php?content='.$login.'">';
 		exit;
-mysql_free_result($result);
-mysql_close($zalongwa);
+mysqli_free_result($result);
+mysqli_close($zalongwa);
 	}
 	?>
 <form action="#" method="post" name="updateuser" id="updateuser">
@@ -130,11 +130,11 @@ mysql_close($zalongwa);
 									?>
             		<option value="<?php echo $row_module['moduleid']?>"><?php echo $row_module['modulename']?></option>
            				 <?php
-								} while ($row_module = mysql_fetch_assoc($module));
-  								$rows = mysql_num_rows($module);
+								} while ($row_module = mysqli_fetch_assoc($module));
+  								$rows = mysqli_num_rows($module);
   								if($rows > 0) {
-      								mysql_data_seek($module, 0);
-	  								$row_module = mysql_fetch_assoc($module);
+      								mysqli_data_seek($module, 0);
+	  								$row_module = mysqli_fetch_assoc($module);
   								}
 						?>
                 </select></td>
@@ -142,17 +142,18 @@ mysql_close($zalongwa);
               <tr>
                 <td><div align="right"><strong>Privilege:</strong></div></td>
                 <td><select name="priv" id="priv">
-				 <option value="<?php echo $cuerrentprivilege?>" selected><?php echo $currentprivilege?></option>
+				 <option value="<?php $cuerrentprivilege =$currentprivilege;
+                 echo $cuerrentprivilege?>" selected><?php echo $currentprivilege?></option>
             		<?php
 							do {  
 									?>
             		<option value="<?php echo $row_privilege['privilegeID']?>"><?php echo $row_privilege['privilegename']?></option>
            				 <?php
-								} while ($row_privilege = mysql_fetch_assoc($privilege));
-  								$rows = mysql_num_rows($privilege);
+								} while ($row_privilege = mysqli_fetch_assoc($privilege));
+  								$rows = mysqli_num_rows($privilege);
   								if($rows > 0) {
-      								mysql_data_seek($privilege, 0);
-	  								$row_privilege = mysql_fetch_assoc($privilege);
+      								mysqli_data_seek($privilege, 0);
+	  								$row_privilege = mysqli_fetch_assoc($privilege);
   								}
 						?>
                 </select></td>
@@ -167,11 +168,11 @@ mysql_close($zalongwa);
 									?>
             		<option value="<?php echo $row_dept['DeptID']?>"><?php echo $row_dept['DeptName']?></option>
            				 <?php
-								} while ($row_dept = mysql_fetch_assoc($dept));
-  								$rows = mysql_num_rows($dept);
+								} while ($row_dept = mysqli_fetch_assoc($dept));
+  								$rows = mysqli_num_rows($dept);
   								if($rows > 0) {
-      								mysql_data_seek($dept, 0);
-	  								$row_dept = mysql_fetch_assoc($dept);
+      								mysqli_data_seek($dept, 0);
+	  								$row_dept = mysqli_fetch_assoc($dept);
   								}
 						?>
                 </select></td>
@@ -179,17 +180,18 @@ mysql_close($zalongwa);
 			   <tr>
                 <td><div align="right"><strong>Faculty:</strong></div></td>
                 <td><select name="faculty" id="faculty">
-				 <option value="<?php echo $cuerrentfaculty?>" selected><?php echo $currentfaculty?></option>
+                        <option value="<?php /** @var cuerrentfaculty $cuerrentfaculty */
+                 echo $cuerrentfaculty?>" selected><?php echo $currentfaculty?></option>
             		<?php
 							do {  
 									?>
             		<option value="<?php echo $row_faculty['FacultyID']?>"><?php echo $row_faculty['FacultyName']?></option>
            				 <?php
-								} while ($row_faculty = mysql_fetch_assoc($faculty));
-  								$rows = mysql_num_rows($faculty);
+								} while ($row_faculty = mysqli_fetch_assoc($faculty));
+  								$rows = mysqli_num_rows($faculty);
   								if($rows > 0) {
-      								mysql_data_seek($faculty, 0);
-	  								$row_faculty = mysql_fetch_assoc($faculty);
+      								mysqli_data_seek($faculty, 0);
+	  								$row_faculty = mysqli_fetch_assoc($faculty);
   								}
 						?>
                 </select></td>

@@ -13,12 +13,23 @@
 	$szTitle = 'Caution Fee';
 	include('admissionheader.php');
 
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+/**
+ * @param $theValue
+ * @param $theType
+ * @param string $theDefinedValue
+ * @param string $theNotDefinedValue
+ * @return int|string
+ */
+function GetSQLValueString($theValue,
+                           $theType,
+                           $theDefinedValue = "",
+                           $theNotDefinedValue = "")
 {
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
 
   switch ($theType) {
-    case "text":
+      case "date":
+      case "text":
       $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
       break;    
     case "long":
@@ -28,10 +39,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
     case "double":
       $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
       break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
+      case "defined":
       $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
       break;
   }
@@ -54,11 +62,11 @@ $qtype = "SELECT DISTINCT Description ";
 $qtype .= "FROM tblcautionfee ";
 $qtype .= "ORDER BY Description ";
 
-$dbtype = mysql_query($qtype, $zalongwa) or die(mysql_error());
+$dbtype = mysqli_query($qtype, $zalongwa) or die(mysqli_error());
 
 //query for crosstab
 $qx = "SELECT RegNo";
-while($rowx = mysql_fetch_object($dbtype)){
+while($rowx = mysqli_fetch_object($dbtype)){
 $qx .= ", SUM(IF(Description = '$rowx->Description', Amount, 0)) AS Amount ";
 }
 //$qx .= ", MINUS(Amount) AS \"Balance by Student\" ";
@@ -68,8 +76,8 @@ $qx .= "GROUP BY tblcautionfee.RegNo";
 
 //print($qx);
 
-if(!($dbx = mysql_query($qx, $zalongwa))){
-	print("MySQL reports: " . mysql_error() . "\n");
+if(!($dbx = mysqli_query($qx, $zalongwa))){
+	print("MySQL reports: " . mysqli_error() . "\n");
 	exit();
 	}
 ?>
@@ -77,8 +85,8 @@ if(!($dbx = mysql_query($qx, $zalongwa))){
 <tr>
 <td bgcolor="#FFFFCC"> RegNo</td>
 <?php
-mysql_data_seek($dbtype, 0);
-	while($rowx = mysql_fetch_object($dbtype)){
+mysqli_data_seek($dbtype, 0);
+	while($rowx = mysqli_fetch_object($dbtype)){
 		print("<td bgcolor=\"#FFFFCC\">");
 		print("$rowx->Description");
 		print("</td>");
@@ -87,7 +95,7 @@ mysql_data_seek($dbtype, 0);
 <td bgcolor="#00FFFF"><strong>Balance</strong></td>
 </tr>
 <?php
-while($dbrow = mysql_fetch_row($dbx)){
+while($dbrow = mysqli_fetch_row($dbx)){
 	print("<tr>");
 	$col_num = 0;
 	foreach($dbrow as $key=>$value){
@@ -106,8 +114,8 @@ print("<tr bgcolor=\"#CCCCCC\">");
 print("<td><strong>Total By Record</strong></td>");
 	$alpha = b;
 	$numeric = 2;
-	$rows = mysql_num_rows($dbx)+1;
-	for($i=1; $i < mysql_num_fields($dbx); $i++){
+	$rows = mysqli_num_rows($dbx)+1;
+	for($i=1; $i < mysqli_num_fields($dbx); $i++){
 		print("<td><strong>=sum($alpha$numeric:$alpha$rows)</strong></td>");
 		$alpha++;
 		}

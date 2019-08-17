@@ -1,5 +1,5 @@
 <?php 
-#get connected to the database and verfy current session
+#get connected to the database and verify current session
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 	
@@ -14,12 +14,12 @@
 	include('admissionheader.php')
 ?>
 <form action="adminmanageuser.php" method="get" class="style24">
-            <div align="right"><span class="style67"><font face="Verdana"><b>Search</b></font></span> 
-              <font color="006699" face="Verdana"><b> 
+            <div align="right"><span class="style67"><span style="font-family: Verdana; "><b>Search</b></span></span>
+              <span style="color: #006699; font-family: Verdana; "><b>
               <input type="text" name="content" size="15">
-              </b></font><font color="#FFFF00" face="Verdana"><b> 
+              </b></span><span style="color: #FFFF00; font-family: Verdana; "><b>
               <input type="submit" value="GO" name="go">
-              </b></font>            </div>
+              </b></span>            </div>
         </form>
         <?php
 require_once('../Connections/zalongwa.php'); 
@@ -28,24 +28,24 @@ $key=addslashes($_GET['content']);
 $sql = "SELECT FullName, RegNo, UserName, Password, Position, AuthLevel, LastLogin
 FROM security 
 WHERE FullName LIKE '%$key%' OR UserName LIKE '%$key%' OR RegNo LIKE '%$key%' ORDER BY FullName";
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($sql , $zalongwa ) or die("Cannot query the database.<br>" . mysqli_error());
+$query = @mysqli_query($sql , $zalongwa ) or die("Cannot query the database.<br>" . mysqli_error());
 }else{
 $sql = "SELECT FullName, RegNo, UserName, Password, Position, AuthLevel, LastLogin
 FROM security ORDER BY FullName";
 //(((roomapplication.Hall)='$hall') And
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($sql , $zalongwa ) or die("Cannot query the database.<br>" . mysqli_error());
+$query = @mysqli_query($sql , $zalongwa) or die("Cannot query the database.<br>" . mysqli_error());
 }
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($query , $zalongwa);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
+if (mysqli_num_rows($query) > 0){
 echo "<p>Total Records Found: $totalRows_query </p>";
 echo "<table border='1'>";
 echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> UserName </td><td> Position </td><td> Last Login</td><td> Edit</td><td>Delete</td></tr>";
 $i=1;
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$login = stripslashes($result["UserName"]);
 		$Name = stripslashes($result["FullName"]);
 		$RegNo = stripslashes($result["RegNo"]);
@@ -68,7 +68,7 @@ $key= stripslashes($key);
 echo "Sorry, No Records Found <br>";
 echo "That Match With Your Searck Key \"$key \" ";
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?>
 		 <?php
 

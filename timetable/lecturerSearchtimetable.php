@@ -42,15 +42,15 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 
 //get all days
 $sql_day ="SELECT * FROM days";
-$result_day =mysql_query($sql_day);
+$result_day =mysqli_query($zalongwa, $sql_day);
 
 //timetable Category
 $sql_cat ="SELECT * FROM timetableCategory";
-$result_cat =mysql_query($sql_cat);
+$result_cat =mysqli_query($zalongwa, $sql_cat);
 
 // academic year
 $sql_acc = "SELECT * FROM academicyear ORDER BY AYear DESC";
-$result_acc =mysql_query($sql_acc);
+$result_acc =mysqli_query($zalongwa, $sql_acc);
 $get_data="SELECT * FROM timetable ORDER BY AYear DESC";
 if(isset($_POST['search'])){
 	$get_data="SELECT * FROM timetable";
@@ -97,7 +97,7 @@ if(!empty($_POST['ayear'])){
 
 }
 
-$result_all_data = mysql_query($get_data);
+$result_all_data = mysqli_query($zalongwa, $get_data);
 
 
 ?>
@@ -117,7 +117,7 @@ $result_all_data = mysql_query($get_data);
 <select name="day" id="day">
      <option value="">Select Day</option>
      <?php 
-     while ($rows = mysql_fetch_array($result_day)) {
+     while ($rows = mysqli_fetch_array($result_day)) {
      	?>
      	<option value="<?php echo $rows['id'];?>"><?php echo $rows['name'];?></option>
      	<?php      }      ?>       		
@@ -151,15 +151,15 @@ $result_all_data = mysql_query($get_data);
 <td class="resViewtd"><select name="semester" id="semester">
 <option value="">Select Category</option>
                         <?php
-do {  
+do {
 ?>
                         <option value="<?php echo $row_sem['id']?>"><?php echo $row_sem['name']?></option>
                         <?php
-} while ($row_sem = mysql_fetch_assoc($result_cat));
-  $rows = mysql_num_rows($result_cat);
+} while ($row_sem = mysqli_fetch_assoc($result_cat));
+  $rows = mysqli_num_rows($result_cat);
   if($rows > 0) {
-      mysql_data_seek($result_cat, 0);
-	  $row_sem = mysql_fetch_assoc($result_cat);
+      mysqli_data_seek($result_cat, 0);
+	  $row_sem = mysqli_fetch_assoc($result_cat);
   }
 ?>
                     </select>
@@ -175,7 +175,7 @@ do {
 <td class="resViewtd">
 <select name="ayear" id="ayear">
      <?php 
-     while ($rows = mysql_fetch_array($result_acc)) {
+     while ($rows = mysqli_fetch_array($result_acc)) {
      	?>
      	<option value="<?php echo $rows['AYear'];?>"><?php echo $rows['AYear'];?></option>
      	<?php      }      ?>       		
@@ -214,24 +214,23 @@ if(isset($_GET['succ'])){
 </tr>
 
 <?php 
-while ($data = mysql_fetch_array($result_all_data)) {
+while ($data = mysqli_fetch_array($result_all_data)) {
 	//fullname
 	$lname = $data['lecturer'];
 	$user="SELECT * FROM security WHERE UserName='$lname'";
-	$result_user=mysql_query($user);
-	$lect_name = mysql_fetch_array($result_user);
+	$result_user=mysqli_query($zalongwa, $user);
+	$lect_name = mysqli_fetch_array($result_user);
 	
 	//get dat
 	$day = $data['day'];
 $sql_day ="SELECT * FROM days WHERE id='$day'";
-$result_day =mysql_query($sql_day);
-$day_name = mysql_fetch_array($result_day);
+$result_day =mysqli_query($zalongwa, $sql_day);
+$day_name = mysqli_fetch_array($result_day);
 
 //timetable Category
 $cat_id = $data['timetable_category'];
 $sql_cat ="SELECT * FROM timetableCategory WHERE id='$cat_id'";
-$result_cat_name =mysql_query($sql_cat);
-$cat_name = mysql_fetch_array($result_cat_name);
+$cat_name = mysqli_fetch_array($result_cat_name);
 	
 	?>
 	<tr>
@@ -253,7 +252,7 @@ $cat_name = mysql_fetch_array($result_cat_name);
 if(isset($_GET['delete'])){
 	$id = $_GET['delete'];
 	$delete = "DELETE FROM timetable WHERE id='$id'";
-	$Result = mysql_query($delete);
+	$Result = mysqli_query($zalongwa, $delete);
 	if($Result){
 		$succ = urlencode('Data deleted!!');
 	echo '<meta http-equiv = "refresh" content ="0; url = lecturerSearchtimetable.php?succ='.$succ.'">';

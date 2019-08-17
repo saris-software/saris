@@ -17,8 +17,8 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 	#get programme name
 	if($programme!=0){
 		$qprogram = "SELECT ProgrammeName, Title FROM programme WHERE ProgrammeCODE ='$programme'";
-		$dbprogram = mysql_query($qprogram);
-		$row_program = mysql_fetch_assoc($dbprogram);
+		$dbprogram = mysqli_query($zalongwa, $qprogram);
+		$row_program = mysqli_fetch_assoc($dbprogram);
 		$pname = $row_program['ProgrammeName'];
 		$ptitle = $row_program['Title'];
 	}
@@ -273,10 +273,10 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 									student.Name";	
 	}
 		
-	$query_std = @mysql_query($sql);
+	$query_std = @mysqli_query($zalongwa, $sql);
 
 	/* Printing Results in pdf */
-		if (mysql_num_rows($query_std) > 0)
+		if (mysqli_num_rows($query_std) > 0)
 		{
 	
 				$pdf = &PDF::factory('p', 'a4');      // Set up the pdf object. 
@@ -293,9 +293,12 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 				#count unregistered
 				$j=0;
 				#count sex
-				$$fmcount = 0;
-				$$mcount = 0;
-				$$fcount = 0;
+            /** @var fmcount $fmcount */
+            $$fmcount = 0;
+            /** @var mcount $mcount */
+            $$mcount = 0;
+            /** @var fcount $fcount */
+            $$fcount = 0;
 				include '../includes/logoformat.php';
 				#print header
 				$pdf->image($logofile, 248, 50);   // Image at x=50 and y=200. 
@@ -308,7 +311,8 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 				} 
 				$pdf->setFont('Arial', 'B', 21.5);     // Set font to arial bold italic 12 pt. 
 				$pdf->setFillColor('rgb', 0, 0, 0);   // Set text color to blue. 
-				$pdf->text(66, 50, strtoupper($org));   // Text at x=100 and y=100. 
+            /** @var org $org */
+            $pdf->text(66, 50, strtoupper($org));   // Text at x=100 and y=100.
 				$pdf->setFillColor('rgb', 0, 0, 0);   // Set text color to black. 
 				
 				#University Addresses
@@ -348,7 +352,7 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 				$pdf->line(570.28, $y-15, 570.28, $y+3);       // most right side margin. 
 				$pdf->line($x, $y+19, 570.28, $y+19);       // bottom year summary line. 
 				
-				while($result = mysql_fetch_array($query_std)) {
+				while($result = mysqli_fetch_array($query_std)) {
 					$id = stripslashes($result["Id"]);
 					$Name = stripslashes($result["Name"]);
 					$RegNo = stripslashes($result["RegNo"]);
@@ -361,20 +365,21 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 					$entryyear = stripslashes($result['EntryYear']);
 				    $ststatus = stripslashes($result['Status']);
 					#compute year of study
-					$current_yeartranc = substr($cyear,0,4);
+                    /** @var cyear $cyear */
+                    $current_yeartranc = substr($cyear,0,4);
 					$entryyear = substr($entryyear,0,4);
 					$yearofstudy=$current_yeartranc-$entryyear+1;
 						
 					#get study programe name
 					$qprogram = "SELECT ProgrammeName FROM programme WHERE ProgrammeCODE ='$degreecode'";
-					$dbprogram = mysql_query($qprogram);
-					$row_program = mysql_fetch_assoc($dbprogram);
+					$dbprogram = mysqli_query($zalongwa, $qprogram);
+					$row_program = mysqli_fetch_assoc($dbprogram);
 					$degree = $row_program['ProgrammeName'];
 					
 					#get study status name
 					$qstatus = "SELECT Status FROM studentstatus WHERE StatusID ='$ststatus'";
-					$dbstatus = mysql_query($qstatus);
-					$row_status = mysql_fetch_assoc($dbstatus);
+					$dbstatus = mysqli_query($zalongwa, $qstatus);
+					$row_status = mysqli_fetch_assoc($dbstatus);
 					$status = $row_status['Status'];
 					
 					/*
@@ -404,8 +409,9 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 					}else{
 					 $linecolor = 2;//'bgcolor="#FFFFFF"';
 					}
-					
-					if($display==1){
+
+                    /** @var display $display */
+                    if($display==1){
 						if($ststatus != 3){
 						$pdf->setFillColor('rgb', 1, 0, 0); 
 						}else{
@@ -517,8 +523,9 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 						$pdf->setFont('Arial', '', 11.3);     
 						$pdf->text(95, 80, 'Phone: '.$phone);   
 						$pdf->text(95, 99, 'Fax: '.$fax);  
-						$pdf->text(95, 121, 'Email: '.$email);   
-						$pdf->text(370, 80, strtoupper($address));   
+						$pdf->text(95, 121, 'Email: '.$email);
+                        /** @var address $address */
+                        $pdf->text(370, 80, strtoupper($address));
 						$pdf->text(370, 99, strtoupper($city));   
 						$pdf->text(370, 121, $website);   
 						
@@ -650,23 +657,23 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 	include('admissionheader.php');
 
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AcademicYear = mysql_query($query_AcademicYear, $zalongwa) or die(mysql_error());
-$row_AcademicYear = mysql_fetch_assoc($AcademicYear);
-$totalRows_AcademicYear = mysql_num_rows($AcademicYear);
+$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error());
+$row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
+$totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_Hostel = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error());
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_faculty = "SELECT FacultyID, FacultyName FROM faculty ORDER BY FacultyName ASC";
-$faculty = mysql_query($query_faculty, $zalongwa) or die(mysql_error());
-$row_faculty = mysql_fetch_assoc($faculty);
-$totalRows_faculty = mysql_num_rows($faculty);
+$faculty = mysqli_query($zalongwa, $query_faculty) or die(mysqli_error());
+$row_faculty = mysqli_fetch_assoc($faculty);
+$totalRows_faculty = mysqli_num_rows($faculty);
 
 if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 	#get post values
@@ -680,8 +687,8 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 	
 	#get programme name
 	$qprogram = "SELECT ProgrammeName FROM programme WHERE ProgrammeCODE ='$programme'";
-	$dbprogram = mysql_query($qprogram);
-	$row_program = mysql_fetch_assoc($dbprogram);
+	$dbprogram = mysqli_query($zalongwa, $qprogram);
+	$row_program = mysqli_fetch_assoc($dbprogram);
 	$pname = $row_program['ProgrammeName'];
 	
 	#create report title
@@ -698,7 +705,7 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 		include 'includes/filter_students.php';
 
 	/* Printing Results in html */
-	if (mysql_num_rows($query_std) > 0){
+	if (mysqli_num_rows($query_std) > 0){
 		$degree = $pname;
 		?>
 		
@@ -708,7 +715,8 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
           </tr>
           <tr>
             <td><div align="center" class="style4">
-              <h1><?php echo $org?></h1>
+                    <h1><?php /** @var org $org */
+                  echo $org?></h1>
             </div></td>
           </tr>
           <tr>
@@ -757,7 +765,7 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 		$pastelurl = $odbcfile;
 		$pastelobj = new pastel();
 
-		while($result = mysql_fetch_array($query_std)) {
+		while($result = mysqli_fetch_array($query_std)) {
 				$id = stripslashes($result["Id"]);
 				$Name = stripslashes($result["Name"]);
 				$RegNo = stripslashes($result["RegNo"]);
@@ -770,7 +778,8 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 				$entryyear = stripslashes($result['EntryYear']);
 			    $ststatus = stripslashes($result['Status']);
 				#compute year of study
-				$current_yeartranc = substr($cyear,0,4);
+            /** @var cyear $cyear */
+            $current_yeartranc = substr($cyear,0,4);
 				$entryyear = substr($entryyear,0,4);
 				$yearofstudy=$current_yeartranc-$entryyear+1;
 				
@@ -794,20 +803,20 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 				
 				//update registration status
 				if(!in_array($ststatus,$registration_status,true)){
-					mysql_query("UPDATE student SET Status='$acc_id' WHERE RegNo='$regno'");
+					mysqli_query("UPDATE student SET Status='$acc_id' WHERE RegNo='$regno'");
 					$ststatus = $acc_id;
 					}
 					
 				#get study programe name
 				$qprogram = "SELECT ProgrammeName FROM programme WHERE ProgrammeCODE ='$degreecode'";
-				$dbprogram = mysql_query($qprogram);
-				$row_program = mysql_fetch_assoc($dbprogram);
+				$dbprogram = mysqli_query($zalongwa, $qprogram);
+				$row_program = mysqli_fetch_assoc($dbprogram);
 				$degree = $row_program['ProgrammeName'];
 				
 				#get study status name
 				$qstatus = "SELECT Status FROM studentstatus WHERE StatusID ='$ststatus'";
-				$dbstatus = mysql_query($qstatus);
-				$row_status = mysql_fetch_assoc($dbstatus);
+				$dbstatus = mysqli_query($zalongwa, $qstatus);
+				$row_status = mysqli_fetch_assoc($dbstatus);
 				$status = $row_status['Status'];
 				
 				
@@ -857,7 +866,8 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 			$gt=$i-1;
 			echo 'Grand Total: '.$gt;
 			echo '<hr>';
-			if ($display==1){
+        /** @var display $display */
+        if ($display==1){
 				echo 'Total Unregistered Students  are: '.$j.'('.round($j/$gt*100,2).'%)';
 			}
 				echo '<hr> Total Female Students are: '.$fcount.'('.round($fcount/$gt*100,2).'%)';
@@ -886,11 +896,11 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 						?>
 						            <option value="<?php echo $row_Hostel['ProgrammeCode']?>"><?php echo $row_Hostel['ProgrammeName']?></option>
 						            <?php
-						} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-						  $rows = mysql_num_rows($Hostel);
+						} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+						  $rows = mysqli_num_rows($Hostel);
 						  if($rows > 0) {
-						      mysql_data_seek($Hostel, 0);
-							  $row_Hostel = mysql_fetch_assoc($Hostel);
+						      mysqli_data_seek($Hostel, 0);
+							  $row_Hostel = mysqli_fetch_assoc($Hostel);
 						  }
 						?>
           			</select></td>
@@ -904,11 +914,11 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 					?>
 			            <option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
 			            <?php
-					} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-					  $rows = mysql_num_rows($AcademicYear);
+					} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+					  $rows = mysqli_num_rows($AcademicYear);
 					  if($rows > 0) {
-					      mysql_data_seek($AcademicYear, 0);
-						  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+					      mysqli_data_seek($AcademicYear, 0);
+						  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 					  }
 					?>
 				   </select></td>
@@ -922,11 +932,11 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 				?>
 		            <option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
 		            <?php
-				} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-				  $rows = mysql_num_rows($AcademicYear);
+				} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+				  $rows = mysqli_num_rows($AcademicYear);
 				  if($rows > 0) {
-				      mysql_data_seek($AcademicYear, 0);
-					  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+				      mysqli_data_seek($AcademicYear, 0);
+					  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 				  }
 				?>
         	  </select></td>
@@ -937,8 +947,8 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 		       <option value="0">--------------------------------</option>
 				<?php
 					$query_class = "SELECT name FROM classstream ORDER BY name ASC";
-					$nm=mysql_query($query_class);
-					while($show = mysql_fetch_array($nm) )
+					$nm=mysqli_query($zalongwa, $query_class);
+					while($show = mysqli_fetch_array($nm) )
 					{  										 
 					 echo"<option  value='$show[name]'>$show[name]</option>";      	    
 					}
@@ -951,8 +961,8 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 		       <option value="0">--------------------------------</option>
 			      <?php  
 					$query_studentStatus = "SELECT StatusID,Status FROM studentstatus ORDER BY StatusID";
-					$nm=mysql_query($query_studentStatus);
-					while($show = mysql_fetch_array($nm) )
+					$nm=mysqli_query($zalongwa, $query_studentStatus);
+					while($show = mysqli_fetch_array($nm) )
 					{  										 
 						echo"<option  value='$show[StatusID]'>$show[Status]</option>";      
 					      
@@ -965,13 +975,14 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
             <td colspan="1" bgcolor="#CCCCCC"><select name="sponsor" id="sponsor">
              <option value="0">--------------------------------</option>
 		       <?php
-				if($sponsor)
+               /** @var sponsor $sponsor */
+               if($sponsor)
 				{
 					echo"<option value='$sponsor'>$sponsor</option>";
 				}  
 				$query_sponsor = "SELECT Name FROM sponsors ORDER BY SponsorID ASC";
-				$nm=mysql_query($query_sponsor);
-				while($show = mysql_fetch_array($nm) )
+				$nm=mysqli_query($zalongwa, $query_sponsor);
+				while($show = mysqli_fetch_array($nm) )
 				{  										 
 				   echo"<option  value='$show[Name]'>$show[Name]</option>";      	    
 				}
@@ -996,8 +1007,8 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
         </form>
 <?php
 }
-mysql_free_result($AcademicYear);
+mysqli_free_result($AcademicYear);
 
-mysql_free_result($Hostel);
+mysqli_free_result($Hostel);
 include('../footer/footer.php');
 ?>

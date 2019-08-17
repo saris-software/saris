@@ -1,5 +1,5 @@
 <?php
-#get connected to the database and verfy current session
+#get connected to the database and verify current session
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 	
@@ -19,7 +19,7 @@ if(isset($_GET['login'])){
 $user = addslashes($_GET['login']);
 echo "Deleting user account - ".$user;
 $qdelete="DELETE FROM security WHERE UserName = '$user'";
-$dbdelete_user = mysql_query($qdelete)or die('Cannot delete this user account!!');
+$dbdelete_user = mysqli_query($qdelete , $zalongwa ) or die('Cannot delete this user account!!');
 
 //after deleting go back to user list
 echo '<meta http-equiv = "refresh" content ="0; url = adminmanageuser.php">';

@@ -14,7 +14,8 @@ body {
 -->
 </style></HEAD>
 <BODY>
-<FORM action="userlogin.php" method="post"onkeypress="javascript:return WebForm_FireDefaultButton(event, 'btnLogin')" id="idpform" name="idpform"> 
+<FORM action="userlogin.php" method="post" onkeypress="return WebForm_FireDefaultButton(event, 'btnLogin')" id="idpform"
+      name="idpform">
 
 <SCRIPT type=text/javascript>
 //<![CDATA[
@@ -64,7 +65,9 @@ type=image src="login_files/btn_login.gif" name=btnLogin>
 		if (isset($loginerror ) && $loginerror !="")
 		{
 		?>
-        <b class="small"><font color="Brown">
+            <b class="small">
+                <style
+                =font-color:"Brown">
 								<?php  echo $loginerror?>
 								</font>
 		  </b>

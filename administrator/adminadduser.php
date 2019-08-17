@@ -21,7 +21,7 @@
       xmlns:padding="http://www.w3.org/1999/xhtml">
             <div text-align="right"><span class="style67"><span style="Verdana"><b>Search</b></span></span>
               <span style="Verdana color: 006699 ; "><b>
-                content: <input type="text" name="content" size="15"<?php $content =;
+                content: <input type="text" name="content" size="15"<?php $content ;
                       echo $content;?>
               </b></span>
                 <span family="Verdana color: #FFFF00; "><b>
@@ -52,7 +52,7 @@
 	
 		#check username
 		if (!preg_match("^(([A-Za-z0-9!#$%&*+/=?^_`{|}~-][A-Za-z0-9!#$%&*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $username)){
-		$_SESSION['loginerror'] = $username.' - is a Bad Username! '; 
+		$_SESSION['loginerror'] = $username.' - is a Bad Username! ';
   		//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
 		 }
 	   
@@ -153,7 +153,7 @@
 			//create account
 			$query = "INSERT INTO security (UserName, Password, FullName, RegNo, Position, AuthLevel, Email, LastLogin, Registered)
 					 VALUES ('$username', '$hash', '$fullname', '$id', '$selectPosition', 'user', '$Email', now(), now())";
-			$result = mysqli_query($query) or die("Query Failed, Words like Ng'ombe are not accepted <br>" . mysqli_query_error($query));
+			$result = mysqli_query($zalongwa,$query) or die("Query Failed, Words like Ng'ombe are not accepted <br>" . mysqli_query_error($query));
 		}
 }
 ?>

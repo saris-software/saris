@@ -16,13 +16,13 @@
 
 #populate module combo box
 	$query_module = "SELECT moduleid, modulename FROM modules";
-	$module = mysqli_query($query_module, $zalongwa) or die(mysqli_error());
+	$module = mysqli_query($zalongwa,$query_module) or die(mysqli_error());
 	$row_module = mysqli_fetch_assoc($module);
 	$totalRows_module = mysqli_num_rows($module);
 
 #populate privileges combo box
 	$query_privilege = "SELECT privilegeID, privilegename FROM privilege";
-	$privilege = mysqli_query($query_privilege, $zalongwa) or die(mysqli_error());
+	$privilege = mysqli_query($zalongwa,$query_privilege) or die(mysqli_error());
 	$row_privilege = mysqli_fetch_assoc($privilege);
 	$totalRows_privilege = mysqli_num_rows($privilege);
 	
