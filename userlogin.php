@@ -17,9 +17,17 @@ if (isset($_POST['textusername'])) {
 //$hash = $password;
 	$sql=sprintf("SELECT UserName, password, RegNo, Position, Module, PrivilegeID, FullName, Faculty FROM security WHERE UserName='%s' AND password='%s'",
  		get_magic_quotes_gpc() ? $username : addslashes($username), get_magic_quotes_gpc() ? $hash : addslashes($hash));
-
 	$result = mysqli_query($zalongwa, $sql);
 		$loginFoundUser = mysqli_num_rows($result);
+		$row = mysqli_fetch_assoc($result);
+		$UName = $row['UserName'];
+
+		$sql = "SELECT page FROM stats WHERE page LIKE '$UName%'";
+    		$active = mysqli_query($zalongwa, $sql);
+    		$userLoggedIn = mysqli_num_rows($active);
+    		if($userLoggedIn >0){
+    		//if(($loginFoundUser > 0) && ($userLoggedIn == 0)){
+ 		/*
  		if ($loginFoundUser) {
        		$loginStrGroup  = mysqli_free_result($result,0,'password');
     		$loginName		= mysqli_result($result,0,'FullName');
@@ -29,7 +37,18 @@ if (isset($_POST['textusername'])) {
 			$userFaculty 	= mysqli_result($result,0,'Faculty');
 			$privilege  = mysqli_result($result,0,'PrivilegeID');
 			$mtumiaji = 3;
-			
+			*/
+			$loginStrGroup = $row['password'];
+			$loginName = $row['FullName'];
+			$position = $row['Position'];
+			$RegNo = $row['RegNo'];
+			$module = $row['Module'];
+			$userFaculty = $row['Faculty'];
+			$userDept = $row['Dept'];
+			$userDeptHead = $row['DeptHead'];
+		        $privilege = $row['PrivilegeID'];
+                        $mtumiaji = 3;
+                        
 			$_SESSION['username'] = $username; 
 			$_SESSION['mtumiaji'] = $mtumiaji; 
 			$_SESSION['RegNo'] = $RegNo; 
@@ -37,6 +56,8 @@ if (isset($_POST['textusername'])) {
 			$_SESSION['privilege'] = $privilege; 
 			$_SESSION['loginName'] = $loginName; 
 			$_SESSION['userFaculty'] = $userFaculty; 
+			    		//echo 'userlogged in is inside if '.$userLoggedIn;
+    		//exit;
 						
 	 	$update_login = "UPDATE security SET LastLogin = now() WHERE UserName = '$username' AND Password = '$password'";
 	 	$result = mysqli_query($update_login,$zalongwa) or die("Siwezi ku-update LastLogin, Zalongwa");
