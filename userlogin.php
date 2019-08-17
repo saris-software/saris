@@ -5,7 +5,7 @@ session_cache_limiter('nocache');
 
 if (isset($accesscheck)) {
   $GLOBALS['PrevUrl'] = $accesscheck;
-  session_register('PrevUrl');
+	session_is_register('PrevUrl');
 }
 
 if (isset($_POST['textusername'])) {
@@ -16,9 +16,9 @@ if (isset($_POST['textusername'])) {
  $hash = "{jlungo-hash}" . base64_encode(pack("H*", sha1($password )));
 //$hash = $password;
 	$sql=sprintf("SELECT UserName, password, RegNo, Position, Module, PrivilegeID, FullName, Faculty FROM security WHERE UserName='%s' AND password='%s'",
- 		get_magic_quotes_gpc() ? $username : addslashes($username), get_magic_quotes_gpc() ? $hash : addslashes($hash)); 
-		
-		$result = @mysqli_query($zalongwa,$sql);
+ 		get_magic_quotes_gpc() ? $username : addslashes($username), get_magic_quotes_gpc() ? $hash : addslashes($hash));
+
+	$result = mysqli_query($zalongwa, $sql);
 		$loginFoundUser = mysqli_num_rows($result);
  		if ($loginFoundUser) {
        		$loginStrGroup  = mysqli_free_result($result,0,'password');
