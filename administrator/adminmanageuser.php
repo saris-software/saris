@@ -28,24 +28,24 @@ $key=addslashes($_GET['content']);
 $sql = "SELECT FullName, RegNo, UserName, Password, Position, AuthLevel, LastLogin
 FROM security 
 WHERE FullName LIKE '%$key%' OR UserName LIKE '%$key%' OR RegNo LIKE '%$key%' ORDER BY FullName";
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($sql));
+$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($sql));
 }else{
 $sql = "SELECT FullName, RegNo, UserName, Password, Position, AuthLevel, LastLogin
 FROM security ORDER BY FullName";
 //(((roomapplication.Hall)='$hall') And
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($sql));
+$query = mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error($sql));
 }
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($zalongwa,$query);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
+if (mysqli_num_rows($query) > 0){
 echo "<p>Total Records Found: $totalRows_query </p>";
 echo "<table border='1'>";
 echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> UserName </td><td> Position </td><td> Last Login</td><td> Edit</td><td>Delete</td></tr>";
 $i=1;
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$login = stripslashes($result["UserName"]);
 		$Name = stripslashes($result["FullName"]);
 		$RegNo = stripslashes($result["RegNo"]);
