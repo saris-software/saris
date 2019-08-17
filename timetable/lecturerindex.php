@@ -19,7 +19,7 @@ $ip  =  $_SERVER["REMOTE_ADDR"];
 $name = $username." - Visited the Academic Page";   
 //$username = $username." "."Visited ".$szTitle;
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$name')";   
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error());
 
 	
 ?>
@@ -30,3 +30,5 @@ $result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
 	# include the footer
 	include('../footer/footer.php');
 ?>
+
+

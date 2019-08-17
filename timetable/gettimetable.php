@@ -10,14 +10,14 @@ include('lecturerMenu.php');
 ?>
 
 <?php
-mysql_select_db($zalongwa_database,$zalongwa);
+mysqli_select_db($zalongwa_database,$zalongwa);
 //select all academic year
 $sql_ayear= "SELECT * FROM academicyear ORDER BY AYear DESC";
-$result_ayear=mysql_query($sql_ayear);
+$result_ayear=mysqli_query($sql_ayear);
 
 // select all timetable type/category
 $sql_timetablecategory= "SELECT * FROM timetableCategory";
-$result_timetablecategory=mysql_query($sql_timetablecategory);
+$result_timetablecategory=mysqli_query($sql_timetablecategory);
 
 //select all programme
 $sql_programme= "SELECT * FROM programme";
