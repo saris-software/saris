@@ -17,19 +17,19 @@ $result_ayear=mysqli_query($sql_ayear);
 
 // select all timetable type/category
 $sql_timetablecategory= "SELECT * FROM timetableCategory";
-$result_timetablecategory=mysqli_query($sql_timetablecategory);
+$result_timetablecategory=mysqli_query($zalongwa, $sql_timetablecategory);
 
 //select all programme
 $sql_programme= "SELECT * FROM programme";
-$result_programme=mysql_query($sql_programme);
+$result_programme=mysqli_query($zalongwa, $sql_programme);
 
 // select all lecturer
 $query_lecturer = "SELECT UserName, FullName, Position FROM security WHERE Position = 'Lecturer' ORDER BY FullName";
-$lecturer_result=mysql_query($query_lecturer);
+$lecturer_result=mysqli_query($zalongwa, $query_lecturer);
 
 // select all fuculty
 $query_fuculty = "SELECT * FROM faculty ";
-$fuculty_result=mysql_query($query_fuculty);
+$fuculty_result=mysqli_query($zalongwa, $query_fuculty);
 
 
 if(isset($_POST['load'])){
@@ -64,7 +64,7 @@ display:none;
 <td class="resViewtd">
 <select name="ayear">
 <?php 
-while($row = mysql_fetch_array($result_ayear)){
+while($row = mysqli_fetch_array($result_ayear)){
 	echo '<option value="'.$row['AYear'].'">'.$row['AYear'].'</option>';
 }
 ?>
@@ -85,7 +85,7 @@ while($row = mysql_fetch_array($result_ayear)){
 <td class="resViewtd">
 <select name="programme">
 <?php 
-while($row = mysql_fetch_array($result_programme)){
+while($row = mysqli_fetch_array($result_programme)){
 	echo '<option value="'.$row['ProgrammeCode'].'">'.$row['ProgrammeName'].'</option>';
 }
 ?>
@@ -97,7 +97,7 @@ while($row = mysql_fetch_array($result_programme)){
 <td class="resViewtd">
 <select name="faculty">
 <?php 
-while($row = mysql_fetch_array($fuculty_result)){
+while($row = mysqli_fetch_array($fuculty_result)){
 	echo '<option value="'.$row['FacultyID'].'">'.$row['FacultyName'].'</option>';
 }
 ?>
@@ -109,7 +109,7 @@ while($row = mysql_fetch_array($fuculty_result)){
 <td class="resViewtd">
 <select name="lecturer">
 <?php 
-while($row = mysql_fetch_array($lecturer_result)){
+while($row = mysqli_fetch_array($lecturer_result)){
 	echo '<option value="'.$row['UserName'].'">'.$row['FullName'].'</option>';
 }
 ?>
@@ -121,7 +121,7 @@ while($row = mysql_fetch_array($lecturer_result)){
 <td class="resViewtd">
 <select name="tcategory">
 <?php 
-while($row = mysql_fetch_array($result_timetablecategory)){
+while($row = mysqli_fetch_array($result_timetablecategory)){
 	echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 }
 ?>
@@ -149,8 +149,8 @@ echo '<div style="color:red; margin:0px 0px 0px 50px;">'.$_GET['error'].'</div>'
 	 $sql = "SELECT * FROM timetable WHERE AYear='$ayear' AND Programme='$programme' AND timetable_category='$type' ORDER BY day,start ASC";
              // generate timetable title
               $sql_title = "SELECT * FROM programme WHERE ProgrammeCode='$programme'";
-	  $title_result = mysql_query($sql_title);
-	  $fetch_title = mysql_fetch_array($title_result);
+	  $title_result = mysqli_query($zalongwa, $sql_title);
+	  $fetch_title = mysqli_fetch_array($title_result);
 	    $title_timetable = $fetch_title['Title'].' - [ '.$fetch_title['ProgrammeName'].' ] ';
 	 
              if($type == 1){
@@ -167,15 +167,15 @@ echo '<div style="color:red; margin:0px 0px 0px 50px;">'.$_GET['error'].'</div>'
 	}else if($fby == 2){
 		
 		$sql_faculty = "SELECT * FROM faculty WHERE FacultyID='$programme'";
-		$result_faculty = mysql_query($sql_faculty);
-		$data=mysql_fetch_array($result_faculty);
+		$result_faculty = mysqli_query($zalongwa, $sql_faculty);
+		$data=mysqli_fetch_array($result_faculty);
 		$fc_ID = $programme;
 		$fc_name = $data['FacultyName'];
 		  $sql_progr = "SELECT DISTINCT ProgrammeCode FROM programme WHERE Faculty='$fc_ID' OR Faculty='$fc_name'";
 		
-		$facult_prog = mysql_query($sql_progr);
+		$facult_prog = mysqli_query($sql_progr);
 		//$loop_prog_value='';
-		while ($row = mysql_fetch_array($facult_prog)) {
+		while ($row = mysqli_fetch_array($facult_prog)) {
 			$pg = $row['ProgrammeCode'];
 			$loop_prog_value.="  Programme='$pg' OR ";
 		}
@@ -209,8 +209,8 @@ echo '<div style="color:red; margin:0px 0px 0px 50px;">'.$_GET['error'].'</div>'
 	 
 	 // generate timetable title
       $sql_title = "SELECT * FROM security WHERE UserName='$programme'";
-	  $title_result = mysql_query($sql_title);
-	  $fetch_title = mysql_fetch_array($title_result);
+	  $title_result = mysqli_query($zalongwa, $sql_title);
+	  $fetch_title = mysqli_fetch_array($title_result);
 	    $title_timetable = $fetch_title['FullName'];
 	 
              if($type == 1){
@@ -226,8 +226,8 @@ echo '<div style="color:red; margin:0px 0px 0px 50px;">'.$_GET['error'].'</div>'
              }
 	 
 	}
-	 $result = mysql_query($sql);
-	 $num = mysql_num_rows($result);
+	 $result = mysqli_query($zalongwa, $sql);
+	 $num = mysqli_num_rows($result);
 	
 
 	$timetable=array();
@@ -237,16 +237,16 @@ echo '<div style="color:red; margin:0px 0px 0px 50px;">'.$_GET['error'].'</div>'
 	}else{
 		//array key define here
 		$keys = array();
-		while ($row = mysql_fetch_array($result)) {
+		while ($row = mysqli_fetch_array($result)) {
 			$usern = $row['lecturer'];
 			$sql_lect = "SELECT * FROM security WHERE UserName='$usern'";
-			$result_lect = mysql_query($sql_lect);
-			$lecturer_name = mysql_fetch_array($result_lect);
+			$result_lect = mysqli_query($zalongwa, $sql_lect);
+			$lecturer_name = mysqli_fetch_array($result_lect);
 			
 			$teaching = $row['teachingtype'];
 			$sql_teach = "SELECT * FROM teachingtype WHERE id='$teaching'";
-			$result_teach = mysql_query($sql_teach);
-			$teach_type = mysql_fetch_array($result_teach);
+			$result_teach = mysqli_query($zalongwa, $sql_teach);
+			$teach_type = mysqli_fetch_array($result_teach);
 			
 			$keys[$row['CourseCode']] = $row['CourseCode'];
 			$timetable[$row['day']][$row['start']][]=array(
@@ -386,8 +386,8 @@ echo '<h3 style="padding:0px; margin:0px; width:900px; color:black; font-size:20
   
 <?php
 $sql_day = "SELECT * FROM days ORDER BY id ASC";
-$get = mysql_query($sql_day); 
-while ($row = mysql_fetch_array($get)) {
+$get = mysqli_query($zalongwa, $sql_day);
+while ($row = mysqli_fetch_array($get)) {
 	?>
 	<tr>
 	<td style="width:100px;"><?php echo $row['name'];?></td>
@@ -447,8 +447,8 @@ while ($row = mysql_fetch_array($get)) {
                 echo '<u><b>KEY</b></u><br/>';
                 foreach ($keys as $k => $v) {
                     $sele = "SELECT * FROM course WHERE CourseCode='$k'";
-                    $my = mysql_query($sele);
-                    $fetc = mysql_fetch_array($my);
+                    $my = mysqli_query($zalongwa, $sele);
+                    $fetc = mysqli_fetch_array($my);
                     echo $k . ' &nbsp; : &nbsp; &nbsp;' . $fetc['CourseName'] . '<br/>';
                 }
             }
