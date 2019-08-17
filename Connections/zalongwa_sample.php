@@ -7,13 +7,13 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 @$username_zalongwa = "siras";
 @$password_zalongwa = "54321otod";
 
+
 $zalongwa = new mysqli($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa), $database_zalongwa);
-//$zalongwa = @mysqli_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa));
+
 if (!$zalongwa){
     printf("Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
     exit;
 }
-
 
 global $szRootURL,$szRootPath,$szSiteTitle,$szWebmasterEmail,$arrStructure,$arrVariations,$intDefaultVariation;
 global $szDBName,$szDBUsername,$szDBPassword,$szDiscussionAdmin,$szDiscussionPassword;
