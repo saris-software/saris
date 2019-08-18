@@ -231,7 +231,7 @@ do {
 } while ($row_course = mysqli_fetch_assoc($course));
   $rows = mysqli_num_rows($course);
   if($rows > 0) {
-      mysql_data_seek($course, 0);
+      mysqli_data_seek($course, 0);
 	  $row_course = mysqli_fetch_assoc($course);
   }
 ?>
