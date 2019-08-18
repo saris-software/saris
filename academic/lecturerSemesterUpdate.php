@@ -25,7 +25,7 @@ $row_AYear = mysqli_fetch_assoc($AYear);
 $totalRows_AYear = mysqli_num_rows($AYear);
 
 //populate semester combo box
-mysqli_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_sem = "SELECT Semester FROM terms ORDER BY Semester ASC LIMIT 2";
 $sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error());
 $row_sem = mysqli_fetch_assoc($sem);
@@ -60,7 +60,7 @@ $query = "UPDATE examregister SET Semester='$sem' WHERE CourseCode ='$key' AND A
 $qupdadateexamresult = "UPDATE examresult SET Semester='$sem' WHERE CourseCode ='$key' AND AYear = '$ayear'";
 
 $result = mysqli_query($zalongwa, $query);
-$result1 = mysqli_query($qupdadateexamresult);
+$result1 = mysqli_query($zalongwa,$qupdadateexamresult);
 
 	if($result) {
 	echo " Database Updated Successful!";
@@ -80,7 +80,7 @@ do {
 ?>
 <option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
                         <?php
-} while ($row_AYear = mysql_fetch_assoc($AYear));
+} while ($row_AYear = mysqli_fetch_assoc($AYear));
   $rows = mysqli_num_rows($AYear);
   if($rows > 0) {
       mysqli_data_seek($AYear, 0);
@@ -134,6 +134,6 @@ do {
 </form>
 <?php
 }
-@mysqli_free_result(@$ExamOfficerGradeBook);
+@mysqli_free_result (@$ExamOfficerGradeBook);
 include('../footer/footer.php');
 ?>
