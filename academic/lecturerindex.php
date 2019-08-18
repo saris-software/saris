@@ -6,8 +6,8 @@ require_once('../Connections/zalongwa.php');
 
 
 # initialise globals
-#include('lecturerMenu.php');
-#include('lecturerheader.php');
+include('lecturerMenu.php');
+include('lecturerheader.php');
 
 
 	# include the header
