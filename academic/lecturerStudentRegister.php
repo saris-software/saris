@@ -274,7 +274,7 @@ do {
 ?>
                     <option value="<?php echo $row_semester['Description']?>"><?php echo $row_semester['Description']?></option>
                     <?php
-} while ($row_semester = mysqli_fetch_assoc($semester));i
+} while ($row_semester = mysqli_fetch_assoc($semester));
   $rows = mysqli_num_rows($semester);
   if($rows > 0) {
       mysqli_data_seek($semester, 0);
