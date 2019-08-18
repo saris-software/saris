@@ -4,10 +4,11 @@
     $browser  =  $_SERVER["HTTP_USER_AGENT"];
 
     $ip  =  $_SERVER["REMOTE_ADDR"];
-    include 'conn/conn.php';$sql  =  "INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'<a href=\"studentResults.php\"> student Search Engine </a>')" ;
+    include '../Connections/zalongwa.php';
+    $sql  =  "INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'<a href=\"studentResults.php\"> student Search Engine </a>')" ;
     $sqldel = "delete from stats where (YEAR(CURRENT_DATE)-YEAR(received))- (RIGHT(CURRENT_DATE,5)<RIGHT(received,5))>1";
     $results  =  mysqli_query ($zalongwa,$sql);
-    $results  =  mysqli_query ( $sqldel);
+    $results  =  mysqli_query ($zalongwa, $sqldel);
 
 ?> 
     <html>
@@ -32,7 +33,7 @@
     <body bgcolor="#FFFFCC">
     <div align="center">
       <center>
-        <tr>
+        <tr style="margin: 0 auto">
           <td width="100%" height="48"></td>
         </tr>
       </center>
@@ -212,7 +213,7 @@
 
     /* Connecting, Selecting database */
 
-    include 'conn/conn.php';
+    include '../Connections/zalongwa.php';
     $today = date("Y");
 
     $content = @$_GET['content'];
@@ -220,10 +221,10 @@
     $query = "SELECT student.Name, Allocation.RegNo, [Hall/Hostel].HName AS HOSTEL, Allocation.RNumber AS ROOM, Allocation.AYear AS YEAR
     FROM student RIGHT JOIN (Allocation INNER JOIN [Hall/Hostel] ON Allocation.HID = [Hall/Hostel].HID) ON student.RegNo = Allocation.RegNo
     WHERE student.RegNo LIKE '%$content%' OR Name LIKE '$content' AND AYear LIKE '%$today%' order by Name, AYear";
-    $result = odbc_Exec($link, $query) or die("Query failed");
+    $result = odbc_Exec($zalongwa,$query,$link) or die("Query failed");
               odbc_result_all($result, "border = 1");
     /* closing connection	*/
-    odbc_close( $link);
+    odbc_close($link);
 ?>
 
             <td width="62">

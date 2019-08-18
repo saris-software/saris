@@ -28,10 +28,11 @@ function __doPostBack(eventTarget, eventArgument) {
         theForm.__EVENTTARGET.value = eventTarget;
         theForm.__EVENTARGUMENT.value = eventArgument;
         theForm.submit();
+
     }
 }
 //]]>
-</SCRIPT>
+</SCRIPT>event
 
 <SCRIPT src="login_files/WebResource.axd" type=text/javascript></SCRIPT>
 
