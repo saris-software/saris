@@ -19,7 +19,7 @@ $ip  =  $_SERVER["REMOTE_ADDR"];
 $jina = $username." - Visited the Administrator Page";   
 //$username = $username." "."Visited ".$szTitle;
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$jina')";   
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa,$sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($sql));
 
 ?> 
 <form action="adminmanageuser.php" method="get" class="style24">
