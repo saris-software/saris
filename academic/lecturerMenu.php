@@ -9,7 +9,7 @@
 		echo '<meta http-equiv = "refresh" content ="0;	url = ../index.php">';		
 	}
 	# start the session
-	session_start();
+	//session_start();
 	
 	# include the global settings
 	
