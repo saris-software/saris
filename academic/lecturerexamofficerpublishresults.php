@@ -18,31 +18,31 @@
 $currentPage = $_SERVER["PHP_SELF"];
 
 //populate academic year combo box
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AYear = mysql_query($query_AYear, $zalongwa) or die(mysql_error());
-$row_AYear = mysql_fetch_assoc($AYear);
-$totalRows_AYear = mysql_num_rows($AYear);
+$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error());
+$row_AYear = mysqli_fetch_assoc($AYear);
+$totalRows_AYear = mysqli_num_rows($AYear);
 
 //populate semester combo box
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_sem = "SELECT Semester FROM terms ORDER BY Semester ASC";
-$sem = mysql_query($query_sem, $zalongwa) or die(mysql_error());
-$row_sem = mysql_fetch_assoc($sem);
-$totalRows_sem = mysql_num_rows($sem);
+$sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error());
+$row_sem = mysqli_fetch_assoc($sem);
+$totalRows_sem = mysqli_num_rows($sem);
 
 //populate coursecode combo box
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_course = "SELECT CourseCode FROM course ORDER BY CourseCode ASC";
-$course = mysql_query($query_course, $zalongwa) or die(mysql_error());
-$row_course = mysql_fetch_assoc($course);
-$totalRows_course = mysql_num_rows($course);
+$course = mysqli_query($zalongwa, $query_course) or die(mysqli_error());
+$row_course = mysqli_fetch_assoc($course);
+$totalRows_course = mysqli_num_rows($course);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_Hostel = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error());
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
 
 
@@ -69,7 +69,7 @@ $pageNum_ExamOfficerGradeBook = 0;
 		
 		$query = "UPDATE examresult LEFT JOIN student ON (examresult.regno)=(student.regno) SET checked='$act' 
 					WHERE (AYear='$ayear' AND ProgrammeofStudy='$programme' AND Semester='$sem')";
-		$result = mysql_query($query);
+		$result = mysqli_query($zalongwa, $query);
 
 
 }
@@ -84,7 +84,7 @@ $query = "UPDATE examresult SET checked = 0 WHERE Semester ='$sem' AND AYear = '
 echo "Please Choose Action, Either Publish or Unpublish!";
 exit;
 }
-$result = mysql_query($query) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa, $query) or die("Siwezi kuingiza data.<br>" . mysqli_error());
 
 
 echo "Database Update Succeful!";
@@ -103,11 +103,11 @@ do {
 ?>
 <option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
                         <?php
-} while ($row_AYear = mysql_fetch_assoc($AYear));
-  $rows = mysql_num_rows($AYear);
+} while ($row_AYear = mysqli_fetch_assoc($AYear));
+  $rows = mysqli_num_rows($AYear);
   if($rows > 0) {
-      mysql_data_seek($AYear, 0);
-	  $row_AYear = mysql_fetch_assoc($AYear);
+      mysqli_data_seek($AYear, 0);
+	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
       </select></td>
@@ -121,11 +121,11 @@ do {
 ?>
  <option value="<?php echo $row_Hostel['ProgrammeCode']?>"><?php echo $row_Hostel['ProgrammeName']?></option>
                         <?php
-} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-  $totalRows_Hostel = mysql_num_rows($Hostel);
+} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+  $totalRows_Hostel = mysqli_num_rows($Hostel);
   if($totalRows_Hostel > 0) {
-      mysql_data_seek($Hostel, 0);
-	  $row_Hostel = mysql_fetch_assoc($Hostel);
+      mysqli_data_seek($Hostel, 0);
+	  $row_Hostel = mysqli_fetch_assoc($Hostel);
   }
 ?>
             </select></td>
@@ -139,11 +139,11 @@ do {
 ?>
  <option value="<?php echo $row_sem['Semester']?>"><?php echo $row_sem['Semester']?></option>
                         <?php
-} while ($row_sem = mysql_fetch_assoc($sem));
-  $rows = mysql_num_rows($sem);
+} while ($row_sem = mysqli_fetch_assoc($sem));
+  $rows = mysqli_num_rows($sem);
   if($rows > 0) {
-      mysql_data_seek($sem, 0);
-	  $row_sem = mysql_fetch_assoc($sem);
+      mysqli_data_seek($sem, 0);
+	  $row_sem = mysqli_fetch_assoc($sem);
   }
 ?>
             </select></td>
@@ -157,11 +157,11 @@ do {
 ?>
                         <option value="<?php echo $row_course['CourseCode']?>"><?php echo $row_course['CourseCode']?></option>
                         <?php
-} while ($row_course = mysql_fetch_assoc($course));
-  $rows = mysql_num_rows($course);
+} while ($row_course = mysqli_fetch_assoc($course));
+  $rows = mysqli_num_rows($course);
   if($rows > 0) {
-      mysql_data_seek($course, 0);
-	  $row_course = mysql_fetch_assoc($course);
+      mysqli_data_seek($course, 0);
+	  $row_course = mysqli_fetch_assoc($course);
   }
 ?>
             </select></td>
@@ -192,11 +192,11 @@ do {
 ?>
 <option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
                         <?php
-} while ($row_AYear = mysql_fetch_assoc($AYear));
-  $rows = mysql_num_rows($AYear);
+} while ($row_AYear = mysqli_fetch_assoc($AYear));
+  $rows = mysqli_num_rows($AYear);
   if($rows > 0) {
-      mysql_data_seek($AYear, 0);
-	  $row_AYear = mysql_fetch_assoc($AYear);
+      mysqli_data_seek($AYear, 0);
+	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
       </select></td>
@@ -210,11 +210,11 @@ do {
 ?>
  <option value="<?php echo $row_sem['Semester']?>"><?php echo $row_sem['Semester']?></option>
                         <?php
-} while ($row_sem = mysql_fetch_assoc($sem));
-  $rows = mysql_num_rows($sem);
+} while ($row_sem = mysqli_fetch_assoc($sem));
+  $rows = mysqli_num_rows($sem);
   if($rows > 0) {
-      mysql_data_seek($sem, 0);
-	  $row_sem = mysql_fetch_assoc($sem);
+      mysqli_data_seek($sem, 0);
+	  $row_sem = mysqli_fetch_assoc($sem);
   }
 ?>
             </select></td>
@@ -228,11 +228,11 @@ do {
 ?>
                         <option value="<?php echo $row_course['CourseCode']?>"><?php echo $row_course['CourseCode']?></option>
                         <?php
-} while ($row_course = mysql_fetch_assoc($course));
-  $rows = mysql_num_rows($course);
+} while ($row_course = mysqli_fetch_assoc($course));
+  $rows = mysqli_num_rows($course);
   if($rows > 0) {
-      mysql_data_seek($course, 0);
-	  $row_course = mysql_fetch_assoc($course);
+      mysqli_data_seek($course, 0);
+	  $row_course = mysqli_fetch_assoc($course);
   }
 ?>
             </select></td>
@@ -255,6 +255,6 @@ do {
 <?php
 
 }
-@mysql_free_result(@$ExamOfficerGradeBook);
+@mysqli_free_result(@$ExamOfficerGradeBook);
 include('../footer/footer.php');
 ?>
