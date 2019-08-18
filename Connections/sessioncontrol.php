@@ -1,5 +1,4 @@
 <?php
-session_start();
 session_cache_limiter('nocache');
 @$module  = $_SESSION['module'];
 @$privilege  = $_SESSION['privilege'];
@@ -14,5 +13,6 @@ if(!$username){
 	echo ("Session Expired, <a href=\"../index.php\"> Click Here<a> to Re-Login");
 	echo '<meta http-equiv = "refresh" content ="0; url = ../index.php">';
 	exit;
-}		
+}
+session_start();
 ?>
