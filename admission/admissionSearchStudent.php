@@ -48,19 +48,19 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if (isset($_POST['search']) && ($_POST['search'] == "Search")) {
 #get post variables
 $rawkey = addslashes($_POST['key']);
-$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+$key = preg_replace("[[:space:]]+", " ",$rawkey);
 			
 require_once('../Connections/zalongwa.php'); 
 $stdsql = "SELECT student.Id, student.Name, student.Sex, student.ProgrammeofStudy, student.Faculty, student.Sponsor, student.EntryYear, student.RegNo, student.AdmissionNo, student.Photo
 FROM student
 WHERE (student.Name LIKE '%$key%')OR (student.AdmissionNo LIKE '%$key%') OR (student.RegNo LIKE '%$key%') ORDER BY student.Name";
 
-$stdquery = @mysql_query($stdsql);
+$stdquery = @mysqli_query($zalongwa, $stdsql);
 
-$all_query = mysql_query($stdquery);
-$totalRows_query = mysql_num_rows($stdquery);
+$all_query = mysqli_query($zalongwa, $stdquery);
+$totalRows_query = mysqli_num_rows($stdquery);
 /* Printing Results in html */
-if (mysql_num_rows($stdquery) > 0){
+if (mysqli_num_rows($stdquery) > 0){
 echo "<p>Total Records Found: $totalRows_query </p>";
 echo "<table border='1' cellpadding='0' cellspacing='0'>";
 echo "<tr>
@@ -77,7 +77,7 @@ echo "<tr>
 <th> Photo </th>
 </tr>";
 $i=1;
-while($result = mysql_fetch_array($stdquery))
+while($result = mysqli_fetch_array($stdquery))
  {
 		$id = stripslashes($result["Id"]);
 		$year = stripslashes($result["AYear"]);
@@ -93,8 +93,8 @@ while($result = mysql_fetch_array($stdquery))
 		$citeria = stripslashes($result["RNumber"]);
 			//get degree name
 			$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-			$dbdegree = mysql_query($qdegree);
-			$row_degree = mysql_fetch_array($dbdegree);
+			$dbdegree = mysqli_query($zalongwa, $qdegree);
+			$row_degree = mysqli_fetch_array($dbdegree);
 			$programme = $row_degree['Title'];
 			#get Billing Information
 			$regno=$RegNo;
@@ -111,7 +111,8 @@ while($result = mysql_fetch_array($stdquery))
 			include('../billing/includes/getgrandtotalpaid.php');
 				$invoice = number_format($invoice,2,'.',',');
 				$paid = number_format($paid,2,'.',',');
-				$due = number_format($due,2,'.',',');	
+     /** @var due $due */
+     $due = number_format($due,2,'.',',');
 					
 				echo "<tr><td><a href=\"admissionRegistrationForm.php?id=$id&RegNo=$RegNo\">$i</a></td>";
 					echo "<td>&nbsp;$Name</td>";
@@ -134,7 +135,7 @@ $key= stripslashes($key);
 echo "Sorry, No Records Found <br>";
 echo "That Match With Your Searck Key \"$key \" ";
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 
 }else{
 
