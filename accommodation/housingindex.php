@@ -1,11 +1,11 @@
 <?php 
 #get connected to the database and verfy current session
-	require_once('../Connections/sessioncontrol.php');
-    require_once('../Connections/zalongwa.php');
-	
-	# initialise globals
-	include('admissionMenu.php');
-	
+require_once('../Connections/sessioncontrol.php');
+require_once('../Connections/zalongwa.php');
+
+# initialise globals
+include('admissionMenu.php');
+//include('housingindex.php');
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Profile';
@@ -16,10 +16,10 @@
 #Store Login History	
 $browser  =  $_SERVER["HTTP_USER_AGENT"];   
 $ip  =  $_SERVER["REMOTE_ADDR"];
-$jina = $username." - Visited the Accommodation Page";   
+$name = $username." - Visited the Accommodation Page";
 //$username = $username." "."Visited ".$szTitle;
-$sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$jina')";   
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$name')";
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error());
 
 	
 ?>
