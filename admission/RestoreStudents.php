@@ -29,7 +29,7 @@ return false;
 if(isset($_POST['Remove']))
 {
 $stid=$_POST['stid'];
-$remove_log=mysql_query("delete from studentlog where Id='$stid'")or die(mysql_error());
+$remove_log=mysqli_query("delete from studentlog where Id='$stid'", $zalongwa)or die(mysqli_error());
 }
 if(isset($_POST['delete']))
 {
@@ -39,7 +39,7 @@ if($count<=0)
 {
 echo "<table>
 <tr><td>
-<font color='red'>Choose Student please.</font>
+<span style=\"color: red; \">Choose Student please.</span>
 </td></tr>
 </table>";
 }
@@ -50,8 +50,8 @@ for($j=0;$j<$count;$j++)
 {
 #Fetch Records
 $sql = "SELECT * FROM studentlog WHERE Id ='$Eq[$j]'"; 
-$update = mysql_query($sql) or die(mysql_error());
-$update_row = mysql_fetch_array($update)or die(mysql_error());
+$update = mysqli_query($zalongwa, $sql) or die(mysqli_error());
+$update_row = mysqli_fetch_array($update)or die(mysqli_error());
 	$regno = addslashes($update_row['RegNo']);
 	$stdid = addslashes($update_row['Id']);
 	$AdmissionNo = addslashes($update_row['AdmissionNo']);     
@@ -110,7 +110,9 @@ $kin_job=addslashes($update_row['kin_job']);
 $studylevel=addslashes($update_row['studylevel']);
 //***********             
 #insert record
-$sql="INSERT INTO student
+    /** @var disability $disability */
+    /** @var Subject $Subject */
+    $sql="INSERT INTO student
 (Name,AdmissionNo,
 Sex,DBirth,
 MannerofEntry,MaritalStatus,
@@ -182,10 +184,10 @@ VALUES
 
 
 //echo $sql;
-$plg=mysql_query($sql)or die(mysql_error());
+$plg=mysqli_query($zalongwa, $sql)or die(mysqli_error());
 if($plg)
 {
-$delete=mysql_query("delete from studentlog where Id='$Eq[$j]'");
+$delete=mysqli_query("delete from studentlog where Id='$Eq[$j]'", $zalongwa);
 }else
 {
 
@@ -205,7 +207,7 @@ if($count<=0)
 {
 echo "<table>
 <tr><td>
-<font color='red'>Choose Student please.</font>
+<span style=\"color: red; \">Choose Student please.</span>
 </td></tr>
 </table>";
 }
@@ -214,7 +216,7 @@ else
 $e=1;
 for($j=0;$j<$count;$j++)
 {
-$delete_completely=mysql_query("delete from studentlog where Id='$Eq[$j]'");
+$delete_completely=mysqli_query("delete from studentlog where Id='$Eq[$j]'", $zalongwa);
 }
 }
 }
@@ -240,7 +242,7 @@ $pageNum=$_GET['page'];
 $offset=($pageNum-1)*$rowPerPage;
 $k=$offset+1;
 $query=$look."LIMIT $offset,$rowPerPage";
-$result=mysql_query($query) or die(mysql_error());
+$result=mysqli_query($zalongwa, $query) or die(mysqli_error());
 echo"<form action='$_SERVER[PHP_SELF]' method='POST'>";
 echo "<table cellspacing='0' border='1' width='950' cellpadding='0'>
 <tr class='dtable' bgcolor='#ccccf'>
@@ -254,7 +256,7 @@ echo "<table cellspacing='0' border='1' width='950' cellpadding='0'>
 <th>Date</th>
 <th>Select</th>
 </tr>";
-while($r=mysql_fetch_array($result))
+while($r=mysqli_fetch_array($result))
 {
 echo "<tr>
 <td>&nbsp;$k</td>
@@ -284,11 +286,11 @@ echo"</td></tr>";
 $k++;
 }
 echo"</table>";
-$data=mysql_query($look);
-$numrows=mysql_num_rows($data);
+$data=mysqli_query($zalongwa, $look);
+$numrows=mysqli_num_rows($data);
 //$result=mysql_query($data);
-$result=mysql_query($look);
-$row=mysql_fetch_array($data);
+$result=mysqli_query($zalongwa, $look);
+$row=mysqli_fetch_array($data);
 $maxPage=ceil($numrows/$rowPerPage);
 $self=$_SERVER['PHP_SELF'];
 $nav='';
