@@ -231,11 +231,9 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
                                             style="color:#0000CC; ">LAST NAME:</span></div></TD>
                             <TD colspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
                                             style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
+<INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"])))? $_POST["txtLastName"]:"" ?>;">
 
-<label>
-<INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"])))?$_POST["txtLastName"]??  ?>">
-</label>
-</span><span style="color: rgb(000000); "><span class="large style4"><span style="color: #0000CC; ">(LASTNAME)</span></span> </span></div></TD>
+</span><span style="color:#000000; "><span class="large style4"><span style="color: #0000CC; ">(LASTNAME)</span></span> </span></div></TD>
                             
                           </TR>
                           <TR>
@@ -392,10 +390,9 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
                                     <input type="submit" value="Submit" name="Submit">
                                     <span class="style45 style16"> ...............</span>
                                     <input type="reset" value=" Reset" name="Reset">
-                                  </div>
-                            </div></TD>
+                                  </div></TD>
                             
-                            <td vertical-align="top"> background-color="#FFFFCC"><div text-align="right"></div></td>
+                            <td vertical-align="top" background-color="#FFFFCC"><div text-align="right"></div></td>
                           </TR>
           </table>
           <input type="hidden" name="MM_insert" value="true">
