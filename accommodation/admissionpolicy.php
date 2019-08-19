@@ -13,10 +13,10 @@ include('admissionMenu.php');
 require_once('../Connections/zalongwa.php');
 
 $sql = "SELECT FullName, Email, Position, UserName, Registered FROM security WHERE UserName = '$username'";
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$query = @mysqli_query($sql) or die("Cannot query the database.<br>" . mysqli_error());
 echo "<table border='1'>";
 echo "<tr><td> Name </td><td> Login ID </td><td> Status </td><td> E-Post </td><td> Registered </td></tr>";
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$Name = stripslashes($result["FullName"]);
 		$username = stripslashes($result["UserName"]);
 		$position = stripslashes($result["Position"]);
