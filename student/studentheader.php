@@ -44,189 +44,189 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
-<html>
-<head>
-	<title>SARIS -> <?php echo  $szSection ?> -> <?php echo  $szSubSection ?></title>
-	<!-- include style sheet -->
-	<link rel="stylesheet" type="text/css" href="../css/header.css">
+    <html>
+    <head>
+        <title>SARIS -> <?php echo  $szSection ?> -> <?php echo  $szSubSection ?></title>
+        <!-- include style sheet -->
+        <link rel="stylesheet" type="text/css" href="../css/header.css">
 
-</head>
-<body leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
-<table border="0" cellspacing="0" cellpadding='0' width='100%' background="../themes/images/loginTopHeaderBg.gif" style="border:2px solid rgb(119,119,119)">
-<tr>
-	<td align=left valign="middle" bgcolor="#ceceff">
-		<span class="style5">
-		<table border="0" cellspacing="0" cellpadding='3' width='100%'>
-			<tr>
-				<td align=right valign="middle" style='font-family:Courier New, monospaced; font-weight:bold; font-size:14px'>
-					<?php
-						echo 'NAME:<BR/>REGISTRATION NUMBER:<BR/>PROGRAMME:<BR/>ENTRY YEAR:<BR/>ACADEMIC YEAR:';
-					?>
-				</td>
-				<td align=left valign="middle" style='font-family:Courier New, monospaced; font-size:14px'>
-					<?php
-						$qdetail = mysqli_query($zalongwa,"SELECT s.Photo, s.Entryyear, p.Title
-												FROM student s, programme p 
-												WHERE s.RegNo='$RegNo' AND p.ProgrammeCode=s.ProgrammeofStudy");
-												
-						list($photo,$entry,$title) = mysqli_fetch_array($qdetail);
-						
-						echo $name.'<BR/>'.$RegNo.'<BR/>'.$title.'<BR/>'.$entry.'<BR/>';
-						
-						$qyear = mysqli_query($zalongwa,"SELECT AYear FROM academicyear WHERE Status=1");
-						list($ayear) = mysqli_fetch_array($qyear);
-						echo $ayear;
-					?>
-				</td>
-				<td align=left valign="middle">
-						<?php
-							#get photo							
-							$photo = stripslashes($photo);
-							
-							echo "<img src='$photo' width='100' height='100'>"
-						?>
-				</td>
-			</tr>
-			</table>
-		</span>
-	</td>
-</tr>
-</table>
-<table border="0" cellspacing="0" cellpadding="0" width=100% height=100% style="border:2px solid rgb(119,119,119)">
-<tr>
-</tr>
-<tr><td height=30 colspan=2 bgcolor="#CCCCCC" class="style6">
-		<table border="0" cellspacing="0" cellpadding="0" width=100%>
-		<tr>
-		    <td class="smalltext">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $name ?></td>
-		</tr>
-		</table>
-	</td>
-</tr>
-<tr>
-    <td rowspan=2 width=180 valign=top align=center style="padding:5px" bgcolor="#CCCCCC"><span class="white"></span>
-      <table cellspacing="0" cellpadding="0" border="0">
-		  <tr>
-		      <td align="left" style="padding-left: 1px;" valign=top>
-			
-			  
-			<div class="EnclosureBox">
-			  <?php # loop around and write out the Sections
-				for ( $i=1; $i<= count( $arrStructure ); $i++ ){	
-					
-					# is this the current section?
-					if ( $arrStructure[$i]['name1'] == $szSection ) $intSectionID = $i;
-					
-					# only output parent sections
-					
-					if ( $arrStructure[$i]['parentID'] == 0){
-					
-						# Section Enclosure
-						echo '<div class="SectionEnclosureBox">';
-						
-						# is this the current section
-						if ( $i == $intSectionID ) { 
-							# Section On
-							echo '<div class="SectionOnBox"><a class="NavigationLink" href="'.$arrStructure[$i]['url'].'">'.$arrStructure[$i]['name'.$intDisplayLanguage].'</a></div>';
-							
-							# Subsections
-							
-							# loop around and write out the sub-sections
-							$arrSubStructure = $arrStructure[$intSectionID]['subsections'];
-							for ($j=1; $j<= count($arrSubStructure); $j++){	
-							
-								# Sub Section Enclosure
-								echo '<div class="SubSectionEnclosureBox">';
-								
-								# is this the current subsection?
-								if ( $arrSubStructure[$j]['name1'] == $szSubSection ) $intSubSectionID = $j;
-								
-								# is this a section page?
-								
-								# is this the current subsection
-								if ( $j == $intSubSectionID ) { 
-									# SubSection On
-									echo '<div class="SubSectionOnBox"><a class="NavigationLink" href="'.$arrSubStructure[$j]['url'].'">'.$arrSubStructure[$j]['name'.$intDisplayLanguage].'</a></div>';
-									
-									# loop around and write out the sub-sections
-									$arrSubSubStructure = $arrStructure[$intSectionID]['subsections'][$intSubSectionID]['subsections'];
-									
-									for ($k=1; $k<= count($arrSubSubStructure); $k++){	
-		
-										# is this the current subsubsection?
-										if ( $arrSubSubStructure[$k]['name1'] == $szSubSubSection ) $intSubSubSectionID = $k;
-										
-										# is this the current subsubsection
-										if ( $k == $intSubSubSectionID ) { 
-											// ON
-											echo '<div class="SubSubSectionOnBox">'.$arrSubSubStructure[$k]['name'.$intDisplayLanguage].'</div>';
-										}else{
-											echo '<div class="SubSubSectionOffBox"><a class="NavigationLink" href="'.$arrSubSubStructure[$k]['url'].'">'.$arrSubSubStructure[$k]['name'.$intDisplayLanguage].'</a></div>';
-										}
-										
-									}
-								}else{
-									# subsection is off
-									echo '<div class="SubSectionOffBox"><a class="NavigationLink" href="'.$arrSubStructure[$j]['url'].'">'.$arrSubStructure[$j]['name'.$intDisplayLanguage].'</a></div>';
-								}
-								
-								# End of Sub Section Enclosure
-								echo '</div>';
-								
-							}
-						}else{
-							# section is off
-							echo '<div class="SectionOffBox"><a class="NavigationLink" href="'.$arrStructure[$i]['url'].'">'.$arrStructure[$i]['name'.$intDisplayLanguage].'</a></div>';
-							//echo '<tr><td style="padding-left: 10px;" height="20" align="left">&nbsp;<a class="navoff"href="'.$arrStructure[$i]['url'].'">'.$arrStructure[$i]['name'.$intDisplayLanguage].'</a>&nbsp;</td></tr>';
-						}
-						
-						# End of Section Enclosure
-						echo '</div>';
-					}
-				}
-				
-			?>
-			  </div>
-			  <div>
-			&nbsp;
-			  </div>
-			  <?php if (isset($arrSpecialStructure)){?>
-				  <div class="EnclosureBox">
-				  <?php # loop around and write out the Sections
-					for ( $i=1; $i<= count( $arrSpecialStructure ); $i++ ){	
-						
-						# only output parent sections
-						if ( $arrSpecialStructure[$i]['parentID'] == 0){
-						
-							# Section Enclosure
-							echo '<div class="SectionEnclosureBox">';
-							
-							# section is off
-							echo '<div class="SpecialSectionBox"><a class="NavigationLink" href="'.$arrSpecialStructure[$i]['url'].'">'.$arrSpecialStructure[$i]['name'.$intDisplayLanguage].'</a></div>';
+    </head>
+    <body style="margin: 0">
+    <table border="0" cellspacing="0" cellpadding='0' width='100%' background="../themes/images/loginTopHeaderBg.gif" style="border:2px solid rgb(119,119,119)">
+    <tr>
+        <td align=left valign="middle" bgcolor="#ceceff">
+            <span class="style5">
+            <table border="0" cellspacing="0" cellpadding='3' width='100%'>
+                <tr>
+                    <td align=right valign="middle" style='font-family:Courier New, monospaced; font-weight:bold; font-size:14px'>
+                        <?php
+                            echo 'NAME:<BR/>REGISTRATION NUMBER:<BR/>PROGRAMME:<BR/>ENTRY YEAR:<BR/>ACADEMIC YEAR:';
+                        ?>
+                    </td>
+                    <td align=left valign="middle" style='font-family:Courier New, monospaced; font-size:14px'>
+                        <?php
+                            $qdetail = mysqli_query($zalongwa,"SELECT s.Photo, s.Entryyear, p.Title
+                                                    FROM student s, programme p 
+                                                    WHERE s.RegNo='$RegNo' AND p.ProgrammeCode=s.ProgrammeofStudy");
 
-							
-							# End of Section Enclosure
-							echo '</div>';
-						}
-					}
-					
-				?>
-				  </div>
-				  <div>
-				&nbsp;
-				  </div>
-			  <?php } ?>
-			  </td>
-		  </tr>
-	  </table></td>
-      <td valign=top style="font-size:12pt;"><div style="width:550;padding:15px 10px 15px 20px">
-		  <?php if (strlen($szTitle)){
-				echo '<div class="header1">'.$szTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
-			}elseif (strlen($szSubSubSectionTitle)){
-				echo '<div class="header1">'.$szSubSubSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
-			}elseif (strlen($szSubSectionTitle)){
-				echo '<div class="header1">'.$szSubSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
-			}elseif (strlen($szSectionTitle)){
-				echo '<div class="header1">'.$szSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
-			} 
-			?>
+                            list($photo,$entry,$title) = mysqli_fetch_array($qdetail);
+
+                            echo $name.'<BR/>'.$RegNo.'<BR/>'.$title.'<BR/>'.$entry.'<BR/>';
+
+                            $qyear = mysqli_query($zalongwa,"SELECT AYear FROM academicyear WHERE Status=1");
+                            list($ayear) = mysqli_fetch_array($qyear);
+                            echo $ayear;
+                        ?>
+                    </td>
+                    <td align=left valign="middle">
+                            <?php
+                                #get photo
+                                $photo = stripslashes($photo);
+
+                                echo "<img src='$photo' width='100' height='100'>"
+                            ?>
+                    </td>
+                </tr>
+                </table>
+            </span>
+        </td>
+    </tr>
+    </table>
+    <table border="0" cellspacing="0" cellpadding="0" width=100% height=100% style="border:2px solid rgb(119,119,119)">
+    <tr>
+    </tr>
+    <tr><td height=30 colspan=2 bgcolor="#CCCCCC" class="style6">
+            <table border="0" cellspacing="0" cellpadding="0" width=100%>
+            <tr>
+                <td class="smalltext">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $name ?></td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td rowspan=2 width=180 valign=top align=center style="padding:5px" bgcolor="#CCCCCC"><span class="white"></span>
+          <table cellspacing="0" cellpadding="0" border="0">
+              <tr>
+                  <td align="left" style="padding-left: 1px;" valign=top>
+
+
+                <div class="EnclosureBox">
+                  <?php # loop around and write out the Sections
+                    for ( $i=1; $i<= count( $arrStructure ); $i++ ){
+
+                        # is this the current section?
+                        if ( $arrStructure[$i]['name1'] == $szSection ) $intSectionID = $i;
+
+                        # only output parent sections
+
+                        if ( $arrStructure[$i]['parentID'] == 0){
+
+                            # Section Enclosure
+                            echo '<div class="SectionEnclosureBox">';
+
+                            # is this the current section
+                            if ( $i == $intSectionID ) {
+                                # Section On
+                                echo '<div class="SectionOnBox"><a class="NavigationLink" href="'.$arrStructure[$i]['url'].'">'.$arrStructure[$i]['name'.$intDisplayLanguage].'</a></div>';
+
+                                # Subsections
+
+                                # loop around and write out the sub-sections
+                                $arrSubStructure = $arrStructure[$intSectionID]['subsections'];
+                                for ($j=1; $j<= count($arrSubStructure); $j++){
+
+                                    # Sub Section Enclosure
+                                    echo '<div class="SubSectionEnclosureBox">';
+
+                                    # is this the current subsection?
+                                    if ( $arrSubStructure[$j]['name1'] == $szSubSection ) $intSubSectionID = $j;
+
+                                    # is this a section page?
+
+                                    # is this the current subsection
+                                    if ( $j == $intSubSectionID ) {
+                                        # SubSection On
+                                        echo '<div class="SubSectionOnBox"><a class="NavigationLink" href="'.$arrSubStructure[$j]['url'].'">'.$arrSubStructure[$j]['name'.$intDisplayLanguage].'</a></div>';
+
+                                        # loop around and write out the sub-sections
+                                        $arrSubSubStructure = $arrStructure[$intSectionID]['subsections'][$intSubSectionID]['subsections'];
+
+                                        for ($k=1; $k<= count($arrSubSubStructure); $k++){
+
+                                            # is this the current subsubsection?
+                                            if ( $arrSubSubStructure[$k]['name1'] == $szSubSubSection ) $intSubSubSectionID = $k;
+
+                                            # is this the current subsubsection
+                                            if ( $k == $intSubSubSectionID ) {
+                                                // ON
+                                                echo '<div class="SubSubSectionOnBox">'.$arrSubSubStructure[$k]['name'.$intDisplayLanguage].'</div>';
+                                            }else{
+                                                echo '<div class="SubSubSectionOffBox"><a class="NavigationLink" href="'.$arrSubSubStructure[$k]['url'].'">'.$arrSubSubStructure[$k]['name'.$intDisplayLanguage].'</a></div>';
+                                            }
+
+                                        }
+                                    }else{
+                                        # subsection is off
+                                        echo '<div class="SubSectionOffBox"><a class="NavigationLink" href="'.$arrSubStructure[$j]['url'].'">'.$arrSubStructure[$j]['name'.$intDisplayLanguage].'</a></div>';
+                                    }
+
+                                    # End of Sub Section Enclosure
+                                    echo '</div>';
+
+                                }
+                            }else{
+                                # section is off
+                                echo '<div class="SectionOffBox"><a class="NavigationLink" href="'.$arrStructure[$i]['url'].'">'.$arrStructure[$i]['name'.$intDisplayLanguage].'</a></div>';
+                                //echo '<tr><td style="padding-left: 10px;" height="20" align="left">&nbsp;<a class="navoff"href="'.$arrStructure[$i]['url'].'">'.$arrStructure[$i]['name'.$intDisplayLanguage].'</a>&nbsp;</td></tr>';
+                            }
+
+                            # End of Section Enclosure
+                            echo '</div>';
+                        }
+                    }
+
+                ?>
+                  </div>
+                  <div>
+                &nbsp;
+                  </div>
+                  <?php if (isset($arrSpecialStructure)){?>
+                      <div class="EnclosureBox">
+                      <?php # loop around and write out the Sections
+                        for ( $i=1; $i<= count( $arrSpecialStructure ); $i++ ){
+
+                            # only output parent sections
+                            if ( $arrSpecialStructure[$i]['parentID'] == 0){
+
+                                # Section Enclosure
+                                echo '<div class="SectionEnclosureBox">';
+
+                                # section is off
+                                echo '<div class="SpecialSectionBox"><a class="NavigationLink" href="'.$arrSpecialStructure[$i]['url'].'">'.$arrSpecialStructure[$i]['name'.$intDisplayLanguage].'</a></div>';
+
+
+                                # End of Section Enclosure
+                                echo '</div>';
+                            }
+                        }
+
+                    ?>
+                      </div>
+                      <div>
+                    &nbsp;
+                      </div>
+                  <?php } ?>
+                  </td>
+              </tr>
+          </table></td>
+          <td valign=top style="font-size:12pt;"><div style="width:550px ;padding:15px 10px 15px 20px">
+              <?php if (strlen($szTitle)){
+                    echo '<div class="header1">'.$szTitle.'</div><hr style="color:#B9C2C6; size:1">';
+                }elseif (strlen($szSubSubSectionTitle)){
+                    echo '<div class="header1">'.$szSubSubSectionTitle.'</div><hr style="color:#B9C2C6; size:1">';
+                }elseif (strlen($szSubSectionTitle)){
+                    echo '<div class="header1">'.$szSubSectionTitle.'</div><hr style="color:#B9C2C6; size:1">';
+                }elseif (strlen($szSectionTitle)){
+                    echo '<div class="header1">'.$szSectionTitle.'</div><hr style="color:#B9C2C6; size:1">';
+                }
+                ?>

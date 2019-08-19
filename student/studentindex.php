@@ -41,7 +41,7 @@
 			$position = stripslashes($result["Position"]);
 			$email = stripslashes($result["Email"]);
 			$registered = stripslashes($result["LastLogin"]);
-				echo "<tr bgcolor='#ffffff'>
+				echo "<tr style='background-color: #ffffff' >
 						<td nowrap>$Name</td>
 						<td nowrap>$username</td>
 						<td nowrap>$position</td>
