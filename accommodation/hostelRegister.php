@@ -59,9 +59,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
                        GetSQLValueString($_POST['txtName'], "text"));
 
   mysqli_select_db($zalongwa, $database_zalongwa);
-  $Result1 = mysqli_query($zalongwa,$updateSQL) or die(mysqli_error($zalongwa,));
+  $Result1 = mysqli_query($zalongwa,$updateSQL) or die(mysqli_error($zalongwa));
   mysqli_select_db($zalongwa,$database_zalongwa);
-  $Result1 = mysqli_query($zalongwa,$updateSQL) or die(mysqli_error($zalongwa,));
+  $Result1 = mysqli_query($zalongwa,$updateSQL) or die(mysqli_error($zalongwa));
 
 
   $updateGoTo = "hostelRegister.php";
@@ -83,7 +83,7 @@ $startRow_inst = $pageNum_inst * $maxRows_inst;
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_inst = "SELECT HID, HName, Location, Capacity, Address FROM hostel ORDER BY HID ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
 
 mysqli_select_db($zalongwa,$database_zalongwa);
 $query_inst = "SELECT HID, HName, Location, Capacity, Address FROM hostel ORDER BY HID ASC";
