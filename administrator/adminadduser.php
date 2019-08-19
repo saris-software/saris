@@ -233,7 +233,7 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
                                             style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
 
 <label>
-<INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"])))?$_POST["txtLastName"]?? Null; ?>">
+<INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"])))?$_POST["txtLastName"]??  ?>">
 </label>
 </span><span style="color: rgb(000000); "><span class="large style4"><span style="color: #0000CC; ">(LASTNAME)</span></span> </span></div></TD>
                             
