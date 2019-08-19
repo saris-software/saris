@@ -196,8 +196,7 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
 			<td text-align=left>
 			
 			
-			table {
-                border=0  border-spacing="0px" border-padding="0px" width:100% background="themes/images/loginTopHeaderBg.gif"}
+			<table border=0  border-spacing="0px" border-padding="0px" width="100%" background="themes/images/loginTopHeaderBg.gif">
 			<tr>
                 &nbsp;
 				<td text-align=right><!--img src="themes/images/loginTopVersion.gif"--></td>
@@ -233,14 +232,14 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
                                             style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
 <INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"])))? $_POST["txtLastName"]:"" ?>;">
 
-<<<<<<< HEAD
+
 </span><span style="color:#000000; "><span class="large style4"><span style="color: #0000CC; ">(LASTNAME)</span></span> </span></div></TD>
-=======
+
 <label>
 <INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"]))?$_POST["txtLastName"]:"") ?>">
 </label>
 </span><span style="color: rgb(000000); "><span class="large style4"><span style="color: #0000CC; ">(LASTNAME)</span></span> </span></div></TD>
->>>>>>> d7047af7345fb672136266165a2ae81307855612
+
                             
                           </TR>
                           <TR>
