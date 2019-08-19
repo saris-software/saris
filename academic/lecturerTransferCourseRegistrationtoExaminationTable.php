@@ -40,16 +40,16 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "ExamResults")) {
                        GetSQLValueString($_POST['AYear'], "text"),
                        GetSQLValueString(isset($_POST['checked']) ? "true" : "", "defined","1","0"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error($zalongwa));
 }
-} while ($row_coursecandidate = mysql_fetch_assoc($coursecandidate));
+} while ($row_coursecandidate = mysqli_fetch_assoc($coursecandidate));
 
-mysql_select_db($database_zalongwa, $zalongwa);
-$query_coursecandidate = "SELECT student.Name, CourseCandidate.RegNo, CourseCandidate.CourseCode, CourseCandidate.AYear FROM student INNER JOIN CourseCandidate ON student.RegNo = CourseCandidate.RegNo WHERE CourseCandidate.CourseCode = 'EV 200'";
-$coursecandidate = mysql_query($query_coursecandidate, $zalongwa) or die(mysql_error());
-$row_coursecandidate = mysql_fetch_assoc($coursecandidate);
-$totalRows_coursecandidate = mysql_num_rows($coursecandidate);
+mysqli_select_db($zalongwa,$database_zalongwa);
+$query_coursecandidate = "SELECT student.Name, CoursieCandidate.RegNo, CourseCandidate.CourseCode, CourseCandidate.AYear FROM student INNER JOIN CourseCandidate ON student.RegNo = CourseCandidate.RegNo WHERE CourseCandidate.CourseCode = 'EV 200'";
+$coursecandidate = mysqli_query($zalongwa,$query_coursecandidate) or die(mysqli_error($zalongwa));
+$row_coursecandidate = mysqli_fetch_assoc($coursecandidate);
+$totalRows_coursecandidate = mysqli_num_rows($coursecandidate);
 ?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="ExamResults" id="ExamResults">
 Click Save to Save Examination Results:<input name="save" type="submit" value="Save Results">
@@ -80,10 +80,10 @@ Click Save to Save Examination Results:<input name="save" type="submit" value="S
       <td><input name="txtCWK" type="text" id="txtCWK" size="6"></td>
       <td><input name="txtExam" type="text" id="txtExam" size="6"></td>
     </tr>
-    <?php } while ($row_coursecandidate = mysql_fetch_assoc($coursecandidate)); ?>
+    <?php } while ($row_coursecandidate = mysqli_fetch_assoc($coursecandidate)); ?>
 </table>
 <input type="hidden" name="MM_insert" value="ExamResults">
 </form>
 <?php
-mysql_free_result($coursecandidate);
+mysqli_free_result($coursecandidate);
 ?>
