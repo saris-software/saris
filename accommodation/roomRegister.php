@@ -27,13 +27,13 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_Hostel = "SELECT HID, HName FROM hostel";
-$Hostel = mysql_query($query_Hostel, $zalongwa);
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa, $query_Hostel);
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 //the query was wrong, there is no Id field in block table
 //$query_Block = "SELECT Id, HID, BName FROM block";
 
@@ -68,8 +68,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmInst")) {
 			 $insertSQL = "INSERT INTO room SET RNumber='$rnumber',
                            HID='$hall', Capacity='$capacity', BID='$block', FloorName='$flr'";
                            
-			 mysql_select_db($database_zalongwa, $zalongwa);
-			 $Result1 = mysql_query($insertSQL, $zalongwa);
+			 mysqli_select_db($zalongwa, $database_zalongwa);
+			 $Result1 = mysqli_query($zalongwa, $insertSQL);
 			 }
 }
 
@@ -86,8 +86,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
                                     FloorName='$flr'
   				WHERE HID='$hall' AND RNumber=' $rnumber'";
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($updateSQL, $zalongwa);
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $updateSQL);
 
   $updateGoTo = "roomRegister.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -104,17 +104,17 @@ if (isset($_GET['pageNum_inst'])) {
 }
 $startRow_inst = $pageNum_inst * $maxRows_inst;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_inst = "SELECT HID, BID, RNumber, Capacity, FloorName FROM room ORDER BY HID, BID, RNumber ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysql_query($query_limit_inst, $zalongwa) or die(mysql_error());
-$row_inst = mysql_fetch_assoc($inst);
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+$row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
-  $all_inst = mysql_query($query_inst);
-  $totalRows_inst = mysql_num_rows($all_inst);
+  $all_inst = mysqli_query($zalongwa, $query_inst);
+  $totalRows_inst = mysqli_num_rows($all_inst);
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 
@@ -158,7 +158,7 @@ if (@$new<>1){
 	<td nowrap><?php echo $row_inst['BID']; ?></td>
     <td nowrap><?php echo $row_inst['FloorName']; ?></td>
   </tr>
-  <?php } while ($row_inst = mysql_fetch_assoc($inst)); ?>
+  <?php } while ($row_inst = mysqli_fetch_assoc($inst)); ?>
 </table>
 <a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a><span class="style1">.............</span><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> <span class="style1">..............</span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
 <?php }
@@ -183,11 +183,11 @@ else{
 				?>
 				            <option value="<?php echo $row_Hostel['HID']?>"><?php echo $row_Hostel['HName']?></option>
 				              <?php
-		} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-		  $rows = mysql_num_rows($Hostel);
+		} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+		  $rows = mysqli_num_rows($Hostel);
 		  if($rows > 0) {
-		      mysql_data_seek($Hostel, 0);
-			  $row_Hostel = mysql_fetch_assoc($Hostel);
+		      mysqli_data_seek($Hostel, 0);
+			  $row_Hostel = mysqli_fetch_assoc($Hostel);
 		  }
 		?>
 		 </select></td>
@@ -203,9 +203,9 @@ else{
 		$hostel = $_POST['hostel'];
 		
 		$query_Block = "SELECT HID, BName FROM block WHERE HID='$hostel'";
-		$Block = mysql_query($query_Block, $zalongwa);
-		$row_Block = mysql_fetch_assoc($Block);
-		$totalRows_Block = mysql_num_rows($Block);
+		$Block = mysqli_query($zalongwa, $query_Block);
+		$row_Block = mysqli_fetch_assoc($Block);
+		$totalRows_Block = mysqli_num_rows($Block);
 		
 ?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmInst" id="frmInst">
@@ -248,11 +248,11 @@ else{
 				?>
 				<option value="<?php echo $row_Block['BName'];?>"><?php echo $row_Block['HID'].' - '.$row_Block['BName']?></option>		
 				<?php 
-		} while ($row_Block = mysql_fetch_assoc($Block));
-		  $rows = mysql_num_rows($Block);
+		} while ($row_Block = mysqli_fetch_assoc($Block));
+		  $rows = mysqli_num_rows($Block);
 		  if($rows > 0) {
-		      mysql_data_seek($Block, 0);
-			  $row_Block = mysql_fetch_assoc($Block);
+		      mysqli_data_seek($Block, 0);
+			  $row_Block = mysqli_fetch_assoc($Block);
 		  }
 		?>
 		 </select></td>
@@ -280,11 +280,11 @@ if (isset($_GET['edit'])){
 #get post variables
 $key = $_GET['edit'];
 $rumber = $_GET['rnumber'];
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_instEdit = "SELECT * FROM room WHERE HID='$key' AND RNumber='$rumber'";
-$instEdit = mysql_query($query_instEdit, $zalongwa) or die(mysql_error());
-$row_instEdit = mysql_fetch_assoc($instEdit);
-$totalRows_instEdit = mysql_num_rows($instEdit);
+$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error());
+$row_instEdit = mysqli_fetch_assoc($instEdit);
+$totalRows_instEdit = mysqli_num_rows($instEdit);
 
 $queryString_inst = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
@@ -338,7 +338,7 @@ $queryString_inst = sprintf("&totalRows_inst=%d%s", $totalRows_inst, $queryStrin
 	# include the footer
 	include("../footer/footer.php");
 
-@mysql_free_result($inst);
+@mysqli_free_result($inst);
 
-@mysql_free_result($instEdit);
+@mysqli_free_result($instEdit);
 ?>

@@ -32,7 +32,7 @@ function __doPostBack(eventTarget, eventArgument) {
     }
 }
 //]]>
-</SCRIPT>event
+</SCRIPT>
 
 <SCRIPT src="login_files/WebResource.axd" type=text/javascript></SCRIPT>
 

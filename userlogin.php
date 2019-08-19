@@ -1,8 +1,9 @@
 <?php require_once('Connections/zalongwa.php'); ?>
 <?php
-session_start();
+
 session_cache_limiter('nocache');
 
+session_start();
 if (isset($accesscheck)) {
   $GLOBALS['PrevUrl'] = $accesscheck;
 	session_is_register('PrevUrl');
