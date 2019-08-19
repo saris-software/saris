@@ -46,19 +46,17 @@ src="login_files/top_banner.png"> </DIV>
 <DIV class=loginInnerFormContents>
 <DIV class=loginErrorRow style="PADDING-TOP: 20px"></DIV>
                       <div align="center" class="style1">SARIS LOGIN FORM</div>
-<DIV class=loginFormRow style="PADDING-TOP: 20px"><SPAN 
-class=loginFormHeader>Username:</SPAN> <INPUT id=textusername 
-style="BORDER-RIGHT: silver 1px solid; BORDER-TOP: silver 1px solid; BORDER-LEFT: silver 1px solid; WIDTH: 150px; BORDER-BOTTOM: silver 1px solid" 
-name=textusername value="<?php  echo $_SESSION['username']?>"> </DIV>
+<DIV class=loginFormRow style="PADDING-TOP: 20px"><SPAN class=loginFormHeader>Username:</SPAN> <INPUT id=textusername
+style="BORDER-RIGHT: silver 1px solid;border-radius: 4px; BORDER-TOP: silver 1px solid; BORDER-LEFT: silver 1px solid; WIDTH: 170px; BORDER-BOTTOM: silver 1px solid"
+name=textusername value="<?php  echo $_SESSION['username']?>"> </DIV><br>
 <DIV class=loginFormRow><SPAN class=loginFormHeader>Password:</SPAN> <INPUT 
 id=textpassword 
-style="BORDER-RIGHT: silver 1px solid; BORDER-TOP: silver 1px solid; BORDER-LEFT: silver 1px solid; WIDTH: 150px; BORDER-BOTTOM: silver 1px solid" 
+style="BORDER-RIGHT: silver 1px solid; border-radius: 4px; BORDER-TOP: silver 1px solid; BORDER-LEFT: silver 1px solid; WIDTH: 170px; BORDER-BOTTOM: silver 1px solid"
 type=password name=textpassword> </DIV>
 <DIV class=loginButtonRow>
 
       <div align="left">
-        <INPUT id=btnLogin 
-style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px" 
+        <INPUT id=btnLogin style="BORDER-TOP-WIDTH: 0px;border-radius: 4px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px"
 type=image src="login_files/btn_login.gif" name=btnLogin> 
         </div>
 </DIV><p>
