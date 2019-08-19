@@ -395,7 +395,7 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
                                   </div>
                             </div></TD>
                             
-                            <td vertical-align="top"> background-color="#FFFFCC"><div text-align="right"></div></td>
+                            <td vertical-align="top" background-color="#FFFFCC"><div text-align="right"></div></td>
                           </TR>
           </table>
           <input type="hidden" name="MM_insert" value="true">
