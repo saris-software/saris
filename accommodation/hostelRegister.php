@@ -43,11 +43,21 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmInst")) {
                        GetSQLValueString($_POST['txtTel'], "text"),
                        GetSQLValueString($_POST['txtEmail'], "text"));
 
+<<<<<<< HEAD
   mysqli_select_db($zalongwa, $database_zalongwa);
   $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 
   mysqli_select_db($zalongwa,$database_zalongwa);
   $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error($zalongwa));
+=======
+
+  mysqli_select_db($database_zalongwa, $zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error());
+
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
+
+>>>>>>> 764a54c278a7827951170c679a82817e2de8dff2
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
@@ -58,10 +68,18 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
                        GetSQLValueString($_POST['txtEmail'], "text"),
                        GetSQLValueString($_POST['txtName'], "text"));
 
+<<<<<<< HEAD
   mysqli_select_db($zalongwa, $database_zalongwa);
   $Result1 = mysqli_query($zalongwa,$updateSQL) or die(mysqli_error($zalongwa));
   mysqli_select_db($zalongwa,$database_zalongwa);
   $Result1 = mysqli_query($zalongwa,$updateSQL) or die(mysqli_error($zalongwa));
+=======
+  mysqli_select_db($database_zalongwa, $zalongwa);
+  $Result1 = mysqli_query($updateSQL, $zalongwa) or die(mysqli_error());
+
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($updateSQL) or die(mysqli_error());
+>>>>>>> 764a54c278a7827951170c679a82817e2de8dff2
 
 
   $updateGoTo = "hostelRegister.php";
@@ -80,6 +98,7 @@ if (isset($_GET['pageNum_inst'])) {
 $startRow_inst = $pageNum_inst * $maxRows_inst;
 
 
+<<<<<<< HEAD
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_inst = "SELECT HID, HName, Location, Capacity, Address FROM hostel ORDER BY HID ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
@@ -89,6 +108,17 @@ mysqli_select_db($zalongwa,$database_zalongwa);
 $query_inst = "SELECT HID, HName, Location, Capacity, Address FROM hostel ORDER BY HID ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
 $inst = mysqli_query($zalongwa,$query_limit_inst) or die(mysqli_error($zalongwa));
+=======
+mysqli_select_db($database_zalongwa, $zalongwa);
+$query_inst = "SELECT HID, HName, Location, Capacity, Address FROM hostel ORDER BY HID ASC";
+$query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
+$inst = mysqli_query($zalongwa,$query_limit_inst) or die(mysqli_error());
+
+mysqli_select_db($zalongwa, $database_zalongwa);
+$query_inst = "SELECT HID, HName, Location, Capacity, Address FROM hostel ORDER BY HID ASC";
+$query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+>>>>>>> 764a54c278a7827951170c679a82817e2de8dff2
 
 $row_inst = mysqli_fetch_assoc($inst);
 
@@ -96,9 +126,16 @@ if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
 
+<<<<<<< HEAD
   $all_inst = mysqli_query($zalongwa, $query_inst);
   $all_inst = mysqli_query($zalongwa,$query_inst);
 
+=======
+  $all_inst = mysqli_query($zalongwa,$query_inst);
+
+  $all_inst = mysqli_query($zalongwa, $query_inst);
+
+>>>>>>> 764a54c278a7827951170c679a82817e2de8dff2
   $totalRows_inst = mysqli_num_rows($all_inst);
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
@@ -185,6 +222,7 @@ if (isset($_GET['edit'])){
 #get post variables
 $key = $_GET['edit'];
 
+<<<<<<< HEAD
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_instEdit = "SELECT * FROM hostel WHERE HID ='$key'";
 $instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalongwa));
@@ -192,6 +230,16 @@ $instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalong
 mysqli_select_db($zalongwa,$database_zalongwa);
 $query_instEdit = "SELECT * FROM hostel WHERE HID ='$key'";
 $instEdit = mysqli_query($zalongwa,$query_instEdit) or die(mysqli_error($zalongwa));
+=======
+mysqli_select_db($database_zalongwa, $zalongwa);
+$query_instEdit = "SELECT * FROM hostel WHERE HID ='$key'";
+$instEdit = mysqli_query($query_instEdit, $zalongwa) or die(mysqli_error());
+
+mysqli_select_db($zalongwa, $database_zalongwa);
+$query_instEdit = "SELECT * FROM hostel WHERE HID ='$key'";
+$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error());
+
+>>>>>>> 764a54c278a7827951170c679a82817e2de8dff2
 $row_instEdit = mysqli_fetch_assoc($instEdit);
 $totalRows_instEdit = mysqli_num_rows($instEdit);
 
