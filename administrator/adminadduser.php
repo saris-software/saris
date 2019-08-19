@@ -119,9 +119,8 @@
 	// search for existing users
 	
 	   #check if username exist
-	   $sql ="SELECT UserName			
-			  FROM security WHERE UserName='$username'";
-	   $result = mysqli_query($sql);
+	   $sql ="SELECT UserName FROM security WHERE UserName='$username'";
+	   $result = mysqli_query($zalongwa,$sql);
 	   $usernameFound = mysqli_num_rows($result);
 	   if ($usernameFound>0) {
 			$login = mysqli_result($result,0,'UserName');
@@ -130,9 +129,8 @@
 					//echo '<meta http-equiv = "refresh" content ="0; url = registration.php">';
 			}
 	   #check if regno exist
-	   $sql ="SELECT RegNo  			
-			  FROM security WHERE RegNo = '$id'";
-	   $result = mysqli_query($sql);
+	   $sql ="SELECT RegNo FROM security WHERE RegNo = '$id'";
+	   $result = mysqli_query($zalongwa,$sql);
 	   $noFound = mysqli_num_rows($result);
 	   if ($noFound>0) {
 			$userregno = mysqli_result($result,0,"userregno");
@@ -196,8 +194,7 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
 			<td text-align=left>
 			
 			
-			table {
-                border=0  border-spacing="0px" border-padding="0px" width:100% background="themes/images/loginTopHeaderBg.gif"}
+			<table border=0  border-spacing="0px" border-padding="0px" width="100%" background="themes/images/loginTopHeaderBg.gif">
 			<tr>
                 &nbsp;
 				<td text-align=right><!--img src="themes/images/loginTopVersion.gif"--></td>
@@ -227,25 +224,21 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
 							}
 							?>
 										 <TR>
-                            <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap <?php echo $missingLastname?'style=color: rgb(990000)':'';?>><div text-align="right" class="large"><span
-                                            style="color:#0000CC; ">LAST NAME:</span></div></TD>
+                            <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap <?php echo $missingLastname?'style=color: rgb(990000)':'';?>>
+                                <div text-align="right" class="large"><span style="color:#0000CC ">LAST NAME:</span></div></TD>
                             <TD colspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
                                             style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
+<INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"])))? $_POST["txtLastName"]:"" ?>">
 
-<label>
-<INPUT TYPE="text" SIZE="29" name="txtLastName" value="<?php echo((isset($_POST["txtLastName"])))?$_POST["txtLastName"]?? Null; ?>">
-</label>
-</span><span style="color: rgb(000000); "><span class="large style4"><span style="color: #0000CC; ">(LASTNAME)</span></span> </span></div></TD>
-                            
-                          </TR>
+
                           <TR>
                             <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap><div text-align="right" class="large"><span
                                             style="color: #0000CC; ">FIRST NAME: </span></div></TD>
                             <TD colspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
                                             style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
-                                  <label>
+
 <INPUT TYPE="text" SIZE="29" name="txtFirstName" value="<?php echo((isset($_POST["txtFirstName"]))?$_POST["txtFirstName"]:"") ?>">
-</label>
+
 </span><span style="color: #000000; "><span class="large style4"><span style="color: #0000CC; ">(Firstname)</span></span> </span></div></TD>
                           </TR>
 						    <TR>
@@ -392,10 +385,9 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
                                     <input type="submit" value="Submit" name="Submit">
                                     <span class="style45 style16"> ...............</span>
                                     <input type="reset" value=" Reset" name="Reset">
-                                  </div>
-                            </div></TD>
+                                  </div></TD>
                             
-                            <td vertical-align="top"> background-color="#FFFFCC"><div text-align="right"></div></td>
+                            <td vertical-align="top" background-color="#FFFFCC"><div text-align="right"></div></td>
                           </TR>
           </table>
           <input type="hidden" name="MM_insert" value="true">

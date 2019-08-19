@@ -22,23 +22,23 @@
 
 	include('admissionheader.php');
 	
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AcademicYear = mysql_query($query_AcademicYear, $zalongwa) or die(mysql_error());
-$row_AcademicYear = mysql_fetch_assoc($AcademicYear);
-$totalRows_AcademicYear = mysql_num_rows($AcademicYear);
+$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error());
+$row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
+$totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_Hostel = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error());
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_sessions = "SELECT id, name FROM classstream";
-$sessions = mysql_query($query_sessions,$zalongwa) or die(mysql_error());
-$row_sesssions = mysql_fetch_assoc($sessions);
-$totalRows_Sessions = mysql_num_rows($sessions);
+$sessions = mysqli_query($zalongwa, $query_sessions) or die(mysqli_error());
+$row_sesssions = mysqli_fetch_assoc($sessions);
+$totalRows_Sessions = mysqli_num_rows($sessions);
 ?>
 
 <script type="text/javascript" language="javascript">// <![CDATA[
@@ -120,9 +120,9 @@ for($j=0;$j<$count;$j++)
 
   $sql = "SELECT * FROM student WHERE Id ='$Eq[$j]'"; 
 
-  $update = mysql_query($sql) or die(mysql_error());
+  $update = mysqli_query($zalongwa, $sql) or die(mysqli_error());
 
-  $update_row = mysql_fetch_array($update)or die(mysql_error());
+  $update_row = mysqli_fetch_array($update)or die(mysqli_error());
   
 	$regno = addslashes($update_row['RegNo']);
 	$yearofstudy=addslashes($_POST['yearofstudy']);
@@ -144,7 +144,7 @@ for($j=0;$j<$count;$j++)
 
 echo $sql;
 
-$plg=mysql_query($sql);
+$plg=mysqli_query($zalongwa, $sql);
 
 if($plg)
 
@@ -193,11 +193,11 @@ echo"<form action='$_SERVER[PHP_SELF]' method='POST'>
 						?>
 						            <option value="<?php echo $row_Hostel['ProgrammeCode']?>" <?php echo $progselected;?>><?php echo $row_Hostel['ProgrammeName']?></option>
 						            <?php
-						} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-						  $rows = mysql_num_rows($Hostel);
+						} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+						  $rows = mysqli_num_rows($Hostel);
 						  if($rows > 0) {
-						      mysql_data_seek($Hostel, 0);
-							  $row_Hostel = mysql_fetch_assoc($Hostel);
+						      mysqli_data_seek($Hostel, 0);
+							  $row_Hostel = mysqli_fetch_assoc($Hostel);
 						  }
 						?>
           			</select>
@@ -219,11 +219,11 @@ echo"<form action='$_SERVER[PHP_SELF]' method='POST'>
 					?>
 			            <option value="<?php echo $row_AcademicYear['AYear']?>" <?php echo $yearselected;?>><?php echo $row_AcademicYear['AYear']?></option>
 			            <?php
-					} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-					  $rows = mysql_num_rows($AcademicYear);
+					} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+					  $rows = mysqli_num_rows($AcademicYear);
 					  if($rows > 0) {
-					      mysql_data_seek($AcademicYear, 0);
-						  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+					      mysqli_data_seek($AcademicYear, 0);
+						  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 					  }
 					?>
 					?>
@@ -246,11 +246,11 @@ echo"<form action='$_SERVER[PHP_SELF]' method='POST'>
 					?>
 			            <option value="<?php echo $row_AcademicYear['AYear']?>" <?php echo $yearselected;?>><?php echo $row_AcademicYear['AYear']?></option>
 			            <?php
-					} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-					  $rows = mysql_num_rows($AcademicYear);
+					} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+					  $rows = mysqli_num_rows($AcademicYear);
 					  if($rows > 0) {
-					      mysql_data_seek($AcademicYear, 0);
-						  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+					      mysqli_data_seek($AcademicYear, 0);
+						  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 					  }
 					?>
 				   </select>
@@ -272,7 +272,7 @@ echo"</td>
 
 </table></form>";
 
-echo isset($_GET['success']) ? '<div style="color:00FF00">'.$_GET['size'].' records updated successfully</div>': '';
+echo isset($_GET['success']) ? '<div style="color:#00FF00">'.$_GET['size'].' records updated successfully</div>': '';
 
 if(isset($_POST['search'])||$_GET['key'])
 {
@@ -285,7 +285,7 @@ if(isset($_POST['search'])||$_GET['key'])
 	
 		$query="SELECT * FROM  student where ProgrammeofStudy='$programme' AND EntryYear='$cohort'";	
 	
-	$result=mysql_query($query) or die(mysql_error());
+	$result=mysqli_query($zalongwa, $query) or die(mysqli_error());
 
 	echo"<form action='$_SERVER[PHP_SELF]' method='POST' name='frm1'>";
 ?>
@@ -339,11 +339,11 @@ echo "<table cellspacing='0' border='1' width='950' cellpadding='0'>
 
 </tr>";
 
-while($r=mysql_fetch_array($result))
+while($r=mysqli_fetch_array($result))
 
 {
-$result_prog=mysql_query("SELECT Title FROM programme WHERE ProgrammeCode='$r[ProgrammeofStudy]'");
-$row_prog=mysql_fetch_array($result_prog);
+$result_prog=mysqli_query("SELECT Title FROM programme WHERE ProgrammeCode='$r[ProgrammeofStudy]'", $zalongwa);
+$row_prog=mysqli_fetch_array($result_prog);
 $prog=$row_prog['Title'];
 echo "<tr>
 
@@ -372,13 +372,13 @@ echo"</table>";
 
 
 
-$data=mysql_query($look);
+$data=mysqli_query($zalongwa, $look);
 
-$numrows=mysql_num_rows($data);
+$numrows=mysqli_num_rows($data);
 
-$result=mysql_query($data);
+$result=mysqli_query($zalongwa, $data);
 
-$row=mysql_fetch_array($data);
+$row=mysqli_fetch_array($data);
 
 
 

@@ -144,10 +144,10 @@ if ($fileavailable==1){
 		  $exno = $exnum[0];
 		  $table = "examnumber_".$exno;
 		  
-		  $usajili = mysql_query("SELECT RegNo FROM $table WHERE AYear='$impayear' AND Semester='$impsem' AND ExamNo='$arr[0]'");
+		  $usajili = mysqli_query("SELECT RegNo FROM $table WHERE AYear='$impayear' AND Semester='$impsem' AND ExamNo='$arr[0]'");
 		  echo $usajili; exit;
-		  $rows = mysql_num_rows($usajili);
-		  $register = mysql_fetch_array($usajili);
+		  $rows = mysqli_num_rows($usajili);
+		  $register = mysqli_fetch_array($usajili);
 		  
 		  #controling uploading
 		  if($rows == '0'){
@@ -197,8 +197,8 @@ if ($fileavailable==1){
 													Comment =''
 													";
 				  }
-			mysql_query($sql);
-			if(mysql_error()) {
+			mysqli_query($usajili,$sql);
+			if(mysqli_error($usajili)) {
 					  echo "<tr><td nowrap>Record ".$i."</td><td nowrap>(<b>$arr[0]</b>) is a Duplicate Entry</td><td nowrap>- Not Imported!</td></tr>"; 				 				 
 				  }
 				  else{
@@ -209,9 +209,9 @@ if ($fileavailable==1){
 			 
 		//course work uploading
 		else{
-		  $usajili = mysql_query("SELECT * FROM student WHERE RegNo='$arr[0]'");
-		  $rows = mysql_num_rows($usajili);
-		  $register = mysql_fetch_array($usajili);
+		  $usajili = mysqli_query("SELECT * FROM student WHERE RegNo='$arr[0]'");
+		  $rows = mysqli_num_rows($usajili);
+		  $register = mysqli_fetch_array($usajili);
 		  
 		  #controling uploading
 		  if($rows == '0'){
@@ -261,8 +261,8 @@ if ($fileavailable==1){
 													";
 				  }
 			
-			mysql_query($sql);
-			if(mysql_error()) {
+			mysqli_query($zalongwa,$sql);
+			if(mysqli_error($zalongwa)) {
 					  echo "<tr><td nowrap>Record ".$i."</td><td nowrap>(<b>$arr[0]</b>) is a Duplicate Entry</td><td> nowrap- Not Imported!</td></tr>"; 				 				 
 				  }
 				  else{

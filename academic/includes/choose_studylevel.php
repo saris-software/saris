@@ -1,8 +1,8 @@
 <?php
 	# find course's examninationregulation
 	$qexamreg = "SELECT StudyLevel FROM course  WHERE  CourseCode = '$course'";
-	$dbexamreg = mysql_query($qexamreg);
-	$row_result_sheet = mysql_fetch_array($dbexamreg);
+	$dbexamreg = mysqli_query($zalongwa, $qexamreg);
+	$row_result_sheet = mysqli_fetch_array($dbexamreg);
 	$studylevel= $row_result_sheet['StudyLevel'];
 
 	if($studylevel == 1){
