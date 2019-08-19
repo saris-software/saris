@@ -52,7 +52,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/header.css">
 	<script type="text/javascript" src="datepicker/mootools.js"></script>
 	<script type="text/javascript" src="datepicker/calendar.js"></script>
-	
+
 <!--
 	<meta http-equiv="pragma" content="no-cache">
 	<META HTTP-EQUIV="Expires" CONTENT="-1">
@@ -189,13 +189,14 @@
 			</td>
 		</tr>
 	</table></td>
-    <td valign=top style="font-size:12pt;"><div style="width:550;padding:15px 10px 15px 20px">
+    <td valign=top style="font-size:12pt;"><div style="width:550px;padding:15px 10px 15px 20px">
 		<?php if (strlen($szTitle)){
 				echo '<div class="header1">'.$szTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
 			}elseif (strlen($szSubSubSectionTitle)){
 				echo '<div class="header1">'.$szSubSubSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
 			}elseif (strlen($szSubSectionTitle)){
 				echo '<div class="header1">'.$szSubSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
-			}elseif (strlen($szSectionTitle)){
+        } /** @var szSectionTitle $szSectionTitle */
+        elseif (strlen($szSectionTitle)){
 				echo '<div class="header1">'.$szSectionTitle.'</div><hr noshade style="color:#B9C2C6" size=1>';
 			} ?>
