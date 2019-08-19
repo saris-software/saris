@@ -13,7 +13,7 @@
 	$szTitle = 'Academic Module User Guide';
 	include('lecturerheader.php');
 ?>
-<h1></h1><a name="_Toc125001720">Module 1: Examination Module </a></h1>
+<h1><a name="_Toc125001720">Module 1: Examination Module </a></h1>
 <p>NOTE: While this guide explain all menus, you may not see some menus because of your 'Access Privilege Level' (your rights given to the system). </p>
 <p>The Examination Module has eight (8) Menus namely Profile, Policy Setup, Administration, Examination, E-Learning, Communication, Security, and Sign Out. </p>
 <p>Each Menu consists of several Sub-Menus. The sub-menus are listed below the main menu when Menu becomes active (selected). </p>
@@ -32,7 +32,7 @@
 <p>This Menu has four (4) sub-menus explained as follows: </p>
 <p>&#149;&nbsp; Course Allocation: allows Exam Officer to allocate each a lecturer a course. As a result each lecturer will see class roster of all students who have registered the course. </p>
 <p>&#149;&nbsp; Change Semester: while registering, some students can register a course for semester one and others may register the same course for semester two. This sub-menu allows the exam officer to combine the two student groups into one. </p>
-<p>&#149;&nbsp; Publish Exam: allows Exam Officer to “ <strong>publish” </strong> and “ <strong>un-publish” </strong> exam results. If Publish action is selected, students will see the exam results, and the respective course lecturer will not be able to change the exam results. If Un-Publish action is selected, students will not see their results, and the respective lecturer will be able to update the exam results. </p>
+<p>&#149;&nbsp; Publish Exam: allows Exam Officer to ï¿½ <strong>publishï¿½ </strong> and ï¿½ <strong>un-publishï¿½ </strong> exam results. If Publish action is selected, students will see the exam results, and the respective course lecturer will not be able to change the exam results. If Un-Publish action is selected, students will not see their results, and the respective lecturer will be able to update the exam results. </p>
 <p>&#149;&nbsp; Exam Marker: allows adding new Exam Marker.</p>
 <h2><a name="_Toc125001724">Examination Menu </a></h2>
 <p>This menu three sub-menus name Search, Course Result, Annual Report, Cumulative Points, Gradebook, and Transcript. </p>
@@ -83,4 +83,4 @@
 						<tr>
                           <th nowrap scope="row"><span class="style15">The First GPL Licensed Software in Tanzania </span></th>
                         </tr>
-                      </table></p>
+                      </table>
