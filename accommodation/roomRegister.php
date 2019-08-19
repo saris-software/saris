@@ -113,8 +113,8 @@ $row_inst = mysqli_fetch_assoc($inst);
 if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
-  $all_inst = mysql_query($query_inst);
-  $totalRows_inst = mysql_num_rows($all_inst);
+  $all_inst = mysqli_query($zalongwa, $query_inst);
+  $totalRows_inst = mysqli_num_rows($all_inst);
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 
