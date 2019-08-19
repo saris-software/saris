@@ -10,16 +10,16 @@
 	include("admissionheader.php");
 
 	#populate academic year combo box
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqlI_select_db($database_zalongwa, $zalongwa);
 	$query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-	$AYear = mysql_query($query_AYear, $zalongwa) or die(mysql_error());
-	$row_AYear = mysql_fetch_assoc($AYear);
+	$AYear = mysqlI_query($zalongwa, $query_AYear) or die(mysqli_error());
+	$row_AYear = mysqli_fetch_assoc($AYear);
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_post = "SELECT * FROM electionpost ORDER BY Post ASC";
-	$post = mysql_query($query_post, $zalongwa) or die(mysql_error());
-	$row_post = mysql_fetch_assoc($post);
-	$totalRows_post = mysql_num_rows($post);
+	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error());
+	$row_post = mysqli_fetch_assoc($post);
+	$totalRows_post = mysqli_num_rows($post);
 
 	if (isset($_POST["add"])) {
 		$key = addslashes($_POST["Year"]);
@@ -31,8 +31,8 @@
 					FROM electioncandidate el, student st 
 					WHERE (st.RegNo=el.RegNo) AND (el.Period='$key') AND (el.Post='$post')
 					ORDER BY el.Period,el.Post, st.Name DESC";
-		$dbexamno = mysql_query($qexamno);
-		$totalrec = mysql_num_rows($dbexamno);
+		$dbexamno = mysqli_query($zalongwa, $qexamno);
+		$totalrec = mysqli_num_rows($dbexamno);
 
 		if ($totalrec>0){
 			
@@ -49,7 +49,7 @@
 				  </tr>";
 			
 			$index = 1;
-			while ($row_examno = mysql_fetch_assoc($dbexamno)){
+			while ($row_examno = mysqli_fetch_assoc($dbexamno)){
 				$candidateid = trim($row_examno['id']);
 				$period = trim($row_examno['Period']);
 				$regno = trim($row_examno['RegNo']);
@@ -59,8 +59,8 @@
 				$inst= trim($row_examno['Institution']);
 				#count votes
 				$qvote = "select * from electionvotes where CandidateID='$candidateid'";
-				$dbvote =mysql_query($qvote);
-				$vote = mysql_num_rows($dbvote);
+				$dbvote =mysqli_query($zalongwa, $qvote);
+				$vote = mysqli_num_rows($dbvote);
 				
 				echo "<tr>
 						<td nowrap>$index</td>
@@ -97,11 +97,11 @@
 						?>
 						<option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
 						<?php
-							} while ($row_AYear = mysql_fetch_assoc($AYear));
-									$rows = mysql_num_rows($AYear);
+							} while ($row_AYear = mysqli_fetch_assoc($AYear));
+									$rows = mysqli_num_rows($AYear);
 									if($rows > 0) {
-						mysql_data_seek($AYear, 0);
-						$row_AYear = mysql_fetch_assoc($AYear);
+						mysqli_data_seek($AYear, 0);
+						$row_AYear = mysqli_fetch_assoc($AYear);
 					}
 			   ?>
 					
@@ -115,11 +115,11 @@
 			?>
 					<option value="<?php echo $row_post['Post']?>"><?php echo $row_post['Post']?></option>
 					<?php
-			} while ($row_post = mysql_fetch_assoc($post));
-			  $rows = mysql_num_rows($post);
+			} while ($row_post = mysqli_fetch_assoc($post));
+			  $rows = mysqli_num_rows($post);
 			  if($rows > 0) {
-				  mysql_data_seek($post, 0);
-				  $row_post = mysql_fetch_assoc($post);
+				  mysqli_data_seek($post, 0);
+				  $row_post = mysqli_fetch_assoc($post);
 			  }
 			?>
 			  </select></td>
