@@ -43,8 +43,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
                        GetSQLValueString($_POST['toid'], "text"),
                        GetSQLValueString($_POST['message'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error($zalongwa));
 
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
@@ -54,11 +54,11 @@ echo '<meta http-equiv = "refresh" content ="0;
 	url = lecturerindex.php">';
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_suggestionbox = "SELECT suggestion.received, suggestion.fromid, suggestion.toid, suggestion.message FROM suggestion";
-$suggestionbox = mysql_query($query_suggestionbox, $zalongwa) or die(mysql_error());
-$row_suggestionbox = mysql_fetch_assoc($suggestionbox);
-$totalRows_suggestionbox = mysql_num_rows($suggestionbox);
+$suggestionbox = mysqli_query($zalongwa,$query_suggestionbox) or die(mysqli_error($zalongwa));
+$row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
+$totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
  
 if(!$username){
 	echo ("Session Expired, <a href=\"ReLogin.php\"> Click Here<a> to Re-Login");
@@ -123,14 +123,14 @@ a:active {
 
 <body bgcolor="#FFFFCC">
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <tr> 
       <td width="100%" height="48"></td>
     </tr>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#990000">
       <tr bgcolor="#99CCCC">
         <td height="69" colspan="7" align="center" valign="middle"> <img src="/images/Nkurumah.gif" width="724" height="69" align="left"></td>
@@ -263,16 +263,16 @@ a:active {
         <td width="36" bgcolor="#99CCCC">&nbsp;</td>
       </tr>
     </table>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
-  </center>
+  <div style="text-align: center;">
+  </div>
 </div>
 
 </body>
 
 </html>
 <?php
-mysql_free_result($suggestionbox);
+mysqli_free_result($suggestionbox);
 ?>
