@@ -15,17 +15,17 @@
 	$today = date("Y-m-d");
 //control form display
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AcademicYear = mysql_query($query_AcademicYear, $zalongwa) or die(mysql_error());
-$row_AcademicYear = mysql_fetch_assoc($AcademicYear);
-$totalRows_AcademicYear = mysql_num_rows($AcademicYear);
+$AcademicYear = mysqli_query($zalongwa,$query_AcademicYear) or die(mysqli_error());
+$row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
+$totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_Hostel = "SELECT HID, HName FROM hostel";
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa,$query_Hostel) or die(mysqli_error());
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
 
 if (isset($_POST["MM_search"]) && $_POST["MM_search"] == 'room'){
@@ -35,14 +35,14 @@ if (isset($_POST["MM_search"]) && $_POST["MM_search"] == 'room'){
 	
 	//create array of all rooms from this hostel
 	$qroom = "SELECT HID, RNumber, Capacity FROM room WHERE HID='$hall'";
-	$dbroom = mysql_query($qroom);
-	$roomcount = mysql_num_rows($dbroom);
+	$dbroom = mysqli_query($zalongwa,$qroom);
+	$roomcount = mysqli_num_rows($dbroom);
 
 	if($roomcount>0){
 	//print report
 	$qhall = "select HName from hostel where HID='$hall'";
-	$dbhall = mysql_query($qhall);
-	$row_hall = mysql_fetch_assoc($dbhall);
+	$dbhall = mysqli_query($zalongwa,$qhall);
+	$row_hall = mysqli_fetch_assoc($dbhall);
 	$hallname = $row_hall['HName'];
 	echo"$ayear Vacant Beds Report for Hostel '$hallname'";
 		?><table width="200" border="1" cellspacing="0" cellpadding="0">
@@ -56,13 +56,13 @@ if (isset($_POST["MM_search"]) && $_POST["MM_search"] == 'room'){
 		<?php
 		$i=0;
 				//compare allocated students and room capacity
-		while($row_room=mysql_fetch_array($dbroom)){
+		while($row_room=mysqli_fetch_array($dbroom)){
 				$i=$i+1;
 				$room = $row_room['RNumber'];
 				$capacity = intval($row_room['Capacity']);
 				$qstudent = "SELECT RegNo FROM allocation WHERE HID='$hall' AND RNumber='$room' AND AYear='$ayear' AND CheckOut>'$today'";
-				$dbstudent=mysql_query($qstudent);
-				$totalstudent=mysql_num_rows($dbstudent);
+				$dbstudent=mysqli_query($zalongwa,$qstudent);
+				$totalstudent=mysqli_num_rows($dbstudent);
 				$vacant = $capacity - $totalstudent;
 
 				?>
@@ -100,11 +100,11 @@ do {
 ?>
             <option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
             <?php
-} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-  $rows = mysql_num_rows($AcademicYear);
+} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+  $rows = mysqli_num_rows($AcademicYear);
   if($rows > 0) {
-      mysql_data_seek($AcademicYear, 0);
-	  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+      mysqli_data_seek($AcademicYear, 0);
+	  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
   }
 ?>
           </select></td>
@@ -118,11 +118,11 @@ do {
 ?>
             <option value="<?php echo $row_Hostel['HID']?>"><?php echo $row_Hostel['HName']?></option>
               <?php
-} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-  $rows = mysql_num_rows($Hostel);
+} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+  $rows = mysqli_num_rows($Hostel);
   if($rows > 0) {
-      mysql_data_seek($Hostel, 0);
-	  $row_Hostel = mysql_fetch_assoc($Hostel);
+      mysqli_data_seek($Hostel, 0);
+	  $row_Hostel = mysqli_fetch_assoc($Hostel);
   }
 ?>
           </select></td>

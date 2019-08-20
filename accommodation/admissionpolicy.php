@@ -13,11 +13,16 @@ include('admissionMenu.php');
 require_once('../Connections/zalongwa.php');
 
 $sql = "SELECT FullName, Email, Position, UserName, Registered FROM security WHERE UserName = '$username'";
-<<<<<<< HEAD
-$query = @mysqli_query($sql) or die("Cannot query the database.<br>" . mysqli_error());
-=======
+
+
+$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+
 $query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error());
->>>>>>> 3dfbbc4521634b23849cd93202dc83ae5532b4a4
+
+
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error());
+$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+
 echo "<table border='1'>";
 echo "<tr><td> Name </td><td> Login ID </td><td> Status </td><td> E-Post </td><td> Registered </td></tr>";
 while($result = mysqli_fetch_array($query)) {
