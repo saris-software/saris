@@ -4,8 +4,8 @@ $szSiteTitle = 'zalongwaSARIS';
 $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 @$hostname_zalongwa = "localhost";
 @$database_zalongwa = "saris_students";
-@$username_zalongwa = "siras";
-@$password_zalongwa = "54321otod";
+@$username_zalongwa = "amaroc";
+@$password_zalongwa = "amaroc";
 $zalongwa = new mysqli($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa), $database_zalongwa );
 if (!$zalongwa){
     printf(mysqli_connect_error()."Tunasikitika Kuwa Hatuwezi Kutoa Huduma Kwa Sasa,\rTafadhari Jaribu Tena Baadaye!");
