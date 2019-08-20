@@ -51,8 +51,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 					     GetSQLValueString($_POST['dept'], "text"),
 						   GetSQLValueString($_POST['faculty'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die("");
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die("");
 
   $insertGoTo = "lecturercourselist.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -62,17 +62,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   header(sprintf("Location: %s", $insertGoTo));
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_dept = "SELECT DeptName FROM department ORDER BY DeptName ASC";
-$dept = mysql_query($query_dept, $zalongwa) or die(mysql_error());
-$row_dept = mysql_fetch_assoc($dept);
-$totalRows_dept = mysql_num_rows($dept);
+$dept = mysqli_query($zalongwa,$query_dept) or die(mysqli_error($zalongwa));
+$row_dept = mysqli_fetch_assoc($dept);
+$totalRows_dept = mysqli_num_rows($dept);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_faculty = "SELECT FacultyName FROM faculty ORDER BY FacultyName ASC";
-$faculty = mysql_query($query_faculty, $zalongwa) or die("Hii imeshaingia tayari kwenye database");
-$row_faculty = mysql_fetch_assoc($faculty);
-$totalRows_faculty = mysql_num_rows($faculty);
+$faculty = mysqli_query($zalongwa,$query_faculty) or die("Hii imeshaingia tayari kwenye database");
+$row_faculty = mysqli_fetch_assoc($faculty);
+$totalRows_faculty = mysqli_num_rows($faculty);
 
 $currentPage = $_SERVER["PHP_SELF"];
 
@@ -104,8 +104,8 @@ require_once('../Connections/zalongwa.php');
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
 //$sqldel = "delete from stats where (YEAR(CURRENT_DATE)-YEAR(received))- (RIGHT(CURRENT_DATE,5)<RIGHT(received,5))>1";
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
-mysql_close($zalongwa);
+$result = mysqli_query($zalongwa,$sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
+mysqli_close($zalongwa);
 ?> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang=en-US>
@@ -161,14 +161,14 @@ a:active {
 
 <body bgcolor="#FFFFCC">
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <tr> 
       <td width="100%" height="48"></td>
     </tr>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
       <tr bgcolor="#99CCCC">
         <td height="69" colspan="5" align="center" valign="middle">
@@ -176,14 +176,15 @@ a:active {
       </tr>
       <tr bgcolor="#FFFFCC" class="normaltext">
         <td height="28" colspan="3" align="center" valign="middle" nowrap>
-        <div align="left" class="style24"><span class="style29"><font face="Verdana" color="#FFFF00"><b><font color="006699"><a href="/index.html">Welcome</a> </font></b></font><font face="Verdana"><b><span class="style42">--&gt;</span></b></font></span><font face="Verdana"><b> User Menu</b></font><span class="style29"><font face="Verdana"> </font> </span> </div></td>
+        <div align="left" class="style24"><span class="style29"><span style="font-family: Verdana; color: #FFFF00; "><b><font color="006699"><a href="/index.html">Welcome</a> </font></b></span><font face="Verdana"><b><span class="style42">--&gt;</span></b></font></span><font face="Verdana"><b> User Menu</b></font><span class="style29"><font face="Verdana"> </font> </span> </div></td>
         <td colspan="2" align="center" valign="middle" bgcolor="#FFFFCC">
           <form action="/academic/lecturerexamofficerpublishresults.php" method="get" class="style24">
-            <div align="right"><span class="style42"><font face="Verdana"><b>Search</b></font></span> <font color="006699" face="Verdana"><b>
+            <div align="right"><span class="style42"><span
+                            style="font-family: Verdana; "><b>Search</b></span></span> <span color="006699" face="Verdana"><b>
               <input type="text" name="content" size="15">
-              </b></font><font color="#FFFF00" face="Verdana"><b>
+              </b></span><span style="color: #FFFF00; font-family: Verdana; "><b>
               <input type="submit" value="GO" name="go">
-            </b></font> </div>
+            </b></span> </div>
         </form></td>
       </tr>
       <tr>
@@ -306,11 +307,11 @@ do {
 ?>
                     <option value="<?php echo $row_dept['DeptName']?>"><?php echo $row_dept['DeptName']?></option>
                     <?php
-} while ($row_dept = mysql_fetch_assoc($dept));
-  $rows = mysql_num_rows($dept);
+} while ($row_dept = mysqli_fetch_assoc($dept));
+  $rows = mysqli_num_rows($dept);
   if($rows > 0) {
-      mysql_data_seek($dept, 0);
-	  $row_dept = mysql_fetch_assoc($dept);
+      mysqli_data_seek($dept, 0);
+	  $row_dept = mysqli_fetch_assoc($dept);
   }
 ?>
                   </select></td>
@@ -323,11 +324,11 @@ do {
 ?>
                     <option value="<?php echo $row_faculty['FacultyName']?>"><?php echo $row_faculty['FacultyName']?></option>
                     <?php
-} while ($row_faculty = mysql_fetch_assoc($faculty));
-  $rows = mysql_num_rows($faculty);
+} while ($row_faculty = mysqli_fetch_assoc($faculty));
+  $rows = mysqli_num_rows($faculty);
   if($rows > 0) {
-      mysql_data_seek($faculty, 0);
-	  $row_faculty = mysql_fetch_assoc($faculty);
+      mysqli_data_seek($faculty, 0);
+	  $row_faculty = mysqli_fetch_assoc($faculty);
   }
 ?>
                   </select></td>
@@ -390,18 +391,18 @@ do {
         <td><img height="1" width="10" src="/images/spacer.gif"></td>
       </tr>
     </table>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
-  </center>
+  <div style="text-align: center;">
+  </div>
 </div>
 
 </body>
 
 </html>
 <?php
-mysql_free_result($dept);
+mysqli_free_result($dept);
 
-mysql_free_result($faculty);
+mysqli_free_result($faculty);
 ?>
