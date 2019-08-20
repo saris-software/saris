@@ -197,7 +197,7 @@ if ($fileavailable==1){
 													Comment =''
 													";
 				  }
-			mysqli_query($usajili,$sql);
+			mysqli_query($zalongwa,$sql);
 			if(mysqli_error($usajili)) {
 					  echo "<tr><td nowrap>Record ".$i."</td><td nowrap>(<b>$arr[0]</b>) is a Duplicate Entry</td><td nowrap>- Not Imported!</td></tr>"; 				 				 
 				  }

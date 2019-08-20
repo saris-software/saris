@@ -54,11 +54,7 @@
                     {
                     ?>
                     <b class="small">
-                        <style
-                        =font-color:"Brown">
-                        <?php  echo $loginerror?>
-                        </font>
-                        </b>
+                        <style=font-color:"Brown"><?php  echo $loginerror?></font></b>
                           <?php
                           session_cache_limiter('nocache');
                           $_SESSION = array();
@@ -79,6 +75,4 @@
                         src="login_files/fade_bottom.gif"> </DIV></DIV>
                                                                    <SCRIPT type=text/javascript>
                         //<![CDATA[
-                        WebForm_AutoFocus('txtUsername');//]]>
-                                                             </SCRIPT>
-                                                               </FORM></BODY></HTML>
+                        WebForm_AutoFocus('txtUsername');//]]></SCRIPT></FORM></BODY></HTML>
