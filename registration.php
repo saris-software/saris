@@ -7,8 +7,8 @@
 	require_once('./Connections/zalongwa.php');
 	#Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+	$dborg = mysqli_query($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
 	$org = $row_org['Name'];
 	$post = $row_org['Address'];
 	$phone = $row_org['tel'];
@@ -103,15 +103,15 @@
 	
 	$query = "SELECT student.RegNo
 			  FROM student WHERE (student.RegNo='$id')";
-	$result = mysql_query($query) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
-	$regnoFound = mysql_num_rows($result);
+	$result = mysqli_query($zalongwa,$query) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
+	$regnoFound = mysqli_num_rows($result);
 	if ($regnoFound>0) {
 					   $RegNo = mysql_result($result,0,'RegNo');
 					   #check if username exist
 					   $sql ="SELECT UserName			
 							  FROM security WHERE UserName='$username'";
-					   $result = mysql_query($sql) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
-					   $usernameFound = mysql_num_rows($result);
+					   $result = mysqli_query($zalongwa,$sql) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
+					   $usernameFound = mysqli_num_rows($result);
 					   if ($usernameFound>0) {
 							$login     = mysql_result($result,0,'UserName');
 									$_SESSION['loginerror'] = " Registration NOT successful! <br> Some one is already using this USERNAME: '".$username."'
@@ -121,8 +121,8 @@
 					   #check if regno exist
 					   $sql ="SELECT RegNo  			
 							  FROM security WHERE RegNo = '$id'";
-					   $result = mysql_query($sql) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
-					   $noFound = mysql_num_rows($result);
+					   $result = mysqli_query($zalongwa,$sql) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
+					   $noFound = mysqli_num_rows($result);
 					   if ($noFound>0) {
 							$userregno = mysql_result($result,0,'userregno');
 									$_SESSION['loginerror'] = "Registration NOT Successful! <br>
@@ -145,18 +145,18 @@ if ($_SESSION['loginerror']==""){
 	//create account
 		$query = "INSERT INTO security (UserName, Password, FullName, RegNo, Position, AuthLevel, Email, LastLogin, Registered)
 				 VALUES ('$username', '$hash', '$fullname', '$id', '$selectPosition', 'user', '$Email', now(), now())";
-		$result = mysql_query($query) or die("Query Failed, Words like Ng'ombe are not accepted <br>");
+		$result = mysqli_query($zalongwa,$query) or die("Query Failed, Words like Ng'ombe are not accepted <br>");
 		
 	//Update Birth Date
 	$sql = "UPDATE student SET DBirth='$bdate' WHERE RegNo = '$id'";
-	$query = mysql_query($sql);
+	$query = mysqli_query($zalongwa,$sql);
 		
 	$_SESSION['loginerror'] = " Welcome '".$LastName.", ".$FirstName."' to ZALONGWA"; 
 	$_SESSION['username']=$username;
 	echo '<meta http-equiv = "refresh" content ="0; url = index.php">';
 	exit;
 }
-	mysql_close( $zalongwa);
+	mysqli_close( $zalongwa);
 }
 ?>
 

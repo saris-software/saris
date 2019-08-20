@@ -142,12 +142,12 @@ if ($fileavailable==1){
 		  $exno = $exnum[0];
 		  $table = "examnumber_".$exno;
 		  
-		  $tabs = mysql_query("CREATE TABLE IF NOT EXISTS $table 
+		  $tabs = mysqli_query("CREATE TABLE IF NOT EXISTS $table 
 											(RegNo varchar(50) PRIMARY KEY, ExamNo varchar(50) UNIQUE KEY, 
 											EntryYear varchar(9),AYear varchar(9), Semester varchar(11))");
 											
-		  $usajili = mysql_query("SELECT RegNo FROM $table WHERE AYear='2010/2011' AND Semester='Semester II' AND ExamNo='$arr[0]'");
-		  $rows = mysql_num_rows($usajili);
+		  $usajili = mysqli_query("SELECT RegNo FROM $table WHERE AYear='2010/2011' AND Semester='Semester II' AND ExamNo='$arr[0]'");
+		  $rows = mysqli_num_rows($usajili);
 		  
 		  if($rows != 0){
 			  $sql ="REPLACE INTO $table SET
@@ -166,8 +166,8 @@ if ($fileavailable==1){
 										Semester = 'Semester II'";
 			  }
 				  
-			mysql_query($sql);
-			if(mysql_error()) {
+			mysqli_query($zalongwa,$sql);
+			if(mysqli_error($zalongwa)) {
 					  echo "<tr><td nowrap>Record ".$i."</td><td nowrap>(<b>$arr[0]</b>) is a Duplicate Entry</td><td nowrap>- Not Imported!</td></tr>"; 				 				 
 				  }
 				  else{

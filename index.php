@@ -1,6 +1,6 @@
 <?php 
 	session_start();
-	session_cache_limiter('nocache');       
+//session_cache_limiter('nocache');
 	@$loginerror  = $_SESSION['loginerror'];
 	
 	require_once('Connections/zalongwa.php');
@@ -20,4 +20,4 @@
 	
 	include 'loginform.php';
 
-
+	?>

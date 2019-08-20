@@ -135,7 +135,7 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 					$nemu=addslashes($arr[3]);
 					$name=strtoupper($nem).", ".ucwords($nemu);			  
 
-					$chas = mysql_query("SELECT RegNo FROM student WHERE RegNo='$arr[1]'");
+					$chas = mysqli_query("SELECT RegNo FROM student WHERE RegNo='$arr[1]'", $zalongwa);
 												
 					if($overwrite==1 AND sizeof($arr)<7){
 						echo "<p style='color:maroon'>ERROR: You can not overwrite student(s) without registration number(s)</p>";					
@@ -148,7 +148,7 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 						
 						if($year>1950 && $month>0 && $month<13 && $day>0 && $day<32){
 							
-							if($fetch = mysql_num_rows($chas) == 0){	
+							if($fetch = mysqli_num_rows($chas) == 0){
 								$month = (strlen($month)>1)? $month:'0'.$month;
 								$day = (strlen($day)>1)? $day:'0'.$day;
 								
@@ -188,9 +188,9 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 															WHERE RegNo = '$arr[1]'";
 								}
 															
-							mysql_query($sql);
-							if(mysql_error()) {
-								 echo $name. "- Record ".$i." is Not Imported! Due to ".mysql_error()."<br>\n"; //$arr[0]
+							mysqli_query($zalongwa, $sql);
+							if(mysqli_error()) {
+								 echo $name. "- Record ".$i." is Not Imported! Due to ".mysqli_error()."<br>\n"; //$arr[0]
 								}
 							else{
 								echo "Record ".$i." Imported Successfuly!<br>\n";
@@ -211,8 +211,8 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 					$sufx = substr($sub,-2);
 					
 					#get the programme name
-					$progname = mysql_query("SELECT ProgrammeName FROM programme WHERE ProgrammeCode='$impprog'");
-					$catch = mysql_fetch_array($progname);
+					$progname = mysqli_query("SELECT ProgrammeName FROM programme WHERE ProgrammeCode='$impprog'", $zalongwa);
+					$catch = mysqli_fetch_array($progname);
 					$kifupi = $catch['ProgrammeName'];
 					$chunk = explode(" ",$kifupi);
 					
@@ -237,16 +237,16 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 					
 					
 					#get the last entered registration number under the speciefied study programme
-					$chas = mysql_query("SELECT RegNo FROM student WHERE RegNo like '$control%' ORDER BY RegNo DESC");
+					$chas = mysqli_query("SELECT RegNo FROM student WHERE RegNo like '$control%' ORDER BY RegNo DESC", $zalongwa);
 					
-					if($fetchs=mysql_num_rows($chas)==0){
+					if($fetchs=mysqli_num_rows($chas)==0){
 						#assign the first registration number under tha new study programme
 						$regno = $control."/0001/".$sufx;
 						}
 					else{
 						
 						$numo = '';
-						while($fetch = mysql_fetch_assoc($chas)){						
+						while($fetch = mysqli_fetch_assoc($chas)){
 							//$nums = substr($numx,0,4);
 							$numx = explode("/", $fetch['RegNo']);
 							$nums = $numx[2];
@@ -331,10 +331,10 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 													DBirth = '$DBirth',
 													Status =''
 													";//RegNo = '$arr[0]',Sex = '$arr[2]',
-						mysql_query($sql);
+						mysqli_query($zalongwa, $sql);
 					   
-						if(mysql_error()) {
-							 echo $name. "- Record ".$i." is Not Imported! Due to ".mysql_error()."<br>\n"; //$arr[0]
+						if(mysqli_error()) {
+							 echo $name. "- Record ".$i." is Not Imported! Due to ".mysqli_error()."<br>\n"; //$arr[0]
 							}
 						else{							
 							#get surname
@@ -342,12 +342,12 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 							$PWD = strtoupper(trim($surname[0]));
 							$hash = "{jlungo-hash}" . base64_encode(pack("H*", sha1($PWD)));							
 										
-							mysql_query("INSERT INTO security 
+							mysqli_query("INSERT INTO security 
 										(UserName, Password, FullName, RegNo, Position, AuthLevel, Email, LastLogin, Registered)
 										VALUES 
 										('$regno', '$hash', '$name', '$regno', 'student', 'user', '', now(), now())"); 
 							
-							echo "Record ".$i." Imported Successfuly!<br>".mysql_error()." \n";
+							echo "Record ".$i." Imported Successfuly!<br>".mysqli_error()." \n";
 							}
 						}
 					else{
@@ -391,17 +391,17 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 		  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 		}
 
-		mysql_select_db($database_zalongwa, $zalongwa);
+		mysqli_select_db($database_zalongwa, $zalongwa);
 		$query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-		$AcademicYear = mysql_query($query_AcademicYear, $zalongwa) or die(mysql_error());
-		$row_AcademicYear = mysql_fetch_assoc($AcademicYear);
-		$totalRows_AcademicYear = mysql_num_rows($AcademicYear);
+		$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error());
+		$row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
+		$totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
 
-		mysql_select_db($database_zalongwa, $zalongwa);
+		mysqli_select_db($database_zalongwa, $zalongwa);
 		$query_Hostel = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-		$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-		$row_Hostel = mysql_fetch_assoc($Hostel);
-		$totalRows_Hostel = mysql_num_rows($Hostel);
+		$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error());
+		$row_Hostel = mysqli_fetch_assoc($Hostel);
+		$totalRows_Hostel = mysqli_num_rows($Hostel);
 			
 		?>
 
@@ -430,11 +430,11 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 								?>
 											<option value="<?php echo $row_Hostel['ProgrammeCode']?>"><?php echo $row_Hostel['ProgrammeName']?></option>
 											<?php
-								} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-								  $rows = mysql_num_rows($Hostel);
+								} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+								  $rows = mysqli_num_rows($Hostel);
 								  if($rows > 0) {
-									  mysql_data_seek($Hostel, 0);
-									  $row_Hostel = mysql_fetch_assoc($Hostel);
+									  mysqli_data_seek($Hostel, 0);
+									  $row_Hostel = mysqli_fetch_assoc($Hostel);
 								  }
 								?>
 							</select></td>
@@ -448,11 +448,11 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 							?>
 								<option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
 								<?php
-							} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-							  $rows = mysql_num_rows($AcademicYear);
+							} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+							  $rows = mysqli_num_rows($AcademicYear);
 							  if($rows > 0) {
-								  mysql_data_seek($AcademicYear, 0);
-								  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+								  mysqli_data_seek($AcademicYear, 0);
+								  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 							  }
 							?>
 						   </select></td>
@@ -491,8 +491,8 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 		<?php
 		}
 
-	@mysql_free_result($AcademicYear);
+	@mysqli_free_result($AcademicYear);
 
-	@mysql_free_result($Hostel);
+	@mysqli_free_result($Hostel);
 	include('../footer/footer.php');
 ?>

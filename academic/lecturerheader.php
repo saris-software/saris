@@ -1,12 +1,14 @@
-<?php /*
+<?php
+
+/*
 	This is the header to be included for all files.
 	Variables to be set before including this file are as follows:
 	
 	szSection - the name of the section.
 	szSubSection - the name of the subsection.
-*/ 
-	
-	# this script will use the following globals
+*/
+
+# this script will use the following globals
 	global $szSection, $szSubSection, $szSubSubSection,$intSectionID,$intSubSectionID,$szSubSubSectionTitle,$szSubSectionTitle, $szTitle, $additionalStyleSheet, $arrStructure, $szRootURL, $blnHideNav, $arrVariations;
 
 	//if (!isset($blnHideNav)){$blnHideNav = false;}
@@ -35,10 +37,14 @@
 		if ( $arrStructure[$i]['name1'] == $szSection ) $intCurrentSectionID = $i;
 	}
 	#get organisation name
+
 	
 	$qname = 'SELECT Name, Address FROM organisation';
-	$dbname = mysql_query($qname);
-	$name_row = mysql_fetch_assoc($dbname);
+	$dbname = mysqli_query($zalongwa, $qname);
+	$name_row = mysqli_fetch_assoc($dbname);
+	$dbname = mysqli_query($zalongwa, $qname);
+	$name_row = mysqli_fetch_assoc($dbname);
+
 	
 ?>
 

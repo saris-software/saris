@@ -21,7 +21,7 @@ $CourseCode = $_GET['CourseCode'];
             <form enctype="multipart/form-data" action="UploadLectureNotes.php?<?php echo $CourseCode?>" method="post">
               <p>&nbsp;              </p>
                   <p><span class="style1">..</span></p>
-                  <table width="200" border="0" cellspacing="0" cellpadding="0">
+                  <table style="width:200px border:0 border-spacing:0 padding:0">
                     <tr>
                       <th nowrap scope="row"><div align="right">
       <input type="hidden" name="MAX_FILE_SIZE" value="5646039">

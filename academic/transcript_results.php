@@ -37,8 +37,8 @@
 			}
 #get entry year ID
 $qayearid ="SELECT intYearID FROM academicyear WHERE AYear='$entry'";
-$dbayearid = mysql_query($qayearid);
-$rowayearid = mysql_fetch_object($dbayearid);
+$dbayearid = mysqli_query($zalongwa,$qayearid);
+$rowayearid = mysqli_fetch_object($dbayearid);
 $ayearid = $rowayearid->intYearID;
 
 //query academeic years
@@ -51,20 +51,19 @@ else{
 	$qayear="SELECT DISTINCT AYear FROM examresult WHERE RegNo = '$regno' and AYear>='$entry' ORDER BY AYear ASC";
 	//$qayear = "SELECT DISTINCT examresult.AYear FROM examresult inner JOIN academicyear ON (examresult.AYear=academicyear.AYear) WHERE RegNo = '$regno' and checked=1 AND intYearID>='$ayearid' ORDER BY AYear ASC"; 
 	}
-$dbayear = mysql_query($qayear);    
-	
+$dbayear = mysqli_query($zalongwa,$qayear);
 	//query academeic year
 	//$qayear = "SELECT DISTINCT AYear FROM examresult WHERE RegNo = '$regno' and checked=1 ORDER BY AYear ASC";
-	//$dbayear = mysql_query($qayear);
+	//$dbayear = mysqli_query($qayear);
 
 
 	
 	#query project
 	/*
 	$qproject = "SELECT ayear, thesis FROM thesis WHERE RegNo = '$key'";
-	$dbproject = mysql_query($qproject);
-	$row_project = mysql_fetch_assoc($dbproject);
-	$thesisresult = mysql_num_rows($dbproject);
+	$dbproject = mysqli_query($zalongwa,$qproject);
+	$row_project = mysqli_fetch_assoc($dbproject);
+	$thesisresult = mysqli_num_rows($dbproject);
 	$thesis = $row_project['thesis'];
 	$thesisyear = $row_project['ayear'];
 	*/
@@ -72,17 +71,17 @@ $dbayear = mysql_query($qayear);
 	$acyear = 0;
 	
 	//query exam results sorted per years
-	while($rowayear = mysql_fetch_object($dbayear)){
+	while($rowayear = mysqli_fetch_object($dbayear)){
 	$acyear = $acyear +1;
 	$acyear = ((isset($_POST['studyYear']))&&($yearofstudy<>"")&&($fby=='yes'))?$yearofstudy:$acyear;
 	$currentyear = $rowayear->AYear;
 	
 	//query semester
 	$qsemester = "SELECT DISTINCT Semester FROM examresult WHERE RegNo = '$regno' AND AYear = '$currentyear' ORDER BY Semester ASC";
-	$dbsemester = mysql_query($qsemester);
+	$dbsemester = mysqli_query($zalongwa,$qsemester);
 		
 		//query exam results sorted per semester
-		while($rowsemester = mysql_fetch_object($dbsemester)) {
+		while($rowsemester = mysqli_fetch_object($dbsemester)) {
             $currentsemester = $rowsemester->Semester;
 
             # get all courses for this candidate
@@ -101,9 +100,9 @@ $dbayear = mysql_query($qayear);
 							(examresult.Checked='1') 
 				      ORDER BY examresult.AYear DESC, examresult.Semester ASC";
 
-            $result = mysql_query($query_examresult);
-            $query = @mysql_query($query_examresult);
-            $dbcourseUnit = mysql_query($query_examresult);
+            $result = mysqli_query($zalongwa,$query_examresult);
+            $query = @mysqli_query($zalongwa,$query_examresult);
+            $dbcourseUnit = mysqli_query($zalongwa,$query_examresult);
 
             $totalunit = 0;
             $unittaken = 0;
@@ -198,7 +197,7 @@ $dbayear = mysql_query($qayear);
 					
 					#calculate results
 					$i=1;
-					while($row_course = mysql_fetch_array($dbcourseUnit)){
+					while($row_course = mysqli_fetch_array($dbcourseUnit)){
 						$course= $row_course['CourseCode'];
 						$unit = $row_course['Units'];
 						$cname = $row_course['CourseName'];
@@ -209,8 +208,8 @@ $dbayear = mysql_query($qayear);
 						/*
 						#get specific ourse units
 						$qcunits = "select Units from course where (course.Programme = '$degree') AND coursecode = '$course'";
-						$dbcunits = mysql_query($qcunits);
-						$count = mysql_num_rows($dbcunits);
+						$dbcunits = mysqli_query($zalongwa,$qcunits);
+						$count = mysqli_num_rows($dbcunits);
 						if ($count > 0) 
 						{
 							$unit = $row_cunits['Units'];

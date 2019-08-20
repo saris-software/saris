@@ -40,7 +40,7 @@ $query_studentsuggestion = "SELECT id, received, fromid, toid, message,replied F
 							WHERE toid = '$RegNo' or toid = '$username' or toid='0' ORDER BY received DESC";
 
 $query_limit_studentsuggestion = sprintf("%s LIMIT %d, %d", $query_studentsuggestion, $startRow_studentsuggestion, $maxRows_studentsuggestion);
-$studentsuggestion = mysqli_query($query_limit_studentsuggestion, $zalongwa) or die(mysqli_error());
+$studentsuggestion = mysqli_query($zalongwa, $query_limit_studentsuggestion) or die(mysqli_error());
 
 $row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion);
 
@@ -50,7 +50,7 @@ if (isset($_GET['totalRows_studentsuggestion'])) {
 } 
 else {
 
-  $all_studentsuggestion = mysqli_query($query_studentsuggestion , $zalongwa);
+  $all_studentsuggestion = mysqli_query($zalongwa, $query_studentsuggestion);
   $totalRows_studentsuggestion = mysqli_num_rows($all_studentsuggestion);
 
 }
@@ -119,7 +119,7 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
 
 								$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$from'";
 
-								$dbstudent = mysqli_query($qstudent , $zalongwa) or die("This student has no results".  mysqli_error());
+								$dbstudent = mysqli_query($zalongwa, $qstudent) or die("This student has no results".  mysqli_error());
 
 								if($rows = mysqli_num_rows($dbstudent) != 0){
 									$row_result = mysqli_fetch_array($dbstudent);
@@ -129,7 +129,7 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
 									
 									//get degree name
 									$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-									$dbdegree = mysqli_query($qdegree , $zalongwa);
+									$dbdegree = mysqli_query($zalongwa, $qdegree);
 									$row_degree = mysqli_fetch_array($dbdegree);
 									$programme = $row_degree['Title'];
 									

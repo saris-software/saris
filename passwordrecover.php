@@ -7,8 +7,8 @@
  require_once('Connections/zalongwa.php'); 
 	#Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+$dborg = mysqli_query($zalongwa, $qorg);
+$row_org = mysqli_fetch_assoc($dborg);
 	$org = $row_org['Name'];
 	$post = $row_org['Address'];
 	$phone = $row_org['tel'];
@@ -20,7 +20,7 @@
 header("Cache-control: private"); // IE 6 Fix. 
 if (isset($accesscheck)) {
   $GLOBALS['PrevUrl'] = $accesscheck;
-  session_register('PrevUrl');
+    session_is_register('PrevUrl');
 }
 #update userpassword
 if (isset($_POST["save"]) && ($_POST["save"] == "Save Password")) {
@@ -35,8 +35,8 @@ if(strlen($newpass)<5){
 	$_SESSION['thisuser'] = $txtusername;
 }
   $updateSQL = "UPDATE security SET password='$hashnew' WHERE UserName='$txtusername'";
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($updateSQL, $zalongwa) or die(mysql_error());
+    mysqli_select_db($database_zalongwa, $zalongwa);
+    $Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($updateSQL));
 
   $updateGoTo = "index.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -87,8 +87,8 @@ $check_num = mysql_num_rows($result_regno);
 if($check_num == 1){
 // check bday
  $check_reg ="SELECT * FROM student WHERE RegNo='$userregno' AND (DBirth='$bdate' OR  DBirth='$bdate2')";
-$result_regno = mysql_query($check_reg);
-$check_num = mysql_num_rows($result_regno);
+    $result_regno = mysqli_query($zalongwa, $check_reg);
+    $check_num = mysqli_num_rows($result_regno);
 
 if($check_num == 1){
 	if($bdate){
@@ -100,10 +100,10 @@ if($check_num == 1){
 					  security.Position
                 FROM security,student
                 WHERE security.RegNo = '$userregno' AND (student.DBirth = '$bdate' OR student.DBirth = '$bdate2')",
- 		get_magic_quotes_gpc() ? $userregno : addslashes($userregno), get_magic_quotes_gpc() ? $bdate : addslashes($bdate)); 
-		
-		$result = @mysql_query($sql, $zalongwa);
-		$loginFoundUser = mysql_num_rows($result);
+ 		get_magic_quotes_gpc() ? $userregno : addslashes($userregno), get_magic_quotes_gpc() ? $bdate : addslashes($bdate));
+
+        $result = @mysqli_query($sql, $zalongwa);
+        $loginFoundUser = mysqli_num_rows($result);
  		
 						if ($loginFoundUser) {
 							$loginName		= mysql_result($result,0,'UserName');

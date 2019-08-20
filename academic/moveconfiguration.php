@@ -20,10 +20,10 @@ $keyayear = $_GET['ayear'];
 
 if(isset($_POST['save_record'])){
   $get_data = "SELECT * FROM courseprogramme WHERE ProgrammeID='$key' AND AYear='$keyayear'";
-  $result_data = mysql_query($get_data);
-  $num_rows = mysql_num_rows($result_data);
+  $result_data = mysqli_query($zalongwa,$get_data);
+  $num_rows = mysqli_num_rows($result_data);
   if($num_rows > 0){
-  	while ($rows = mysql_fetch_array($result_data)) {
+  	while ($rows = mysqli_fetch_array($result_data)) {
   		$prg = $rows['ProgrammeID'];
   		$code = $rows['CourseCode'];
   		$status = $rows['Status'];
@@ -31,7 +31,7 @@ if(isset($_POST['save_record'])){
   		$sem = $rows['Semester'];
   		$yr = $_POST['rayear'];
   		$insert = "INSERT INTO courseprogramme (ProgrammeID,CourseCode,Status,YearofStudy,Semester,AYear) VALUES('$prg','$code','$status','$class','$sem','$yr')";
-  		$insert_data = mysql_query($insert);
+  		$insert_data = mysqli_query($zalongwa,$insert);
   	}
   	echo "<div>Configuration is successfully copied!!!</div>";
   }
@@ -40,10 +40,10 @@ if(isset($_POST['save_record'])){
 
 
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $prog_sql = "SELECT * FROM programme WHERE ProgrammeCode ='$key'";
-$prog_result = mysql_query($prog_sql, $zalongwa);
-$fetc_prog = mysql_fetch_assoc($prog_result);
+$prog_result = mysqli_query($zalongwa,$prog_sql);
+$fetc_prog = mysqli_fetch_assoc($prog_result);
 
 echo 'Course Configuration - '.$fetc_prog['ProgrammeName'].' : '.$fetc_prog['Title'];
 ?></div>
@@ -57,19 +57,19 @@ echo 'Course Configuration - '.$fetc_prog['ProgrammeName'].' : '.$fetc_prog['Tit
  <td align="left">
  <select name="rayear">
  <?php 
- mysql_select_db($database_zalongwa, $zalongwa);
+ mysqli_select_db($zalongwa,$database_zalongwa);
 $query_ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$ayear = mysql_query($query_ayear, $zalongwa);
-$row_ayear = mysql_fetch_assoc($ayear);
+$ayear = mysqli_query($zalongwa,$query_ayear);
+$row_ayear = mysqli_fetch_assoc($ayear);
  do {  
 			?>
                     <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
                     <?php
-				} while ($row_ayear = mysql_fetch_assoc($ayear));
-				  $rows = mysql_num_rows($ayear);
+				} while ($row_ayear = mysqli_fetch_assoc($ayear));
+				  $rows = mysqli_num_rows($ayear);
 				  if($rows > 0) {
-			      mysql_data_seek($ayear, 0);
-				  $row_ayear = mysql_fetch_assoc($ayear);
+			      mysqli_data_seek($ayear, 0);
+				  $row_ayear = mysqli_fetch_assoc($ayear);
 			  }
  
  ?>

@@ -1,11 +1,12 @@
 <?php require_once('Connections/zalongwa.php'); ?>
 <?php
-session_start();
+
 session_cache_limiter('nocache');
 
+session_start();
 if (isset($accesscheck)) {
   $GLOBALS['PrevUrl'] = $accesscheck;
-  session_register('PrevUrl');
+	session_is_register('PrevUrl');
 }
 
 if (isset($_POST['textusername'])) {
@@ -14,22 +15,29 @@ if (isset($_POST['textusername'])) {
   $password = $_POST['textpassword'];
   // Generate jlungo hash
  $hash = "{jlungo-hash}" . base64_encode(pack("H*", sha1($password )));
-//$hash = $password;
 	$sql=sprintf("SELECT UserName, password, RegNo, Position, Module, PrivilegeID, FullName, Faculty FROM security WHERE UserName='%s' AND password='%s'",
- 		get_magic_quotes_gpc() ? $username : addslashes($username), get_magic_quotes_gpc() ? $hash : addslashes($hash)); 
-		
-		$result = @mysqli_query($zalongwa,$sql);
+ 		get_magic_quotes_gpc() ? $username : addslashes($username), get_magic_quotes_gpc() ? $hash : addslashes($hash));
+	$result = mysqli_query($zalongwa, $sql);
 		$loginFoundUser = mysqli_num_rows($result);
- 		if ($loginFoundUser) {
-       		$loginStrGroup  = mysqli_free_result($result,0,'password');
-    		$loginName		= mysqli_result($result,0,'FullName');
-			$position 		= mysqli_result($result,0,'Position');
-			$RegNo 		= mysqli_result($result,0,'RegNo');
-			$module 	= mysqli_result($result,0,'Module');
-			$userFaculty 	= mysqli_result($result,0,'Faculty');
-			$privilege  = mysqli_result($result,0,'PrivilegeID');
-			$mtumiaji = 3;
-			
+		$row = mysqli_fetch_assoc($result);
+		$UName = $row['UserName'];
+
+		$sql = "SELECT page FROM stats WHERE page LIKE '$UName%'";
+    		$active = mysqli_query($zalongwa, $sql);
+    		$userLoggedIn = mysqli_num_rows($active);
+    		if($userLoggedIn >0){
+
+			$loginStrGroup = $row['password'];
+			$loginName = $row['FullName'];
+			$position = $row['Position'];
+			$RegNo = $row['RegNo'];
+			$module = $row['Module'];
+			$userFaculty = $row['Faculty'];
+			$userDept = $row['Dept'];
+			$userDeptHead = $row['DeptHead'];
+		        $privilege = $row['PrivilegeID'];
+                        $mtumiaji = 3;
+                        
 			$_SESSION['username'] = $username; 
 			$_SESSION['mtumiaji'] = $mtumiaji; 
 			$_SESSION['RegNo'] = $RegNo; 
@@ -37,11 +45,11 @@ if (isset($_POST['textusername'])) {
 			$_SESSION['privilege'] = $privilege; 
 			$_SESSION['loginName'] = $loginName; 
 			$_SESSION['userFaculty'] = $userFaculty; 
-						
+				
 	 	$update_login = "UPDATE security SET LastLogin = now() WHERE UserName = '$username' AND Password = '$password'";
-	 	$result = mysqli_query($update_login,$zalongwa) or die("Siwezi ku-update LastLogin, Zalongwa");
+	 	$result = mysqli_query($zalongwa, $update_login) or die("Siwezi ku-update LastLogin, Zalongwa");
 	
-if ($module=='1') 
+	 if ($module=='1') 
          {
 		   echo '<meta http-equiv = "refresh" content ="0; 
 				url = academic/lecturerindex.php">';
@@ -84,4 +92,5 @@ if ($module=='1')
 ?>
 <?php
 mysqli_close($zalongwa);
+
 ?>

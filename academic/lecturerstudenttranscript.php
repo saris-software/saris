@@ -55,13 +55,13 @@ $dept = $_POST['dept'];
 										   and 
 											  (examresult.AYear = '$year')
 										   )";
-           	$result = mysql_query($updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
-			$query = @mysql_query($updateSQL) or die("Cannot query the database.<br>" . mysql_error());
-			$row_result = mysql_fetch_array($result);
+           	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];
 			
-			if (mysql_num_rows($query) > 0){
+			if (mysqli_num_rows($query) > 0){
 			
 					$totalunit=0;
 					$unittaken=0;
@@ -73,7 +73,7 @@ $dept = $_POST['dept'];
 			echo "<table border='1'>";
 			echo "<tr><td> S/No </td><td>Year </td><td> Course</td><td> Unit </td><td> Grade </td><td> Remarks</td><td> Core/Option</td></tr>";
 			$i=1;
-				while($result = mysql_fetch_array($query)) {
+				while($result = mysqli_fetch_array($query)) {
 					
 					
 					$unit = $result['Units'];
@@ -174,13 +174,13 @@ $dept = $_POST['dept'];
 										   and 
 											  (examresult.AYear = '$year')
 										   )";
-           	$result = mysql_query($updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
-			$query = @mysql_query($updateSQL) or die("Cannot query the database.<br>" . mysql_error());
-			$row_result = mysql_fetch_array($result);
+           	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];
 			
-			if (mysql_num_rows($query) > 0){
+			if (mysqli_num_rows($query) > 0){
 			
 					$totalunit=0;
 					$unittaken=0;
@@ -192,7 +192,7 @@ $dept = $_POST['dept'];
 			echo "<table border='1'>";
 			echo "<tr><td> S/No </td><td>Year </td><td> Course</td><td> Unit </td><td> Grade </td><td> Remarks</td><td> Core/Option</td></tr>";
 			$i=1;
-				while($result = mysql_fetch_array($query)) {
+				while($result = mysqli_fetch_array($query)) {
 					
 					
 					$unit = $result['Units'];
@@ -285,13 +285,13 @@ FROM examresult
    INNER JOIN course ON (examresult.CourseCode = course.CourseCode)
    INNER JOIN student ON (examresult.RegNo = student.RegNo)
 				WHERE  student.ProgrammeofStudy = '$deg' AND examresult.RegNo = '$reg[$c]' ";
-           	$result = mysql_query($updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
-			$query = @mysql_query($updateSQL) or die("Cannot query the database.<br>" . mysql_error());
-			$row_result = mysql_fetch_array($result);
+           	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];
 			
-			if (mysql_num_rows($query) > 0){
+			if (mysqli_num_rows($query) > 0){
 			
 					$totalunit=0;
 					$unittaken=0;
@@ -303,7 +303,7 @@ FROM examresult
 			echo "<table border='1'>";
 			echo "<tr><td> S/No </td><td>Year </td><td> Course</td><td> Unit </td><td> Grade </td><td> Remarks</td><td> Core/Option</td></tr>";
 			$i=1;
-				while($result = mysql_fetch_array($query)) {
+				while($result = mysqli_fetch_array($query)) {
 					
 					
 					$unit = $result['Units'];
@@ -396,13 +396,13 @@ FROM examresult
    INNER JOIN course ON (examresult.CourseCode = course.CourseCode)
    INNER JOIN student ON (examresult.RegNo = student.RegNo)
 				WHERE  examresult.RegNo = '$reg[$c]' ";
-           	$result = mysql_query($updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
-			$query = @mysql_query($updateSQL) or die("Cannot query the database.<br>" . mysql_error());
-			$row_result = mysql_fetch_array($result);
+           	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];
 			
-			if (mysql_num_rows($query) > 0){
+			if (mysqli_num_rows($query) > 0){
 			
 					$totalunit=0;
 					$unittaken=0;
@@ -414,7 +414,7 @@ FROM examresult
 			echo "<table border='1'>";
 			echo "<tr><td> S/No </td><td>Year </td><td> Course</td><td> Unit </td><td> Grade </td><td> Remarks</td><td> Core/Option</td></tr>";
 			$i=1;
-				while($result = mysql_fetch_array($query)) {
+				while($result = mysqli_fetch_array($query)) {
 					
 					
 					$unit = $result['Units'];
@@ -477,8 +477,8 @@ FROM examresult
 					}else{ 
 					if(!@$reg[$c]){}
 						}
-					//mysql_close($zalongwa);
-					//mysql_free_result($result);
+					//mysqli_close($zalongwa);
+					//mysqli_free_result($result);
 					$c++;
 			 }
 		}			

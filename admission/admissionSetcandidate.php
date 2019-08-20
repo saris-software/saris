@@ -22,11 +22,11 @@
 		
 		#check if candidate exist
 		$sql ="SELECT RegNo FROM electioncandidate WHERE (RegNo='$code' AND Period='$academic')";
-		$result = mysql_query($sql) or die("Service not available.<br>");
-		$coursecodeFound = mysql_num_rows($result);
+		$result = mysqli_query($zalongwa, $sql) or die("Service not available.<br>");
+		$coursecodeFound = mysqli_num_rows($result);
 		
 		if ($coursecodeFound) {
-			$coursefound   = mysql_result($result,0,'RegNo');
+			$coursefound   = mysqli_result($result,0,'RegNo');
 			$error = urlencode("This Candidate: $coursefound Do Exists!!");
 			$url = "admissionSetcandidate.php?error=$error";
 			echo '<meta http-equiv="refresh" content="0; url='.$url.'">';
@@ -34,9 +34,9 @@
 			}
 		else{
 			#check if the candidate exists in student table
-			$check_exists = mysql_query("SELECT Name FROM student WHERE RegNo='$code'");
+			$check_exists = mysqli_query("SELECT Name FROM student WHERE RegNo='$code'", $zalongwa);
 			
-			if(@mysql_num_rows($check_exists) <>'0'){
+			if(@mysqli_num_rows($check_exists) <>'0'){
 				$insertSQL = sprintf("INSERT INTO electioncandidate (RegNo, Post, Faculty, Institution, Period) VALUES (%s, %s, %s, %s, %s)",
 				GetSQLValueString($_POST['txtRegNo'], "text"),
 				GetSQLValueString($_POST['cmbPost'], "text"),
@@ -44,8 +44,8 @@
 				GetSQLValueString($_POST['cmbInst'], "text"),
 				GetSQLValueString($_POST['ayear'], "text"));
 
-				mysql_select_db($database_zalongwa, $zalongwa);
-				$Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+				mysqli_select_db($database_zalongwa, $zalongwa);
+				$Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
 				}
 			else{
 				$error = urlencode("There is no student with RegNo: $code");
@@ -64,19 +64,19 @@
 		
 		#check if candidate exist
 		$sql ="SELECT RegNo FROM electioncandidate WHERE (RegNo='$code') AND (Period='$year') AND id<>'$id'";
-		$result = mysql_query($sql) or die("Service not available.<br>");
-		$coursecodeFound = mysql_num_rows($result);
+		$result = mysqli_query($zalongwa, $sql) or die("Service not available.<br>");
+		$coursecodeFound = mysqli_num_rows($result);
 		
 		if ($coursecodeFound) {
-			$coursefound   = mysql_result($result,0,'RegNo');
+			$coursefound   = mysqli_result($result,0,'RegNo');
 			print " This Candidate: '".$coursefound."' contests for a different post!!"; 
 			exit;
 			}
 		else{
 			#check if the candidate exists in student table
-			$check_exists = mysql_query("SELECT Name FROM student WHERE RegNo='$code'");
+			$check_exists = mysqli_query("SELECT Name FROM student WHERE RegNo='$code'", $zalongwa);
 			
-			if(@mysql_num_rows($check_exists) <>'0'){
+			if(@mysqli_num_rows($check_exists) <>'0'){
 				//$updateSQL = sprintf("UPDATE electioncandidate SET Post=%s, Faculty=%s, Institution=%s, Period=%s, Name=%s WHERE Id=%s",
 				$updateSQL = sprintf("UPDATE electioncandidate SET RegNo=%s, Post=%s, Faculty=%s, Institution=%s, Period=%s WHERE Id=%s",
 				GetSQLValueString($_POST['txtRegNo'], "text"),
@@ -86,8 +86,8 @@
 				GetSQLValueString($_POST['ayear'], "text"),
 				GetSQLValueString($_POST['id'], "int"));
 
-				mysql_select_db($database_zalongwa, $zalongwa);
-				$Result1 = mysql_query($updateSQL, $zalongwa) or die(mysql_error());
+				mysqli_select_db($database_zalongwa, $zalongwa);
+				$Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error());
 				}
 			else{
 				$error = urlencode("There is no student with RegNo: $code");
@@ -125,29 +125,29 @@
 	//control the display table
 	@$new=2;
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_campus = "SELECT * FROM campus ORDER BY Campus ASC";
-	$campus = mysql_query($query_campus, $zalongwa) or die(mysql_error());
-	$row_campus = mysql_fetch_assoc($campus);
-	$totalRows_campus = mysql_num_rows($campus);
+	$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error());
+	$row_campus = mysqli_fetch_assoc($campus);
+	$totalRows_campus = mysqli_num_rows($campus);
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_faculty = "SELECT * FROM faculty ORDER BY FacultyName ASC";
-	$faculty = mysql_query($query_faculty, $zalongwa) or die(mysql_error());
-	$row_faculty = mysql_fetch_assoc($faculty);
-	$totalRows_faculty = mysql_num_rows($faculty);
+	$faculty = mysqli_query($zalongwa, $query_faculty) or die(mysqli_error());
+	$row_faculty = mysqli_fetch_assoc($faculty);
+	$totalRows_faculty = mysqli_num_rows($faculty);
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_post = "SELECT * FROM electionpost ORDER BY Post ASC";
-	$post = mysql_query($query_post, $zalongwa) or die(mysql_error());
-	$row_post = mysql_fetch_assoc($post);
-	$totalRows_post = mysql_num_rows($post);
+	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error());
+	$row_post = mysqli_fetch_assoc($post);
+	$totalRows_post = mysqli_num_rows($post);
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_ayear = "SELECT * FROM academicyear ORDER BY AYear DESC";
-	$ayear = mysql_query($query_ayear, $zalongwa) or die(mysql_error());
-	$row_ayear = mysql_fetch_assoc($ayear);
-	$totalRows_ayear = mysql_num_rows($ayear);
+	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error());
+	$row_ayear = mysqli_fetch_assoc($ayear);
+	$totalRows_ayear = mysqli_num_rows($ayear);
 
 	$editFormAction = $_SERVER['PHP_SELF'];
 	if (isset($_SERVER['QUERY_STRING'])) {
@@ -161,22 +161,22 @@
 		}
 
 	$startRow_inst = $pageNum_inst * $maxRows_inst;
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 
 	$query_inst = "SELECT el.id, el.RegNo,el.Post,el.Faculty,el.Institution,el.Period,el.Photo,el.Size,st.Name 
 					FROM electioncandidate el, student st WHERE st.RegNo=el.RegNo
 					ORDER BY Period DESC, Name DESC";
 		
 	$query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-	$inst = mysql_query($query_limit_inst, $zalongwa) or die(mysql_error());
-	$row_inst = mysql_fetch_assoc($inst);
+	$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+	$row_inst = mysqli_fetch_assoc($inst);
 
 	if (isset($_GET['totalRows_inst'])) {
 		$totalRows_inst = $_GET['totalRows_inst'];
 		} 
 	else {
-		$all_inst = mysql_query($query_inst);
-		$totalRows_inst = mysql_num_rows($all_inst);
+		$all_inst = mysqli_query($zalongwa, $query_inst);
+		$totalRows_inst = mysqli_num_rows($all_inst);
 		}
 	$totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 
@@ -186,12 +186,12 @@
 
 	if(isset($_POST['course'])){
 		$key=$_POST['course'];
-		$query_inst = mysql_query("SELECT el.id, el.RegNo,el.Post,el.Faculty,el.Institution,el.Period,
+		$query_inst = mysqli_query("SELECT el.id, el.RegNo,el.Post,el.Faculty,el.Institution,el.Period,
 									el.Photo,el.Size,st.Name FROM electioncandidate el, student st 
 									WHERE el.RegNo Like '%$key%' AND st.RegNo=el.RegNo
-									ORDER BY Period, Name DESC");
+									ORDER BY Period, Name DESC", $zalongwa);
 		
-		if(@mysql_num_rows($query_inst) > 0){
+		if(@mysqli_num_rows($query_inst) > 0){
 			
 			echo "<table border='1' cellpadding='3' cellspacing='0'>
 				  <tr>
@@ -205,7 +205,7 @@
 				  </tr>";
 		
 			$index=1;
-			while($results = mysql_fetch_array($query_inst)){
+			while($results = mysqli_fetch_array($query_inst)){
 				echo "<tr>
 						<td nowrap>$index</td>
 						<td nowrap>$results[RegNo]</td>
@@ -250,11 +250,11 @@
 		#get post variables
 		$key = $_GET['edit'];
 
-		mysql_select_db($database_zalongwa, $zalongwa);
+		mysqli_select_db($database_zalongwa, $zalongwa);
 		$query_instEdit = "SELECT * FROM electioncandidate WHERE Id ='$key'";
-		$instEdit = mysql_query($query_instEdit, $zalongwa) or die(mysql_error());
-		$row_instEdit = mysql_fetch_assoc($instEdit);
-		$totalRows_instEdit = mysql_num_rows($instEdit);
+		$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error());
+		$row_instEdit = mysqli_fetch_assoc($instEdit);
+		$totalRows_instEdit = mysqli_num_rows($instEdit);
 
 		$queryString_inst = "";
 		if (!empty($_SERVER['QUERY_STRING'])) {
@@ -284,11 +284,11 @@
 		?>
 		<option value="<?php echo $row_campus['Campus']?>"><?php echo $row_campus['Campus']?></option>
 		  <?php
-		} while ($row_campus = mysql_fetch_assoc($campus));
-		  $rows = mysql_num_rows($campus);
+		} while ($row_campus = mysqli_fetch_assoc($campus));
+		  $rows = mysqli_num_rows($campus);
 		  if($rows > 0) {
-			  mysql_data_seek($campus, 0);
-			  $row_campus = mysql_fetch_assoc($campus);
+			  mysqli_data_seek($campus, 0);
+			  $row_campus = mysqli_fetch_assoc($campus);
 		  }
 		?>
 			  </select></td>
@@ -303,11 +303,11 @@
 		?>
 				<option value="<?php echo $row_faculty['FacultyName']?>"><?php echo $row_faculty['FacultyName']?></option>
 				<?php
-		} while ($row_faculty = mysql_fetch_assoc($faculty));
-		  $rows = mysql_num_rows($faculty);
+		} while ($row_faculty = mysqli_fetch_assoc($faculty));
+		  $rows = mysqli_num_rows($faculty);
 		  if($rows > 0) {
-			  mysql_data_seek($faculty, 0);
-			  $row_faculty = mysql_fetch_assoc($faculty);
+			  mysqli_data_seek($faculty, 0);
+			  $row_faculty = mysqli_fetch_assoc($faculty);
 		  }
 		?>
 			  </select></td>
@@ -321,11 +321,11 @@
 		?>
 				<option value="<?php echo $row_post['Post']?>"><?php echo $row_post['Post']?></option>
 				<?php
-		} while ($row_post = mysql_fetch_assoc($post));
-		  $rows = mysql_num_rows($post);
+		} while ($row_post = mysqli_fetch_assoc($post));
+		  $rows = mysqli_num_rows($post);
 		  if($rows > 0) {
-			  mysql_data_seek($post, 0);
-			  $row_post = mysql_fetch_assoc($post);
+			  mysqli_data_seek($post, 0);
+			  $row_post = mysqli_fetch_assoc($post);
 		  }
 		?>
 			  </select></td>
@@ -340,11 +340,11 @@
 		?>
 				<option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
 				<?php
-		} while ($row_ayear = mysql_fetch_assoc($ayear));
-		  $rows = mysql_num_rows($ayear);
+		} while ($row_ayear = mysqli_fetch_assoc($ayear));
+		  $rows = mysqli_num_rows($ayear);
 		  if($rows > 0) {
-			  mysql_data_seek($ayear, 0);
-			  $row_ayear = mysql_fetch_assoc($ayear);
+			  mysqli_data_seek($ayear, 0);
+			  $row_ayear = mysqli_fetch_assoc($ayear);
 		  }
 		?>
 			  </select></td>
@@ -430,9 +430,9 @@
 			$fileName = addslashes($fileName);
 			}
 			
-		mysql_query("UPDATE electioncandidate SET Photo='$content', Size='$fileSize' WHERE RegNo='$num' AND Period='$per'");
+		mysqli_query("UPDATE electioncandidate SET Photo='$content', Size='$fileSize' WHERE RegNo='$num' AND Period='$per'", $zalongwa);
 		
-		if(mysql_error()){
+		if(mysqli_error()){
 			$error = urlencode("The file $fileName failed to upload");
 			$location = "index.php?error=$error";
 			
@@ -481,11 +481,11 @@
 		?>
 				<option value="<?php echo $row_campus['Campus']?>"><?php echo $row_campus['Campus']?></option>
 				<?php
-		} while ($row_campus = mysql_fetch_assoc($campus));
-		  $rows = mysql_num_rows($campus);
+		} while ($row_campus = mysqli_fetch_assoc($campus));
+		  $rows = mysqli_num_rows($campus);
 		  if($rows > 0) {
-			  mysql_data_seek($campus, 0);
-			  $row_campus = mysql_fetch_assoc($campus);
+			  mysqli_data_seek($campus, 0);
+			  $row_campus = mysqli_fetch_assoc($campus);
 		  }
 		?>
 			  </select></td>
@@ -499,11 +499,11 @@
 		?>
 				<option value="<?php echo $row_faculty['FacultyName']?>"><?php echo $row_faculty['FacultyName']?></option>
 				<?php
-		} while ($row_faculty = mysql_fetch_assoc($faculty));
-		  $rows = mysql_num_rows($faculty);
+		} while ($row_faculty = mysqli_fetch_assoc($faculty));
+		  $rows = mysqli_num_rows($faculty);
 		  if($rows > 0) {
-			  mysql_data_seek($faculty, 0);
-			  $row_faculty = mysql_fetch_assoc($faculty);
+			  mysqli_data_seek($faculty, 0);
+			  $row_faculty = mysqli_fetch_assoc($faculty);
 		  }
 		?>
 			  </select></td>
@@ -516,11 +516,11 @@
 		?>
 				<option value="<?php echo $row_post['Post']?>"><?php echo $row_post['Post']?></option>
 				<?php
-		} while ($row_post = mysql_fetch_assoc($post));
-		  $rows = mysql_num_rows($post);
+		} while ($row_post = mysqli_fetch_assoc($post));
+		  $rows = mysqli_num_rows($post);
 		  if($rows > 0) {
-			  mysql_data_seek($post, 0);
-			  $row_post = mysql_fetch_assoc($post);
+			  mysqli_data_seek($post, 0);
+			  $row_post = mysqli_fetch_assoc($post);
 		  }
 		?>
 			  </select></td>
@@ -533,11 +533,11 @@
 		?>
 				<option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
 				<?php
-		} while ($row_ayear = mysql_fetch_assoc($ayear));
-		  $rows = mysql_num_rows($ayear);
+		} while ($row_ayear = mysqli_fetch_assoc($ayear));
+		  $rows = mysqli_num_rows($ayear);
 		  if($rows > 0) {
-			  mysql_data_seek($ayear, 0);
-			  $row_ayear = mysql_fetch_assoc($ayear);
+			  mysqli_data_seek($ayear, 0);
+			  $row_ayear = mysqli_fetch_assoc($ayear);
 		  }
 		?>
 			  </select></td>
@@ -624,7 +624,7 @@
 		  </tr>
 		  <?php 
 		  $counter++;
-		  } while ($row_inst = mysql_fetch_assoc($inst)); 
+		  } while ($row_inst = mysqli_fetch_assoc($inst));
 		  ?>
 		</table>
 		<a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a><span class="style1">......<span class="style2"><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> </span>..........</span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
@@ -639,11 +639,11 @@
 	# include the footer
 	include("../footer/footer.php");
 
-@mysql_free_result($inst);
+@mysqli_free_result($inst);
 
-@mysql_free_result($instEdit);
+@mysqli_free_result($instEdit);
 
-@mysql_free_result($faculty);
+@mysqli_free_result($faculty);
 
-@mysql_free_result($campus);
+@mysqli_free_result($campus);
 ?>

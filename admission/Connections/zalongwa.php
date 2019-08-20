@@ -7,7 +7,7 @@ $szWebmasterEmail = '< jlungo@udsm.ac.tz >';
 
 @$hostname_zalongwa = "localhost";
 @$database_zalongwa = "zalongwadit";
-@$username_zalongwa = "toor";
+@$username_zalongwa = "";
 @$password_zalongwa = "01tid02;
 $zalongwa = mysql_connect($hostname_zalongwa, strrev($username_zalongwa), strrev($password_zalongwa)); 
 if (!$zalongwa){

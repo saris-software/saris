@@ -1,8 +1,8 @@
 <?php
 	//select student
 	$qstudent = "SELECT * from student WHERE RegNo = '$key'";
-	$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo"); 
-	$row_result = mysql_fetch_array($dbstudent);
+	$dbstudent = mysqli_query($zalongwa, $qstudent) or die("Mwanafunzi huyu hana matokeo");
+	$row_result = mysqli_fetch_array($dbstudent);
 	$name = $row_result['Name'];
 	$regno = $row_result['RegNo'];
 	$degree = $row_result['ProgrammeofStudy'];
@@ -10,8 +10,8 @@
 	$deg =$degree;
 	//get degree name
 	$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-	$dbdegree = mysql_query($qdegree);
-	$row_degree = mysql_fetch_array($dbdegree);
+	$dbdegree = mysqli_query($zalongwa, $qdegree);
+	$row_degree = mysqli_fetch_array($dbdegree);
 	$programme = $row_degree['Title'];
 	
 	echo  "$name - $regno <br> $programme";	
@@ -20,15 +20,15 @@
 	$gpa_tracker = array();
 	//query academeic year
 	$qayear = "SELECT DISTINCT AYear FROM examresult WHERE RegNo = '$key' ORDER BY AYear ASC";
-	$dbayear = mysql_query($qayear);
+	$dbayear = mysqli_query($zalongwa, $qayear);
 	
 	//get current year
-	$get_current_year = mysql_query("SELECT AYear FROM academicyear WHERE Status=1 ORDER BY AYear DESC LIMIT 1");
-	list($academicYEAR) = mysql_fetch_array($get_current_year);
+	$get_current_year = mysqli_query($zalongwa, "SELECT AYear FROM academicyear WHERE Status=1 ORDER BY AYear DESC LIMIT 1");
+	list($academicYEAR) = mysqli_fetch_array($get_current_year);
 	
 	echo '<table width="100%" height="100%" border="1" cellpadding="3" cellspacing="0" id="table">';
 	//query exam results sorted per years
-	while($rowayear = mysql_fetch_object($dbayear)){
+	while($rowayear = mysqli_fetch_object($dbayear)){
 
 		$currentyear = $rowayear->AYear;
 		
@@ -47,10 +47,10 @@ EOD;
 		
 		//query semester
 		$qsemester = "SELECT DISTINCT Semester FROM examresult WHERE RegNo = '$key' AND AYear = '$currentyear' ORDER BY Semester ASC";
-		$dbsemester = mysql_query($qsemester);
+		$dbsemester = mysqli_query($zalongwa, $qsemester);
 
 		//query exam results sorted per semester
-		while($rowsemester = mysql_fetch_object($dbsemester)){
+		while($rowsemester = mysqli_fetch_object($dbsemester)){
 			
 			$currentsemester = $rowsemester->Semester;
 			
@@ -58,10 +58,10 @@ EOD;
 			//get user module
 			if($module == 3){
 				//check if the student has not cleared the fees
-				$chekdue = mysql_query("SELECT * FROM studentremark WHERE RegNo='$key' AND Semester='$currentsemester' 
+				$chekdue = mysqli_query("SELECT * FROM studentremark WHERE RegNo='$key' AND Semester='$currentsemester' 
 								AND AYear='$currentyear' AND Remark<>''");
-				$getdue = mysql_num_rows($chekdue);
-				$row=mysql_fetch_array($chekdue);
+				$getdue = mysqli_num_rows($chekdue);
+				$row=mysqli_fetch_array($chekdue);
 				
 				/**
 				 * capture remark value from studentremark table 
@@ -71,8 +71,8 @@ EOD;
 				 * */
 				$remarkvalue=$row['Remark'];
 				$remarksql="SELECT Description FROM examremark where Remark='$remarkvalue'";
-				$remarkresult=mysql_query($remarksql);
-				$row2=mysql_fetch_array($remarkresult);
+				$remarkresult=mysqli_query($zalongwa, $remarksql);
+				$row2=mysqli_fetch_array($remarkresult);
 				$remarkDescription=$row2['Description'];
 				
 				$qcourse="SELECT DISTINCT course.CourseName, course.Units, course.StudyLevel, 
@@ -113,23 +113,23 @@ if($getdue != '0' && !empty($remarkDescription)){
 				
 			else{
 					
-				$dbcourse = mysql_query($qcourse);
-				$total_rows = mysql_num_rows($dbcourse);
+				$dbcourse = mysqli_query($zalongwa, $qcourse);
+				$total_rows = mysqli_num_rows($dbcourse);
 				
 				if($total_rows>0){
 					//print name and degree
 					//select student
 					$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$key'";
-					$dbstudent = mysql_query($qstudent); 
-					$row_result = mysql_fetch_array($dbstudent);
+					$dbstudent = mysqli_query($zalongwa, $qstudent);
+					$row_result = mysqli_fetch_array($dbstudent);
 					$name = $row_result['Name'];
 					$regno = $row_result['RegNo'];
 					$degree = $row_result['ProgrammeofStudy'];
 					
 					//get degree name
 					$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-					$dbdegree = mysql_query($qdegree);
-					$row_degree = mysql_fetch_array($dbdegree);
+					$dbdegree = mysqli_query($zalongwa, $qdegree);
+					$row_degree = mysqli_fetch_array($dbdegree);
 					$programme = $row_degree['Title'];
 									
 					//initialise
@@ -140,7 +140,7 @@ if($getdue != '0' && !empty($remarkDescription)){
 					$gpa=0;
 					$sn = 1;
 					
-					while($row_course = mysql_fetch_array($dbcourse)){
+					while($row_course = mysqli_fetch_array($dbcourse)){
 						$course= $row_course['CourseCode'];
 						$unit= $row_course['Units'];
 						$semester= $row_course['Semester'];
@@ -191,8 +191,8 @@ if($getdue != '0' && !empty($remarkDescription)){
 						 </tr>";
 		 
 						  
-					$query = mysql_query("SELECT ProgrammeCode, Title, Faculty, Ntalevel FROM programme WHERE ProgrammeCode='$deg'");
-					$chas = mysql_fetch_array($query);
+					$query = mysqli_query($zalongwa, "SELECT ProgrammeCode, Title, Faculty, Ntalevel FROM programme WHERE ProgrammeCode='$deg'");
+					$chas = mysqli_fetch_array($query);
 					$class = $chas['Ntalevel'];
 					$remark = '';
 						
@@ -289,4 +289,5 @@ if($getdue != '0' && !empty($remarkDescription)){
 		} //ends while rowayear	
 	
 	echo '</table>';
-	mysql_close($zalongwa);
+	mysqli_close($zalongwa);
+?>

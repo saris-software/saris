@@ -37,12 +37,12 @@ move_uploaded_file($_FILES['userfile']['tmp_name'], "../download/$filename");
 	If (!$url) print "Title of the File is Requires \n";
 	else{
 	$query = "insert into tbllecturenotes (coursecode, notes, received, filename) Values ('$CourseCode', '$url', now(), '$filename')";
-	$result = mysql_query($query) or die("Query failed, Kwanini?");
+	$result = mysqli_query($zalongwa,$query) or die("Query failed, Kwanini?");
 
 	echo '<meta http-equiv = "refresh" content ="0; 
 	url = lecturerlecturenotes.php?CourseCode='.$CourseCode.'">';
 	
 /* closing connection	*/
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 }
 ?> 

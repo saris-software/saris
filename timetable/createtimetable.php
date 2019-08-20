@@ -29,18 +29,18 @@ padding:5px 0px 0px 0px;
 }
 </style>
 <?php
-mysql_select_db($zalongwa_database,$zalongwa);
+mysqli_select_db($zalongwa_database);
 //select all academic year
 $sql_ayear= "SELECT * FROM academicyear ORDER BY AYear DESC";
-$result_ayear=mysql_query($sql_ayear);
+$result_ayear=mysqli_query($zalongwa, $sql_ayear);
 
 // select all timetable type/category
 $sql_timetablecategory= "SELECT * FROM timetableCategory";
-$result_timetablecategory=mysql_query($sql_timetablecategory);
+$result_timetablecategory=mysqli_query($zalongwa, $sql_timetablecategory);
 
 //select all programme
 $sql_programme= "SELECT * FROM programme";
-$result_programme=mysql_query($sql_programme);
+$result_programme=mysqli_query($zalongwa, $sql_programme);
 
 
 
@@ -64,7 +64,7 @@ if(!isset($_GET['create'])){
 <td class="resViewtd">
 <select name="ayear">
 <?php 
-while($row = mysql_fetch_array($result_ayear)){
+while($row = mysqli_fetch_array($result_ayear)){
 	echo '<option value="'.$row['AYear'].'">'.$row['AYear'].'</option>';
 }
 ?>
@@ -76,7 +76,7 @@ while($row = mysql_fetch_array($result_ayear)){
 <td class="resViewtd">
 <select name="programme">
 <?php 
-while($row = mysql_fetch_array($result_programme)){
+while($row = mysqli_fetch_array($result_programme)){
 	echo '<option value="'.$row['ProgrammeCode'].'">'.$row['ProgrammeName'].'</option>';
 }
 ?>
@@ -88,7 +88,7 @@ while($row = mysql_fetch_array($result_programme)){
 <td class="resViewtd">
 <select name="tcategory">
 <?php 
-while($row = mysql_fetch_array($result_timetablecategory)){
+while($row = mysqli_fetch_array($result_timetablecategory)){
 	echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 }
 ?>
@@ -128,36 +128,36 @@ while($row = mysql_fetch_array($result_timetablecategory)){
 	}
 	
 	$sql_course = "SELECT c.CourseCode,t.Capacity FROM courseprogramme as c, course as t WHERE c.CourseCode =t.CourseCode AND c.AYear='$ayear' AND c.ProgrammeID='$programme' ".$type;
-	$course_result = mysql_query($sql_course);
+	$course_result = mysqli_query($zalongwa, $sql_course);
 	
 	$dd = "SELECT * FROM programme WHERE ProgrammeCode='$programme'";
-	$grd = mysql_query($dd);
-	$pgdata = mysql_fetch_array($grd);
+	$grd = mysqli_query($zalongwa, $dd);
+	$pgdata = mysqli_fetch_array($grd);
 	
 	// select all venue
 	
 	$sql_venue = "SELECT * FROM venue";
-	$venue_result = mysql_query($sql_venue);
+	$venue_result = mysqli_query($zalongwa, $sql_venue);
 	
 	// select all days
 $sql_days= "SELECT * FROM days";
-$days_result=mysql_query($sql_days);
+$days_result=mysqli_query($zalongwa, $sql_days);
 	
 // select all lecturer
 $query_lecturer = "SELECT UserName, FullName, Position FROM security WHERE Position = 'Lecturer' ORDER BY FullName";
-$lecturer_result=mysql_query($query_lecturer);
+$lecturer_result=mysqli_query($zalongwa, $query_lecturer);
 
 //select teaching type
 $sql_teaching ="SELECT * FROM teachingtype";
-$teaching_result = mysql_query($sql_teaching);
+$teaching_result = mysqli_query($zalongwa, $sql_teaching);
 
 
 //chek if action is now edit
 if(isset($_GET['edit'])){
 	$edit_id =$_GET['edit'];
 	$sql_edit="SELECT * FROM timetable WHERE id='$edit_id'";
-	$result_edit = mysql_query($sql_edit);
-	$edit_data=mysql_fetch_array($result_edit);
+	$result_edit = mysqli_query($zalongwa, $sql_edit);
+	$edit_data=mysqli_fetch_array($result_edit);
 }
 
 ?>
@@ -177,7 +177,7 @@ if(isset($_GET['edit'])){
 <table>
 <?php 
 $l=0;
-while ($row = mysql_fetch_array($course_result)) { 
+while ($row = mysqli_fetch_array($course_result)) {
 $div_id =str_replace(' ','_',$row['CourseCode']);
 	if($l%2 == 0){
 
@@ -230,7 +230,7 @@ $div_id =str_replace(' ','_',$row['CourseCode']);
 <td><select name="teaching" id="teaching">
 <option value="">Select teaching type</option>
 <?php 
-while ($row = mysql_fetch_array($teaching_result)) { 
+while ($row = mysqli_fetch_array($teaching_result)) {
   echo '<option '.( isset($_GET['edit']) ? ($row['id'] == $edit_data['teachingtype'] ? 'selected="selected"':''):'').' value="'.$row['id'].'">'.$row['name'].'</option>';
 	 } ?>
 </select></td>
@@ -240,7 +240,7 @@ while ($row = mysql_fetch_array($teaching_result)) {
 <td><select name="day" id="day">
 <option value="">Select Day</option>
 <?php 
-while ($row = mysql_fetch_array($days_result)) { 
+while ($row = mysqli_fetch_array($days_result)) {
 ?>
 <option <?php echo (isset($_GET['edit']) ? ($edit_data['day'] == $row['id'] ? 'selected="selected"':''):''); ?> value="<?php echo $row['id'];?>"><?php echo $row['name'];?></option>
 <?php } ?>
@@ -280,7 +280,7 @@ echo '<option selected="selected" value="'.$edit_data['end'].'">'.$edit_data['en
 <td><select name="lecturer" id="lecturer">
 <option value="">Select Lecturer Name</option>
 <?php 
-while ($row = mysql_fetch_array($lecturer_result)) { 
+while ($row = mysqli_fetch_array($lecturer_result)) {
 ?>
 <option <?php echo (isset($_GET['edit']) ? ($row['UserName'] == $edit_data['lecturer'] ? 'selected="selected"':'') : '');?> value="<?php echo $row['UserName'];?>"><?php echo $row['FullName'];?></option>
 <?php } ?>
@@ -310,7 +310,7 @@ while ($row = mysql_fetch_array($lecturer_result)) {
 <?php 
 $i=0;
 $m=0;
-while ($row = mysql_fetch_array($venue_result)) { 
+while ($row = mysqli_fetch_array($venue_result)) {
 $div_id =str_replace(' ','_',$row['VenueCode']);
 	if($i%2 == 0){
 

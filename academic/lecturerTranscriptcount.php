@@ -17,7 +17,7 @@ $today = date("Y-m-d");
 if (isset($_POST['PreView']) && ($_POST['PreView'] == "PreView")) {
 	#get post variables
 	$rawkey = addslashes(trim($_POST['datevalue']));
-	$key = ereg_replace("[[:space:]]+", "",$rawkey);
+	$key = preg_replace("[[:space:]]+", "",$rawkey);
 	$sn=1;
 	?>
   <table border="1" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
@@ -35,25 +35,25 @@ if (isset($_POST['PreView']) && ($_POST['PreView'] == "PreView")) {
 	<?php
 	#get transcript list
 	$qcand = "SELECT DISTINCT RegNo FROM transcriptcount WHERE received >='$key%' ORDER BY RegNo";
-	$dbcand = mysql_query($qcand);
-	while($result = mysql_fetch_array($dbcand)) {
+	$dbcand = mysqli_query($zalongwa,$qcand);
+	while($result = mysqli_fetch_array($dbcand)) {
 		$candregno=$result['RegNo'];
 		#find printdate
 		$qpdate = "SELECT received FROM transcriptcount WHERE RegNo = '$candregno' ORDER BY received DESC LIMIT 1";
-		$dbpdate = mysql_query($qpdate) or  die("something is wrong");
-		$result_pdate = mysql_fetch_array($dbpdate);
+		$dbpdate = mysqli_query($zalongwa,$qpdate) or  die("something is wrong");
+		$result_pdate = mysqli_fetch_array($dbpdate);
 		$printdate=$result_pdate['received'];
 		#query name and date printed
 		$qcandname = "SELECT Name, sex, ProgrammeofStudy from student WHERE RegNo='$candregno'";
-		$dbcandname = mysql_query($qcandname);
-		$row_candname = mysql_fetch_assoc($dbcandname);
+		$dbcandname = mysqli_query($zalongwa,$qcandname);
+		$row_candname = mysqli_fetch_assoc($dbcandname);
 		$candname = $row_candname['Name'];
 		$candsex = $row_candname['sex'];
 		$degree = $row_candname['ProgrammeofStudy'];
 		//get degree name
 		$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-		$dbdegree = mysql_query($qdegree);
-		$row_degree = mysql_fetch_array($dbdegree);
+		$dbdegree = mysqli_query($zalongwa,$qdegree);
+		$row_degree = mysqli_fetch_array($dbdegree);
 		$programme = $row_degree['Title'];
 		#print results
 		?>
@@ -79,7 +79,7 @@ if (isset($_POST['PreView']) && ($_POST['PreView'] == "PreView")) {
   <tr>
     <td nowrap><strong>From Date :</strong></td>
 	<!-- A Separate Layer for the Calendar -->
-	<script language="JavaScript" src="datepicker/Calendar1-901.js" type="text/javascript"></script>    
+	<script lang="JavaScript" src="datepicker/Calendar1-901.js" type="text/javascript"></script>
 	<td><input name="datevalue" type="text" id="datevalue" value=<?php echo $today; ?> maxlength="20"></td>
 	<td><input type="button" class="button" name="dtDate_button" value="Calendar" onClick="show_calendar('save.datevalue', '','','YYYY-MM-DD', 'POPUP','AllowWeekends=Yes;Nav=No;SmartNav=Yes;PopupX=300;PopupY=300;')"></td>
   </tr>

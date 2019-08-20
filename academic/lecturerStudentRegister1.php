@@ -13,21 +13,21 @@ include('lecturerMenu.php');
 
 	#populate academic year Combo Box
 	$query_paytype = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-	$paytype = mysql_query($query_paytype, $zalongwa) or die(mysql_error());
-	$row_paytype = mysql_fetch_assoc($paytype);
-	$totalRows_paytype = mysql_num_rows($paytype);
+	$paytype = mysqli_query($zalongwa,$query_paytype) or die(mysqli_error($zalongwa));
+	$row_paytype = mysqli_fetch_assoc($paytype);
+	$totalRows_paytype = mysqli_num_rows($paytype);
 	
 	#populate semester Box
 	$query_semester = "SELECT Description FROM terms ORDER BY Semester ASC";
-	$semester = mysql_query($query_semester, $zalongwa) or die(mysql_error());
-	$row_semester = mysql_fetch_assoc($semester);
-	$totalRows_semester = mysql_num_rows($semester);
+	$semester = mysqli_query($zalongwa,$query_semester) or die(mysqli_error($zalongwa));
+	$row_semester = mysqli_fetch_assoc($semester);
+	$totalRows_semester = mysqli_num_rows($semester);
 	
 	#populate course list combo box
 	$query_course = "SELECT CourseCode, CourseName FROM course ORDER BY CourseCode ASC";
-	$course = mysql_query($query_course, $zalongwa) or die(mysql_error());
-	$row_course = mysql_fetch_assoc($course);
-	$totalRows_course = mysql_num_rows($course);
+	$course = mysqli_query($zalongwa,$query_course) or die(mysqli_error($zalongwa));
+	$row_course = mysqli_fetch_assoc($course);
+	$totalRows_course = mysqli_num_rows($course);
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;
@@ -182,8 +182,8 @@ $dbstatus = mysql_query($qstatus);
 
 //query current Year
 $qyear = "SELECT AYear from academicyear WHERE Status = 1";
-$dbyear = mysql_query($qyear);
-$row_year = mysql_fetch_assoc($dbyear);
+$dbyear = mysqli_query($zalongwa,$qyear);
+$row_year = mysqli_fetch_assoc($dbyear);
 $currentYear = $row_year['AYear'];
 if($privilege <> 2){
 	if($currentYear<>$ayear){
@@ -200,14 +200,14 @@ $qregistered = "
 			INNER JOIN course ON (examregister.CourseCode = course.CourseCode)
 		WHERE (examregister.AYear ='$ayear') AND examregister.CourseCode = '$course'
 		GROUP BY course.CourseCode";
-$dbregistered = mysql_query($qregistered);
-$row_registered = mysql_fetch_assoc($dbregistered);
+$dbregistered = mysqli_query($zalongwa,$qregistered);
+$row_registered = mysqli_fetch_assoc($dbregistered);
 $totalRegistered = $row_registered['Total'];
 
 //get course capacity
 $qcapacity = "SELECT Capacity from course where CourseCode = '$course'";
-$dbcapacity = mysql_query($qcapacity);
-$row_capacity = mysql_fetch_assoc($dbcapacity);
+$dbcapacity = mysqli_query($zalongwa,$qcapacity);
+$row_capacity = mysqli_fetch_assoc($dbcapacity);
 $capacity = $row_capacity['Capacity'];
 
  if($totalRegistered < $capacity + 1){
@@ -223,8 +223,8 @@ $capacity = $row_capacity['Capacity'];
 						   GetSQLValueString($_POST['core'], "text"),
 						   GetSQLValueString($_POST['checked'], "text"));
 	
-	  mysql_select_db($database_zalongwa, $zalongwa);
-	  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+	  mysqli_select_db($zalongwa,$database_zalongwa);
+	  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error($zalongwa));
 	  
 	  echo '<meta http-equiv = "refresh" content ="0; 
 							url = lecturerStudentRegister.php">';
@@ -241,9 +241,9 @@ $key=trim($_POST["candidate"]);
 $query_candidate = "SELECT student.Name, student.RegNo
 						  FROM student 
 						  WHERE (student.RegNo ='$key')";
-$candidate = mysql_query($query_candidate, $zalongwa) or die(mysql_error());
-$row_candidate = mysql_fetch_assoc($candidate);
-$totalRows_candidate = mysql_num_rows($candidate);
+$candidate = mysqli_query($zalongwa,$query_candidate) or die(mysqli_error($zalongwa));
+$row_candidate = mysqli_fetch_assoc($candidate);
+$totalRows_candidate = mysqli_num_rows($candidate);
 
 }
 //display the form if candidate is found
@@ -273,11 +273,11 @@ do {
 ?>
                     <option value="<?php echo $row_semester['Description']?>"><?php echo $row_semester['Description']?></option>
                     <?php
-} while ($row_semester = mysql_fetch_assoc($semester));
-  $rows = mysql_num_rows($semester);
+} while ($row_semester = mysqli_fetch_assoc($semester));
+  $rows = mysqli_num_rows($semester);
   if($rows > 0) {
-      mysql_data_seek($semester, 0);
-	  $row_semester = mysql_fetch_assoc($semester);
+      mysqli_data_seek($semester, 0);
+	  $row_semester = mysqli_fetch_assoc($semester);
   }
 ?>
                   </select>					</td>
@@ -292,11 +292,11 @@ do {
 ?>
                     <option value="<?php echo $row_course['CourseCode']?>"><?php echo $row_course['CourseCode']?></option>
                     <?php
-} while ($row_course = mysql_fetch_assoc($course));
-  $rows = mysql_num_rows($course);
+} while ($row_course = mysqli_fetch_assoc($course));
+  $rows = mysqli_num_rows($course);
   if($rows > 0) {
-      mysql_data_seek($course, 0);
-	  $row_course = mysql_fetch_assoc($course);
+      mysqli_data_seek($course, 0);
+	  $row_course = mysqli_fetch_assoc($course);
   }
 ?>
                   </select>				    </td>
@@ -310,11 +310,11 @@ do {
 ?>
                     <option value="<?php echo $row_paytype['AYear']?>"><?php echo $row_paytype['AYear']?></option>
                     <?php
-} while ($row_paytype = mysql_fetch_assoc($paytype));
-  $rows = mysql_num_rows($paytype);
+} while ($row_paytype = mysqli_fetch_assoc($paytype));
+  $rows = mysqli_num_rows($paytype);
   if($rows > 0) {
-      mysql_data_seek($paytype, 0);
-	  $row_paytype = mysql_fetch_assoc($paytype);
+      mysqli_data_seek($paytype, 0);
+	  $row_paytype = mysqli_fetch_assoc($paytype);
   }
 ?>
                   </select></td>

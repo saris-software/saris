@@ -10,14 +10,14 @@ include('lecturerMenu.php');
 ?>
 
 <?php
-mysql_select_db($zalongwa_database,$zalongwa);
+mysqli_select_db($zalongwa_database,$zalongwa);
 //select all academic year
 $sql_ayear= "SELECT * FROM academicyear ORDER BY AYear DESC";
-$result_ayear=mysql_query($sql_ayear);
+$result_ayear=mysqli_query($zalongwa, $sql_ayear);
 
 // select all timetable type/category
 $sql_timetablecategory= "SELECT * FROM timetableCategory";
-$result_timetablecategory=mysql_query($sql_timetablecategory);
+$result_timetablecategory=mysqli_query($zalongwa, $sql_timetablecategory);
 
 
 
@@ -45,7 +45,7 @@ display:none;
 <td class="resViewtd">
 <select name="ayear">
 <?php 
-while($row = mysql_fetch_array($result_ayear)){
+while($row = mysqli_fetch_array($result_ayear)){
 	echo '<option value="'.$row['AYear'].'">'.$row['AYear'].'</option>';
 }
 ?>
@@ -55,7 +55,7 @@ while($row = mysql_fetch_array($result_ayear)){
 <td class="resViewtd">
 <select name="tcategory">
 <?php 
-while($row = mysql_fetch_array($result_timetablecategory)){
+while($row = mysqli_fetch_array($result_timetablecategory)){
 	echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 }
 ?>
@@ -93,12 +93,12 @@ if($type == 1){
 
 // selet all venue
 $get_all ="SELECT * FROM venue";
-$venue_result = mysql_query($get_all);
-$venue_rows = mysql_num_rows($venue_result);
+$venue_result = mysqli_query($zalongwa, $get_all);
+$venue_rows = mysqli_num_rows($venue_result);
 
 //get all days
 $get_all_days ="SELECT * FROM days";
-$days_result = mysql_query($get_all_days);
+$days_result = mysqli_query($zalongwa, $get_all_days);
 
 
 if($venue_rows == 0){
@@ -113,23 +113,23 @@ $total = array();
 $time=array();
 $time_total =array();
 // loop in all venue
-while ($rw = mysql_fetch_array($venue_result)) {
+while ($rw = mysqli_fetch_array($venue_result)) {
  	$ven = $rw['VenueCode'];
 	$f=array();
          $get_all_days ="SELECT * FROM days";
-         $days_result = mysql_query($get_all_days);
+         $days_result = mysqli_query($zalongwa, $get_all_days);
 	
- while ($row = mysql_fetch_array($days_result)) {
+ while ($row = mysqli_fetch_array($days_result)) {
       $d=$row['id'];
  	$sql_count = "SELECT venue FROM timetable WHERE AYear ='$ayear' AND timetable_category='$type' AND venue='$ven' AND day='$d'";
- 	$count_result = mysql_query($sql_count);
- 	$ftc=mysql_num_rows($count_result);
+ 	$count_result = mysqli_query($zalongwa, $sql_count);
+ 	$ftc=mysqli_num_rows($count_result);
  	
  	//get all period data 
  	$get_all_period = "SELECT * FROM timetable WHERE AYear ='$ayear' AND timetable_category='$type' AND venue='$ven' AND day='$d'";
- 	$all_time = mysql_query($get_all_period);
+ 	$all_time = mysqli_query($zalongwa, $get_all_period);
  	$totat_time_in_day = 0;
- 	while ($rr = mysql_fetch_array($all_time)) {
+ 	while ($rr = mysqli_fetch_array($all_time)) {
  		$totat_time_in_day += $rr['end']-$rr['start'];
  	}
  	
@@ -197,9 +197,9 @@ echo '<h3 style="padding:0px; margin:0px; width:900px; color:black; font-size:15
 	<td>Venue Name</td>
 	<?php 
 	$sql = "SELECT * FROM days";
-	$re=mysql_query($sql);
+	$re=mysqli_query($zalongwa, $sql);
 	
-	while ($row = mysql_fetch_array($re)) {
+	while ($row = mysqli_fetch_array($re)) {
 		?>
 		<td align="center" colspan="2"><?php echo $row['name'];?></td>
 <?php	} ?>
@@ -213,9 +213,9 @@ echo '<h3 style="padding:0px; margin:0px; width:900px; color:black; font-size:15
 <td></td>
 <?php 
 	$sql = "SELECT * FROM days";
-	$re=mysql_query($sql);
+	$re=mysqli_query($zalongwa, $sql);
 	
-	while ($row = mysql_fetch_array($re)) {
+	while ($row = mysqli_fetch_array($re)) {
 		?>
 		<td align="center"># Period</td>
 		<td align="center"># Hours</td>
@@ -233,13 +233,13 @@ foreach ($total as $key => $value) {
 	<td align="center"><?php echo $key;?></td>
 	<td><?php
    $sql = "SELECT * FROM venue WHERE VenueCode='$key'";
-	$re=mysql_query($sql);
-	$v_name = mysql_fetch_array($re);
+	$re=mysqli_query($zalongwa, $sql);
+	$v_name = mysqli_fetch_array($re);
 	echo $v_name['VenueName'];?></td>
 	<?php 
 	$sql = "SELECT * FROM days";
-	$re=mysql_query($sql);
-	while ($row = mysql_fetch_array($re)) {
+	$re=mysqli_query($zalongwa, $sql);
+	while ($row = mysqli_fetch_array($re)) {
 		$day = $row['id'];
 		?>
 		<td align="center"><?php echo $main_data[$key][$day];?></td>

@@ -3,7 +3,7 @@
 if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	#get post variables
 	$rawkey = addslashes(trim($_POST['key']));
-	$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+	$key = preg_replace("[[:space:]]+", " ",$rawkey);
 	#get content table raw height
 	$rh= addslashes(trim($_POST['sex']));
 	$temp= addslashes(trim($_POST['temp']));
@@ -34,17 +34,17 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	}
 	#check if is a reprint
 	$qtranscounter = "SELECT RegNo, received FROM transcriptcount where RegNo='$key'";
-	$dbtranscounter = mysql_query($qtranscounter);
-	@$transcounter = mysql_num_rows($dbtranscounter);
+	$dbtranscounter = mysqli_query($zalongwa,$qtranscounter);
+	@$transcounter = mysqli_num_rows($dbtranscounter);
 	
 	if ($transcounter>0){
-		$row_transcounter = mysql_fetch_array($dbtranscounter);
+		$row_transcounter = mysqli_fetch_array($dbtranscounter);
 		$lastprinted = $row_result['received'];
 	}
 	#Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+	$dborg = mysqli_query($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
  	$org = $row_org['Name'];
 	$post = $row_org['Address'];
 	$phone = $row_org['tel'];
@@ -60,8 +60,8 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	$tpg =$pg;
 
 	$qstudent = "SELECT * from student WHERE regno = '$key'";
-	$dbstudent = mysql_query($qstudent); 
-	$row_result = mysql_fetch_array($dbstudent);
+	$dbstudent = mysqli_query($zalongwa,$qstudent);
+	$row_result = mysqli_fetch_array($dbstudent);
 		$sname = $row_result['Name'];
 		$regno = $row_result['RegNo'];
 		$degree = $row_result['ProgrammeofStudy'];
@@ -79,8 +79,8 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 		$checkit = strlen($photo);
 		#get campus name
 		$qcampus = "SELECT Campus FROM campus where CampusID='$campusid'";
-		$dbcampus = mysql_query($qcampus);
-		$row_campus= mysql_fetch_assoc($dbcampus);
+		$dbcampus = mysqli_query($zalongwa,$qcampus);
+		$row_campus= mysqli_fetch_assoc($dbcampus);
 		$campus = $row_campus['Campus'];
 		
 		if ($checkit > 8){
@@ -90,16 +90,16 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 		}
 		#get degree name
 		$qdegree = "Select Title, Faculty FROM programme WHERE ProgrammeCode = '$degree'";
-		$dbdegree = mysql_query($qdegree);
-		$row_degree = mysql_fetch_array($dbdegree);
+		$dbdegree = mysqli_query($zalongwa,$qdegree);
+		$row_degree = mysqli_fetch_array($dbdegree);
 		$programme = $row_degree['Title'];
 		$faculty = $row_degree['Faculty'];
 		
 		#get subject combination
 		$qsubjectcomb = "SELECT SubjectName FROM subjectcombination WHERE SubjectID='$subjectid'";
-		$dbsubjectcom = mysql_query($qsubjectcomb);
-		$row_subjectcom = mysql_fetch_assoc($dbsubjectcom);
-		$counter = mysql_num_rows($dbsubjectcom );
+		$dbsubjectcom = mysqli_query($zalongwa,$qsubjectcomb);
+		$row_subjectcom = mysqli_fetch_assoc($dbsubjectcom);
+		$counter = mysqli_num_rows($dbsubjectcom );
 		if ($counter>0){
 		$subject = $row_subjectcom['SubjectName'];
 		}
@@ -436,7 +436,7 @@ if (isset($_POST['search']) && ($_POST['search'] == "PreView")) {
 
 #get post variables
 $rawkey = $_POST['key'];
-$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+$key = preg_replace("[[:space:]]+", " ",$rawkey);
 include 'includes/showexamresults.php';
 
 }else{

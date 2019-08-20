@@ -14,8 +14,8 @@ $fontstyle='Arial';
 $font=10.5;
 $prog=$_POST['degree'];
 $qprog= "SELECT ProgrammeCode, Title, Faculty FROM programme WHERE ProgrammeCode='$prog'";
-$dbprog = mysql_query($qprog);
-$row_prog = mysql_fetch_array($dbprog);
+$dbprog = mysqli_query($zalongwa,$qprog);
+$row_prog = mysqli_fetch_array($dbprog);
 $programme = $row_prog['Title'];
   $keys=array();
 
@@ -160,8 +160,8 @@ $objPHPExcel->getProperties()->setCreator("Zalongwa")
 	 $sql = "SELECT * FROM timetable WHERE AYear='$ayear' AND Programme='$programme' AND timetable_category='$type' ORDER BY day,start ASC";
 	                   // generate timetable title
               $sql_title = "SELECT * FROM programme WHERE ProgrammeCode='$programme'";
-	  $title_result = mysql_query($sql_title);
-	  $fetch_title = mysql_fetch_array($title_result);
+	  $title_result = mysqli_query($zalongwa,$sql_title);
+	  $fetch_title = mysqli_fetch_array($title_result);
 	    $title_timetable = $fetch_title['Title'].' - [ '.$fetch_title['ProgrammeName'].' ] ';
 	 
              if($type == 1){
@@ -180,15 +180,15 @@ $objPHPExcel->getProperties()->setCreator("Zalongwa")
 	                   }else if($fby == 2){
 		
 		$sql_faculty = "SELECT * FROM faculty WHERE FacultyID='$programme'";
-		$result_faculty = mysql_query($sql_faculty);
-		$data=mysql_fetch_array($result_faculty);
+		$result_faculty = mysqli_query($zalongwa,$sql_faculty);
+		$data=mysqli_fetch_array($result_faculty);
 		$fc_ID = $programme;
 		$fc_name = $data['FacultyName'];
 		  $sql_progr = "SELECT DISTINCT ProgrammeCode FROM programme WHERE Faculty='$fc_ID' OR Faculty='$fc_name'";
 		
-		$facult_prog = mysql_query($sql_progr);
+		$facult_prog = mysqli_query($zalongwa,$sql_progr);
 		//$loop_prog_value='';
-		while ($row = mysql_fetch_array($facult_prog)) {
+		while ($row = mysqli_fetch_array($facult_prog)) {
 			$pg = $row['ProgrammeCode'];
 			$loop_prog_value.="  Programme='$pg' OR ";
 		}
@@ -223,8 +223,8 @@ $objPHPExcel->getProperties()->setCreator("Zalongwa")
 	
 	// generate timetable title
       $sql_title = "SELECT * FROM security WHERE UserName='$programme'";
-	  $title_result = mysql_query($sql_title);
-	  $fetch_title = mysql_fetch_array($title_result);
+	  $title_result = mysqli_query($zalongwa,$sql_title);
+	  $fetch_title = mysqli_fetch_array($title_result);
 	    $title_timetable = $fetch_title['FullName'];
 	 
              if($type == 1){
@@ -243,20 +243,20 @@ $objPHPExcel->getProperties()->setCreator("Zalongwa")
 	 
 	 
 	}
-	 $result = mysql_query($sql);
-	 $num = mysql_num_rows($result);
+	 $result = mysqli_query($zalongwa,$sql);
+	 $num = mysqli_num_rows($result);
 	$timetable=array();
 	
-	while ($row = mysql_fetch_array($result)) {
+	while ($row = mysqli_fetch_array($result)) {
 			$usern = $row['lecturer'];
 			$sql_lect = "SELECT * FROM security WHERE UserName='$usern'";
-			$result_lect = mysql_query($sql_lect);
-			$lecturer_name = mysql_fetch_array($result_lect);
+			$result_lect = mysqli_query($zalongwa,$sql_lect);
+			$lecturer_name = mysqli_fetch_array($result_lect);
 			$keys[$row['CourseCode']]=$row['CourseCode'];
 			$teaching = $row['teachingtype'];
 			$sql_teach = "SELECT * FROM teachingtype WHERE id='$teaching'";
-			$result_teach = mysql_query($sql_teach);
-			$teach_type = mysql_fetch_array($result_teach);
+			$result_teach = mysqli_query($zalongwa,$sql_teach);
+			$teach_type = mysqli_fetch_array($result_teach);
 			
 			
 			$timetable[$row['day']][$row['start']][]=array(
@@ -275,8 +275,8 @@ $objPHPExcel->getProperties()->setCreator("Zalongwa")
 	         //          exit;
 	 #Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+	$dborg = mysqli_query($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
 	$org = $row_org['Name'];        
 		
 		$objPHPExcel->getActiveSheet()->mergeCells('C2:P2');
@@ -320,14 +320,14 @@ $rows++;
 	//$objPHPExcel->getActiveSheet()->freezePane($col.$rows);
 			
 $sql_day = "SELECT * FROM days ORDER BY id ASC";
-$get = mysql_query($sql_day); 
+$get = mysqli_query($zalongwa,$sql_day);
 $row1=$rows;
 $row2=$rows;
 $row3 =$rows;
 $start = $rows;
 $tracker=array();
 $cell_data=array();
-while ($row = mysql_fetch_array($get)) {
+while ($row = mysqli_fetch_array($get)) {
 $col="C";
 $kk = "B";
 $objPHPExcel->getActiveSheet()->setCellValue($col.$rows,$row['name']);
@@ -472,8 +472,8 @@ foreach($keys as $k=>$v){
 $col="C";
 
 $sele = "SELECT * FROM course WHERE CourseCode='$k'";
-$my=mysql_query($sele);
-$fetc = mysql_fetch_array($my);
+$my=mysqli_query($zalongwa,$sele);
+$fetc = mysqli_fetch_array($my);
 $objPHPExcel->getActiveSheet()->setCellValue($col.$rows,$k);
     $objPHPExcel->getActiveSheet()->getStyle($col.$rows)->applyFromArray($set_borders);
 $col++;
