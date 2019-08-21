@@ -279,7 +279,7 @@ class gettext_reader {
       } else {
         $header = $this->get_translation_string(0);
       }
-      if (eregi("plural-forms: (.*)\n", $header, $regs))
+      if (pregi("plural-forms: (.*)\n", $header, $regs))
         $expr = $regs[1];
       else
         $expr = "nplurals=2; plural=n == 1 ? 0 : 1;";
@@ -354,4 +354,3 @@ class gettext_reader {
   }
 
 }
-?>
