@@ -14,10 +14,10 @@
 	include('administratorheader.php');
 	
 #populate academic year combo box
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AYear = mysql_query($query_AYear, $zalongwa) or die(mysql_error());
-$row_AYear = mysql_fetch_assoc($AYear);
+$AYear = mysqli_query($zalongwa,$query_AYear) or die(mysqli_error($zalongwa));
+$row_AYear = mysqli_fetch_assoc($AYear);
 ?> 
 
 <?php 
@@ -57,11 +57,11 @@ while ($row_regno = mysql_fetch_assoc($dbregno)){
 						?>
 						<option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
 						<?php
-							} while ($row_AYear = mysql_fetch_assoc($AYear));
-									$rows = mysql_num_rows($AYear);
+							} while ($row_AYear = mysqli_fetch_assoc($AYear));
+									$rows = mysqli_num_rows($AYear);
 									if($rows > 0) {
-						mysql_data_seek($AYear, 0);
-						$row_AYear = mysql_fetch_assoc($AYear);
+						mysqli_data_seek($AYear, 0);
+						$row_AYear = mysqli_fetch_assoc($AYear);
   					}
                ?>
 			

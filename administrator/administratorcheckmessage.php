@@ -27,7 +27,7 @@ if (isset($_GET['totalRows_studentsuggestion'])) {
   $totalRows_studentsuggestion = $_GET['totalRows_studentsuggestion'];
 } else {
 
-  $all_studentsuggestion = mysqli_query($query_studentsuggestion);
+  $all_studentsuggestion = mysqli_query($zalongwa,$query_studentsuggestion);
   $totalRows_studentsuggestion = mysqli_num_rows($all_studentsuggestion);
 }
 $totalPages_studentsuggestion = ceil($totalRows_studentsuggestion/$maxRows_studentsuggestion)-1;
