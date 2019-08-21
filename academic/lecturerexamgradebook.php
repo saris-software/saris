@@ -36,21 +36,21 @@ if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
 }
 $startRow_ExamOfficerGradeBook = $pageNum_ExamOfficerGradeBook * $maxRows_ExamOfficerGradeBook;
   
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 if ($auth_level =='editor') {
 $query_ExamOfficerGradeBook = "SELECT DISTINCT course.CourseCode, examresult.AYear, course.Department, examresult.SemesterID 
 FROM examresult INNER JOIN course ON (examresult.CourseCode = course.CourseCode)
 WHERE (examresult.AYear ='$ayear') AND course.Department = '$dept' ORDER BY AYear DESC";
 }
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysql_query($query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysql_error());
-$row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook);
+$ExamOfficerGradeBook = mysqli_query($zalongwa, $query_limit_ExamOfficerGradeBook) or die(mysqli_error($zalongwa));
+$row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {
   $totalRows_ExamOfficerGradeBook = $_GET['totalRows_ExamOfficerGradeBook'];
 } else {
-  $all_ExamOfficerGradeBook = mysql_query($query_ExamOfficerGradeBook);
-  $totalRows_ExamOfficerGradeBook = mysql_num_rows($all_ExamOfficerGradeBook);
+  $all_ExamOfficerGradeBook = mysqli_query($zalongwa, $query_ExamOfficerGradeBook);
+  $totalRows_ExamOfficerGradeBook = mysqli_num_rows($all_ExamOfficerGradeBook);
 }
 $totalPages_ExamOfficerGradeBook = ceil($totalRows_ExamOfficerGradeBook/$maxRows_ExamOfficerGradeBook)-1;
 
@@ -76,7 +76,7 @@ $ip  =  $_SERVER["REMOTE_ADDR"];
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
 //$sqldel = "delete from stats where (YEAR(CURRENT_DATE)-YEAR(received))- (RIGHT(CURRENT_DATE,5)<RIGHT(received,5))>1";
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 ?> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang=en-US>
@@ -281,7 +281,7 @@ a:active {
                 <?php } ?>
 				<td><?php echo "<a href=\"lectureraddexamresults.php?course=$course&ayear=$ayear&sem=$sem\">Edit</a>";?></td>
               </tr>
-              <?php } while ($row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook)); ?>
+              <?php } while ($row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook)); ?>
             </table>
             <p>&nbsp;<a href="<?php printf("%s?pageNum_ExamOfficerGradeBook=%d%s", $currentPage, max(0, $pageNum_ExamOfficerGradeBook - 1), $queryString_ExamOfficerGradeBook); ?>">Previous</a> <span class="style64">.....</span>Records: <?php echo min($startRow_ExamOfficerGradeBook + $maxRows_ExamOfficerGradeBook, $totalRows_ExamOfficerGradeBook) ?>/<?php echo $totalRows_ExamOfficerGradeBook ?> <span class="style64">..... </span><a href="<?php printf("%s?pageNum_ExamOfficerGradeBook=%d%s", $currentPage, min($totalPages_ExamOfficerGradeBook, $pageNum_ExamOfficerGradeBook + 1), $queryString_ExamOfficerGradeBook); ?>">Next</a> </p>
         </div></td>
@@ -318,5 +318,5 @@ a:active {
 
 </html>
 <?php
-mysql_free_result($ExamOfficerGradeBook);
+mysqli_free_result($ExamOfficerGradeBook);
 ?>

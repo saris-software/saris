@@ -356,7 +356,7 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 						
 						//auto generate table name and create the table
 						$tabl = "examnumber_".$initial;
-						$table = mysqli_query("CREATE TABLE IF NOT EXISTS $tabl 
+						$table = mysqli_query($zalongwa, "CREATE TABLE IF NOT EXISTS $tabl 
 											(RegNo varchar(50) PRIMARY KEY, ExamNo varchar(50) UNIQUE KEY, 
 											EntryYear varchar(9),AYear varchar(9), Semester varchar(11))");
 							

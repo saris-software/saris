@@ -20,7 +20,7 @@ require_once('../Connections/zalongwa.php');
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
 //$sqldel = "delete from stats where (YEAR(CURRENT_DATE)-YEAR(received))- (RIGHT(CURRENT_DATE,5)<RIGHT(received,5))>1";
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 
 ?> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -142,13 +142,13 @@ FROM examresult
    INNER JOIN course ON (examresult.CourseCode = course.CourseCode)
    INNER JOIN student ON (examresult.RegNo = student.RegNo)
 WHERE examresult.RegNo LIKE '%$key%' OR student.Name LIKE '%$key%'";
-$result = mysql_query($query_examresult) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-			$query = @mysql_query($query_examresult) or die("Cannot query the database.<br>" . mysql_error());
-			$row_result = mysql_fetch_array($result);
+$result = mysqli_query($zalongwa, $query_examresult) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
+			$query = @mysqli_query($zalongwa, $query_examresult) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];
 						
-			if (mysql_num_rows($query) > 0){
+			if (mysqli_num_rows($query) > 0){
 			
 					$totalunit=0;
 					$unittaken=0;
@@ -159,7 +159,7 @@ $result = mysql_query($query_examresult) or die("Mwanafunzi huyu hana matokeo". 
 			echo "<table border='1'>";
 			echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> ExamNo </td><td>Year </td><td> Course</td><td> Unit </td><td> Grade </td><td> Remarks</td><td> Status</td></tr>";
 			$i=1;
-				while($result = mysql_fetch_array($query)) {
+				while($result = mysqli_fetch_array($query)) {
 					
 					
 					$unit = $result['Units'];
@@ -248,5 +248,5 @@ $result = mysql_query($query_examresult) or die("Mwanafunzi huyu hana matokeo". 
 
 </html>
 <?php
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?>

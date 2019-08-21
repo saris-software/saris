@@ -21,18 +21,18 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
 
 $rawcode = $_POST['txtCode'];
-$programme = ereg_replace("[[:space:]]+", " ",$rawcode);
+$programme = preg_replace("[[:space:]]+", " ",$rawcode);
 $rawname = $_POST['txtTitle'];
-$code = ereg_replace("[[:space:]]+", " ",$rawname);
+$code = preg_replace("[[:space:]]+", " ",$rawname);
 #check if coursecode exist
 $sql ="SELECT CourseCode 			
 	  FROM course WHERE (CourseCode  = '$code')";
-$result = mysql_query($sql);
-$coursecodeFound = mysql_num_rows($result);
+$result = mysqli_query($zalongwa, $sql);
+$coursecodeFound = mysqli_num_rows($result);
 if ($coursecodeFound) {
 	#insert records	 
 	$insSQL = "INSERT INTO courseprogramme (ProgrammeID, CourseCode) VALUES ('$programme', '$code')";  				   
-	  $Result1 = mysql_query($insSQL) or die(mysql_error());
+	  $Result1 = mysqli_query($zalongwa, $insSQL) or die(mysqli_error($zalongwa));
 	}
  }
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -74,7 +74,7 @@ if (isset($_GET['pageNum_inst'])) {
 }
 $startRow_inst = $pageNum_inst * $maxRows_inst;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 if (isset($_GET['edit'])) {
   $rawkey=$_GET['edit'];
   $key = addslashes($rawkey);
@@ -84,19 +84,19 @@ $query_inst = "SELECT * FROM courseprogramme ORDER BY ProgrammeID ASC";
 }
 #get combination name
 $qcomb = "select ProgrammeName from programme where ProgrammeCode='$key'";
-$dbcomb = mysql_query($qcomb);
-$row_comb =mysql_fetch_assoc($dbcomb);
+$dbcomb = mysqli_query($zalongwa, $qcomb);
+$row_comb =mysqli_fetch_assoc($dbcomb, $zalongwa);
 $comb = $row_comb['ProgrammeName'];
 //$query_inst = "SELECT * FROM course ORDER BY CourseCode ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysql_query($query_limit_inst, $zalongwa) or die(mysql_error());
-$row_inst = mysql_fetch_assoc($inst);
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
+$row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
-  $all_inst = mysql_query($query_inst);
-  $totalRows_inst = mysql_num_rows($all_inst);
+  $all_inst = mysqli_query($zalongwa, $query_inst);
+  $totalRows_inst = mysqli_num_rows($all_inst);
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 ?>
@@ -122,13 +122,13 @@ if (@$new<>1){
 if (isset($_GET['edit'])){
 #get post variables
 $rawkey = addslashes($_GET['edit']);
-$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+$key = preg_replace("[[:space:]]+", " ",$rawkey);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_instEdit = "SELECT * FROM courseprogramme WHERE ProgrammeID ='$key'";
-$instEdit = mysql_query($query_instEdit, $zalongwa) or die(mysql_error());
-$row_instEdit = mysql_fetch_assoc($instEdit);
-$totalRows_instEdit = mysql_num_rows($instEdit);
+$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalongwa));
+$row_instEdit = mysqli_fetch_assoc($instEdit);
+$totalRows_instEdit = mysqli_num_rows($instEdit);
 
 $queryString_inst = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
@@ -194,7 +194,7 @@ $queryString_inst = sprintf("&totalRows_inst=%d%s", $totalRows_inst, $queryStrin
   <?php 
   $sn=$sn+1;
   
-  } while ($row_inst = mysql_fetch_assoc($inst)); ?>
+  } while ($row_inst = mysqli_fetch_assoc($inst)); ?>
 </table>
 <a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a><span class="style1">......<span class="style2"><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> </span>..........</span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
 <?php }
@@ -202,11 +202,11 @@ $queryString_inst = sprintf("&totalRows_inst=%d%s", $totalRows_inst, $queryStrin
 	# include the footer
 	include("../footer/footer.php");
 
-@mysql_free_result($inst);
+@mysqli_free_result($inst);
 
-@mysql_free_result($instEdit);
+@mysqli_free_result($instEdit);
 
-@mysql_free_result($faculty);
+@mysqli_free_result($faculty);
 
-@mysql_free_result($campus);
+@mysqli_free_result($campus);
 ?>

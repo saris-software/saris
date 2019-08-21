@@ -21,7 +21,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 $maxRows_ExamOfficerGradeBook = 10000;
 $pageNum_ExamOfficerGradeBook = 0;
 $query = "UPDATE examresult SET checked = 1 WHERE CourseCode ='$key' AND AYear = '$ayear'";
-$result = mysqli_query($zalongwa,$query) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa);
+$result = mysqli_query($zalongwa,$query) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 //mysqli_free_result($result);
 
 if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
@@ -55,13 +55,13 @@ examresult.Exam,        examresult.Total,        examresult.Grade,        examre
 	   INNER JOIN student ON (examresult.RegNo = student.RegNo) WHERE ((examresult.CourseCode ='$key') AND (examresult.SemesterID='$sem') AND (AYear = '$ayear'))";
 }
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysqli_query($zalongwa,$query_limit_ExamOfficerGradeBook) or die(mysqli_error());
+$ExamOfficerGradeBook = mysqli_query($zalongwa,$query_limit_ExamOfficerGradeBook) or die(mysqli_error($zalongwa));
 $row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {
   $totalRows_ExamOfficerGradeBook = $_GET['totalRows_ExamOfficerGradeBook'];
 } else {
-  $all_ExamOfficerGradeBook = mysqli_query($query_ExamOfficerGradeBook);
+  $all_ExamOfficerGradeBook = mysqli_query($zalongwa, $query_ExamOfficerGradeBook);
   $totalRows_ExamOfficerGradeBook = mysqli_num_rows($all_ExamOfficerGradeBook);
 }
 $totalPages_ExamOfficerGradeBook = ceil($totalRows_ExamOfficerGradeBook/$maxRows_ExamOfficerGradeBook)-1;

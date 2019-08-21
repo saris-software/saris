@@ -21,7 +21,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 $maxRows_ExamOfficerGradeBook = 10000;
 $pageNum_ExamOfficerGradeBook = 0;
 $query = "UPDATE examresult SET checked = 1 WHERE CourseCode ='$key' AND AYear = '$ayear'";
-$result = mysql_query($query) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa, $query) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 //mysql_free_result($result);
 
 if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
@@ -36,7 +36,7 @@ if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
 }
 $startRow_ExamOfficerGradeBook = $pageNum_ExamOfficerGradeBook * $maxRows_ExamOfficerGradeBook;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 if (isset($_GET['content'])) {
   $key=$_GET['content'];
 $query_ExamOfficerGradeBook = "SELECT student.Name,        course.CourseCode,        course.CourseName, course.Units,       
@@ -55,14 +55,14 @@ examresult.Exam,        examresult.Total,        examresult.Grade,        examre
 	   INNER JOIN student ON (examresult.RegNo = student.RegNo) WHERE ((examresult.CourseCode ='$key') AND (examresult.SemesterID='$sem') AND (AYear = '$ayear'))";
 }
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysql_query($query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysql_error());
-$row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook);
+$ExamOfficerGradeBook = mysqli_query($zalongwa, $query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysqli_error($zalongwa));
+$row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {
   $totalRows_ExamOfficerGradeBook = $_GET['totalRows_ExamOfficerGradeBook'];
 } else {
-  $all_ExamOfficerGradeBook = mysql_query($query_ExamOfficerGradeBook);
-  $totalRows_ExamOfficerGradeBook = mysql_num_rows($all_ExamOfficerGradeBook);
+  $all_ExamOfficerGradeBook = mysqli_query($zalongwa, $query_ExamOfficerGradeBook);
+  $totalRows_ExamOfficerGradeBook = mysqli_num_rows($all_ExamOfficerGradeBook);
 }
 $totalPages_ExamOfficerGradeBook = ceil($totalRows_ExamOfficerGradeBook/$maxRows_ExamOfficerGradeBook)-1;
 
@@ -148,7 +148,7 @@ $queryString_ExamOfficerGradeBook = sprintf("&totalRows_ExamOfficerGradeBook=%d%
 				echo $row_ExamOfficerGradeBook['Grade']; ?></td>
                 <td><?php echo $row_ExamOfficerGradeBook['Remarks']; ?></td>
               </tr>
-              <?php $i=$i+1;} while ($row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook)); 
+              <?php $i=$i+1;} while ($row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook));
 			  
 			  	  
 			  ?>
@@ -181,6 +181,6 @@ echo "SUMMARY (GRADE TOTAL)<br><br>";
       </tr>
     </table>
 <?php
-mysql_free_result($ExamOfficerGradeBook);
+mysqli_free_result($ExamOfficerGradeBook);
 include('../footer/footer.php');
 ?>

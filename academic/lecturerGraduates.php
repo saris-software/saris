@@ -451,7 +451,7 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 						  WHERE (examresult.RegNo='$regno') AND 
 								(examresult.AYear = '$currentyear') AND (examresult.Checked='1') 
 						  ORDER BY examresult.AYear ASC, examresult.Semester ASC";	
-				$dbcourse = mysql_query($qcourse);
+				$dbcourse = mysqli_query($zalongwa,$qcourse);
 				if(!$dbcourse){
 					//or die("No Exam Results for the Candidate - $regno ");
 					$error = urlencode("No Exam Results for the Candidate - $regno");
@@ -837,7 +837,7 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 			}//ends $rowstudent loop
 
 		#output file
-		$filename = ereg_replace("[[:space:]]+", "",$progname);
+		$filename = preg_replace("[[:space:]]+", "",$progname);
 
 		$pdf->Output();
 		}
@@ -861,31 +861,31 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 
 	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_studentlist = "SELECT RegNo, Name, ProgrammeofStudy FROM student ORDER BY ProgrammeofStudy  ASC";
-	$studentlist = mysqli_query($zalongwa, $query_studentlist) or die(mysqli_error());
+	$studentlist = mysqli_query($zalongwa, $query_studentlist) or die(mysqli_error($zalongwa));
 	$row_studentlist = mysqli_fetch_assoc($studentlist);
 	$totalRows_studentlist = mysqli_num_rows($studentlist);
 
 	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_degree = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-	$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error());
+	$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error($zalongwa));
 	$row_degree = mysqli_fetch_assoc($degree);
 	$totalRows_degree = mysqli_num_rows($degree);
 
 	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error());
+	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error($zalongwa));
 	$row_ayear = mysqli_fetch_assoc($ayear);
 	$totalRows_ayear = mysqli_num_rows($ayear);
 
 	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_sem = "SELECT Semester FROM terms ORDER BY Semester";
-	$sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error());
+	$sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error($zalongwa));
 	$row_sem = mysqli_fetch_assoc($sem);
 	$totalRows_sem = mysqli_num_rows($sem);
 
 	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_dept = "SELECT Faculty, DeptName FROM department ORDER BY DeptName, Faculty ASC";
-	$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error());
+	$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error($zalongwa));
 	$row_dept = mysqli_fetch_assoc($dept);
 	$totalRows_dept = mysqli_num_rows($dept);
 
@@ -948,7 +948,7 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 
 	mysqli_select_db($zalongwa, $database_zalongwa);
 	$query_combin = "SELECT * FROM subjectcombination where ProgrammeID='$prgcomb' ORDER BY Description ASC";
-	$combin = mysqli_query($zalongwa, $query_combin) or die(mysqli_error());
+	$combin = mysqli_query($zalongwa, $query_combin) or die(mysqli_error($zalongwa));
 	$row_combin = mysqli_fetch_assoc($combin);
 	$totalRows_combin = mysqli_num_rows($combin);
 	?>
