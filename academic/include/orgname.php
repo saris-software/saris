@@ -1,8 +1,8 @@
 <?php
 		#Get Organisation Name
 		$qorg = "SELECT Name FROM organisation";
-		$dborg = mysql_query($qorg);
-		$row_org = mysql_fetch_assoc($dborg);
+		$dborg = mysqli_query($zalongwa, $qorg);
+		$row_org = mysqli_fetch_assoc($dborg);
 		$org = $row_org['Name'];
 		
 		#print header
