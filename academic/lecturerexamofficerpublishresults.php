@@ -20,14 +20,14 @@ $currentPage = $_SERVER["PHP_SELF"];
 //populate academic year combo box
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error());
+$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error($zalongwa));
 $row_AYear = mysqli_fetch_assoc($AYear);
 $totalRows_AYear = mysqli_num_rows($AYear);
 
 //populate semester combo box
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_sem = "SELECT Semester FROM terms ORDER BY Semester ASC";
-$sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error());
+$sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error($zalongwa));
 $row_sem = mysqli_fetch_assoc($sem);
 $totalRows_sem = mysqli_num_rows($sem);
 
@@ -40,7 +40,7 @@ $totalRows_course = mysqli_num_rows($course);
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_Hostel = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error());
+$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error($zalongwa));
 $row_Hostel = mysqli_fetch_assoc($Hostel);
 $totalRows_Hostel = mysqli_num_rows($Hostel);
 
@@ -84,7 +84,7 @@ $query = "UPDATE examresult SET checked = 0 WHERE Semester ='$sem' AND AYear = '
 echo "Please Choose Action, Either Publish or Unpublish!";
 exit;
 }
-$result = mysqli_query($zalongwa, $query) or die("Siwezi kuingiza data.<br>" . mysqli_error());
+$result = mysqli_query($zalongwa, $query) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 
 
 echo "Database Update Succeful!";

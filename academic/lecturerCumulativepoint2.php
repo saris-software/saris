@@ -14,29 +14,29 @@
 	include('lecturerheader.php');
 $editFormAction = $_SERVER['PHP_SELF'];
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_studentlist = "SELECT RegNo, Name, ProgrammeofStudy FROM student ORDER BY ProgrammeofStudy  ASC";
-$studentlist = mysql_query($query_studentlist, $zalongwa) or die(mysql_error());
-$row_studentlist = mysql_fetch_assoc($studentlist);
-$totalRows_studentlist = mysql_num_rows($studentlist);
+$studentlist = mysqli_query($zalongwa, $query_studentlist) or die(mysqli_error($zalongwa));
+$row_studentlist = mysqli_fetch_assoc($studentlist);
+$totalRows_studentlist = mysqli_num_rows($studentlist);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_degree = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$degree = mysql_query($query_degree, $zalongwa) or die(mysql_error());
-$row_degree = mysql_fetch_assoc($degree);
-$totalRows_degree = mysql_num_rows($degree);
+$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error($zalongwa));
+$row_degree = mysqli_fetch_assoc($degree);
+$totalRows_degree = mysqli_num_rows($degree);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$ayear = mysql_query($query_ayear, $zalongwa) or die(mysql_error());
-$row_ayear = mysql_fetch_assoc($ayear);
-$totalRows_ayear = mysql_num_rows($ayear);
+$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error($zalongwa));
+$row_ayear = mysqli_fetch_assoc($ayear);
+$totalRows_ayear = mysqli_num_rows($ayear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_dept = "SELECT Faculty, DeptName FROM department ORDER BY DeptName, Faculty ASC";
-$dept = mysql_query($query_dept, $zalongwa) or die(mysql_error());
-$row_dept = mysql_fetch_assoc($dept);
-$totalRows_dept = mysql_num_rows($dept);
+$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error($zalongwa));
+$row_dept = mysqli_fetch_assoc($dept);
+$totalRows_dept = mysqli_num_rows($dept);
 ?>
 <?php
 			
@@ -55,12 +55,12 @@ $prog=$_POST['degree'];
 $cohotyear = $_POST['cohot'];
 $ayear = $_POST['ayear'];
 $qprog= "SELECT ProgrammeCode, Title FROM programme WHERE ProgrammeCode='$prog'";
-$dbprog = mysql_query($qprog);
-$row_prog = mysql_fetch_array($dbprog);
+$dbprog = mysqli_query($zalongwa, $qprog);
+$row_prog = mysqli_fetch_array($dbprog);
 $progname = $row_prog['Title'];
 $qyear= "SELECT AYear FROM academicyear WHERE AYear='$cohotyear'";
-$dbyear = mysql_query($qyear);
-$row_year = mysql_fetch_array($dbyear);
+$dbyear = mysqli_query($zalongwa, $qyear);
+$row_year = mysqli_fetch_array($dbyear);
 $year = $row_year['AYear'];
 echo $progname;
 echo " - ".$year;
@@ -84,10 +84,10 @@ $cohot = addslashes($_POST['cohot']);
 
 //query student list
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot') ORDER BY RegNo";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa, $qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$sex = $rowstudent['Sex'];
@@ -97,9 +97,9 @@ $i=1;
 							course INNER JOIN examresult ON (course.CourseCode = examresult.CourseCode)
 								 WHERE (RegNo='$regno') AND (course.Programme = '$deg') AND (AYear='$year')";	
 								 
-				$dbcourse = mysql_query($qcourse) or die("No Exam Results for the Candidate - $key ");
-				$dbcourseUnit = mysql_query($qcourse);
-				$total_rows = mysql_num_rows($dbcourse);
+				$dbcourse = mysqli_query($zalongwa, $qcourse) or die("No Exam Results for the Candidate - $key ");
+				$dbcourseUnit = mysqli_query($zalongwa, $qcourse);
+				$total_rows = mysqli_num_rows($dbcourse);
 				
 				if($total_rows>0){
 
@@ -125,7 +125,7 @@ $i=1;
 								<td scope="col">Remarks</td>
 					  </tr>
 					  <tr>
-						<?php while($row_course = mysql_fetch_array($dbcourseUnit)){
+						<?php while($row_course = mysqli_fetch_array($dbcourseUnit)){
 							$course= $row_course['CourseCode'];
 							$unit = $row_course['Units'];
 							$name = $row_course['CourseName'];
@@ -144,9 +144,9 @@ $i=1;
 					<td><div align="center"><?php $gpa = @substr($totalsgp/$unittaken, 0,3); echo $gpa; ?></div></td>
 					<td><div align="center"><?php #get student remarks
 					$qremarks = "SELECT Remark FROM studentremark WHERE RegNo='$regno'";
-					$dbremarks = mysql_query($qremarks);
-					$row_remarks = mysql_fetch_assoc($dbremarks);
-					$totalremarks = mysql_num_rows($dbremarks);
+					$dbremarks = mysqli_query($zalongwa, $qremarks);
+					$row_remarks = mysqli_fetch_assoc($dbremarks);
+					$totalremarks = mysqli_num_rows($dbremarks);
 					$studentremarks = $row_remarks['Remark'];
 					if(($totalremarks>0)&&($studentremarks<>'')){
 						$remark = $studentremarks;
@@ -199,10 +199,10 @@ $dept = $_POST['dept'];
 
 //query student list
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot') ORDER BY RegNo";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa, $qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$sex = $rowstudent['Sex'];
@@ -211,9 +211,9 @@ $i=1;
 			$qcourse="SELECT DISTINCT course.Units, course.Department, examresult.CourseCode FROM 
 						course INNER JOIN examresult ON (course.CourseCode = examresult.CourseCode)
 							 WHERE RegNo='$regno'";	
-			$dbcourse = mysql_query($qcourse) or die("No Exam Results for the Candidate - $key ");
-			$dbcourseUnit = mysql_query($qcourse);
-			$total_rows = mysql_num_rows($dbcourse);
+			$dbcourse = mysqli_query($zalongwa, $qcourse) or die("No Exam Results for the Candidate - $key ");
+			$dbcourseUnit = mysqli_query($zalongwa, $qcourse);
+			$total_rows = mysqli_num_rows($dbcourse);
 			
 			if($total_rows>0){
 
@@ -239,7 +239,7 @@ $i=1;
 							<td scope="col">Remarks</td>
 				  </tr>
 				  <tr>
-					<?php while($row_course = mysql_fetch_array($dbcourseUnit)){
+					<?php while($row_course = mysqli_fetch_array($dbcourseUnit)){
 						$course= $row_course['CourseCode'];
 						$unit = $row_course['Units'];
 						$name = $row_course['CourseName'];
@@ -249,9 +249,9 @@ $i=1;
 							
 							#query Coursework
 							$qtest2 = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=4";
-							$dbtest2=mysql_query($qtest2);
-							$total_test2 = mysql_num_rows($dbtest2);
-							$row_test2=mysql_fetch_array($dbtest2);
+							$dbtest2=mysqli_query($zalongwa, $qtest2);
+							$total_test2 = mysqli_num_rows($dbtest2);
+							$row_test2=mysqli_fetch_array($dbtest2);
 							$value_test2score=$row_test2['ExamScore'];
 							if(($total_test2>0)&&($value_test2score<>'')){
 								$test2date=$row_test2['ExamDate'];
@@ -263,9 +263,9 @@ $i=1;
 
 							#query Annual Exam
 							$qae = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=5";
-							$dbae=mysql_query($qae);
-							$total_ae = mysql_num_rows($dbae);
-							$row_ae=mysql_fetch_array($dbae);
+							$dbae=mysqli_query($zalongwa, $qae);
+							$total_ae = mysqli_num_rows($dbae);
+							$row_ae=mysqli_fetch_array($dbae);
 							$value_aescore=$row_ae['ExamScore'];
 							if(($total_ae>0)&&($value_aescore<>'')){
 								$aedate=$row_ae['ExamDate'];
@@ -277,9 +277,9 @@ $i=1;
 							
 							#query Special Exam
 							$qsp = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=7";
-							$dbsp=mysql_query($qsp);
-							$row_sp=mysql_fetch_array($dbsp);
-							$row_sp_total=mysql_num_rows($dbsp);
+							$dbsp=mysqli_query($zalongwa, $qsp);
+							$row_sp=mysqli_fetch_array($dbsp);
+							$row_sp_total=mysqli_num_rows($dbsp);
 							$svalue_pcore=$row_sp['ExamScore'];
 							if(($row_sp_total>0)&&($svalue_pcore<>'')){
 								$spdate=$row_sp['ExamDate'];
@@ -289,9 +289,9 @@ $i=1;
 							
 							#Check if has a Supplimentatary Exam
 							$qsup = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=6";
-							$dbsup=mysql_query($qsup);
-							$row_sup=mysql_fetch_array($dbsup);
-							$row_sup_total=mysql_num_rows($dbsup);
+							$dbsup=mysqli_query($zalongwa, $qsup);
+							$row_sup=mysqli_fetch_array($dbsup);
+							$row_sup_total=mysqli_num_rows($dbsup);
 							$supdate=$row_sup['ExamDate'];
 							$supscore=$row_sup['ExamScore'];
 
@@ -471,9 +471,9 @@ $i=1;
 				<td><div align="center"><?php $gpa = @substr($totalsgp/$unittaken, 0,3); echo $gpa; ?></div></td>
 				<td><div align="center"><?php #get student remarks
 				$qremarks = "SELECT Remark FROM studentremark WHERE RegNo='$regno'";
-				$dbremarks = mysql_query($qremarks);
-				$row_remarks = mysql_fetch_assoc($dbremarks);
-				$totalremarks = mysql_num_rows($dbremarks);
+				$dbremarks = mysqli_query($zalongwa, $qremarks);
+				$row_remarks = mysqli_fetch_assoc($dbremarks);
+				$totalremarks = mysqli_num_rows($dbremarks);
 				$studentremarks = $row_remarks['Remark'];
 				if(($totalremarks>0)&&($studentremarks<>'')){
 					$remark = $studentremarks;
@@ -525,10 +525,10 @@ $cohot = addslashes($_POST['cohot']);
 
 //query student list
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE EntryYear = '$cohot' ORDER BY RegNo";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa, $qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$sex = $rowstudent['Sex'];
@@ -537,9 +537,9 @@ $i=1;
 			$qcourse="SELECT DISTINCT course.Units, course.Department, examresult.CourseCode FROM 
 						course INNER JOIN examresult ON (course.CourseCode = examresult.CourseCode)
 							 WHERE RegNo='$regno'";	
-			$dbcourse = mysql_query($qcourse) or die("No Exam Results for the Candidate - $key ");
-			$dbcourseUnit = mysql_query($qcourse);
-			$total_rows = mysql_num_rows($dbcourse);
+			$dbcourse = mysqli_query($zalongwa, $qcourse) or die("No Exam Results for the Candidate - $key ");
+			$dbcourseUnit = mysqli_query($zalongwa, $qcourse);
+			$total_rows = mysqli_num_rows($dbcourse);
 			
 			if($total_rows>0){
 
@@ -565,7 +565,7 @@ $i=1;
 							<td scope="col">Remarks</td>
 				  </tr>
 				  <tr>
-					<?php while($row_course = mysql_fetch_array($dbcourseUnit)){
+					<?php while($row_course = mysqli_fetch_array($dbcourseUnit)){
 						$course= $row_course['CourseCode'];
 						$unit = $row_course['Units'];
 						$name = $row_course['CourseName'];
@@ -575,10 +575,10 @@ $i=1;
 							
 							#query Coursework
 							$qtest2 = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=4";
-							$dbtest2=mysql_query($qtest2);
-							$total_test2 = mysql_num_rows($dbtest2);
+							$dbtest2=mysqli_query($zalongwa, $qtest2);
+							$total_test2 = mysqli_num_rows($dbtest2);
 							if($total_test2>0){
-								$row_test2=mysql_fetch_array($dbtest2);
+								$row_test2=mysqli_fetch_array($dbtest2);
 								$test2date=$row_test2['ExamDate'];
 								$test2score=$row_test2['ExamScore'];
 							}else{
@@ -588,9 +588,9 @@ $i=1;
 
 							#query Coursework
 							$qtest2 = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=4";
-							$dbtest2=mysql_query($qtest2);
-							$total_test2 = mysql_num_rows($dbtest2);
-							$row_test2=mysql_fetch_array($dbtest2);
+							$dbtest2=mysqli_query($zalongwa, $qtest2);
+							$total_test2 = mysqli_num_rows($dbtest2);
+							$row_test2=mysqli_fetch_array($dbtest2);
 							$value_test2score=$row_test2['ExamScore'];
 							if(($total_test2>0)&&($value_test2score<>'')){
 								$test2date=$row_test2['ExamDate'];
@@ -602,9 +602,9 @@ $i=1;
 
 							#query Annual Exam
 							$qae = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=5";
-							$dbae=mysql_query($qae);
-							$total_ae = mysql_num_rows($dbae);
-							$row_ae=mysql_fetch_array($dbae);
+							$dbae=mysqli_query($zalongwa, $qae);
+							$total_ae = mysqli_num_rows($dbae);
+							$row_ae=mysqli_fetch_array($dbae);
 							$value_aescore=$row_ae['ExamScore'];
 							if(($total_ae>0)&&($value_aescore<>'')){
 								$aedate=$row_ae['ExamDate'];
@@ -616,9 +616,9 @@ $i=1;
 							
 							#query Special Exam
 							$qsp = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=7";
-							$dbsp=mysql_query($qsp);
-							$row_sp=mysql_fetch_array($dbsp);
-							$row_sp_total=mysql_num_rows($dbsp);
+							$dbsp=mysqli_query($zalongwa, $qsp);
+							$row_sp=mysqli_fetch_array($dbsp);
+							$row_sp_total=mysqli_num_rows($dbsp);
 							$svalue_pcore=$row_sp['ExamScore'];
 							if(($row_sp_total>0)&&($svalue_pcore<>'')){
 								$spdate=$row_sp['ExamDate'];
@@ -628,9 +628,9 @@ $i=1;
 							
 							#Check if has a Supplimentatary Exam
 							$qsup = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$key' AND ExamCategory=6";
-							$dbsup=mysql_query($qsup);
-							$row_sup=mysql_fetch_array($dbsup);
-							$row_sup_total=mysql_num_rows($dbsup);
+							$dbsup=mysqli_query($zalongwa, $qsup);
+							$row_sup=mysqli_fetch_array($dbsup);
+							$row_sup_total=mysqli_num_rows($dbsup);
 							$supdate=$row_sup['ExamDate'];
 							$supscore=$row_sup['ExamScore'];
 
@@ -809,9 +809,9 @@ $i=1;
 				<td><div align="center"><?php $gpa = @substr($totalsgp/$unittaken, 0,3); echo $gpa; ?></div></td>
 				<td><div align="center"><?php #get student remarks
 				$qremarks = "SELECT Remark FROM studentremark WHERE RegNo='$regno'";
-				$dbremarks = mysql_query($qremarks);
-				$row_remarks = mysql_fetch_assoc($dbremarks);
-				$totalremarks = mysql_num_rows($dbremarks);
+				$dbremarks = mysqli_query($zalongwa, $qremarks);
+				$row_remarks = mysqli_fetch_assoc($dbremarks);
+				$totalremarks = mysqli_num_rows($dbremarks);
 				$studentremarks = $row_remarks['Remark'];
 				if(($totalremarks>0)&&($studentremarks<>'')){
 					$remark = $studentremarks;
@@ -873,11 +873,11 @@ do {
 ?>
                           <option value="<?php echo $row_degree['ProgrammeCode']?>"><?php echo $row_degree['ProgrammeName']?></option>
                           <?php
-} while ($row_degree = mysql_fetch_assoc($degree));
-  $rows = mysql_num_rows($degree);
+} while ($row_degree = mysqli_fetch_assoc($degree));
+  $rows = mysqli_num_rows($degree);
   if($rows > 0) {
-      mysql_data_seek($degree, 0);
-	  $row_degree = mysql_fetch_assoc($degree);
+      mysqli_data_seek($degree, 0);
+	  $row_degree = mysqli_fetch_assoc($degree);
   }
 ?>
                         </select>
@@ -892,11 +892,11 @@ do {
 ?>
                         <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
                         <?php
-} while ($row_ayear = mysql_fetch_assoc($ayear));
-  $rows = mysql_num_rows($ayear);
+} while ($row_ayear = mysqli_fetch_assoc($ayear));
+  $rows = mysqli_num_rows($ayear);
   if($rows > 0) {
-      mysql_data_seek($ayear, 0);
-	  $row_ayear = mysql_fetch_assoc($ayear);
+      mysqli_data_seek($ayear, 0);
+	  $row_ayear = mysqli_fetch_assoc($ayear);
   }
 ?>
                     </select>
@@ -912,11 +912,11 @@ do {
 ?>
                         <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
                         <?php
-} while ($row_ayear = mysql_fetch_assoc($ayear));
-  $rows = mysql_num_rows($ayear);
+} while ($row_ayear = mysqli_fetch_assoc($ayear));
+  $rows = mysqli_num_rows($ayear);
   if($rows > 0) {
-      mysql_data_seek($ayear, 0);
-	  $row_ayear = mysql_fetch_assoc($ayear);
+      mysqli_data_seek($ayear, 0);
+	  $row_ayear = mysqli_fetch_assoc($ayear);
   }
 ?>
                     </select>

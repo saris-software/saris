@@ -1,10 +1,10 @@
 <?php require_once('../Connections/zalongwa.php'); ?>
 <?php
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_courselist = "SELECT CourseCode, CourseName FROM course ORDER BY CourseCode ASC";
-$courselist = mysql_query($query_courselist, $zalongwa) or die(mysql_error());
-$row_courselist = mysql_fetch_assoc($courselist);
-$totalRows_courselist = mysql_num_rows($courselist);
+$courselist = mysqli_query($zalongwa, $query_courselist) or die(mysqli_error($zalongwa));
+$row_courselist = mysqli_fetch_assoc($courselist);
+$totalRows_courselist = mysqli_num_rows($courselist);
  
 session_start();
 header("Cache-control: private"); // IE 6 Fix. 
@@ -28,7 +28,7 @@ tr>
               <td><?php echo $row_stats['ip']; ?></td>
               <td><?php echo $row_stats['browser']; ?></td>
             </tr>
-            <?php } while ($row_stats = mysql_fetch_assoc($stats)); ?>
+            <?php } while ($row_stats = mysqli_fetch_assoc($stats)); ?>
 </table>
 */
 	$updateSQL = "SELECT student.Name,
@@ -41,13 +41,13 @@ tr>
 						   examresult.Status
 				FROM examresult INNER JOIN student ON (examresult.RegNo = student.RegNo) 
 				WHERE examresult.AYear='$ayear' AND CourseCode = '$course[$i]'";
-            mysql_select_db($database_zalongwa, $zalongwa);
-  			$result = mysql_query($updateSQL, $zalongwa) or die(mysql_error()); 
-			$row_result = mysql_fetch_array($result);
+            mysqli_select_db($zalongwa, $database_zalongwa);
+  			$result = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
+			$row_result = mysqli_fetch_array($result);
 			
 			$unit = $row_result['Unit'];
 			
-			$totalRows_result = mysql_num_rows($result);
+			$totalRows_result = mysqli_num_rows($result);
 			?>
 			<table border="1">
 			<tr><td></td><td></td><td nowrap>Course Taken: </td>
@@ -75,8 +75,9 @@ tr>
 			   <td nowrap><?php echo $unit; ?></td>
 			   <td nowrap>SGP</td>
 			   <td nowrap>GPA</td></tr><tr></tr>
-			   <?php } while ($row_result = @mysql_fetch_assoc($result)); ?>
+			   <?php } while ($row_result = @mysqli_fetch_assoc($result)); ?>
 			  </tr>
+            </table>
 						
           <?php
 			}
@@ -94,8 +95,8 @@ require_once('../Connections/zalongwa.php');
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
 //$sqldel = "delete from stats where (YEAR(CURRENT_DATE)-YEAR(received))- (RIGHT(CURRENT_DATE,5)<RIGHT(received,5))>1";
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
-mysql_close($zalongwa);
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
+mysqli_close($zalongwa);
 ?> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang=en-US>
@@ -275,11 +276,11 @@ do {
 ?>
                   <option value="<?php echo $row_courselist['CourseCode']?>"><?php echo $row_courselist['CourseCode']?></option>
                   <?php
-} while ($row_courselist = mysql_fetch_assoc($courselist));
-  $rows = mysql_num_rows($courselist);
+} while ($row_courselist = mysqli_fetch_assoc($courselist));
+  $rows = mysqli_num_rows($courselist);
   if($rows > 0) {
-      mysql_data_seek($courselist, 0);
-	  $row_courselist = mysql_fetch_assoc($courselist);
+      mysqli_data_seek($courselist, 0);
+	  $row_courselist = mysqli_fetch_assoc($courselist);
   }
 ?>
               </select>
@@ -322,5 +323,5 @@ do {
 
 </html>
 <?php
-mysql_free_result($courselist);
+mysqli_free_result($courselist);
 ?>

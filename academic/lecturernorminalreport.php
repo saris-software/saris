@@ -203,19 +203,19 @@ $sql = "SELECT student.Name, student.RegNo, student.Sex, student.ProgrammeofStud
 FROM student
 WHERE (student.EntryYear='$year') AND (student.ProgrammeofStudy = '$hall') ORDER BY  student.Faculty, student.ProgrammeofStudy, student.Name";
 }
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($zalongwa, $query);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
+if (mysqli_num_rows($query) > 0){
 echo "Nominal Roll Report For the Year: $year";
 echo "<p>Total Records: $totalRows_query </p>";
 echo "<table border='1'>";
 echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> Sex </td><td> Degree </td><td> Faculty </td><td> Sponsor </td></tr>";
 $i=1;
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$Name = stripslashes($result["Name"]);
 		$RegNo = stripslashes($result["RegNo"]);
 		$sex = stripslashes($result["Sex"]);
@@ -235,7 +235,7 @@ echo "</table>";
 }else{
 echo "Sorry, No Records Found <br>";
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?>
 		
         </div></td>

@@ -244,13 +244,13 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 	
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error());
+$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error($zalongwa));
 $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 $totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
-mysqli_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 
 $query_degree = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error());
+$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error($zalongwa));
 $row_degree = mysqli_fetch_assoc($degree);
 $totalRows_degree = mysqli_num_rows($degree);
 

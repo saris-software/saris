@@ -38,8 +38,8 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "")) {
 	$deleteSQL = sprintf("DELETE FROM tbllecturenotes WHERE id=%s",
                        GetSQLValueString($_GET['id'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($deleteSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $deleteSQL) or die(mysqli_error($zalongwa));
 
   $deleteGoTo = "lecturerindex.php";
   if (isset($_SERVER['QUERY_STRING'])) {

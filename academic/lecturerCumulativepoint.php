@@ -16,25 +16,25 @@ $editFormAction = $_SERVER['PHP_SELF'];
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_studentlist = "SELECT RegNo, Name, ProgrammeofStudy FROM student ORDER BY ProgrammeofStudy  ASC";
-$studentlist = mysqli_query($zalongwa, $query_studentlist) or die(mysqli_error());
+$studentlist = mysqli_query($zalongwa, $query_studentlist) or die(mysqli_error($zalongwa));
 $row_studentlist = mysqli_fetch_assoc($studentlist);
 $totalRows_studentlist = mysqli_num_rows($studentlist);
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_degree = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error());
+$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error($zalongwa));
 $row_degree = mysqli_fetch_assoc($degree);
 $totalRows_degree = mysqli_num_rows($degree);
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error());
+$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error($zalongwa));
 $row_ayear = mysqli_fetch_assoc($ayear);
 $totalRows_ayear = mysqli_num_rows($ayear);
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_dept = "SELECT Faculty, DeptName FROM department ORDER BY DeptName, Faculty ASC";
-$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error());
+$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error($zalongwa));
 $row_dept = mysqli_fetch_assoc($dept);
 $totalRows_dept = mysqli_num_rows($dept);
 ?>
@@ -98,7 +98,7 @@ $i=1;
 								 WHERE (RegNo='$regno') AND (course.Programme = '$deg') AND (AYear='$year')";	
 								 
 				$dbcourse = mysqli_query($zalongwa, $qcourse) or die("No Exam Results for the Candidate - $key ");
-				$dbcourseUnit = mysqli_query($qcourse);
+				$dbcourseUnit = mysqli_query($zalongwa, $qcourse);
 				$total_rows = mysqli_num_rows($dbcourse);
 				
 				if($total_rows>0){

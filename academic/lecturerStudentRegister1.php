@@ -178,7 +178,7 @@ $status = addslashes($_POST['core']);
 
 #update examresult
 $qstatus ="UPDATE examresult SET Status = '$status' WHERE RegNo ='$sregno' AND CourseCode ='$course'";
-$dbstatus = mysql_query($qstatus);
+$dbstatus = mysqli_query($zalongwa, $qstatus);
 
 //query current Year
 $qyear = "SELECT AYear from academicyear WHERE Status = 1";
