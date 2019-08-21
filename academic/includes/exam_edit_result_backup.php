@@ -13,13 +13,13 @@ $ct2score1 = floatval($ct2score);
 $spscore1 = floatval($spscore);
 
 $semq = "SELECT Semester from examregister where CourseCode='$key' and AYear='$ayear'";
-$qsem = mysql_query($semq);
-$qqsem = mysql_fetch_array($qsem);
+$qsem = mysqli_query($zalongwa, $semq);
+$qqsem = mysqli_fetch_array($qsem);
 $wsem = $qqsem['Semester'];
 
 $qstatus = "SELECT Status FROM examresult WHERE CourseCode='$key' AND RegNo='$regno' AND AYear='$ayear'";
-$dbstatus = mysql_query($qstatus);
-$row_status = mysql_fetch_array($dbstatus);
+$dbstatus = mysqli_query($zalongwa, $qstatus);
+$row_status = mysqli_fetch_array($dbstatus);
 $status = $row_status['Status'];
 
 #update hw1
@@ -28,8 +28,8 @@ if (("$hw1score1" != "$hw1score" && "$hw1score" <> "") || $hw1score > 40) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 1";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -38,8 +38,8 @@ if (("$hw1score1" != "$hw1score" && "$hw1score" <> "") || $hw1score > 40) {
 							Semester='$wsem', 
 							ExamScore = '$hw1score'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 1";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($zalongwa, $database_zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -54,8 +54,8 @@ if (("$hw1score1" != "$hw1score" && "$hw1score" <> "") || $hw1score > 40) {
 							Status='$status',
 							ExamScore = '$hw1score'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -65,8 +65,8 @@ if (("$hw2score1" != "$hw2score" && "$hw2score" <> "") || $hw2score > 40) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 2";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -75,8 +75,8 @@ if (("$hw2score1" != "$hw2score" && "$hw2score" <> "") || $hw2score > 40) {
 							Semester='$wsem', 
 							ExamScore = '$hw2score'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 2";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -91,8 +91,8 @@ if (("$hw2score1" != "$hw2score" && "$hw2score" <> "") || $hw2score > 40) {
 							Status='$status',
 							ExamScore = '$hw2score'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -102,8 +102,8 @@ if (("$qz1score1" != "$qz1score" && "$qz1score" <> "") || $qz1score > 40) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 3";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -112,8 +112,8 @@ if (("$qz1score1" != "$qz1score" && "$qz1score" <> "") || $qz1score > 40) {
 							Semester='$wsem', 
 							ExamScore = '$qz1score'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 3";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -128,8 +128,8 @@ if (("$qz1score1" != "$qz1score" && "$qz1score" <> "") || $qz1score > 40) {
 							Status='$status',
 							ExamScore = '$qz1score'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -139,8 +139,8 @@ if (("$qz2score1" != "$qz2score" && "$qz2score" <> "") || $qz2score > 40) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 4";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -149,8 +149,8 @@ if (("$qz2score1" != "$qz2score" && "$qz2score" <> "") || $qz2score > 40) {
 							Semester='$wsem', 
 							ExamScore = '$qz2score'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 4";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -165,8 +165,8 @@ if (("$qz2score1" != "$qz2score" && "$qz2score" <> "") || $qz2score > 40) {
 							Status='$status',
 							ExamScore = '$qz2score'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -176,8 +176,8 @@ if (("$aescore1" != "$aescore" && "$aescore" <> "") || $aescore > 100) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 5";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -186,8 +186,8 @@ if (("$aescore1" != "$aescore" && "$aescore" <> "") || $aescore > 100) {
 							Semester='$wsem', 
 							ExamScore = '$aescore'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 5";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -202,8 +202,8 @@ if (("$aescore1" != "$aescore" && "$aescore" <> "") || $aescore > 100) {
 							Status='$status',
 							ExamScore = '$aescore'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -213,8 +213,8 @@ if (("$gascore1" != "$gascore" && "$gascore" <> "") || $gascore > 40) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 6";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -223,8 +223,8 @@ if (("$gascore1" != "$gascore" && "$gascore" <> "") || $gascore > 40) {
 							Semester='$wsem', 
 							ExamScore = '$gascore'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 6";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -239,8 +239,8 @@ if (("$gascore1" != "$gascore" && "$gascore" <> "") || $gascore > 40) {
 							Status='$status',
 							ExamScore = '$gascore'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -251,8 +251,8 @@ if (("$supscore1" != "$supscore" && "$supscore" <> "") || $supscore > 100) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 7";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -261,8 +261,8 @@ if (("$supscore1" != "$supscore" && "$supscore" <> "") || $supscore > 100) {
 							Semester='$wsem', 
 							ExamScore = '$supscore'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 7";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL) or die("<br>Officer huwezi ku-update");
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL) or die("<br>Officer huwezi ku-update");
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -275,8 +275,8 @@ if (("$supscore1" != "$supscore" && "$supscore" <> "") || $supscore > 100) {
 							AYear = '$ayear',
 							ExamScore = '$supscore'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -286,8 +286,8 @@ if (("$proscore1" != "$proscore" && "$proscore" <> "") || $proscore > 100) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 8";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -296,8 +296,8 @@ if (("$proscore1" != "$proscore" && "$proscore" <> "") || $proscore > 100) {
 							Semester='$wsem', 
 							ExamScore = '$proscore'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 8";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -312,8 +312,8 @@ if (("$proscore1" != "$proscore" && "$proscore" <> "") || $proscore > 100) {
 							Status='$status',
 							ExamScore = '$proscore'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -323,8 +323,8 @@ if (("$ct1score1" != "$ct1score" && "$ct1score" <> "") || $ct1score > 40) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 9";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -333,8 +333,8 @@ if (("$ct1score1" != "$ct1score" && "$ct1score" <> "") || $ct1score > 40) {
 							Semester='$wsem',
 							ExamScore = '$ct1score'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 9";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -349,8 +349,8 @@ if (("$ct1score1" != "$ct1score" && "$ct1score" <> "") || $ct1score > 40) {
 							Status='$status',
 							ExamScore = '$ct1score'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -360,8 +360,8 @@ if (("$ct2score1" != "$ct2score" && "$ct2score" <> "") || $ct2score > 40) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 10";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -370,8 +370,8 @@ if (("$ct2score1" != "$ct2score" && "$ct2score" <> "") || $ct2score > 40) {
 							Semester='$wsem',
 							ExamScore = '$ct2score'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 10";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -386,8 +386,8 @@ if (("$ct2score1" != "$ct2score" && "$ct2score" <> "") || $ct2score > 40) {
 							Status='$status',
 							ExamScore = '$ct2score'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
@@ -397,8 +397,8 @@ if (("$spscore1" != "$spscore" && "$spscore" <> "") || $spscore > 100) {
 } else {
     #check whether to update or to insert
     $qchk = "SELECT ExamScore FROM examresult WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 11";
-    $chkdb = mysql_query($qchk);
-    if (mysql_num_rows($chkdb) > 0) {
+    $chkdb = mysqli_query($zalongwa, $qchk);
+    if (mysqli_num_rows($chkdb) > 0) {
         #update
         $updateSQL = "UPDATE examresult 
 						SET 
@@ -407,8 +407,8 @@ if (("$spscore1" != "$spscore" && "$spscore" <> "") || $spscore > 100) {
 							Semester='$wsem',
 							ExamScore = '$spscore'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 11";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     } else {
         #insert
         $updateSQL = "INSERT INTO examresult 
@@ -423,8 +423,8 @@ if (("$spscore1" != "$spscore" && "$spscore" <> "") || $spscore > 100) {
 							Status='$status',
 							ExamScore = '$spscore'
 						";
-        mysql_select_db($database_zalongwa, $zalongwa);
-        $Result1 = mysql_query($updateSQL);
+        mysqli_select_db($database_zalongwa, $zalongwa);
+        $Result1 = mysqli_query($zalongwa, $updateSQL);
     }
 }
 
