@@ -20,11 +20,11 @@ $today = date("F j, Y, g:i a");
 $username = addslashes($_GET['username']);
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'Data Backup')";   
-$result = mysql_query($sql);// or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa,$sql);// or die("Siwezi kuingiza data.<br>" . mysql_error());
 
 //get all RegNo in Exam Results
 $qexamregno = "Select DISTINCT RegNo FROM examresult ORDER BY RegNo DESC";
-$dbexamregno= mysql_query($qexamregno);
+$dbexamregno= mysqli_query($zalongwa,$qexamregno);
 $i=1;
 ?>
 <table width="200" border="1" cellpadding="1" cellspacing="1" bgcolor="#CCCCCC">
@@ -34,13 +34,13 @@ $i=1;
   </tr>
   
 <?php
-while ($row_examregno = mysql_fetch_array($dbexamregno)){
+while ($row_examregno = mysqli_fetch_array($zalongwa,$dbexamregno)){
 $examregno = $row_examregno['RegNo'];
 
 //query student regno
 	$qstudentregno = "SELECT RegNo FROM student where RegNo = '$examregno'";
-	$dbstudentregno = mysql_query($qstudentregno);
-	$totalresult = mysql_num_rows($dbstudentregno);
+	$dbstudentregno = mysqli_query($zalongwa,$qstudentregno);
+	$totalresult = mysqli_num_rows($dbstudentregno);
 	if ($totalresult<1){
 	?>
 	<tr>

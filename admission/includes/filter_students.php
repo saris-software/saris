@@ -263,5 +263,4 @@ if (($sponsor=='0') and ($stream=='0') and ($status=='0') and ($cohort!='0') and
 								student.Class, 
 								student.Name";	
 }
-	$query_std = @mysql_query($sql);
-?>	
+	$query_std = @mysqli_query($zalongwa,$sql);

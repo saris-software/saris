@@ -103,4 +103,4 @@
 	$i++;
 	$arrStructure[$i] = array( 'name1' => 'Sign Out', 'name2' => 'Funga Program', 'url' => '../signout.php', 'image' => '',  'width' => '', 'height' => '');
     $i++;
-?>
+

@@ -68,7 +68,7 @@ $key= stripslashes($key);
 echo "Sorry, No Records Found <br>";
 echo "That Match With Your Searck Key \"$key \" ";
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?>
 		 <?php
 

@@ -1,5 +1,5 @@
-<?php require_once('../Connections/zalongwa.php'); ?>
-<?php
+<?php require_once('../Connections/zalongwa.php');
+
 session_start();
 header("Cache-control: private"); // IE 6 Fix. 
 @$auth_level = $_SESSION['auth_level'];
@@ -12,7 +12,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 $maxRows_ExamOfficerGradeBook = 1000;
 $pageNum_ExamOfficerGradeBook = 0;
 $query = "UPDATE examresult SET checked = 1 WHERE CourseCode ='$key' AND AYear = '$ayear'";
-$result = mysql_query($query) or die("Siwezi kuingiza data.<br>" . mysql_error());
+$result = mysqli_query($zalongwa, $query) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 //mysql_free_result($result);
 
 if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
@@ -27,7 +27,7 @@ if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
 }
 $startRow_ExamOfficerGradeBook = $pageNum_ExamOfficerGradeBook * $maxRows_ExamOfficerGradeBook;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 if (isset($_GET['content'])) {
   $key=$_GET['content'];
 $query_ExamOfficerGradeBook = "SELECT student.Name,        course.CourseCode,        course.CourseName,        
@@ -46,14 +46,14 @@ examresult.Exam,        examresult.Total,        examresult.Grade,        examre
 	   INNER JOIN student ON (examresult.RegNo = student.RegNo) WHERE examresult.CourseCode ='$key'";
 }
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysql_query($query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysql_error());
-$row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook);
+$ExamOfficerGradeBook = mysqli_query($zalongwa, $query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysqli_error($zalongwa));
+$row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {
   $totalRows_ExamOfficerGradeBook = $_GET['totalRows_ExamOfficerGradeBook'];
 } else {
-  $all_ExamOfficerGradeBook = mysql_query($query_ExamOfficerGradeBook);
-  $totalRows_ExamOfficerGradeBook = mysql_num_rows($all_ExamOfficerGradeBook);
+  $all_ExamOfficerGradeBook = mysqli_query($zalongwa, $query_ExamOfficerGradeBook);
+  $totalRows_ExamOfficerGradeBook = mysqli_num_rows($all_ExamOfficerGradeBook);
 }
 $totalPages_ExamOfficerGradeBook = ceil($totalRows_ExamOfficerGradeBook/$maxRows_ExamOfficerGradeBook)-1;
 

@@ -278,5 +278,3 @@ class Cpdf extends PDF_Language {
 	}
 		
 } // end of class
-
-?>

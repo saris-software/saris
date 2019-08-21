@@ -61,8 +61,8 @@ while($row_reults = mysql_fetch_assoc($dbresult)){
 */
 #copy dus data
 $qdusstudent = "select * from student";
-$dbdusstudent = mysql_query($qdusstudent);
-While ($row_dusstudent = mysql_fetch_assoc($dbdusstudent))
+$dbdusstudent = mysqli_query($zalongwa, $qdusstudent);
+While ($row_dusstudent = mysqli_fetch_assoc($dbdusstudent))
 {
 	$regno = $row_dusstudent['RegNo'];
 	$name = $row_dusstudent['Name'];
@@ -75,8 +75,8 @@ While ($row_dusstudent = mysql_fetch_assoc($dbdusstudent))
 	
 	#find programmename
 	$qdegree = "select * from programme where ProgrammeID ='$prog'";
-	$dbdegree = mysql_query($qdegree);
-	$row_degree = mysql_fetch_assoc($dbdegree);
+	$dbdegree = mysqli_query($zalongwa, $qdegree);
+	$row_degree = mysqli_fetch_assoc($dbdegree);
 	$degree = $row_degree ['ProgrammeName'];
 	/*
 	#insert student record
@@ -93,9 +93,9 @@ While ($row_dusstudent = mysql_fetch_assoc($dbdusstudent))
 	*/
 	#query results
 	$qresult = "select * from examresult where regno ='$regno'";
-	$dbresult = mysql_query($qresult) or die(mysql_error());
-	$dbcount = mysql_query($qresult) or die(mysql_error());
-	$count = mysql_num_rows($dbcount) or die(mysql_error());
+	$dbresult = mysqli_query($zalongwa, $qresult) or die(mysqli_error($zalongwa));
+	$dbcount = mysqli_query($zalongwa, $qresult) or die(mysqli_error($zalongwa));
+	$count = mysqli_num_rows($dbcount) or die(mysqli_error($zalongwa));
 	if ($count > 0)
 	{
 		#insert student record
@@ -108,10 +108,10 @@ While ($row_dusstudent = mysql_fetch_assoc($dbdusstudent))
 						Programme = '$degree',
 						EntryYear = '$ayear'
 						";
-		$dbinsertstd =mysql_query($qinsertstd);
+		$dbinsertstd =mysqli_query($zalongwa, $qinsertstd);
 		
 		#insert results
-		while ($row_result = mysql_fetch_assoc($dbresult))
+		while ($row_result = mysqli_fetch_assoc($dbresult))
 		{
 			$coursecode = $row_result ['CourseCode'];
 			$examno = $row_result ['ExamNo'];
@@ -128,7 +128,7 @@ While ($row_dusstudent = mysql_fetch_assoc($dbdusstudent))
 							Status = '$marital',
 							AYear = '$year'
 							";
-			$dbinsertexam =mysql_query($qinsertstd);
+			$dbinsertexam =mysqli_query($zalongwa, $qinsertstd);
 		}
 	}
 }

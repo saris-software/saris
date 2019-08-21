@@ -1072,6 +1072,7 @@ function _dochecks()
 	//Disable runtime magic quotes
 	if(get_magic_quotes_runtime())
 		@set_magic_quotes_runtime(0);
+
 }
 
 function _getpageformat($format)

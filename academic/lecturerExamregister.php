@@ -53,8 +53,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 					   GetSQLValueString($_POST['user'], "text"),
 					   GetSQLValueString($_POST['checked'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 }
 
 $currentPage = $_SERVER["PHP_SELF"];
@@ -66,43 +66,43 @@ if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
 }
 $startRow_ExamOfficerGradeBook = $pageNum_ExamOfficerGradeBook * $maxRows_ExamOfficerGradeBook;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_ExamOfficerGradeBook = "SELECT CourseCode, AYear, SemesterID FROM examresult";
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysql_query($query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysql_error());
-$row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook);
+$ExamOfficerGradeBook = mysqli_query($zalongwa, $query_limit_ExamOfficerGradeBook) or die(mysqli_error($zalongwa));
+$row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {
   $totalRows_ExamOfficerGradeBook = $_GET['totalRows_ExamOfficerGradeBook'];
 } else {
-  $all_ExamOfficerGradeBook = mysql_query($query_ExamOfficerGradeBook);
-  $totalRows_ExamOfficerGradeBook = mysql_num_rows($all_ExamOfficerGradeBook);
+  $all_ExamOfficerGradeBook = mysqli_query($zalongwa, $query_ExamOfficerGradeBook);
+  $totalRows_ExamOfficerGradeBook = mysqli_num_rows($all_ExamOfficerGradeBook);
 }
 $totalPages_ExamOfficerGradeBook = ceil($totalRows_ExamOfficerGradeBook/$maxRows_ExamOfficerGradeBook)-1;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_Ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$Ayear = mysql_query($query_Ayear, $zalongwa) or die(mysql_error());
-$row_Ayear = mysql_fetch_assoc($Ayear);
-$totalRows_Ayear = mysql_num_rows($Ayear);
+$Ayear = mysqli_query($zalongwa, $query_Ayear) or die(mysqli_error($zalongwa));
+$row_Ayear = mysqli_fetch_assoc($Ayear);
+$totalRows_Ayear = mysqli_num_rows($Ayear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_semester = "SELECT Description FROM terms ORDER BY Semester ASC";
-$semester = mysql_query($query_semester, $zalongwa) or die(mysql_error());
-$row_semester = mysql_fetch_assoc($semester);
-$totalRows_semester = mysql_num_rows($semester);
+$semester = mysqli_query($zalongwa, $query_semester) or die(mysqli_error($zalongwa));
+$row_semester = mysqli_fetch_assoc($semester);
+$totalRows_semester = mysqli_num_rows($semester);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_course = "SELECT CourseCode, CourseName FROM course ORDER BY CourseCode ASC";
-$course = mysql_query($query_course, $zalongwa) or die(mysql_error());
-$row_course = mysql_fetch_assoc($course);
-$totalRows_course = mysql_num_rows($course);
+$course = mysqli_query($zalongwa, $query_course) or die(mysqli_error($zalongwa));
+$row_course = mysqli_fetch_assoc($course);
+$totalRows_course = mysqli_num_rows($course);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_lecturer = "SELECT RegNo, Name FROM student ORDER BY RegNo ASC";
-$lecturer = mysql_query($query_lecturer, $zalongwa) or die(mysql_error());
-$row_lecturer = mysql_fetch_assoc($lecturer);
-$totalRows_lecturer = mysql_num_rows($lecturer);
+$lecturer = mysqli_query($zalongwa, $query_lecturer) or die(mysqli_error($zalongwa));
+$row_lecturer = mysqli_fetch_assoc($lecturer);
+$totalRows_lecturer = mysqli_num_rows($lecturer);
 
 $queryString_ExamOfficerGradeBook = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
@@ -131,11 +131,11 @@ do {
 ?>
                     <option value="<?php echo $row_Ayear['AYear']?>"><?php echo $row_Ayear['AYear']?></option>
                     <?php
-} while ($row_Ayear = mysql_fetch_assoc($Ayear));
-  $rows = mysql_num_rows($Ayear);
+} while ($row_Ayear = mysqli_fetch_assoc($Ayear));
+  $rows = mysqli_num_rows($Ayear);
   if($rows > 0) {
-      mysql_data_seek($Ayear, 0);
-	  $row_Ayear = mysql_fetch_assoc($Ayear);
+      mysqli_data_seek($Ayear, 0);
+	  $row_Ayear = mysqli_fetch_assoc($Ayear);
   }
 ?>
                   </select></td>
@@ -146,11 +146,11 @@ do {
 ?>
                     <option value="<?php echo $row_course['CourseCode']?>"><?php echo $row_course['CourseCode']?></option>
                     <?php
-} while ($row_course = mysql_fetch_assoc($course));
-  $rows = mysql_num_rows($course);
+} while ($row_course = mysqli_fetch_assoc($course));
+  $rows = mysqli_num_rows($course);
   if($rows > 0) {
-      mysql_data_seek($course, 0);
-	  $row_course = mysql_fetch_assoc($course);
+      mysqli_data_seek($course, 0);
+	  $row_course = mysqli_fetch_assoc($course);
   }
 ?>
                   </select></td>
@@ -163,11 +163,11 @@ do {
 ?>
                     <option value="<?php echo $row_semester['Description']?>"><?php echo $row_semester['Description']?></option>
                     <?php
-} while ($row_semester = mysql_fetch_assoc($semester));
-  $rows = mysql_num_rows($semester);
+} while ($row_semester = mysqli_fetch_assoc($semester));
+  $rows = mysqli_num_rows($semester);
   if($rows > 0) {
-      mysql_data_seek($semester, 0);
-	  $row_semester = mysql_fetch_assoc($semester);
+      mysqli_data_seek($semester, 0);
+	  $row_semester = mysqli_fetch_assoc($semester);
   }
 ?>
                   </select></td>
@@ -181,11 +181,11 @@ do {
 ?>
                     <option value="<?php echo $row_lecturer['RegNo']?>"><?php echo $row_lecturer['RegNo'].": ".$row_lecturer['Name']?></option>
                     <?php
-} while ($row_lecturer = mysql_fetch_assoc($lecturer));
-  $rows = mysql_num_rows($lecturer);
+} while ($row_lecturer = mysqli_fetch_assoc($lecturer));
+  $rows = mysqli_num_rows($lecturer);
   if($rows > 0) {
-      mysql_data_seek($lecturer, 0);
-	  $row_lecturer = mysql_fetch_assoc($lecturer);
+      mysqli_data_seek($lecturer, 0);
+	  $row_lecturer = mysqli_fetch_assoc($lecturer);
   }
 ?>
                   </select></td>
@@ -200,14 +200,14 @@ do {
             </form>
 
 <?php
-mysql_free_result($ExamOfficerGradeBook);
+mysqli_free_result($ExamOfficerGradeBook);
 
-mysql_free_result($Ayear);
+mysqli_free_result($Ayear);
 
-mysql_free_result($semester);
+mysqli_free_result($semester);
 
-mysql_free_result($course);
+mysqli_free_result($course);
 
-mysql_free_result($lecturer);
+mysqli_free_result($lecturer);
 include('../footer/footer.php');
 ?>

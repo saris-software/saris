@@ -12,12 +12,12 @@ require_once('../Connections/zalongwa.php');
 			$setMaxConnections = "SET GLOBAL max_connections=180";
 			$setMaxUserConnections = "SET GLOBAL max_user_connections=150";
 			//To execute the above commands, take out the comments(un-comments the respective query below
-					$query = @mysql_query($setCacheSize); 
-					$query = @mysql_query($setWaitTimeOut);
-					$query = @mysql_query($setMaxConnections);
-					$query = @mysql_query($setMaxUserConnections);
+					$query = @mysqli_query($zalongwa,$setCacheSize);
+					$query = @mysqli_query($zalongwa,$setWaitTimeOut);
+					$query = @mysqli_query($zalongwa,$setMaxConnections);
+					$query = @mysqli_query($zalongwa,$setMaxUserConnections);
 //End of my MySQL Monitor          
- mysql_close($zalongwa);			
+ mysqli_close($zalongwa);
 			
 			echo '<meta http-equiv = "refresh" content ="0; 
 			url = administratorcheckconnections.php">'; 

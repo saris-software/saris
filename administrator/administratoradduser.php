@@ -16,13 +16,13 @@
 
 #populate module combo box
 	$query_module = "SELECT moduleid, modulename FROM modules";
-	$module = mysqli_query($zalongwa,$query_module) or die(mysqli_error());
+	$module = mysqli_query($zalongwa,$query_module) or die(mysqli_error($zalongwa));
 	$row_module = mysqli_fetch_assoc($module);
 	$totalRows_module = mysqli_num_rows($module);
 
 #populate privileges combo box
 	$query_privilege = "SELECT privilegeID, privilegename FROM privilege";
-	$privilege = mysqli_query($zalongwa,$query_privilege) or die(mysqli_error());
+	$privilege = mysqli_query($zalongwa,$query_privilege) or die(mysqli_error($zalongwa));
 	$row_privilege = mysqli_fetch_assoc($privilege);
 	$totalRows_privilege = mysqli_num_rows($privilege);
 	
@@ -38,7 +38,7 @@ if ($check=='on'){
 					$module = $_POST['module'];
 			$sql="INSERT INTO security (UserName,password,FullName,RegNo, Position, Email, LastLogin, 
 			Registered, AuthLevel, Module, PrivilegeID) VALUES('$username','$pwd','$name','$reg','$desig','$email','now()','now()','','$authlevel','$module')";   
-			$result = mysqli_query($sql) or die("Siwezi kuingiza data.<br>" . mysqli_connect_error($sql));
+			$result = mysqli_query($zalongwa,$sql) or die("Siwezi kuingiza data.<br>" . mysqli_connect_error($zalongwa));
 	}
 ?> 
 

@@ -62,8 +62,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 	$score2 = floatval($cwk[$c]);
 	$sql_check ="SELECT * FROM examresult WHERE RegNo='$RegNo[$c]' AND CourseCode='$key' AND AYear = '$ayear' AND ExamCategory='$examcat'";
                
-                 $result_sql =mysql_query($sql_check);
-                    $num_row = mysql_num_rows($result_sql);
+                 $result_sql =mysqli_query($zalongwa, $sql_check);
+                    $num_row = mysqli_num_rows($result_sql);
 
                     if($num_row == 0){
 
@@ -75,7 +75,7 @@ $updateSQL = "REPLACE INTO examresult(AYear, Marker, CourseCode, ExamCategory, E
 }else{
 //update
 
-$value_exist = mysql_fetch_array($result_sql);
+$value_exist = mysqli_fetch_array($result_sql);
 
 if($value_exist['ExamScore'] <> $cwk[$c]){
  $updateSQL = "UPDATE examresult SET  Marker='$exammarker',  ExamDate='$examdate', Recorder='$username', RecordDate='".date('Y-m-d')."', ExamScore='$cwk[$c]', Status='1', Comment='$comment[$c]'  WHERE RegNo='$RegNo[$c]' AND CourseCode='$key' AND AYear = '$ayear' AND ExamCategory='$examcat'";
@@ -83,14 +83,14 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 }
 				//$updateSQL = "REPLACE INTO examresult(AYear, Marker, CourseCode, ExamCategory, ExamDate, Recorder, RecordDate, RegNo, ExamScore, Status, Comment)
 						 //VALUES ('$ayear', '$exammarker', '$key', '$examcat', '$examdate', '$username', now(), '$RegNo[$c]', '$cwk[$c]', '1', '$comment[$c]')";
-					mysql_select_db($database_zalongwa, $zalongwa);
+					mysqli_select_db($zalongwa, $database_zalongwa);
 				switch ($examcat) {
 									case 1:
 										if (("$score2"!="$score1" && "$score1" <> "") || $score1>40){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 
@@ -99,7 +99,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 
@@ -108,7 +108,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 									case 4:
@@ -116,7 +116,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 										
@@ -125,7 +125,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 
@@ -134,7 +134,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 									case 7:
@@ -142,7 +142,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 									case 8:
@@ -150,7 +150,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 									case 9:
@@ -158,7 +158,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 									case 10:
@@ -166,7 +166,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 									case 11:
@@ -174,7 +174,7 @@ if($value_exist['ExamScore'] <> $cwk[$c]){
 										   $_SESSION['err'.$c] =  $score1.' is invalid exam score entry to: '.$RegNo[$c].'<br>';
 										   $err = 1;
 					                       }else{
-					                       $Result1 = mysql_query($updateSQL);
+					                       $Result1 = mysqli_query($zalongwa, $updateSQL);
 					                     }
 										break;
 
@@ -299,12 +299,12 @@ $query_addexam_add = "
 								   )
 							ORDER BY programme.ProgrammeName, examregister.RegNo ASC";
 }			
-$addexam = mysql_query($query_addexam_add, $zalongwa) or die('Problem: Check the Add Query!');
-$row_addexam = mysql_fetch_array($addexam);
+$addexam = mysqli_query($zalongwa, $query_addexam_add) or die('Problem: Check the Add Query!');
+$row_addexam = mysqli_fetch_array($addexam);
 #get course code and course title
 $qcourse = "SELECT CourseCode, CourseName from course WHERE CourseCode = '$key'";
-$dbcourse = mysql_query($qcourse);
-$row_course = mysql_fetch_assoc($dbcourse);
+$dbcourse = mysqli_query($zalongwa, $qcourse);
+$row_course = mysqli_fetch_assoc($dbcourse);
 $coursecode = $row_course['CourseCode'];
 $coursename = $row_course['CourseName'];
 
@@ -325,12 +325,12 @@ $coursename = $row_course['CourseName'];
 	<?php
 				#display Exam Category
 					$qcat="select Id,Description from examcategory where Id='$examcat'";
-					$dbcat=mysql_query($qcat);
-					$row_cat=mysql_fetch_array($dbcat);
+					$dbcat=mysqli_query($zalongwa, $qcat);
+					$row_cat=mysqli_fetch_array($dbcat);
 				#display Exam Marker
 					$qmaker="select * from exammarker where Id='$exammarker'";
-					$dbmarker=mysql_query($qmaker);
-					$row_marker=mysql_fetch_array($dbmarker);
+					$dbmarker=mysqli_query($zalongwa, $qmaker);
+					$row_marker=mysqli_fetch_array($dbmarker);
 				?>
             <?php // echo "<b> Course: </b>".$row_addexam['CourseCode']; </span>: ?><?php //echo $row_addexam['CourseName']."<br>"; ?>
             <?php echo "<b> Course: </b>".$coursecode; ?></span>: <?php echo $coursename."<br>"; ?>
@@ -364,15 +364,15 @@ $coursename = $row_course['CourseName'];
 				<td width="4%"><strong>Drop</strong></td>
               </tr>
               <?php $i=1;
-			  $addexam_add = mysql_query($query_addexam_add, $zalongwa) or die('Problem: Check the Add Query!');
-			  while ($row_addexam = mysql_fetch_assoc($addexam_add)){ 
+			  $addexam_add = mysqli_query($zalongwa, $query_addexam_add) or die('Problem: Check the Add Query!');
+			  while ($row_addexam = mysqli_fetch_assoc($addexam_add)){
 			    $currentreg = $row_addexam['RegNo'];
 			    $currentcourse = $row_addexam['CourseCode'];
 
 			  //check for duplicates
 				$qduplicate="SELECT RegNo FROM examresult WHERE RegNo='$currentreg' AND ExamCategory='$examcat' AND CourseCode='$currentcourse'";
-				$dbduplicate=mysql_query($qduplicate) or die('Problem');
-				$total_row = mysql_num_rows($dbduplicate);
+				$dbduplicate=mysqli_query($zalongwa, $qduplicate) or die('Problem');
+				$total_row = mysqli_num_rows($dbduplicate);
 				if($total_row < 1){
 			  ?>
               <tr bgcolor="#CCCCCC">
@@ -390,8 +390,8 @@ $coursename = $row_course['CourseName'];
 				#populate stitting combo box
 					$sit=$row_addexam['Comment'];
 					$qsitting="select Id,Description from sitting where Id='$sit'";
-					$dbsitting=mysql_query($qsitting);
-					$row_sitting=mysql_fetch_array($dbsitting);
+					$dbsitting=mysqli_query($zalongwa, $qsitting);
+					$row_sitting=mysqli_fetch_array($dbsitting);
 					if($sit==''){
 				?>
 				<option value="1">First</option>
@@ -410,8 +410,8 @@ $coursename = $row_course['CourseName'];
 			    }
 			  }  #ends while add loops
 			  #starts edit row display
-			  $addexam = mysql_query($query_addexam_edit, $zalongwa) or die('Problem: Check the Add Query!');
-			  while ($row_addexam = mysql_fetch_assoc($addexam)){ ?>
+			  $addexam = mysqli_query($zalongwa, $query_addexam_edit) or die('Problem: Check the Add Query!');
+			  while ($row_addexam = mysqli_fetch_assoc($addexam)){ ?>
 			  
               <tr bgcolor="#CCCCCC">
                 <td align="left" valign="middle"><div align="left"> <?php echo $i; ?> </div></td>
@@ -428,8 +428,8 @@ $coursename = $row_course['CourseName'];
 				#populate stitting combo box
 					$sit=$row_addexam['Comment'];
 					$qsitting="select Id,Description from sitting where Id='$sit'";
-					$dbsitting=mysql_query($qsitting);
-					$row_sitting=mysql_fetch_array($dbsitting);
+					$dbsitting=mysqli_query($zalongwa, $qsitting);
+					$row_sitting=mysqli_fetch_array($dbsitting);
 					if($sit==''){
 				?>
 				<option value="1">First</option>
@@ -461,16 +461,16 @@ $coursename = $row_course['CourseName'];
                 <td width="6%"><strong>Sitting </strong></td>
               </tr>
               <?php $i=1;
-			  $addexam_add = mysql_query($query_addexam_add, $zalongwa) or die('Problem: Check the Add Query!');
-			  while ($row_addexam = mysql_fetch_assoc($addexam_add)){ 
+			  $addexam_add = mysqli_query($zalongwa, $query_addexam_add) or die('Problem: Check the Add Query!');
+			  while ($row_addexam = mysqli_fetch_assoc($addexam_add)){
 			    $currentreg = $row_addexam['RegNo'];
 				$checked = $row_addexam['Checked'];
 			    $currentcourse = $row_addexam['CourseCode'];
 
 			  //check for duplicates
 				$qduplicate="SELECT RegNo FROM examresult WHERE RegNo='$currentreg' AND ExamCategory='$examcat' AND CourseCode='$currentcourse'";
-				$dbduplicate=mysql_query($qduplicate) or die('Problem');
-				$total_row = mysql_num_rows($dbduplicate);
+				$dbduplicate=mysqli_query($zalongwa, $qduplicate) or die('Problem');
+				$total_row = mysqli_num_rows($dbduplicate);
 				if(($total_row < 1) && ($checked==0)){
 			  ?>
               <tr bgcolor="#CCCCCC">
@@ -487,8 +487,8 @@ $coursename = $row_course['CourseName'];
 				#populate stitting combo box
 					$sit=$row_addexam['Comment'];
 					$qsitting="select Id,Description from sitting where Id='$sit'";
-					$dbsitting=mysql_query($qsitting);
-					$row_sitting=mysql_fetch_array($dbsitting);
+					$dbsitting=mysqli_query($zalongwa, $qsitting);
+					$row_sitting=mysqli_fetch_array($dbsitting);
 					if($sit==''){
 				?>
 				<option value="1">First</option>
@@ -504,8 +504,8 @@ $coursename = $row_course['CourseName'];
               <?php $i=$i+1;
 			   }
 			  } #ends while add row exam
-			  $addexam = mysql_query($query_addexam_edit, $zalongwa) or die('Problem: Check the Add Query!');
-			  while ($row_addexam = mysql_fetch_assoc($addexam)) { 
+			  $addexam = mysqli_query($zalongwa, $query_addexam_edit) or die('Problem: Check the Add Query!');
+			  while ($row_addexam = mysqli_fetch_assoc($addexam)) {
 			  $checked = $row_addexam['Checked'];
 			  if ($checked==0){
 			  ?>
@@ -523,8 +523,8 @@ $coursename = $row_course['CourseName'];
 				#populate stitting combo box
 					$sit=$row_addexam['Comment'];
 					$qsitting="select Id,Description from sitting where Id='$sit'";
-					$dbsitting=mysql_query($qsitting);
-					$row_sitting=mysql_fetch_array($dbsitting);
+					$dbsitting=mysqli_query($zalongwa, $qsitting);
+					$row_sitting=mysqli_fetch_array($dbsitting);
 					if($sit==''){
 				?>
 				<option value="1">First</option>

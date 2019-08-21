@@ -27,31 +27,31 @@
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
 
 $rawcode = $_POST['txtCode'];
-$programme = ereg_replace("[[:space:]]+", " ",$rawcode);
+$programme = preg_replace("[[:space:]]+", " ",$rawcode);
 $rawname = $_POST['txtTitle'];
-$code = ereg_replace("[[:space:]]+", " ",$rawname);
+$code = preg_replace("[[:space:]]+", " ",$rawname);
 $rawcstatus = $_POST['txtStatus'];
-$cstatus = ereg_replace("[[:space:]]+", " ",$rawcstatus);
+$cstatus = preg_replace("[[:space:]]+", " ",$rawcstatus);
 $rawyearofstudy = $_POST['YearofStudy'];
-$yearofstudy = ereg_replace("[[:space:]]+", " ",$rawyearofstudy);
+$yearofstudy = preg_replace("[[:space:]]+", " ",$rawyearofstudy);
 $rawsemester = $_POST['semester'];
-$semester = ereg_replace("[[:space:]]+", " ",$rawsemester);
+$semester = preg_replace("[[:space:]]+", " ",$rawsemester);
 $rawayear = $_POST['ayear'];
-$ayear = ereg_replace("[[:space:]]+", " ",$rawayear);
+$ayear = preg_replace("[[:space:]]+", " ",$rawayear);
 #check if coursecode exist
 $sql ="SELECT CourseCode 			
 	  FROM course WHERE (CourseCode  = '$code')";
-$result = mysql_query($sql);
-$coursecodeFound = mysql_num_rows($result);
+$result = mysqli_query($zalongwa, $sql);
+$coursecodeFound = mysqli_num_rows($result);
 if ($coursecodeFound) {
 	#check if course already registered
    $check = "SELECT * FROM courseprogramme WHERE ProgrammeID='$programme' AND CourseCode='$code' AND Status='$cstatus' AND YearofStudy='$yearofstudy' AND AYear='$ayear' AND Semester='$semester'";
-$check_result = mysql_query($check);
-$total_rows= mysql_num_rows($check_result);
+$check_result = mysqli_query($zalongwa, $check);
+$total_rows= mysqli_num_rows($check_result);
  if($total_rows== 0){  
 	#insert records	 
 	$insSQL = "INSERT INTO courseprogramme (ProgrammeID, CourseCode, Status, YearofStudy, Semester, AYear) VALUES ('$programme', '$code', '$cstatus', '$yearofstudy', '$semester','$ayear')";  				   
-	  $Result1 = mysql_query($insSQL);
+	  $Result1 = mysqli_query($zalongwa, $insSQL);
 	  if(!$Result1){
 	  	$error = urlencode('Something wrong. Try again');
 		$location = "lecturerProgrammecourselist.php?edit=".$programme."&ayear=".$ayear."&error=$error";
@@ -359,23 +359,23 @@ $keyayear = $_GET['ayear'];
 if (isset($_GET['edit'])){
 #get post variables
 $rawkey = addslashes($_GET['edit']);
-$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+$key = preg_replace("[[:space:]]+", " ",$rawkey);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_instEdit = "SELECT * FROM courseprogramme WHERE ProgrammeID ='$key'";
-$instEdit = mysql_query($query_instEdit, $zalongwa);
-$row_instEdit = mysql_fetch_assoc($instEdit);
-$totalRows_instEdit = mysql_num_rows($instEdit);
+$instEdit = mysqli_query($zalongwa, $query_instEdit);
+$row_instEdit = mysqli_fetch_assoc($instEdit);
+$totalRows_instEdit = mysqli_num_rows($instEdit);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $prog_sql = "SELECT * FROM programme WHERE ProgrammeCode ='$key'";
-$prog_result = mysql_query($prog_sql, $zalongwa);
-$fetc_prog = mysql_fetch_assoc($prog_result);
+$prog_result = mysqli_query($zalongwa, $prog_sql);
+$fetc_prog = mysqli_fetch_assoc($prog_result);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$ayear = mysql_query($query_ayear, $zalongwa);
-$row_ayear = mysql_fetch_assoc($ayear);
+$ayear = mysqli_query($zalongwa, $query_ayear);
+$row_ayear = mysqli_fetch_assoc($ayear);
 
 ?>
 <style type="text/css">
@@ -428,11 +428,11 @@ echo '<br/>Configuration  - '.$keyayear;
 			?>
                     <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
                     <?php
-				} while ($row_ayear = mysql_fetch_assoc($ayear));
-				  $rows = mysql_num_rows($ayear);
+				} while ($row_ayear = mysqli_fetch_assoc($ayear));
+				  $rows = mysqli_num_rows($ayear);
 				  if($rows > 0) {
-			      mysql_data_seek($ayear, 0);
-				  $row_ayear = mysql_fetch_assoc($ayear);
+			      mysqli_data_seek($ayear, 0);
+				  $row_ayear = mysqli_fetch_assoc($ayear);
 			  }
                   }else{
                   	

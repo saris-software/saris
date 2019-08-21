@@ -9,7 +9,7 @@ $username = addslashes($_GET['username']);
 require_once('../Connections/zalongwa.php'); 
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'Data Backup')";   
-$result = mysqli_query($sql);// or die("Siwezi kuingiza data.<br>" . mysqli_error());
+$result = mysqli_query($zalongwa,$sql);// or die("Siwezi kuingiza data.<br>" . mysqli_error());
 
 //$result = @mysqli_query("show tables");
     //while (@$line = mysqli_fetch_array($result, MYSQL_ASSOC)) {
@@ -18,7 +18,7 @@ $result = mysqli_query($sql);// or die("Siwezi kuingiza data.<br>" . mysqli_erro
 $tablename = "examresult";
 						$select = "SELECT * FROM  $tablename";     
 								  
-						$export = mysqli_query($select);
+						$export = mysqli_query($zalongwa,$select);
 						$fields = mysqli_num_fields($export);
 						
 						for ($i = 0; $i < $fields; $i++) { 
