@@ -10,29 +10,29 @@ require_once('../Connections/zalongwa.php');
 	//$additionalStyleSheet = './general.css';
 	include('admissionheader.php');
 	
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_AllocationCriteria = "SELECT CriteriaID, ShortName FROM criteria";
-$AllocationCriteria = mysql_query($query_AllocationCriteria, $zalongwa) or die(mysql_error());
-$row_AllocationCriteria = mysql_fetch_assoc($AllocationCriteria);
-$totalRows_AllocationCriteria = mysql_num_rows($AllocationCriteria);
+$AllocationCriteria = mysqli_query($zalongwa,$query_AllocationCriteria) or die(mysqli_error());
+$row_AllocationCriteria = mysqli_fetch_assoc($AllocationCriteria);
+$totalRows_AllocationCriteria = mysqli_num_rows($AllocationCriteria);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_Hostel = "SELECT HID, HName FROM hostel";
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa,$query_Hostel) or die(mysql_error());
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_RoomApplication = "SELECT RegNo, AppYear, AllCriteria, Hall FROM roomapplication";
-$RoomApplication = mysql_query($query_RoomApplication, $zalongwa) or die(mysql_error());
-$row_RoomApplication = mysql_fetch_assoc($RoomApplication);
-$totalRows_RoomApplication = mysql_num_rows($RoomApplication);
+$RoomApplication = mysqli_query($zalongwa,$query_RoomApplication) or die(mysqli_error());
+$row_RoomApplication = mysqli_fetch_assoc($RoomApplication);
+$totalRows_RoomApplication = mysqli_num_rows($RoomApplication);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AYear = mysql_query($query_AYear, $zalongwa) or die(mysql_error());
-$row_AYear = mysql_fetch_assoc($AYear);
-$totalRows_AYear = mysql_num_rows($AYear);
+$AYear = mysqli_query($zalongwa,$query_AYear) or die(mysqli_error());
+$row_AYear = mysqli_fetch_assoc($AYear);
+$totalRows_AYear = mysqli_num_rows($AYear);
 	
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -70,15 +70,15 @@ $regno = addslashes($_POST['regno']);
 $appyear = addslashes($_POST['AppYear']);
 
 $qupdate ="UPDATE roomapplication SET AllCriteria = '$criteria' WHERE RegNo='$regno' AND AppYear ='$appyear'";
-$dbupdate = mysql_query($qupdate);
+$dbupdate = mysqli_query($zalongwa,$qupdate);
 }
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "studentRoomApplication")) {
 //get academic year
 $year = $_POST['AppYear'];
 //query current Year
 $qyear = "SELECT AYear from academicyear WHERE Status = 1";
-$dbyear = mysql_query($qyear);
-$row_year = mysql_fetch_assoc($dbyear);
+$dbyear = mysqli_query($zalongwa,$qyear);
+$row_year = mysqli_fetch_assoc($dbyear);
 $currentYear = $row_year['AYear'];
 if($currentYear<>$year){
 echo "You cannot Apply for This Year:".$year."<br> Application Rejected";
@@ -88,18 +88,18 @@ $regno = addslashes($_POST['regno']);
 $appyear = addslashes($_POST['AppYear']);
 //validate this regno
 $qregno =  "select Name, RegNo from student where RegNo='$regno'";
-$dbregno=mysql_query($qregno);
-if(mysql_num_rows($dbregno)>0){
+$dbregno=mysqli_query($zalongwa,$qregno);
+if(mysqli_num_rows($dbregno)>0){
 	#check if is already applied
 	$qapp ="SELECT * FROM roomapplication WHERE RegNo='$regno' AND AppYear = '$appyear'";
-	$dbapp = mysql_query($qapp);
-	$app_total = mysql_num_rows($dbapp);
+	$dbapp = mysqli_query($zalongwa,$qapp);
+	$app_total = mysqli_num_rows($dbapp);
 	if($app_total>0){
-	$app_rows = mysql_fetch_assoc($dbapp);
+	$app_rows = mysqli_fetch_assoc($dbapp);
 	$criteria = $app_rows['AllCriteria'];
 	$app_AllocationCriteria = "SELECT CriteriaID, ShortName FROM criteria WHERE CriteriaID = '$criteria'";
-	$Criteria = mysql_query($app_AllocationCriteria, $zalongwa) or die(mysql_error());
-	$row_Criteria = mysql_fetch_assoc($Criteria);
+	$Criteria = mysqli_query($zalongwa,$app_AllocationCriteria) or die(mysqli_error());
+	$row_Criteria = mysqli_fetch_assoc($Criteria);
 	echo 'OOPS! The RegNo '.$app_rows['RegNo'].' is already applied !';
 	?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="editstudentRoomApplication" id="editstudentRoomApplication">
@@ -114,11 +114,11 @@ do {
 ?>
               <option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
               <?php
-} while ($row_AYear = mysql_fetch_assoc($AYear));
-  $rows = mysql_num_rows($AYear);
+} while ($row_AYear = mysqli_fetch_assoc($AYear));
+  $rows = mysqli_num_rows($AYear);
   if($rows > 0) {
-      mysql_data_seek($AYear, 0);
-	  $row_AYear = mysql_fetch_assoc($AYear);
+      mysqli_data_seek($AYear, 0);
+	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
 		  </select>
@@ -144,11 +144,11 @@ do {
 ?>
               <option value="<?php echo $row_AllocationCriteria['CriteriaID']?>"><?php echo $row_AllocationCriteria['ShortName']?></option>
               <?php
-} while ($row_AllocationCriteria = mysql_fetch_assoc($AllocationCriteria));
-  $rows = mysql_num_rows($AllocationCriteria);
+} while ($row_AllocationCriteria = mysqli_fetch_assoc($AllocationCriteria));
+  $rows = mysqli_num_rows($AllocationCriteria);
   if($rows > 0) {
-      mysql_data_seek($AllocationCriteria, 0);
-	  $row_AllocationCriteria = mysql_fetch_assoc($AllocationCriteria);
+      mysqli_data_seek($AllocationCriteria, 0);
+	  $row_AllocationCriteria = mysqli_fetch_assoc($AllocationCriteria);
   }
 ?>
           </select></td>
@@ -178,8 +178,8 @@ do {
 							   GetSQLValueString($_POST['AppYear'], "date"),
 							   GetSQLValueString($_POST['AllCriteria'], "text"),
 							   GetSQLValueString($_POST['Hall'], "text"));
-		  mysql_select_db($database_zalongwa, $zalongwa);
-		  $Result1 = mysql_query($insertSQL, $zalongwa);
+		  mysqli_select_db($zalongwa,$database_zalongwa);
+		  $Result1 = mysqli_query($zalongwa,$insertSQL);
  	 }
   }else{
   echo 'OOPS! The RegNo '.$regno.' Does not Exist !';
@@ -214,11 +214,11 @@ do {
 ?>
               <option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
               <?php
-} while ($row_AYear = mysql_fetch_assoc($AYear));
-  $rows = mysql_num_rows($AYear);
+} while ($row_AYear = mysqli_fetch_assoc($AYear));
+  $rows = mysqli_nium_rows($AYear);
   if($rows > 0) {
-      mysql_data_seek($AYear, 0);
-	  $row_AYear = mysql_fetch_assoc($AYear);
+      mysqli_data_seek($AYear, 0);
+	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
 		  </select>
@@ -236,11 +236,11 @@ do {
 ?>
               <option value="<?php echo $row_AllocationCriteria['CriteriaID']?>"><?php echo $row_AllocationCriteria['ShortName']?></option>
               <?php
-} while ($row_AllocationCriteria = mysql_fetch_assoc($AllocationCriteria));
-  $rows = mysql_num_rows($AllocationCriteria);
+} while ($row_AllocationCriteria = mysqli_fetch_assoc($AllocationCriteria));
+  $rows = mysqli_num_rows($AllocationCriteria);
   if($rows > 0) {
-      mysql_data_seek($AllocationCriteria, 0);
-	  $row_AllocationCriteria = mysql_fetch_assoc($AllocationCriteria);
+      mysqli_data_seek($AllocationCriteria, 0);
+	  $row_AllocationCriteria = mysqli_fetch_assoc($AllocationCriteria);
   }
 ?>
           </select></td>

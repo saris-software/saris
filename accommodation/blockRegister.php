@@ -71,7 +71,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
                        GetSQLValueString($_POST['Id'], "text"));
 
   mysqli_select_db($zalongwa, $database_zalongwa);
-  $Result1 = mysqli_query($updateSQL, $zalongwa);
+  $Result1 = mysqli_query($zalongwa,$updateSQL);
 
   $updateGoTo = "blockRegister.php";
   if (isset($_SERVER['QUERY_STRING'])) {

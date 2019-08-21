@@ -49,17 +49,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmCautionFeepenalt
                        GetSQLValueString($_POST['amount'], "double"),
                        GetSQLValueString($_POST['comments'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error());
 echo '<meta http-equiv = "refresh" content ="0; 
 	url = housingindex.php">';
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_cautionfeepenaltypenalty = "SELECT Name, RegNo FROM student ORDER BY RegNo ASC";
-$cautionfeepenaltypenalty = mysql_query($query_cautionfeepenaltypenalty, $zalongwa) or die(mysql_error());
-$row_cautionfeepenaltypenalty = mysql_fetch_assoc($cautionfeepenaltypenalty);
-$totalRows_cautionfeepenaltypenalty = mysql_num_rows($cautionfeepenaltypenalty);
+$cautionfeepenaltypenalty = mysqli_query($zalongwa,$query_cautionfeepenaltypenalty) or die(mysqli_error());
+$row_cautionfeepenaltypenalty = mysqli_fetch_assoc($cautionfeepenaltypenalty);
+$totalRows_cautionfeepenaltypenalty = mysqli_num_rows($cautionfeepenaltypenalty);
 
 ?>
               <form action="<?php echo $editFormAction; ?>" method="POST" name="frmCautionFeepenalty" id="frmCautionFeepenalty">
@@ -90,5 +90,5 @@ $totalRows_cautionfeepenaltypenalty = mysql_num_rows($cautionfeepenaltypenalty);
               </form>
        
 <?php
-mysql_free_result($cautionfeepenaltypenalty);
+mysqli_free_result($cautionfeepenaltypenalty);
 ?>

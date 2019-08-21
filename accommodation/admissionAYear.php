@@ -46,15 +46,15 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmAyear")) {
         $year = $_POST['txtYear'];
         $query_year = "SELECT * FROM academicyear WHERE AYear = '$year' ";
-		$result = mysqli_query($query_year) or die("Hii ngumu");
+		$result = mysqli_query($zalongwa,$query_year) or die("Hii ngumu");
 		$totalRows_result = mysqli_num_rows($result);
 		if ($totalRows_result == 0) {
   $insertSQL = sprintf("INSERT INTO academicyear (AYear, Status) VALUES (%s, %s)",
                        GetSQLValueString($_POST['txtYear'], "text"),
                        GetSQLValueString(isset($_POST['chStatus']) ? "true" : "", "defined","1","0"));
 
-  mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($insertSQL, $zalongwa) or die(mysqli_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error());
   }
 }
 
@@ -68,13 +68,13 @@ $startRow_ayear = $pageNum_ayear * $maxRows_ayear;
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_ayear = "SELECT * FROM academicyear";
 $query_limit_ayear = sprintf("%s LIMIT %d, %d", $query_ayear, $startRow_ayear, $maxRows_ayear);
-$ayear = mysqli_query($query_limit_ayear, $zalongwa) or die(mysqli_error());
+$ayear = mysqli_query($zalongwa,$query_limit_ayear) or die(mysqli_error());
 $row_ayear = mysqli_fetch_assoc($ayear);
 
 if (isset($_GET['totalRows_ayear'])) {
   $totalRows_ayear = $_GET['totalRows_ayear'];
 } else {
-  $all_ayear = mysqli_query($query_ayear);
+  $all_ayear = mysqli_query($zalongwa,$query_ayear);
   $totalRows_ayear = mysqli_num_rows($all_ayear);
 }
 $totalPages_ayear = ceil($totalRows_ayear/$maxRows_ayear)-1;

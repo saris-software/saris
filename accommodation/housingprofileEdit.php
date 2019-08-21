@@ -157,9 +157,9 @@ a:active {
 	$username = $_GET['RegNo'];
 
 $sql = "SELECT FullName, Email, Position, UserName, Registered FROM Security WHERE UserName = '$username'";
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
 
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$Name = stripslashes($result["FullName"]);
 		$username = stripslashes($result["UserName"]);
 		$position = stripslashes($result["Position"]);
@@ -213,5 +213,5 @@ while($result = mysql_fetch_array($query)) {
 
 </html>
 <?php
-mysql_free_result($query);
+mysqli_free_result($query);
 ?>

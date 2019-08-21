@@ -52,19 +52,18 @@ else{
 	//$qayear = "SELECT DISTINCT examresult.AYear FROM examresult inner JOIN academicyear ON (examresult.AYear=academicyear.AYear) WHERE RegNo = '$regno' and checked=1 AND intYearID>='$ayearid' ORDER BY AYear ASC"; 
 	}
 $dbayear = mysqli_query($zalongwa,$qayear);
-	i
 	//query academeic year
 	//$qayear = "SELECT DISTINCT AYear FROM examresult WHERE RegNo = '$regno' and checked=1 ORDER BY AYear ASC";
-	//$dbayear = mysql_query($qayear);
+	//$dbayear = mysqli_query($qayear);
 
 
 	
 	#query project
 	/*
 	$qproject = "SELECT ayear, thesis FROM thesis WHERE RegNo = '$key'";
-	$dbproject = mysql_query($qproject);
-	$row_project = mysql_fetch_assoc($dbproject);
-	$thesisresult = mysql_num_rows($dbproject);
+	$dbproject = mysqli_query($zalongwa,$qproject);
+	$row_project = mysqli_fetch_assoc($dbproject);
+	$thesisresult = mysqli_num_rows($dbproject);
 	$thesis = $row_project['thesis'];
 	$thesisyear = $row_project['ayear'];
 	*/
@@ -209,7 +208,7 @@ $dbayear = mysqli_query($zalongwa,$qayear);
 						/*
 						#get specific ourse units
 						$qcunits = "select Units from course where (course.Programme = '$degree') AND coursecode = '$course'";
-						$dbcunits = mysqli_query($qcunits);
+						$dbcunits = mysqli_query($zalongwa,$qcunits);
 						$count = mysqli_num_rows($dbcunits);
 						if ($count > 0) 
 						{

@@ -38,7 +38,7 @@
 	#get organisation name
 	
 	$qname = 'SELECT Name, Address FROM organisation';
-	$dbname = mysqli_query($zalongwa, $qname);
+	$dbname = mysqli_query($zalongwa,$qname);
 	$name_row = mysqli_fetch_assoc($dbname);
 
 ?>

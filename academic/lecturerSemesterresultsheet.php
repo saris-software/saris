@@ -97,7 +97,7 @@
 			$whereclause=" ";
 			$stud=1;
 			
-			while($rowstd = mysql_fetch_array($dbstd)) {
+			while($rowstd = mysqli_fetch_array($dbstd)) {
 				$stdregno = $rowstd['RegNo'];
 				$whereclause.=($stud<$stud_num)?"RegNo='$stdregno' OR ":"RegNo='$stdregno'";
 				

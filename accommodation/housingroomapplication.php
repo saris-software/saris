@@ -242,7 +242,7 @@ if (isset($_POST['search']) && ($_POST['search'] == "Search"))
 					echo "<td align=\"left\" valign=\"middle\">$citeria</td>";
 					echo "<td align=\"left\" valign=\"middle\">$hall</td></tr>";
 				$sql="UPDATE roomapplication SET Status = 1, Processed = now()";
-				$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysqli_error());
+				$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
 			$i=$i+1;
 		}
 		echo "</table>";
@@ -308,7 +308,7 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 }
 
 
-mysqli_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
 $AcademicYear = mysqli_query($zalongwa,$query_AcademicYear) or die(mysqli_error());
 $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
@@ -320,7 +320,7 @@ $Hostel = mysqli_query($zalongwa,$query_Hostel) or die(mysqli_error());
 $row_Hostel = mysqli_fetch_assoc($Hostel);
 $totalRows_Hostel = mysqli_num_rows($Hostel);
 
-mysqli_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_criteria = "SELECT ShortName FROM criteria ORDER BY ShortName";
 $criteria = mysqli_query($zalongwa,$query_criteria) or die(mysqli_error());
 $row_criteria = mysqli_fetch_assoc($criteria);
