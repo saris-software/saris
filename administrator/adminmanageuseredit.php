@@ -185,11 +185,11 @@ mysql_close($zalongwa);
 									?>
             		<option value="<?php echo $row_faculty['FacultyID']?>"><?php echo $row_faculty['FacultyName']?></option>
            				 <?php
-								} while ($row_faculty = mysql_fetch_assoc($faculty));
-  								$rows = mysql_num_rows($faculty);
+								} while ($row_faculty = mysqli_fetch_assoc($faculty));
+  								$rows = mysqli_num_rows($faculty);
   								if($rows > 0) {
-      								mysql_data_seek($faculty, 0);
-	  								$row_faculty = mysql_fetch_assoc($faculty);
+      								mysqli_data_seek($faculty, 0);
+	  								$row_faculty = mysqli_fetch_assoc($faculty);
   								}
 						?>
                 </select></td>

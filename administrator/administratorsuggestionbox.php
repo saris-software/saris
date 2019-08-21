@@ -42,8 +42,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
                        GetSQLValueString($_POST['toid'], "text"),
                        GetSQLValueString($_POST['message'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($insertSQL, $zalongwa) or die(mysqli_error($zalongwa));
 
   $insertGoTo = "administratorindex.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -53,11 +53,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
   header(sprintf("Location: %s", $insertGoTo));
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_suggestionbox = "SELECT suggestion.received, suggestion.fromid, suggestion.toid, suggestion.message FROM suggestion";
-$suggestionbox = mysql_query($query_suggestionbox, $zalongwa) or die(mysql_error());
-$row_suggestionbox = mysql_fetch_assoc($suggestionbox);
-$totalRows_suggestionbox = mysql_num_rows($suggestionbox);
+$suggestionbox = mysqli_query($zalongwa,$query_suggestionbox) or die(mysqli_error($zalongwa));
+$row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
+$totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
  
 if(!$username){
 	echo ("Session Expired, <a href=\"ReLogin.php\"> Click Here<a> to Re-Login");
@@ -222,5 +222,5 @@ a:active {
 
 </html>
 <?php
-mysql_free_result($suggestionbox);
+mysqli_free_result($suggestionbox);
 ?>

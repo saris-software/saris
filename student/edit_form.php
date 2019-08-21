@@ -543,7 +543,7 @@ EOD;
 		
 	$query_studentStatus1 = mysqli_query($zalongwa,"SELECT StatusID,Status FROM studentstatus where StatusID='$status'");
 	$stat=mysqli_fetch_array($query_studentStatus1);
-	$status2 = ($stat['Status'] == '')? "Active":$stat[Status];
+	$status2 = ($stat['Status'] == '')? "Active":$stat['Status'];
 	
 	$reg_form .=<<<EOD
 				<input type="hidden" name="status" value="$status" />

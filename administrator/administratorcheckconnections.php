@@ -47,7 +47,7 @@
 			echo "<hr>";
 			//$result = mysqli_query($sql);
 			$sql = "select @@global.thread_cache_size";
-			$query = @mysqli_query($sql);
+			$query = @mysqli_query($zalongwa,$sql);
 			while($result = mysqli_fetch_array($query)) {
 			$id = stripslashes($result["@@global.thread_cache_size"]);
 			?>  <table style="border:0">
@@ -59,7 +59,7 @@
 			<?php
 			echo "<hr>";
 			$sql = "SHOW full processlist";
-			$query = @mysqli_query($sql);
+			$query = @mysqli_query($zalongwa,$sql);
 			//echo "If query was executed it will print 1, see the results: ".$query;
 			?> <table style="border:1px">
 			6.0 Current Running Processes:

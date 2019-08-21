@@ -19,7 +19,8 @@
  */
 //include ('class.pdf.php');
 //include ('fpdf.php');
-class PDF {
+class PDF
+{
 
     var $_buffer = '';          // Buffer holding in-memory PDF.
     var $_state = 0;            // Current document state.
@@ -35,20 +36,20 @@ class PDF {
     var $_current_font;         // Array with current font info.
     var $_font_size = 12;       // Current font size in points.
     var $_compress;             // Flag to compress or not.
-    var $_core_fonts = array('courier'      => 'Courier',
-                             'courierB'     => 'Courier-Bold',
-                             'courierI'     => 'Courier-Oblique',
-                             'courierBI'    => 'Courier-BoldOblique',
-                             'helvetica'    => 'Helvetica',
-                             'helveticaB'   => 'Helvetica-Bold',
-                             'helveticaI'   => 'Helvetica-Oblique',
-                             'helveticaBI'  => 'Helvetica-BoldOblique',
-                             'times'        => 'Times-Roman',
-                             'timesB'       => 'Times-Bold',
-                             'timesI'       => 'Times-Italic',
-                             'timesBI'      => 'Times-BoldItalic',
-                             'symbol'       => 'Symbol',
-                             'zapfdingbats' => 'ZapfDingbats');
+    var $_core_fonts = array('courier' => 'Courier',
+        'courierB' => 'Courier-Bold',
+        'courierI' => 'Courier-Oblique',
+        'courierBI' => 'Courier-BoldOblique',
+        'helvetica' => 'Helvetica',
+        'helveticaB' => 'Helvetica-Bold',
+        'helveticaI' => 'Helvetica-Oblique',
+        'helveticaBI' => 'Helvetica-BoldOblique',
+        'times' => 'Times-Roman',
+        'timesB' => 'Times-Bold',
+        'timesI' => 'Times-Italic',
+        'timesBI' => 'Times-BoldItalic',
+        'symbol' => 'Symbol',
+        'zapfdingbats' => 'ZapfDingbats');
     var $_fill_color = '0 g';   // Color used on text and fills.
     var $_draw_color = '0 G';   // Line draw color.
     var $_line_width = 1;       // Drawing line width.
@@ -101,7 +102,7 @@ class PDF {
             $format = array(612, 1008);
         } else {
             die(sprintf('Unknown page format: %s', $format));
-        }   
+        }
         $pdf->_w = $format[0];
         $pdf->_h = $format[1];
 
@@ -129,11 +130,11 @@ class PDF {
      * Note: the Zlib extension is required for this feature. If not present,
      * compression will be turned off.
      *
-     * @param bool $compress  Boolean indicating if compression must be
+     * @param bool $compress Boolean indicating if compression must be
      *                        enabled or not.
      */
     function setCompression($compress)
-    {   
+    {
         /* If no gzcompress function is available then default to
          * false. */
         $this->_compress = (function_exists('gzcompress') ? $compress : false);
@@ -147,7 +148,7 @@ class PDF {
      * @access public
      */
     function open()
-    {   
+    {
         $this->_state = 1;          // Set state to initialised.
         $this->_out('%PDF-1.3');    // Output the PDF header.
     }
@@ -160,11 +161,11 @@ class PDF {
      * @access public
      */
     function addPage()
-    {   
+    {
         $this->_page++;                    // Increment page count.
         $this->_pages[$this->_page] = '';  // Start the page buffer.
         $this->_state = 2;                 // Set state to page
-                                           // opened.
+        // opened.
         /* Check if font has been set before this page. */
         if ($this->_font_family) {
             $this->setFont($this->_font_family, $this->_font_style, $this->_font_size);
@@ -172,7 +173,7 @@ class PDF {
         /* Check if fill color has been set before this page. */
         if ($this->_fill_color != '0 g') {
             $this->_out($this->_fill_color);
-        }   
+        }
         /* Check if draw color has been set before this page. */
         if ($this->_draw_color != '0 G') {
             $this->_out($this->_draw_color);
@@ -195,7 +196,7 @@ class PDF {
      *
      * @access public
      *
-     * @param string $family          Family font. It must be one of the
+     * @param string $family Family font. It must be one of the
      *                                standard families (case insensitive):
      *                                  - Courier (fixed-width)
      *                                  - Helvetica or Arial (sans serif)
@@ -224,7 +225,7 @@ class PDF {
         if ($family == 'arial') {               // Use helvetica.
             $family = 'helvetica';
         } elseif ($family == 'symbol' ||        // No styles for
-                  $family == 'zapfdingbats') {  // these two fonts.
+            $family == 'zapfdingbats') {  // these two fonts.
             $style = '';
         }
 
@@ -249,14 +250,14 @@ class PDF {
         if (!isset($this->_fonts[$fontkey])) {  // Test if cached.
             $i = count($this->_fonts) + 1;      // Increment font
             $this->_fonts[$fontkey] = array(    // object count and
-                'i'    => $i,                   // store cache.
+                'i' => $i,                   // store cache.
                 'name' => $this->_core_fonts[$fontkey]);
         }
 
         /* Store current font information. */
-        $this->_font_family  = $family;
-        $this->_font_style   = $style;
-        $this->_font_size    = $size;
+        $this->_font_family = $family;
+        $this->_font_style = $style;
+        $this->_font_size = $size;
         $this->_current_font = $this->_fonts[$fontkey];
 
         /* Output font information if at least one page has been
@@ -271,7 +272,7 @@ class PDF {
      *
      * @access public
      *
-     * @param float $size  The size (in points).
+     * @param float $size The size (in points).
      */
     function setFontSize($size)
     {
@@ -285,8 +286,8 @@ class PDF {
          * defined. */
         if ($this->_page > 0) {
             $this->_out(sprintf('BT /F%d %.2f Tf ET',
-                                $this->_current_font['i'],
-                                $this->_font_size));
+                $this->_current_font['i'],
+                $this->_font_size));
         }
     }
 
@@ -299,9 +300,9 @@ class PDF {
      *
      * @access public
      *
-     * @param string $cs          Indicates the colorspace which can be either
+     * @param string $cs Indicates the colorspace which can be either
      *                            'rgb', 'cmyk' or 'gray'. Defaults to 'rgb'.
-     * @param float $c1           First color component, floating point value
+     * @param float $c1 First color component, floating point value
      *                            between 0 and 1. Required for gray, rgb and
      *                            cmyk.
      * @param optional float $c2  Second color component, floating point value
@@ -317,11 +318,11 @@ class PDF {
         if ($cs = 'rgb') {
             /* Using a three component RGB color. */
             $this->_fill_color = sprintf('%.3f %.3f %.3f rg',
-                                         $c1, $c2, $c3);
+                $c1, $c2, $c3);
         } elseif ($cs = 'cmyk') {
             /* Using a four component CMYK color. */
             $this->_fill_color = sprintf('%.3f %.3f %.3f %.3f k',
-                                         $c1, $c2, $c3, $c4);
+                $c1, $c2, $c3, $c4);
         } else {
             /* Grayscale one component color. */
             $this->_fill_color = sprintf('%.3f g', $c1);
@@ -340,9 +341,9 @@ class PDF {
      *
      * @access public
      *
-     * @param string $cs          Indicates the colorspace which can be either
+     * @param string $cs Indicates the colorspace which can be either
      *                            'rgb', 'cmyk' or 'gray'. Defaults to 'rgb'.
-     * @param float $c1           First color component, floating point value
+     * @param float $c1 First color component, floating point value
      *                            between 0 and 1. Required for gray, rgb and
      *                            cmyk.
      * @param optional float $c2  Second color component, floating point value
@@ -353,17 +354,17 @@ class PDF {
      *                            between 0 and 1. Required for cmyk.
      */
     function setDrawColor($cs = 'rgb', $c1, $c2 = 0, $c3 = 0, $c4 = 0)
-    {   
+    {
         $cs = strtolower($cs);
         if ($cs = 'rgb') {
             $this->_draw_color = sprintf('%.3f %.3f %.3f RG',
-                                         $c1, $c2, $c3);
+                $c1, $c2, $c3);
         } elseif ($cs = 'cmyk') {
             $this->_draw_color = sprintf('%.3f %.3f %.3f %.3f K',
-                                         $c1, $c2, $c3, $c4);
+                $c1, $c2, $c3, $c4);
         } else {
             $this->_draw_color = sprintf('%.3f G', $c1);
-        }   
+        }
         /* If document started output to buffer. */
         if ($this->_page > 0) {
             $this->_out($this->_draw_color);
@@ -373,11 +374,11 @@ class PDF {
     /**
      * Defines the line width. By default, the value equals 1 pt. The method
      * can be called before the first page is created and the value is
-     * retained from page to page. 
-     * 
+     * retained from page to page.
+     *
      * @access public
-     * 
-     * @param float $width  The width.
+     *
+     * @param float $width The width.
      */
     function setLineWidth($width)
     {
@@ -394,17 +395,17 @@ class PDF {
      *
      * @access public
      *
-     * @param float $x      Abscissa of the origin.
-     * @param float $y      Ordinate of the origin.
-     * @param string $text  String to print.
+     * @param float $x Abscissa of the origin.
+     * @param float $y Ordinate of the origin.
+     * @param string $text String to print.
      */
     function text($x, $y, $text)
     {
         $text = $this->_escape($text);    // Escape any harmful
-                                          // characters.
+        // characters.
 
         $out = sprintf('BT %.2f %.2f Td (%s) Tj ET',
-                       $x, $this->_h - $y, $text);
+            $x, $this->_h - $y, $text);
         $this->_out($out);
     }
 
@@ -426,10 +427,10 @@ class PDF {
      *
      * @access public
      *
-     * @param string $file            Name of the file containing the image.
-     * @param float $x                Abscissa of the upper-left corner.
-     * @param float $y                Ordinate of the upper-left corner.
-     * @param float $width            Width of the image in the page. If equal
+     * @param string $file Name of the file containing the image.
+     * @param float $x Abscissa of the upper-left corner.
+     * @param float $y Ordinate of the upper-left corner.
+     * @param float $width Width of the image in the page. If equal
      *                                to zero, it is automatically calculated
      *                                to keep the original proportions.
      * @param optional float $height  Height of the image in the page. If not
@@ -459,7 +460,7 @@ class PDF {
             $this->_images[$file] = $info;
         } else {
             $info = $this->_images[$file];          // Known image, retrieve
-                                                    // from array.
+            // from array.
         }
 
         /* If not specified, do automatic width and height
@@ -480,30 +481,30 @@ class PDF {
 
     /**
      * Draws a line between two points.
-     * 
+     *
      * @access public
-     * 
-     * @param float $x1  Abscissa of first point. 
-     * @param float $y1  Ordinate of first point.
-     * @param float $x2  Abscissa of second point.
-     * @param float $y2  Ordinate of second point.
-     * 
-     */                           
+     *
+     * @param float $x1 Abscissa of first point.
+     * @param float $y1 Ordinate of first point.
+     * @param float $x2 Abscissa of second point.
+     * @param float $y2 Ordinate of second point.
+     *
+     */
     function line($x1, $y1, $x2, $y2)
-    {   
+    {
         $this->_out(sprintf('%.2f %.2f m %.2f %.2f l S', $x1, $this->_h - $y1, $x2, $this->_h - $y2));
     }
 
-    /**                           
+    /**
      * Outputs a rectangle. It can be drawn (border only), filled (with no
      * border) or both.
      *
      * @access public
      *
-     * @param float $x                Abscissa of upper left corner.
-     * @param float $y                Ordinate of upper left corner.
-     * @param float $width            Width.
-     * @param float $height           Height.
+     * @param float $x Abscissa of upper left corner.
+     * @param float $y Ordinate of upper left corner.
+     * @param float $width Width.
+     * @param float $height Height.
      * @param optional string $style  Style of rendering. Possible values are:
      *                                  - D or empty string: draw (default)
      *                                  - F: fill
@@ -529,9 +530,9 @@ class PDF {
      *
      * @access public
      *
-     * @param float $x                Abscissa of the center of the circle.
-     * @param float $y                Ordinate of the center of the circle.
-     * @param float $r                Circle radius.
+     * @param float $x Abscissa of the center of the circle.
+     * @param float $y Ordinate of the center of the circle.
+     * @param float $r Circle radius.
      * @param optional string $style  Style of rendering. Possible values are:
      *                                  - D or empty string: draw (default)
      *                                  - F: fill
@@ -550,41 +551,41 @@ class PDF {
 
         $y = $this->_h - $y;                 // Adjust y value.
         $b = $r * 0.552;                     // Length of the Bezier
-                                             // controls.
+        // controls.
         /* Move from the given origin and set the current point
          * to the start of the first Bezier curve. */
         $c = sprintf('%.2f %.2f m', $x - $r, $y);
         $x = $x - $r;
         /* First circle quarter. */
         $c .= sprintf(' %.2f %.2f %.2f %.2f %.2f %.2f c',
-                      $x, $y + $b,           // First control point.
-                      $x + $r - $b, $y + $r, // Second control point.
-                      $x + $r, $y + $r);     // Final point.
+            $x, $y + $b,           // First control point.
+            $x + $r - $b, $y + $r, // Second control point.
+            $x + $r, $y + $r);     // Final point.
         /* Set x/y to the final point. */
         $x = $x + $r;
         $y = $y + $r;
         /* Second circle quarter. */
         $c .= sprintf(' %.2f %.2f %.2f %.2f %.2f %.2f c',
-                      $x + $b, $y,
-                      $x + $r, $y - $r + $b,
-                      $x + $r, $y - $r);
+            $x + $b, $y,
+            $x + $r, $y - $r + $b,
+            $x + $r, $y - $r);
         /* Set x/y to the final point. */
         $x = $x + $r;
         $y = $y - $r;
         /* Third circle quarter. */
         $c .= sprintf(' %.2f %.2f %.2f %.2f %.2f %.2f c',
-                      $x, $y - $b,
-                      $x - $r + $b, $y - $r,
-                      $x - $r, $y - $r);
+            $x, $y - $b,
+            $x - $r + $b, $y - $r,
+            $x - $r, $y - $r);
         /* Set x/y to the final point. */
         $x = $x - $r;
         $y = $y - $r;
         /* Fourth circle quarter. */
         $c .= sprintf(' %.2f %.2f %.2f %.2f %.2f %.2f c %s',
-                      $x - $b, $y,
-                      $x - $r, $y + $r - $b,
-                      $x - $r, $y + $r,
-                      $op);
+            $x - $b, $y,
+            $x - $r, $y + $r - $b,
+            $x - $r, $y + $r,
+            $op);
         /* Output the whole string. */
         $this->_out($c);
     }
@@ -614,7 +615,7 @@ class PDF {
         $this->_out('<<');
         $this->_out('/Producer (My First PDF Class)');
         $this->_out(sprintf('/CreationDate (D:%s)',
-                            date('YmdHis')));
+            date('YmdHis')));
         $this->_out('>>');
         $this->_out('endobj');
 
@@ -652,7 +653,7 @@ class PDF {
         $this->_out($start_xref);  // Where to find the xref.
         $this->_out('%%EOF');
         $this->_state = 3;         // Set the document state to
-                                   // closed.
+        // closed.
     }
 
     /**
@@ -701,7 +702,7 @@ class PDF {
     }
 
     function _escape($s)
-    {   
+    {
         $s = str_replace('\\', '\\\\', $s);   // Escape any '\\'
         $s = str_replace('(', '\\(', $s);     // Escape any '('
         return str_replace(')', '\\)', $s);   // Escape any ')'
@@ -748,12 +749,12 @@ class PDF {
         $kids = '/Kids [';
         for ($i = 0; $i < $this->_page; $i++) {
             $kids .= (3 + 2 * $i) . ' 0 R ';
-        }   
+        }
         $this->_out($kids . ']');
         $this->_out('/Count ' . $this->_page);
         /* Output the page size. */
         $this->_out(sprintf('/MediaBox [0 0 %.2f %.2f]',
-                            $this->_w, $this->_h));
+            $this->_w, $this->_h));
         $this->_out('>>');
         $this->_out('endobj');
     }
@@ -811,7 +812,7 @@ class PDF {
     function _putImages()
     {
         /* Output any images. */
-        $filter = ($this->_compress) ? '/Filter /FlateDecode ' : ''; 
+        $filter = ($this->_compress) ? '/Filter /FlateDecode ' : '';
         foreach ($this->_images as $file => $info) {
             $this->_newobj();
             $this->_images[$file]['n'] = $this->_n;
@@ -822,7 +823,7 @@ class PDF {
             $this->_out('/ColorSpace /' . $info['cs']); //Colorspace
             if ($info['cs'] == 'DeviceCMYK') {
                 $this->_out('/Decode [1 0 1 0 1 0 1 0]');
-            }   
+            }
             $this->_out('/BitsPerComponent ' . $info['bpc']); // Bits
             $this->_out('/Filter /' . $info['f']);  // Filter used.
             $this->_out('/Length ' . strlen($info['data']) . '>>');
@@ -860,289 +861,268 @@ class PDF {
 
         return array('w' => $img[0], 'h' => $img[1], 'cs' => $colspace, 'bpc' => $bpc, 'f' => 'DCTDecode', 'data' => $data);
     }
-	
-	#lungo's extension
-	function AcceptPageBreak()
-	{
-		//Accept automatic page break or not
-		return $this->AutoPageBreak;
-	}
 
-	function Cell($w,$h=0,$txt='',$border=0,$ln=0,$align='',$fill=0,$link='')
+    #lungo's extension
+    function AcceptPageBreak()
     {
-	//Output a cell
-	$k=$this->k;
-	if($this->y+$h>$this->PageBreakTrigger and !$this->InFooter and $this->AcceptPageBreak())
-	{
-		//Automatic page break
-		$x=$this->x;
-		$ws=$this->ws;
-		if($ws>0)
-		{
-			$this->ws=0;
-			$this->_out('0 Tw');
-		}
-		$this->AddPage($this->CurOrientation);
-		$this->x=$x;
-		if($ws>0)
-		{
-			$this->ws=$ws;
-			$this->_out(sprintf('%.3f Tw',$ws*$k));
-		}
-	}
-	if($w==0)
-		$w=$this->w-$this->rMargin-$this->x;
-	$s='';
-	if($fill==1 or $border==1)
-	{
-		if($fill==1)
-			$op=($border==1) ? 'B' : 'f';
-		else
-			$op='S';
-		$s=sprintf('%.2f %.2f %.2f %.2f re %s ',$this->x*$k,($this->h-$this->y)*$k,$w*$k,-$h*$k,$op);
-	}
-	if(is_string($border))
-	{
-		$x=$this->x;
-		$y=$this->y;
-		if(is_int(strpos($border,'L')))
-			$s.=sprintf('%.2f %.2f m %.2f %.2f l S ',$x*$k,($this->h-$y)*$k,$x*$k,($this->h-($y+$h))*$k);
-		if(is_int(strpos($border,'T')))
-			$s.=sprintf('%.2f %.2f m %.2f %.2f l S ',$x*$k,($this->h-$y)*$k,($x+$w)*$k,($this->h-$y)*$k);
-		if(is_int(strpos($border,'R')))
-			$s.=sprintf('%.2f %.2f m %.2f %.2f l S ',($x+$w)*$k,($this->h-$y)*$k,($x+$w)*$k,($this->h-($y+$h))*$k);
-		if(is_int(strpos($border,'B')))
-			$s.=sprintf('%.2f %.2f m %.2f %.2f l S ',$x*$k,($this->h-($y+$h))*$k,($x+$w)*$k,($this->h-($y+$h))*$k);
-	}
-	if($txt!='')
-	{
-		if($align=='R')
-			$dx=$w-$this->cMargin-$this->GetStringWidth($txt);
-		elseif($align=='C')
-			$dx=($w-$this->GetStringWidth($txt))/2;
-		else
-			$dx=$this->cMargin;
-		if($this->ColorFlag)
-			$s.='q '.$this->TextColor.' ';
-		$txt2=str_replace(')','\\)',str_replace('(','\\(',str_replace('\\','\\\\',$txt)));
-		$s.=sprintf('BT %.2f %.2f Td (%s) Tj ET',($this->x+$dx)*$k,($this->h-($this->y+.5*$h+.3*$this->FontSize))*$k,$txt2);
-		if($this->underline)
-			$s.=' '.$this->_dounderline($this->x+$dx,$this->y+.5*$h+.3*$this->FontSize,$txt);
-		if($this->ColorFlag)
-			$s.=' Q';
-		if($link)
-			$this->Link($this->x+$dx,$this->y+.5*$h-.5*$this->FontSize,$this->GetStringWidth($txt),$this->FontSize,$link);
-	}
-	if($s)
-		$this->_out($s);
-	$this->lasth=$h;
-	if($ln>0)
-	{
-		//Go to next line
-		$this->y+=$h;
-		if($ln==1)
-			$this->x=$this->lMargin;
-	}
-	else
-		$this->x+=$w;
+        //Accept automatic page break or not
+        return $this->AutoPageBreak;
     }
 
-   function MultiCell($w,$h,$txt,$border=0,$align='J',$fill=0)
-   {
-	//Output text with automatic or explicit line breaks
-	$cw=&$this->CurrentFont['cw'];
-	if($w==0)
-		$w=$this->w-$this->rMargin-$this->x;
-	$wmax=($w-2*$this->cMargin)*1000/$this->FontSize;
-	$s=str_replace("\r",'',$txt);
-	$nb=strlen($s);
-	if($nb>0 and $s[$nb-1]=="\n")
-		$nb--;
-	$b=0;
-	if($border)
-	{
-		if($border==1)
-		{
-			$border='LTRB';
-			$b='LRT';
-			$b2='LR';
-		}
-		else
-		{
-			$b2='';
-			if(is_int(strpos($border,'L')))
-				$b2.='L';
-			if(is_int(strpos($border,'R')))
-				$b2.='R';
-			$b=is_int(strpos($border,'T')) ? $b2.'T' : $b2;
-		}
-	}
-	$sep=-1;
-	$i=0;
-	$j=0;
-	$l=0;
-	$ns=0;
-	$nl=1;
-	while($i<$nb)
-	{
-		//Get next character
-		$c=$s{$i};
-		if($c=="\n")
-		{
-			//Explicit line break
-			if($this->ws>0)
-			{
-				$this->ws=0;
-				$this->_out('0 Tw');
-			}
-			$this->Cell($w,$h,substr($s,$j,$i-$j),$b,2,$align,$fill);
-			$i++;
-			$sep=-1;
-			$j=$i;
-			$l=0;
-			$ns=0;
-			$nl++;
-			if($border and $nl==2)
-				$b=$b2;
-			continue;
-		}
-		if($c==' ')
-		{
-			$sep=$i;
-			$ls=$l;
-			$ns++;
-		}
-		$l+=$cw[$c];
-		if($l>$wmax)
-		{
-			//Automatic line break
-			if($sep==-1)
-			{
-				if($i==$j)
-					$i++;
-				if($this->ws>0)
-				{
-					$this->ws=0;
-					$this->_out('0 Tw');
-				}
-				$this->Cell($w,$h,substr($s,$j,$i-$j),$b,2,$align,$fill);
-			}
-			else
-			{
-				if($align=='J')
-				{
-					$this->ws=($ns>1) ? ($wmax-$ls)/1000*$this->FontSize/($ns-1) : 0;
-					$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
-				}
-				$this->Cell($w,$h,substr($s,$j,$sep-$j),$b,2,$align,$fill);
-				$i=$sep+1;
-			}
-			$sep=-1;
-			$j=$i;
-			$l=0;
-			$ns=0;
-			$nl++;
-			if($border and $nl==2)
-				$b=$b2;
-		}
-		else
-			$i++;
-	}
-	//Last chunk
-	if($this->ws>0)
-	{
-		$this->ws=0;
-		$this->_out('0 Tw');
-	}
-	if($border and is_int(strpos($border,'B')))
-		$b.='B';
-	$this->Cell($w,$h,substr($s,$j,$i-$j),$b,2,$align,$fill);
-	$this->x=$this->lMargin;
+    function Cell($w, $h = 0, $txt = '', $border = 0, $ln = 0, $align = '', $fill = 0, $link = '')
+    {
+        //Output a cell
+        $k = $this->k;
+        if ($this->y + $h > $this->PageBreakTrigger and !$this->InFooter and $this->AcceptPageBreak()) {
+            //Automatic page break
+            $x = $this->x;
+            $ws = $this->ws;
+            if ($ws > 0) {
+                $this->ws = 0;
+                $this->_out('0 Tw');
+            }
+            $this->AddPage($this->CurOrientation);
+            $this->x = $x;
+            if ($ws > 0) {
+                $this->ws = $ws;
+                $this->_out(sprintf('%.3f Tw', $ws * $k));
+            }
+        }
+        if ($w == 0)
+            $w = $this->w - $this->rMargin - $this->x;
+        $s = '';
+        if ($fill == 1 or $border == 1) {
+            if ($fill == 1)
+                $op = ($border == 1) ? 'B' : 'f';
+            else
+                $op = 'S';
+            $s = sprintf('%.2f %.2f %.2f %.2f re %s ', $this->x * $k, ($this->h - $this->y) * $k, $w * $k, -$h * $k, $op);
+        }
+        if (is_string($border)) {
+            $x = $this->x;
+            $y = $this->y;
+            if (is_int(strpos($border, 'L')))
+                $s .= sprintf('%.2f %.2f m %.2f %.2f l S ', $x * $k, ($this->h - $y) * $k, $x * $k, ($this->h - ($y + $h)) * $k);
+            if (is_int(strpos($border, 'T')))
+                $s .= sprintf('%.2f %.2f m %.2f %.2f l S ', $x * $k, ($this->h - $y) * $k, ($x + $w) * $k, ($this->h - $y) * $k);
+            if (is_int(strpos($border, 'R')))
+                $s .= sprintf('%.2f %.2f m %.2f %.2f l S ', ($x + $w) * $k, ($this->h - $y) * $k, ($x + $w) * $k, ($this->h - ($y + $h)) * $k);
+            if (is_int(strpos($border, 'B')))
+                $s .= sprintf('%.2f %.2f m %.2f %.2f l S ', $x * $k, ($this->h - ($y + $h)) * $k, ($x + $w) * $k, ($this->h - ($y + $h)) * $k);
+        }
+        if ($txt != '') {
+            if ($align == 'R')
+                $dx = $w - $this->cMargin - $this->GetStringWidth($txt);
+            elseif ($align == 'C')
+                $dx = ($w - $this->GetStringWidth($txt)) / 2;
+            else
+                $dx = $this->cMargin;
+            if ($this->ColorFlag)
+                $s .= 'q ' . $this->TextColor . ' ';
+            $txt2 = str_replace(')', '\\)', str_replace('(', '\\(', str_replace('\\', '\\\\', $txt)));
+            $s .= sprintf('BT %.2f %.2f Td (%s) Tj ET', ($this->x + $dx) * $k, ($this->h - ($this->y + .5 * $h + .3 * $this->FontSize)) * $k, $txt2);
+            if ($this->underline)
+                $s .= ' ' . $this->_dounderline($this->x + $dx, $this->y + .5 * $h + .3 * $this->FontSize, $txt);
+            if ($this->ColorFlag)
+                $s .= ' Q';
+            if ($link)
+                $this->Link($this->x + $dx, $this->y + .5 * $h - .5 * $this->FontSize, $this->GetStringWidth($txt), $this->FontSize, $link);
+        }
+        if ($s)
+            $this->_out($s);
+        $this->lasth = $h;
+        if ($ln > 0) {
+            //Go to next line
+            $this->y += $h;
+            if ($ln == 1)
+                $this->x = $this->lMargin;
+        } else
+            $this->x += $w;
+    }
+
+    function MultiCell($w, $h, $txt, $border = 0, $align = 'J', $fill = 0)
+    {
+        //Output text with automatic or explicit line breaks
+        $cw =& $this->CurrentFont['cw'];
+        if ($w == 0)
+            $w = $this->w - $this->rMargin - $this->x;
+        $wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+        $s = str_replace("\r", '', $txt);
+        $nb = strlen($s);
+        if ($nb > 0 and $s[$nb - 1] == "\n")
+            $nb--;
+        $b = 0;
+        if ($border) {
+            if ($border == 1) {
+                $border = 'LTRB';
+                $b = 'LRT';
+                $b2 = 'LR';
+            } else {
+                $b2 = '';
+                if (is_int(strpos($border, 'L')))
+                    $b2 .= 'L';
+                if (is_int(strpos($border, 'R')))
+                    $b2 .= 'R';
+                $b = is_int(strpos($border, 'T')) ? $b2 . 'T' : $b2;
+            }
+        }
+        $sep = -1;
+        $i = 0;
+        $j = 0;
+        $l = 0;
+        $ns = 0;
+        $nl = 1;
+        while ($i < $nb) {
+            //Get next character
+            $c = $s{$i};
+            if ($c == "\n") {
+                //Explicit line break
+                if ($this->ws > 0) {
+                    $this->ws = 0;
+                    $this->_out('0 Tw');
+                }
+                $this->Cell($w, $h, substr($s, $j, $i - $j), $b, 2, $align, $fill);
+                $i++;
+                $sep = -1;
+                $j = $i;
+                $l = 0;
+                $ns = 0;
+                $nl++;
+                if ($border and $nl == 2)
+                    $b = $b2;
+                continue;
+            }
+            if ($c == ' ') {
+                $sep = $i;
+                $ls = $l;
+                $ns++;
+            }
+            $l += $cw[$c];
+            if ($l > $wmax) {
+                //Automatic line break
+                if ($sep == -1) {
+                    if ($i == $j)
+                        $i++;
+                    if ($this->ws > 0) {
+                        $this->ws = 0;
+                        $this->_out('0 Tw');
+                    }
+                    $this->Cell($w, $h, substr($s, $j, $i - $j), $b, 2, $align, $fill);
+                } else {
+                    if ($align == 'J') {
+                        $this->ws = ($ns > 1) ? ($wmax - $ls) / 1000 * $this->FontSize / ($ns - 1) : 0;
+                        $this->_out(sprintf('%.3f Tw', $this->ws * $this->k));
+                    }
+                    $this->Cell($w, $h, substr($s, $j, $sep - $j), $b, 2, $align, $fill);
+                    $i = $sep + 1;
+                }
+                $sep = -1;
+                $j = $i;
+                $l = 0;
+                $ns = 0;
+                $nl++;
+                if ($border and $nl == 2)
+                    $b = $b2;
+            } else
+                $i++;
+        }
+        //Last chunk
+        if ($this->ws > 0) {
+            $this->ws = 0;
+            $this->_out('0 Tw');
+        }
+        if ($border and is_int(strpos($border, 'B')))
+            $b .= 'B';
+        $this->Cell($w, $h, substr($s, $j, $i - $j), $b, 2, $align, $fill);
+        $this->x = $this->lMargin;
+    }
+
+
+    function addTextWrap($xb, $yb, $w, $h, $text, $align = 'J', $border = 0, $fill = 0)
+    {
+        $txt = html_entity_decode($text);
+        $this->x = $xb;
+        $this->y = $this->h - $yb - $h;
+
+        switch ($align) {
+            case 'right':
+                $align = 'R';
+                break;
+            case 'center':
+                $align = 'C';
+                break;
+            default:
+                $align = 'L';
+
+        }
+        $this->SetFontSize($h);
+        $cw =& $this->CurrentFont['cw'];
+        if ($w == 0) {
+            $w = $this->w - $this->rMargin - $this->x;
+        }
+        $wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+        $s = str_replace("\r", '', $text);
+        $s = str_replace("\n", ' ', $s);
+        $s = trim($s) . ' ';
+        $nb = strlen($s);
+        $b = 0;
+        if ($border) {
+            if ($border == 1) {
+                $border = 'LTRB';
+                $b = 'LRT';
+                $b2 = 'LR';
+            } else {
+                $b2 = '';
+                if (is_int(strpos($border, 'L'))) {
+                    $b2 .= 'L';
+                }
+                if (is_int(strpos($border, 'R'))) {
+                    $b2 .= 'R';
+                }
+                $b = is_int(strpos($border, 'T')) ? $b2 . 'T' : $b2;
+            }
+        }
+        $sep = -1;
+        $i = 0;
+        $l = $ls = 0;
+        $ns = 0;
+        while ($i < $nb) {
+
+            $c = $s{$i};
+
+            if ($c == ' ' AND $i > 0) {
+                $sep = $i;
+                $ls = $l;
+                $ns++;
+            }
+            $l += $cw[$c];
+            if ($l > $wmax)
+                break;
+            else
+                $i++;
+        }
+        if ($sep == -1) {
+            if ($i == 0) $i++;
+
+            if ($this->ws > 0) {
+                $this->ws = 0;
+                $this->_out('0 Tw');
+            }
+            $sep = $i;
+        } else {
+            if ($align == 'J') {
+                $this->ws = ($ns > 1) ? ($wmax - $ls) / 1000 * $this->FontSize / ($ns - 1) : 0;
+                $this->_out(sprintf('%.3f Tw', $this->ws * $this->k));
+            }
+        }
+
+        $this->Cell($w, $h, substr($s, 0, $sep), $b, 2, $align, $fill);
+        $this->x = $this->lMargin;
+
+        return substr($s, $sep);
+    }
+
+
 }
 
-	
-	function addTextWrap($xb, $yb, $w, $h, $text, $align='J', $border=0, $fill=0) {
-		$txt = html_entity_decode($text);
-		$this->x = $xb;
-		$this->y = $this->h - $yb - $h;
-		
-		switch($align) {
-			case 'right':
-			$align = 'R'; break;
-			case 'center':    
-			$align = 'C'; break;
-			default: 
-			$align = 'L';
-		
-		}
-		$this->SetFontSize($h);
-		$cw=&$this->CurrentFont['cw'];
-		if($w==0) {
-			$w=$this->w-$this->rMargin-$this->x;
-		}
-		$wmax=($w-2*$this->cMargin)*1000/$this->FontSize;
-		$s=str_replace("\r",'',$text);
-		$s=str_replace("\n",' ',$s);
-		$s = trim($s).' ';
-		$nb=strlen($s);
-		$b=0;
-		if ($border) {
-			if ($border==1) {
-				$border='LTRB';
-				$b='LRT';
-				$b2='LR';
-			} else {
-				$b2='';
-				if(is_int(strpos($border,'L'))) {
-					$b2.='L';
-				}
-				if(is_int(strpos($border,'R'))) {
-					$b2.='R';
-				}
-				$b=is_int(strpos($border,'T')) ? $b2.'T' : $b2;
-			}
-		}
-		$sep=-1;
-		$i=0;
-		$l= $ls=0;
-		$ns=0;
-		while($i<$nb) {
-		
-			$c=$s{$i};
-		
-			if($c==' ' AND $i>0) {
-				$sep=$i;
-				$ls=$l;
-				$ns++;
-			}
-			$l+=$cw[$c];
-			if($l>$wmax)
-			break;
-			else 
-			$i++;
-		}
-		if($sep==-1) {
-			if($i==0) $i++;
-			
-			if($this->ws>0) {
-				$this->ws=0;
-				$this->_out('0 Tw');
-			}
-			$sep = $i;
-		} else {
-			if($align=='J') {
-			$this->ws=($ns>1) ? ($wmax-$ls)/1000*$this->FontSize/($ns-1) : 0;
-				$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
-			}	
-		}
-		
-		$this->Cell($w,$h,substr($s,0,$sep),$b,2,$align,$fill);
-		$this->x=$this->lMargin;
-		
-		return substr($s,$sep);
-	}
 
-
-}
-
-?>

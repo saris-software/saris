@@ -45,4 +45,4 @@
         $regno=$RegNo;
 	include ('../includes/registrationform.php');
 	//include ('edit_form.php');
-?>
+

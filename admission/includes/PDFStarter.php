@@ -147,4 +147,3 @@ $pdf->addinfo('Creator','ZALONGWA http://www.zalongwa.com');
 	for Korean - UHC
 */
 $pdf->selectFont('helvetica');
-?>

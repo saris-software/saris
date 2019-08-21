@@ -526,4 +526,4 @@ class PDF {
 		$this->Image($img, $x, $this->h-$y-$h, $w, $h);
 	}
 
-?>
+
