@@ -220,7 +220,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
         $reportgroup = 'sheet';
 
         $currentyear = $year;
-        include '../academic/includes/compute_student_remark.php';
+        include 'compute_student_remark.php';
         if ($semval == 1) {
             $sem1unittaken = $unittaken;
             $sem1totalsgp = $totalsgp;

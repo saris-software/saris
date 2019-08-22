@@ -103,9 +103,9 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
         //form object
         //var fmAdd=document.forms(0);
         //Boolean to track if error found
-        var foundErr;
+        let foundErr;
         //Form element index number which the first error occured
-        var focusOn;
+        let focusOn;
 
         function check_form() {
             foundErr = false;

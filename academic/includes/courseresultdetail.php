@@ -91,14 +91,14 @@ while ($row_regno = mysqli_fetch_array($dbregno)) {
 
     #get name and sex of the candidate
     $qstudent = "SELECT Name, Sex from student WHERE RegNo = '$key'";
-    $dbstudent = mysqli_query($zalongwa,$qstudent);
+    $dbstudent = mysqli_query($zalongwa, $qstudent);
     $row_result = mysqli_fetch_array($dbstudent);
     $name = $row_result['Name'];
     $sex = strtoupper($row_result['Sex']);
 
     # grade marks
     $RegNo = $key;
-    include 'includes/choose_studylevel.php';
+    include 'choose_studylevel.php';
 
     #update grade counter
     if ($grade == 'A') {

@@ -52,7 +52,7 @@ if ($coption == 1) {
     $status = 'Elective';
 }
 
-include '../academic/includes/choose_studylevel.php';
+include 'choose_studylevel.php';
 
 #check whether to count this course or not
 if (($coption <> 2) and ($marks > 0)) {
@@ -76,7 +76,7 @@ if (($coption == 2) and ($marks > 0)) {
 
 } else {
     #compute total marks
-    $gmarks = $gmarks + $marks;
+    $gmarks = $gmarks . $marks;
 }
 
 if (($remark <> 'PASS') and ($marks > 0)) {

@@ -86,10 +86,10 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
     $qcourse = "SELECT DISTINCT CourseCode, Status FROM courseprogramme 
 								WHERE  (ProgrammeID='$deg') AND (YearofStudy='$yearofstudy') AND 
 									(Semester='$semval') ORDER BY CourseCode";
-    $dbcourse = mysqli_query($zalongwa,$qcourse);
-    $dbcourseUnit = mysqli_query($zalongwa,$qcourse);
-    $dbcourseovremark = mysqli_query($zalongwa,$qcourse);
-    $dbcourseheader = mysqli_query($zalongwa,$qcourse);
+    $dbcourse = mysqli_query($zalongwa, $qcourse);
+    $dbcourseUnit = mysqli_query($zalongwa, $qcourse);
+    $dbcourseovremark = mysqli_query($zalongwa, $qcourse);
+    $dbcourseheader = mysqli_query($zalongwa, $qcourse);
     $total_rows = mysqli_num_rows($dbcourse);
 
     #initialise
@@ -137,7 +137,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
     while ($rowcourse = mysqli_fetch_array($dbcourse)) {
         $stdcourse = $rowcourse['CourseCode'];
         $qcoursestd = "SELECT Units, Department, StudyLevel FROM course WHERE CourseCode = '$stdcourse'";
-        $dbcoursestd = mysqli_query($zalongwa,$qcoursestd);
+        $dbcoursestd = mysqli_query($zalongwa, $qcoursestd);
         $row_coursestd = mysqli_fetch_array($dbcoursestd);
         $unit = $row_coursestd['Units'];
         $pdf->line($clnspace, $y + 15, $clnspace + $clmw, $y + 15);
@@ -155,7 +155,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
                 $courseheader = $rownheader['CourseCode'];
                 #get course unit
                 $qunits = "SELECT Units FROM course WHERE CourseCode='$courseheader'";
-                $dbunits = mysqli_query($zalongwa,$qunits);
+                $dbunits = mysqli_query($zalongwa, $qunits);
                 $row_units = mysqli_fetch_array($dbunits);
                 $unit = $row_units['Units'];
                 #print courses as headers
@@ -195,7 +195,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
 
         #get course unit
         $qunits = "SELECT Units FROM course WHERE CourseCode='$course'";
-        $dbunits = mysqli_query($zalongwa,$qunits);
+        $dbunits = mysqli_query($zalongwa, $qunits);
         $row_units = mysqli_fetch_array($dbunits);
         $unit = $row_units['Units'];
 
@@ -207,7 +207,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
         $reportgroup = 'sheet';
 
         $currentyear = $year;
-        include '../academic/includes/compute_student_remark.php';
+        include 'compute_student_remark.php';
         if ($semval == 1) {
             $sem1unittaken = $unittaken;
             $sem1totalsgp = $totalsgp;
@@ -217,7 +217,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
         }
     }
     $curr_semester = $semval;
-    include '../academic/includes/compute_overall_remark.php';
+    include 'compute_overall_remark.php';
     if ($semval == 1) {
         $sem1ptc = $ptc;
         $sem1gpa = $gpa;
@@ -257,7 +257,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
             $qsupp = "SELECT DISTINCT CourseCode, Status FROM courseprogramme WHERE  (ProgrammeID='$deg') 
 														AND (YearofStudy='$yearofstudy') 
 															AND (Semester = '$semval') ORDER BY CourseCode";
-            $dbsupp = mysqli_query($zalongwa,$qsupp);
+            $dbsupp = mysqli_query($zalongwa, $qsupp);
             while ($row_supp = mysqli_fetch_array($dbsupp)) {
                 $course = $row_supp['CourseCode'];
                 $coption = $row_supp['Status'];
@@ -265,7 +265,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
                 $supp = '';
                 $RegNo = $regno;
                 #include grading scale
-                include 'includes/choose_studylevel.php';
+                include 'choose_studylevel.php';
                 if (($supp == '!') && ($marks > 0)) {
                     $pdf->text($x + $k + $cw + 97, $y + 12, ',' . $course);
                     $k = $k + 35;
@@ -380,7 +380,7 @@ while ($rowstudent = mysqli_fetch_array($dbstudent)) {
             while ($rownheader = mysqli_fetch_array($dbcourseheader)) {
                 #get course unit
                 $qunits = "SELECT Units FROM course WHERE CourseCode='$courseheader'";
-                $dbunits = mysqli_query($zalongwa,$qunits);
+                $dbunits = mysqli_query($zalongwa, $qunits);
                 $row_units = mysqli_fetch_array($dbunits);
                 $unit = $row_units['Units'];
                 #print courses as headers

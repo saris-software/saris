@@ -21,7 +21,7 @@ while ($row_course = mysqli_fetch_array($dbcourseUnit)) {
     $RegNo = $regno;
 
     #include grading system
-    include 'includes/gpa_gradingresults.php';
+    include 'gpa_gradingresults.php';
 
     $coursecode = $course;
 
@@ -60,7 +60,7 @@ while ($row_course = mysqli_fetch_array($dbcourseUnit)) {
         $y = 80;
         $pg = $pg + 1;
         $tpg = $pg;
-        include 'includes/transcriptfooter.php';
+        include 'transcriptfooter.php';
         #title line
         $pdf->line(50, 135, 570, 135);
         #set page body content fonts

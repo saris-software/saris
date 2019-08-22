@@ -116,9 +116,9 @@ if (($row_sup_total > 0) && ($supscore <> '')) {
 } elseif (($row_pt_total > 0) && ($ptscore <> '')) {
     $tmarks = $ptscore;
 } elseif (($total_sp > 0) && ($spscore <> '')) {
-    $tmarks = $test2score + $spscore;
+    $tmarks = $test2score . $spscore;
 } else {
-    $tmarks = $test2score + $aescore;
+    $tmarks = $test2score . $aescore;
 }
 
 #round marks
