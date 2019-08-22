@@ -103,12 +103,12 @@ if (is_uploaded_file($imgfiletmp)) {
 	else{
 	$query = "update student set Photo = '$url' where RegNo='$studentregno'";
 echo $query;
-	mysql_query($query) or die("Query failed");
+	mysqli_query($zalongwa, $query) or die("Query failed");
 
 	echo '<meta http-equiv = "refresh" content ="0; 
 	url = admissionSearchStudent.php?key='.$studentregno.'">';
 	
 /* closing connection	*/
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 }
 ?> 

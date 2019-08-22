@@ -37,12 +37,12 @@ move_uploaded_file($_FILES['userfile']['tmp_name'], "../docs/$filename");
 	If (!$url) print "Title of the File is Requires \n";
 	else{
 	$query = "insert into docs (doc, received, filename) Values ('$url', now(), '$filename')";
-	$result = mysql_query($query) or die("Query failed, Kwanini?");
+	$result = mysqli_query($zalongwa, $query) or die("Query failed, Kwanini?");
 
 	echo '<meta http-equiv = "refresh" content ="0; 
 	url = docs.php?docId='.$docId.'">';
 	
 /* closing connection	*/
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 }
 ?> 

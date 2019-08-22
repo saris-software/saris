@@ -40,7 +40,7 @@ $query_studentsuggestion = "SELECT id, received, fromid, toid, message,replied F
 							WHERE toid = '$RegNo' or toid = '$username' or toid='0' ORDER BY received DESC";
 
 $query_limit_studentsuggestion = sprintf("%s LIMIT %d, %d", $query_studentsuggestion, $startRow_studentsuggestion, $maxRows_studentsuggestion);
-$studentsuggestion = mysqli_query($zalongwa, $query_limit_studentsuggestion) or die(mysqli_error());
+$studentsuggestion = mysqli_query($zalongwa, $query_limit_studentsuggestion) or die(mysqli_error($zalongwa));
 
 $row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion);
 

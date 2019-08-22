@@ -100,12 +100,12 @@ if (is_uploaded_file($imgfiletmp)) {
 	If (!$url) print "wewe weka ID upesi \n";
 	else{
 	$query = "update student set Photo =  '$url' where RegNo='$studentregno'";
-	$result = mysql_query($query) or die (mysql_error());
+	$result = mysqli_query($zalongwa, $query) or die (mysqli_error($zalongwa));
 
 	echo '<meta http-equiv = "refresh" content ="0; 
 	url = admissionSearchStudent.php?key='.$studentregno.'">';
 	
 /* closing connection	*/
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 }
 ?> 

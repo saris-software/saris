@@ -1,7 +1,7 @@
 <?php
 #get connected to the database and verfy current session
-mysql_connect('localhost','root','');
-mysql_select_db('zalongwaifm');
+mysqli_connect('localhost','root','');
+mysqli_select_db($zalongwa,'zalongwaifm');
 echo "
 <form action='admissionBookReport.php' method='POST'>
 <table>
@@ -12,8 +12,8 @@ echo "
 <select name="ayear" id="select" class="vform" <?php echo $state4;?>>
 <?php
 echo"<option value=''>[Select Academic Year]</option>";
-$nm=mysql_query("SELECT AYear FROM academicyear where AYear!='$ayear' ORDER BY AYear DESC");
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,"SELECT AYear FROM academicyear where AYear!='$ayear' ORDER BY AYear DESC");
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[AYear]'>$show[AYear]</option>";      
 }
@@ -34,8 +34,8 @@ echo"<option  value='$show[AYear]'>$show[AYear]</option>";
 <?php
 echo"<option value=''>[Select Department]</option>";
 echo"<option  value='all'>All departments</option>";  
-$nm=mysql_query("SELECT * FROM faculty ORDER BY FacultyName DESC");
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,"SELECT * FROM faculty ORDER BY FacultyName DESC");
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[FacultyID]'>$show[FacultyName]</option>";
    

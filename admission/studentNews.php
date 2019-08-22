@@ -39,7 +39,7 @@ mysqli_select_db($database_zalongwa, $zalongwa);
 $query_studentsuggestion = "SELECT received, fromid, toid, message FROM news WHERE toid='0' or toid=6 ORDER BY received DESC";
 $query_limit_studentsuggestion = sprintf("%s LIMIT %d, %d", $query_studentsuggestion, $startRow_studentsuggestion, $maxRows_studentsuggestion);
 
-$studentsuggestion = mysqli_query($zalongwa, $query_limit_studentsuggestion) or die(mysqli_error());
+$studentsuggestion = mysqli_query($zalongwa, $query_limit_studentsuggestion) or die(mysqli_error($zalongwa));
 $row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion);
 
 

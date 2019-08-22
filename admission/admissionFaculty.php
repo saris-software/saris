@@ -31,7 +31,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_campus = "SELECT CampusID, Campus FROM campus";
-$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error());
+$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error($zalongwa));
 $row_campus = mysqli_fetch_assoc($campus);
 $totalRows_campus = mysqli_num_rows($campus);
 
@@ -64,7 +64,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
                        GetSQLValueString($_POST['id'], "int"));
 
   mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error());
+  $Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
 
   $updateGoTo = "admissionFaculty.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -84,7 +84,7 @@ $startRow_inst = $pageNum_inst * $maxRows_inst;
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_inst = "SELECT * FROM faculty ORDER BY FacultyName ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
 $row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
@@ -192,7 +192,7 @@ if (isset($_GET['edit'])){
 $key = $_GET['edit'];
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_instEdit = "SELECT * FROM faculty WHERE FacultyID ='$key'";
-$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error());
+$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalongwa));
 $row_instEdit = mysqli_fetch_assoc($instEdit);
 $totalRows_instEdit = mysqli_num_rows($instEdit);
 

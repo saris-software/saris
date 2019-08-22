@@ -20,7 +20,7 @@ $today = date("F j, Y, g:i a");
 $username = addslashes($_GET['username']);
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'Data Backup')";   
-$result = mysqli_query($sql,$zalongwa) or die("Siwezi kuingiza data.<br>" . mysqli_error());
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 
 //get all RegNo in Exam Results
 $qexamregno = "Select DISTINCT RegNo, ExamNo, CourseCode, Grade, AYear FROM examresult ORDER BY CourseCode ASC";

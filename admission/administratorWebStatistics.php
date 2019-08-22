@@ -24,13 +24,13 @@ $startRow_stats = $pageNum_stats * $maxRows_stats;
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_stats = "SELECT ip, browser, received, page FROM stats ORDER BY received DESC";
 $query_limit_stats = sprintf("%s LIMIT %d, %d", $query_stats, $startRow_stats, $maxRows_stats);
-$stats = mysqli_query($query_limit_stats, $zalongwa) or die(mysqli_error());
+$stats = mysqli_query($zalongwa, $query_limit_stats) or die(mysqli_error($zalongwa));
 $row_stats = mysqli_fetch_assoc($stats);
 
 if (isset($_GET['totalRows_stats'])) {
   $totalRows_stats = $_GET['totalRows_stats'];
 } else {
-  $all_stats = mysqli_query($query_stats,$zalongwa);
+  $all_stats = mysqli_query($zalongwa, $query_stats);
   $totalRows_stats = mysqli_num_rows($all_stats);
 }
 $totalPages_stats = ceil($totalRows_stats/$maxRows_stats)-1;
@@ -73,7 +73,7 @@ $linksql  =  "stats";
 // Populate our Total Distinct Hits variable $total  
 
 $sql  =  "SELECT DISTINCT(ip) FROM $linksql ORDER BY ip" ;  
-$results  =  mysqli_query ( $sql,$zalongwa);
+$results  =  mysqli_query ( $zalongwa, $sql);
 $total  =  mysqli_num_rows ( $results );
 while ( $myrow  =  mysqli_fetch_array ($results )) {
 $ip  =  $myrow [ "ip" ];}  
@@ -99,17 +99,17 @@ echo  " until $now </td></tr><tr><td colspan= \" 3 \" ><hr noshade></td></tr>" ;
 $sql  =  "SELECT DISTINCT(ip) FROM $linksql WHERE ip NOT LIKE  
 ('196.44%') OR ip  
  NOT LIKE ('196.44%')" ;  
-$results  =  mysqli_query ( $sql ,$zalongwa );
+$results  =  mysqli_query ( $zalongwa, $sql);
 $offsite  =  mysqli_num_rows ( $results );
 $onsite  = ( $total  -  $offsite );  
 
 $sql  =  "SELECT DISTINCT(ip) FROM $linksql WHERE browser LIKE ('%MSIE%')" ;  
-$results  =  mysqli_query ( $sql , $zalongwa);
+$results  =  mysqli_query ( $zalongwa, $sql);
 $ms  =  mysqli_num_rows ( $results );
 $netscape  = ( $total  -  $ms );  
 
 $sql  =  "SELECT DISTINCT(ip) FROM $linksql WHERE browser LIKE ('%WIN%')" ;  
-$results  =  mysqli_query ( $sql , $zalongwa);
+$results  =  mysqli_query ( $zalongwa, $sql);
 $windows  =  mysqli_num_rows ( $results );
 $mac  = ( $total  -  $windows );  
 
@@ -182,7 +182,7 @@ align=\"left\">" ;
 
 
 $sql = "SELECT TO_DAYS(MAX(received)) - TO_DAYS(MIN(received)) AS record FROM $linksql";  
-$results  =  mysqli_query ( $sql , $zalongwa );
+$results  =  mysqli_query ( $zalongwa, $sql);
 while ($myrow = mysqli_fetch_array($results)) {
 $avgday = $myrow["record"];  
 }  
@@ -210,7 +210,7 @@ echo  "<tr><td colspan=\"3\">" ;
 // Select Total number of hits (not just distinct hits)  
 
 $sql =  "SELECT COUNT(*) AS CNT FROM $linksql" ;  
-$results  =  mysqli_query ( $sql , $zalongwa);
+$results  =  mysqli_query ( $zalongwa, $sql);
 while ( $myrow  =  mysqli_fetch_array ($results )) {
 $bigtotal  =  $myrow ["CNT" ];  
 

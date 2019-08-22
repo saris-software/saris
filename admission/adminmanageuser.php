@@ -28,14 +28,14 @@ $key=addslashes($_GET['content']);
 $sql = "SELECT FullName, RegNo, UserName, Password, Position, AuthLevel, LastLogin
 FROM security 
 WHERE FullName LIKE '%$key%' OR UserName LIKE '%$key%' OR RegNo LIKE '%$key%' ORDER BY FullName";
-$result = @mysqli_query($sql , $zalongwa ) or die("Cannot query the database.<br>" . mysqli_error());
-$query = @mysqli_query($sql , $zalongwa ) or die("Cannot query the database.<br>" . mysqli_error());
+$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 }else{
 $sql = "SELECT FullName, RegNo, UserName, Password, Position, AuthLevel, LastLogin
 FROM security ORDER BY FullName";
 //(((roomapplication.Hall)='$hall') And
-$result = @mysqli_query($sql , $zalongwa ) or die("Cannot query the database.<br>" . mysqli_error());
-$query = @mysqli_query($sql , $zalongwa) or die("Cannot query the database.<br>" . mysqli_error());
+$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 }
 $all_query = mysqli_query($query , $zalongwa);
 $totalRows_query = mysqli_num_rows($query);
