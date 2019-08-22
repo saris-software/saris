@@ -4,7 +4,7 @@ include("phpgraphlib.php");
 $graph=new PHPGraphLib(500,300); 
 $data=array();
 $sql="SELECT EntryYear, COUNT(*) AS 'count' FROM student where student.Sex='M' GROUP BY student.EntryYear";
-$result = mysqli_query($sql , $zalongwa) or die('Query failed: ' . mysqli_error());
+$result = mysqli_query($zalongwa, $sql) or die('Query failed: ' . mysqli_error($zalongwa));
 if($result)
 {
 while($row = mysqli_fetch_assoc($result))
@@ -19,7 +19,7 @@ $data[$salesgroup]=$count;
 
 $data2=array();
 $sql1="SELECT EntryYear, COUNT(*) AS 'count' FROM student where student.Sex='F' GROUP BY student.EntryYear";
-$result1 = mysqli_query($sql1 , $zalongwa) or die('Query failed: ' . mysqli_error());
+$result1 = mysqli_query($zalongwa, $sql1) or die('Query failed: ' . mysqli_error($zalongwa));
 if($result1)
 {
 while($row1 = mysqli_fetch_assoc($result1))

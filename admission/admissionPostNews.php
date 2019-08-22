@@ -127,9 +127,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
              }
 		} 
 
-  mysql_select_db($database_zalongwa, $zalongwa);
+  mysqli_select_db($database_zalongwa, $zalongwa);
 
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 
 
 
@@ -154,7 +154,7 @@ mysqli_select_db($database_zalongwa, $zalongwa);
 
 $query_suggestionbox = "SELECT received, fromid, toid, message FROM news ORDER BY received DESC";
 
-$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error());
+$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error($zalongwa));
 $row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
 $totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
 

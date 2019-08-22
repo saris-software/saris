@@ -120,9 +120,9 @@ for($j=0;$j<$count;$j++)
 
   $sql = "SELECT * FROM student WHERE Id ='$Eq[$j]'"; 
 
-  $update = mysqli_query($zalongwa, $sql) or die(mysqli_error());
+  $update = mysqli_query($zalongwa, $sql) or die(mysqli_error($zalongwa));
 
-  $update_row = mysqli_fetch_array($update)or die(mysqli_error());
+  $update_row = mysqli_fetch_array($update)or die(mysqli_error($zalongwa));
   
 	$regno = addslashes($update_row['RegNo']);
 	$yearofstudy=addslashes($_POST['yearofstudy']);
@@ -285,7 +285,7 @@ if(isset($_POST['search'])||$_GET['key'])
 	
 		$query="SELECT * FROM  student where ProgrammeofStudy='$programme' AND EntryYear='$cohort'";	
 	
-	$result=mysqli_query($zalongwa, $query) or die(mysqli_error());
+	$result=mysqli_query($zalongwa, $query) or die(mysqli_error($zalongwa));
 
 	echo"<form action='$_SERVER[PHP_SELF]' method='POST' name='frm1'>";
 ?>

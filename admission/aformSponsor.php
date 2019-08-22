@@ -48,7 +48,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "staff")) {
                        GetSQLValueString($_POST['szTelephone'], "text"));
 
   mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 }
 ?>
    <form name="staff" method="POST" action="<?php echo $editFormAction; ?>">

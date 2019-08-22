@@ -21,7 +21,7 @@ $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 
 $query_Recordset1 = "SELECT docs.docId, docs.received, docs.doc, docs.filename FROM docs ORDER BY received DESC";
 $query_limit_Recordset1 = sprintf($query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
-$Recordset1 = mysqli_query($zalongwa, $query_limit_Recordset1) or die(mysqli_error());
+$Recordset1 = mysqli_query($zalongwa, $query_limit_Recordset1) or die(mysqli_error($zalongwa));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 
 if (isset($_GET['totalRows_Recordset1'])) {

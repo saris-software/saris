@@ -45,7 +45,7 @@
 				GetSQLValueString($_POST['ayear'], "text"));
 
 				mysqli_select_db($database_zalongwa, $zalongwa);
-				$Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
+				$Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 				}
 			else{
 				$error = urlencode("There is no student with RegNo: $code");
@@ -87,7 +87,7 @@
 				GetSQLValueString($_POST['id'], "int"));
 
 				mysqli_select_db($database_zalongwa, $zalongwa);
-				$Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error());
+				$Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
 				}
 			else{
 				$error = urlencode("There is no student with RegNo: $code");
@@ -127,25 +127,25 @@
 
 	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_campus = "SELECT * FROM campus ORDER BY Campus ASC";
-	$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error());
+	$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error($zalongwa));
 	$row_campus = mysqli_fetch_assoc($campus);
 	$totalRows_campus = mysqli_num_rows($campus);
 
 	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_faculty = "SELECT * FROM faculty ORDER BY FacultyName ASC";
-	$faculty = mysqli_query($zalongwa, $query_faculty) or die(mysqli_error());
+	$faculty = mysqli_query($zalongwa, $query_faculty) or die(mysqli_error($zalongwa));
 	$row_faculty = mysqli_fetch_assoc($faculty);
 	$totalRows_faculty = mysqli_num_rows($faculty);
 
 	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_post = "SELECT * FROM electionpost ORDER BY Post ASC";
-	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error());
+	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error($zalongwa));
 	$row_post = mysqli_fetch_assoc($post);
 	$totalRows_post = mysqli_num_rows($post);
 
 	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_ayear = "SELECT * FROM academicyear ORDER BY AYear DESC";
-	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error());
+	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error($zalongwa));
 	$row_ayear = mysqli_fetch_assoc($ayear);
 	$totalRows_ayear = mysqli_num_rows($ayear);
 
@@ -168,7 +168,7 @@
 					ORDER BY Period DESC, Name DESC";
 		
 	$query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-	$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+	$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
 	$row_inst = mysqli_fetch_assoc($inst);
 
 	if (isset($_GET['totalRows_inst'])) {
@@ -252,7 +252,7 @@
 
 		mysqli_select_db($database_zalongwa, $zalongwa);
 		$query_instEdit = "SELECT * FROM electioncandidate WHERE Id ='$key'";
-		$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error());
+		$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalongwa));
 		$row_instEdit = mysqli_fetch_assoc($instEdit);
 		$totalRows_instEdit = mysqli_num_rows($instEdit);
 

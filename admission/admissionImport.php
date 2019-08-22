@@ -393,13 +393,13 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 
 		mysqli_select_db($database_zalongwa, $zalongwa);
 		$query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-		$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error());
+		$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error($zalongwa));
 		$row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 		$totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
 
 		mysqli_select_db($database_zalongwa, $zalongwa);
 		$query_Hostel = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-		$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error());
+		$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error($zalongwa));
 		$row_Hostel = mysqli_fetch_assoc($Hostel);
 		$totalRows_Hostel = mysqli_num_rows($Hostel);
 			

@@ -16,7 +16,7 @@
 <?php
 # get all users
 $quser="SELECT password, RegNo FROM security ORDER BY RegNo";	
-$dbuser = mysqli_query($quser,$zalongwa) or die("No Single User");
+$dbuser = mysqli_query($zalongwa, $quser) or die("No Single User");
 	
 	while($row_user = mysqli_fetch_array($dbuser)){
 		$regno= $row_user['RegNo'];

@@ -65,8 +65,8 @@ for($j=0;$j<$count;$j++)
 {
 #Fetch Records
 $sql = "SELECT * FROM student WHERE Id ='$Eq[$j]'"; 
-$update = mysqli_query($zalongwa, $sql) or die(mysqli_error());
-$update_row = mysqli_fetch_array($update)or die(mysqli_error());
+$update = mysqli_query($zalongwa, $sql) or die(mysqli_error($zalongwa));
+$update_row = mysqli_fetch_array($update)or die(mysqli_error($zalongwa));
 	$regno = addslashes($update_row['RegNo']);
 	$stdid = addslashes($update_row['Id']);
 	$AdmissionNo = addslashes($update_row['AdmissionNo']);     

@@ -49,7 +49,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "applicant")) {
                        GetSQLValueString($_POST['intApplicantID'], "text"));
 
   mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($updateSQL, $zalongwa) or die(mysqli_error());
+  $Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
 }
 
 $intApplicantID_applicant = "1";
@@ -58,7 +58,7 @@ if (isset($_GET['intApplicantID'])) {
 }
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_applicant = sprintf("SELECT * FROM applicant WHERE %s = '$%s'", $intApplicantID_applicant,$intApplicantID_applicant);
-$applicant = mysqli_query($query_applicant, $zalongwa) or die(mysqli_error());
+$applicant = mysqli_query($zalongwa, $query_applicant) or die(mysqli_error($zalongwa));
 $row_applicant = mysqli_fetch_assoc($applicant);
 $totalRows_applicant = mysqli_num_rows($applicant);
 ?>

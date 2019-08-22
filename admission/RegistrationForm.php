@@ -550,7 +550,7 @@ if(!$degree)
 echo"<option value=''>[Select Programme]</option>";
 }else
 {
-$take=mysqli_query("select * from programme where ProgrammeCode='$degree'")or die(mysqli_error($zalongwa));
+$take=mysqli_query("select * from programme where ProgrammeCode='$degree'")or die(mysqli_error());
 $t=mysqli_fetch_array($take);
 echo"<option value='$degree'>$t[ProgrammeName]</option>";
 }  
@@ -951,7 +951,7 @@ if(!$status)
 echo"<option value=''>[Select Status]</option>";
 }else
 {
-$query_studentStatus1 = mysqli_query("SELECT StatusID,Status FROM studentstatus where StatusID='$status'", $zalongwa);
+$query_studentStatus1 = mysqli_query("SELECT StatusID,Status FROM studentstatus where StatusID='$status'");
 $stat=mysqli_fetch_array($query_studentStatus1);
 echo"<option value='$status'>$stat[Status]</option>";
 }  

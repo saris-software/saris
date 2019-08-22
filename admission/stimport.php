@@ -175,8 +175,8 @@ if ($fileavailable==1){
 											Comment =''
 											";
 		  }
-		  mysql_query($sql);
-		  if(mysql_error()) {
+		  mysqli_query($zalongwa, $sql);
+		  if(mysqli_error()) {
 				 echo "Record ".$i." is a Duplicate Entry - Not Imported!<br>\n"; 
 			  }else{
 				 echo "Record ".$i." Imported Successfuly!<br>\n"; 

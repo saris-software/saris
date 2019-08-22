@@ -102,7 +102,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
 
   mysqli_select_db($database_zalongwa, $zalongwa);
 
-  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 
 //show replied
 
@@ -112,7 +112,7 @@ $t=date('l dS \of F Y h:i:s A');
 
 $qreplied="UPDATE suggestion SET replied='The message was replied by \'$username\', on: $t' WHERE id='$id'";
 
-mysqli_query($zalongwa, $qreplied) or die(mysqli_error());
+mysqli_query($zalongwa, $qreplied) or die(mysqli_error($zalongwa));
 
 
 
@@ -139,7 +139,7 @@ mysqli_select_db($database_zalongwa, $zalongwa);
 
 $query_suggestionbox = "SELECT suggestion.received, suggestion.fromid, suggestion.toid, suggestion.message FROM suggestion";
 
-$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error());
+$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error($zalongwa));
 
 $row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
 

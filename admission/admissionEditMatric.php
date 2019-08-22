@@ -397,8 +397,8 @@ echo $szRootURL ?>/modules/datepicker/Calendar1-901.js" type="text/javascript"><
   </div>
 </div>
 <div align="center">
-  <center>
-  </center>
+  <div style="text-align: center;">
+  </div>
 </div>
 
 </body>

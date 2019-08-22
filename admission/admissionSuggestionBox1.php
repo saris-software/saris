@@ -50,7 +50,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
                        GetSQLValueString($_POST['message'], "text"));
 
   mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 //show replied
 $id=addslashes($_GET['id']);
 $t=date('l dS \of F Y h:i:s A');

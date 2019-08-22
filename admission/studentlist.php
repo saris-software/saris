@@ -94,8 +94,8 @@ $student="SELECT * FROM student where AdmissionNo  like '%$regno'";
 $student="SELECT * FROM student";
 }
 
-$cat=mysql_query($student ." LIMIT $offset,$rowPerPage");
-$num=mysql_num_rows($cat);
+$cat=mysqli_query($student ." LIMIT $offset,$rowPerPage");
+$num=mysqli_num_rows($cat);
 
 //$category=$_GET['category'];
 echo "<table class='dtable' width='750' cellspacing='0' cellpadding='0'>";
@@ -109,7 +109,7 @@ echo"<tr>
 if($category==1)
 {
 //Case it is FORM FOUR RESULTS
-while($j=mysql_fetch_array($cat))
+while($j=mysqli_fetch_array($cat))
 {
 echo"
 <form action='olevel.php' method='GET'>
@@ -131,7 +131,7 @@ $sn++;
 if($category==2)
 {
 //Case it is FORM SIX RESULTS
-while($j=mysql_fetch_array($cat))
+while($j=mysqli_fetch_array($cat))
 {
 echo"
 <form action='olevel.php' method='GET'>
@@ -153,7 +153,7 @@ $sn++;
 if($category==3)
 {
 //Case it is EQUIVALENT RESULTS
-while($j=mysql_fetch_array($cat))
+while($j=mysqli_fetch_array($cat))
 {
 echo"
 <form action='olevel.php' method='GET'>
@@ -178,10 +178,10 @@ $sn++;
 
 
 echo "</table>";
-$rec=mysql_query($student);
-$numrows=mysql_num_rows($rec);
-$resu=mysql_query($rec);
-$row=mysql_fetch_array($rec);
+$rec=mysqli_query($zalongwa, $student);
+$numrows=mysqli_num_rows($rec);
+$resu=mysqli_query($zalongwa, $rec);
+$row=mysqli_fetch_array($rec);
 $maxPage=ceil($numrows/$rowPerPage);
 $self=$_SERVER['PHP_SELF'];
 $nav='';
@@ -222,12 +222,12 @@ $last='&nbsp;';
 }
 $d=date('Y');
 $cd=date('d/m/y');
-echo"<center><table>
+echo "<div style=\"text-align: center;\"><table>
 <tr>
 <td>&nbsp;$prev&nbsp; </td>
 <td>&nbsp;&nbsp;Page $nm of $maxPage&nbsp;</td>
 <td>&nbsp;$next&nbsp;</td>
-</tr></table></center>";
+</tr></table></div>";
 
 
 

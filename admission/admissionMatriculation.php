@@ -54,8 +54,9 @@ $sql = "SELECT student.Id, student.Name, student.Sex, student.ProgrammeofStudy, 
 FROM (allocation RIGHT JOIN student ON allocation.RegNo = student.RegNo) LEFT JOIN hostel ON allocation.HID = hostel.HID
 WHERE (student.Name LIKE '%$key%') OR (student.RegNo LIKE '%$key%') ORDER BY student.Name, allocation.AYear  DESC";
 
-$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error());
-$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error());
+$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa
+    ));
 
 $all_query = mysqli_query($zalongwa, $query);
 $totalRows_query = mysqli_num_rows($query);

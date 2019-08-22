@@ -12,7 +12,7 @@
 
 	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_ayear = "SELECT * FROM academicyear ORDER BY AYear DESC";
-	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error());
+	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error($zalongwa));
 	$row_ayear = mysqli_fetch_assoc($ayear);
 	$totalRows_ayear = mysqli_num_rows($ayear);
 
@@ -51,7 +51,7 @@
                        GetSQLValueString($_POST['id'], "int"));
 
 		mysqli_select_db($database_zalongwa, $zalongwa);
-		$Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error());
+		$Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
 		}
  
 	function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = ""){
@@ -106,7 +106,7 @@
 
 	//$query_inst = "SELECT * FROM course ORDER BY CourseCode ASC";
 	$query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-	$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+	$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
 	$row_inst = mysqli_fetch_assoc($inst);
 
 	if (isset($_GET['totalRows_inst'])) {
@@ -182,7 +182,7 @@
 
 		mysqli_select_db($database_zalongwa, $zalongwa);
 		$query_instEdit = "SELECT * FROM electionpost WHERE Id ='$key'";
-		$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error());
+		$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalongwa));
 		$row_instEdit = mysqli_fetch_assoc($instEdit);
 		$totalRows_instEdit = mysqli_num_rows($instEdit);
 

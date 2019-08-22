@@ -50,7 +50,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
 		       GetSQLValueString($_POST['recepient'], "text"));
 
   mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 
   //$insertGoTo = "housingcheckmessage.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -64,7 +64,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
 
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_suggestionbox = "SELECT received, fromid, toid, message FROM news ORDER BY received DESC";
-$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error());
+$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error($zalongwa));
 $row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
 $totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
 

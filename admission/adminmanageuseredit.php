@@ -26,24 +26,24 @@ require_once('../Connections/zalongwa.php');
 
 #populate module combo box
 	$query_module = "SELECT moduleid, modulename FROM modules";
-	$module = mysqli_query($query_module, $zalongwa) or die(mysqli_error());
+	$module = mysqli_query($zalongwa, $query_module) or die(mysqli_error($zalongwa));
 	$row_module = mysqli_fetch_assoc($module);
 	$totalRows_module = mysqli_num_rows($module);
 
 #populate privileges combo box
 	$query_privilege = "SELECT privilegeID, privilegename FROM privilege";
-	$privilege = mysqli_query($query_privilege, $zalongwa) or die(mysqli_error());
+	$privilege = mysqli_query($zalongwa, $query_privilege) or die(mysqli_error($zalongwa));
 	$row_privilege = mysqli_fetch_assoc($privilege);
 	$totalRows_privilege = mysqli_num_rows($privilege);
 
 #populate department combo box
 	$query_dept = "SELECT DeptID, DeptName FROM department ORDER BY DeptName";
-	$dept = mysqli_query($query_dept, $zalongwa) or die(mysqli_error());
+	$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error($zalongwa));
 	$row_dept = mysqli_fetch_assoc($dept);
 	$totalRows_dept = mysqli_num_rows($dept);
 #populate faculty combo box
 	$query_faculty = "SELECT FacultyID, FacultyName FROM faculty ORDER BY FacultyName";
-	$faculty = mysqli_query($query_faculty, $zalongwa) or die(mysqli_error());
+	$faculty = mysqli_query($zalongwa, $query_faculty) or die(mysqli_error($zalongwa));
 	$row_faculty = mysqli_fetch_assoc($faculty);
 	$totalRows_faculty = mysqli_num_rows($faculty);
 	 
@@ -51,10 +51,10 @@ $login=$_GET['login'];
 $sql = "SELECT FullName, RegNo, UserName, Module, Faculty, Dept, Position, PrivilegeID, LastLogin
 FROM security WHERE UserName='$login' ORDER BY FullName";
 
-$result = @mysqli_query($sql , $zalongwa) or die("Cannot query the database.<br>" . mysqli_error());
-$query = @mysqli_query($sql , $zalongwa) or die("Cannot query the database.<br>" . mysqli_error());
+$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 
-$all_query = mysqli_query($query , $zalongwa);
+$all_query = mysqli_query($zalongwa, $query);
 $totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
 if (mysqli_num_rows($query) > 0){
@@ -87,7 +87,7 @@ if (isset($_POST['action']) && ($_POST['action'] == "Update"))
 		
 		$sql="UPDATE security Set Position='$position', Module = '$module', Dept = '$dept', Faculty = '$faculty',
 			PrivilegeID='$priv' WHERE UserName='$login'";
-		$result = @mysqli_query($sql, $zalongwa ) or die("Cannot query the database.<br>" . mysqli_error());
+		$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 		echo '<meta http-equiv = "refresh" content ="0; 
 		url = adminmanageuser.php?content='.$login.'">';
 		exit;
