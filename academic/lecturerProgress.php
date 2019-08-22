@@ -41,7 +41,7 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	$tpg =$pg;
 	//select student
 	$qstudent = "SELECT * from student WHERE RegNo = '$key'";
-	$dbstudent = mysqli_query($zalongwa, $qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error());
+	$dbstudent = mysqli_query($zalongwa, $qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
 	$row_result = mysqli_fetch_array($dbstudent);
 		$sname = $row_result['Name'];
 		$regno = $row_result['RegNo'];
@@ -332,7 +332,7 @@ include('lecturerheader.php');
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_campus = "SELECT FacultyName FROM faculty WHERE FacultyID='$userFaculty' ORDER BY FacultyName ASC";
-$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error());
+$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error($zalongwa));
 $row_campus = mysqli_fetch_assoc($campus);
 $totalRows_campus = mysqli_num_rows($campus);
 

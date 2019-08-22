@@ -15,11 +15,11 @@
 
 if (isset($_POST["candidate"])){
 $key=$_POST['candidate'];
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_candidate = "SELECT Name, RegNo FROM student WHERE Name LIKE '%$key%' OR RegNo LIKE '%$key%' ORDER BY Name";
-$candidate = mysql_query($query_candidate, $zalongwa) or die(mysql_error());
-$row_candidate = mysql_fetch_assoc($candidate);
-$totalRows_candidate = mysql_num_rows($candidate);
+$candidate = mysqli_query($zalongwa,$query_candidate) or die(mysqli_error());
+$row_candidate = mysqli_fetch_assoc($candidate);
+$totalRows_candidate = mysqli_num_rows($candidate);
  }
 
 ?>
@@ -55,10 +55,10 @@ $totalRows_candidate = mysql_num_rows($candidate);
                 <td nowrap><?php print "<a href=\"housingcautionfee.php?RegNo=$RegNo\">Add Caution Fees</a>";?></td>
                 <td nowrap><?php print "<a href=\"housingcautionfeepenalty.php?RegNo=$RegNo\">Add Penalty Charge </a>";?></td>
               </tr>
-              <?php } while ($row_candidate = @mysql_fetch_assoc($candidate)); ?>
+              <?php } while ($row_candidate = @mysqli_fetch_assoc($candidate)); ?>
 </table>
             <?php } // Show if recordset not empty ?>
             
 <?php
-@mysql_free_result($candidate);
+@mysqli_free_result($candidate);
 ?>

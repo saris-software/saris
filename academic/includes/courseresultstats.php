@@ -64,8 +64,8 @@
 		
 		#get coursename
 		$qcourse = "Select StudyLevel from course where CourseCode = '$coursecode'";
-		$dbcourse = mysql_query($qcourse);
-		$row_course = mysql_fetch_array($dbcourse);
+		$dbcourse = mysqli_query($zalongwa,$qcourse);
+		$row_course = mysqli_fetch_array($dbcourse);
 		$studylevel = $row_course['StudyLevel'];
 
 		$pdf->text($x+2, $y+53, 'Grandtotal  '); 

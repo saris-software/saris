@@ -10,7 +10,7 @@ if (isset($_GET['id']))
          $reg = addslashes($_GET['RegNo']);
 	}
 	$edit=$_GET['edit'];
-	if($edit==yes)
+	if($edit=="yes")
 	{
 	$state1="submit";
 	$state2="hidden";
@@ -31,7 +31,7 @@ if (isset($_GET['id']))
 	}else{
 	   $sql = "SELECT * FROM student WHERE Id ='$id' and RegNo=$reg";
 	}
-        $update = mysqli_query($sql);
+        $update = mysqli_query($zalongwa,$sql);
 	$update_row = mysqli_fetch_array($update);
 	$totalRows_update = mysqli_num_rows($update);
 	$regno = $update_row['RegNo'];
@@ -345,8 +345,8 @@ if(!$name)
 form();
 #check if RegNo Exist
 $qRegNo = "SELECT RegNo FROM student WHERE RegNo = '$regno'";
-$dbRegNo = mysql_query($qRegNo);
-$total = mysql_num_rows($dbRegNo);
+$dbRegNo = mysqli_query($zalongwa,$qRegNo);
+$total = mysqli_num_rows($dbRegNo);
 if ($total==1)
 {
 echo"
@@ -435,7 +435,7 @@ VALUES
 '$studylevel'
 )";   
 //echo $sql;
-$dbstudent = mysql_query($sql);
+$dbstudent = mysqli_query($zalongwa,$sql);
 if(!$dbstudent)
 {
 echo "Admision Record Cannot be Saved";
@@ -498,8 +498,8 @@ echo"<option value=''>[Select Year]</option>";
 {
 echo"<option value='$ayear'>$ayear</option>";
 }
-$nm=mysql_query("SELECT AYear FROM academicyear where AYear!='$ayear' ORDER BY AYear DESC");
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,"SELECT AYear FROM academicyear where AYear!='$ayear' ORDER BY AYear DESC");
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[AYear]'>$show[AYear]</option>";      
 }
@@ -529,13 +529,13 @@ echo"<option value=''>[Select Campus]</option>";
 }
 else
 {
-$query_campus1 = mysql_query("SELECT CampusID, Campus FROM campus where CampusID='$campus'");
-$camp=mysql_fetch_array($query_campus1);
+$query_campus1 = mysqli_query($zalongwa,"SELECT CampusID, Campus FROM campus where CampusID='$campus'");
+$camp=mysqli_fetch_array($query_campus1);
 echo"<option value='$campus'>$camp[Campus]</option>";
 } 
 $query_campus = "SELECT CampusID, Campus FROM campus ORDER BY Campus ASC";
-$nm=mysql_query($query_campus);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,$query_campus);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[CampusID]'>$show[Campus]</option>";      
 }   
@@ -558,13 +558,13 @@ if(!$degree)
 echo"<option value=''>[Select Programme]</option>";
 }else
 {
-$take=mysql_query("select * from programme where ProgrammeCode='$degree'")or die(mysql_error());
-$t=mysql_fetch_array($take);
+$take=mysqli_query($zalongwa,"select * from programme where ProgrammeCode='$degree'")or die(mysqli_error($zalongwa));
+$t=mysqli_fetch_array($take);
 echo"<option value='$degree'>$t[ProgrammeName]</option>";
 }  
 $query_degree = "SELECT ProgrammeCode,ProgrammeName,Faculty FROM programme ORDER BY ProgrammeName";
-$nm=mysql_query($query_degree);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,$query_degree);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[ProgrammeCode]'>$show[ProgrammeName]</option>";      
      
@@ -598,8 +598,8 @@ echo"<option value=''>[Select Faculty]</option>";
 echo"<option value='$faculty'>$faculty</option>";
 }  
 $query_faculty = "SELECT FacultyName FROM faculty ORDER BY FacultyName DESC";
-$nm=mysql_query($query_faculty);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,$query_faculty);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[FacultyName]'>$show[FacultyName]</option>";      
         
@@ -622,8 +622,8 @@ echo"<option value=''>[Select Class]</option>";
 {
 echo"<option value='$class'>$class</option>";
 }
-$nm=mysql_query("SELECT name FROM classstream where name!='$class' ORDER BY name ASC");
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,"SELECT name FROM classstream where name!='$class' ORDER BY name ASC");
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[name]'>$show[name]</option>";      
 }
@@ -644,15 +644,15 @@ echo"<option value=''>[Select Sponsor]</option>";
 echo"<option value='$sponsor'>$sponsor</option>";
 }  
 $query_sponsor = "SELECT Name FROM sponsors ORDER BY SponsorID ASC";
-$nm=mysql_query($query_sponsor);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,$query_sponsor);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[Name]'>$show[Name]</option>";      
     
 }
 ?>
      </select>
-       <?php 
+       <?php http://172.31.0.94:8090/saris/odbc.php
 echo $sponsor_error;
 ?></td>
    </tr>
@@ -667,13 +667,13 @@ if(!$studylevel)
 echo"<option value=''>[Select Level of Study]</option>";
 }else
 {
-$take=mysql_query("select * from studylevel where LevelCode='$studylevel'");
-$t=mysql_fetch_array($take);
+$take=mysqli_query($zalongwa,"select * from studylevel where LevelCode='$studylevel'");
+$t=mysqli_fetch_array($take);
 echo"<option value='$studylevel'>$t[LevelName]</option>";
 }  
 $query_studylevel = "SELECT LevelCode,LevelName FROM studylevel ORDER BY LevelName";
-$nm=mysql_query($query_studylevel);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,$query_studylevel);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[LevelCode]'>$show[LevelName]</option>";      
  
@@ -693,13 +693,13 @@ if(!$manner)
 echo"<option value=''>[Select Manner of Entry]</option>";
 }else
 {
-$query_Manner =mysql_query("SELECT ID, MannerofEntry FROM mannerofentry where ID='$manner'");
-$mana=mysql_fetch_array($query_Manner);
+$query_Manner =mysqli_query($zalongwa,"SELECT ID, MannerofEntry FROM mannerofentry where ID='$manner';");
+$mana=mysqli_fetch_array($query_Manner);
 echo"<option value='$manner'>$mana[MannerofEntry]</option>";
 }  
 $query_MannerofEntry = "SELECT ID, MannerofEntry FROM mannerofentry ORDER BY MannerofEntry ASC";
-$nm=mysql_query($query_MannerofEntry);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,$query_MannerofEntry);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[ID]'>$show[MannerofEntry]</option>";      
 }       
@@ -733,14 +733,14 @@ echo "<option value=''>[Select Sect of Religion ]</option>";
 }  
 echo 'mimi hje';
 $query_denomination2 = "SELECT * FROM religion";
-$nr=mysql_query($query_denomination2);
-while($l=mysql_fetch_array($nr))
+$nr=mysqli_query($zalongwa,$query_denomination2);
+while($l=mysqli_fetch_array($nr))
 {
 //echo"<optgroup label='$l[Religion]'>";
 //$query_denomination = "SELECT * FROM denomination where ReligionID='$l[ReligionID]' ORDER BY denomination ASC";
 $query_denomination = "SELECT * FROM religion where ReligionID='$l[ReligionID]' ORDER BY Religion ASC";
-$nm=mysql_query($query_denomination);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,$query_denomination);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[Religion]'>$show[Religion]</option>";      
 }
@@ -797,13 +797,13 @@ if($disabilityCategory)
 echo"<option value='None'>[Select Disability]</option>";
 } 
 $query_disability3 = "SELECT * FROM disability"; 
-$nm3=mysql_query($query_disability3);
-while($s= mysql_fetch_array($nm3))
+$nm3=mysqli_query($zalongwa,$query_disability3);
+while($s= mysqli_fetch_array($nm3))
 {
 echo"<optgroup label='$s[disability]'>";      
 $query_disability2 = "SELECT * FROM disabilitycategory where DisabilityCode='$s[DisabilityCode]'";
-$nm2=mysql_query($query_disability2);
-while($show = mysql_fetch_array($nm2) )
+$nm2=mysqli_query($zalongwa,$query_disability2);
+while($show = mysqli_fetch_array($nm2) )
 { 	 
 echo"<option  value='$show[disabilityCategory]'>$show[disabilityCategory]</option>";      
 }
@@ -902,8 +902,8 @@ else
 echo "<option value='Tanzania'>Tanzania</option>";
 }
 $query_country = "SELECT szCountry FROM country ORDER BY szCountry";
-$countrys = mysql_query($query_country);
-while ($row_country = mysql_fetch_array($countrys))
+$countrys = mysqli_query($zalongwa,$query_country);
+while ($row_country = mysqli_fetch_array($countrys))
 {
 ?>
   <option value="<?php echo $row_country['szCountry']?>"> <?php echo $row_country['szCountry']?></option>
@@ -933,8 +933,8 @@ else
 echo "<option value='Tanzanian'>Tanzanian</option>";
 }
 $query_nationality = "SELECT nationality FROM nationality";
-$nationalitys = mysql_query($query_nationality);
-while ($row_nationality = mysql_fetch_array($nationalitys))
+$nationalitys = mysqli_query($zalongwa,$query_nationality);
+while ($row_nationality = mysqli_fetch_array($nationalitys))
 {
 ?>
   <option value="<?php echo $row_nationality['nationality']?>"> <?php echo $row_nationality['nationality']?></option>
@@ -959,13 +959,13 @@ if(!$status)
 echo"<option value=''>[Select Status]</option>";
 }else
 {
-$query_studentStatus1 = mysql_query("SELECT StatusID,Status FROM studentstatus where StatusID='$status'");
-$stat=mysql_fetch_array($query_studentStatus1);
+$query_studentStatus1 = mysqli_query($zalongwa,"SELECT StatusID,Status FROM studentstatus where StatusID='$status'");
+$stat=mysqli_fetch_array($query_studentStatus1);
 echo"<option value='$status'>$stat[Status]</option>";
 }  
 $query_studentStatus = "SELECT StatusID,Status FROM studentstatus ORDER BY StatusID";
-$nm=mysql_query($query_studentStatus);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($zalongwa,$query_studentStatus);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[StatusID]'>$show[Status]</option>";      
       
@@ -1117,7 +1117,7 @@ echo"</select>";
         <input name="save" type="<?php echo $state2;?>" value="Save Record" > 
   </div></td>
 	</td>
-  </tr>
+</tr>
 </table>
     
 </form>
@@ -1200,8 +1200,8 @@ if(isset($_POST['actionupdate']))
 		$currentaddaress=$_POST['currentaddaress'];
 
 $qRegNo = "SELECT RegNo FROM student WHERE RegNo = '$regno'";
-$dbRegNo = mysql_query($qRegNo);
-$total = mysql_num_rows($dbRegNo);
+$dbRegNo = mysqli_query($zalongwa,$qRegNo);
+$total = mysqli_num_rows($dbRegNo);
 if ($total>1) 
 {
 echo "ZALONGWA SARIS database system has detected that,<br> this Registration ". $regno. " is already in use";
@@ -1249,7 +1249,7 @@ else
 	Class='$class',
 	currentaddaress='$currentaddaress'
 	where Id='$stdid'";
-$dbstudent = mysql_query($sql) or die(mysql_error().' - mmeona wenyewe?');
+$dbstudent = mysqli_query($zalongwa,$sql) or die(mysqli_error($zalongwa).' - mmeona wenyewe?');
 if(!$dbstudent)
 {
 echo "Admision Record Cannot be Updated - ".$dbstudent;

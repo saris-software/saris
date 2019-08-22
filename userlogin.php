@@ -92,4 +92,5 @@ if (isset($_POST['textusername'])) {
 ?>
 <?php
 mysqli_close($zalongwa);
+
 ?>

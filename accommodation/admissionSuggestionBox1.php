@@ -50,13 +50,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
                        GetSQLValueString($_POST['toid'], "text"),
                        GetSQLValueString($_POST['message'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error());
 //show replied
 $id=addslashes($_GET['id']);
 $t=date('l dS \of F Y h:i:s A');
 $qreplied="update suggestion set replied='Hii imeshajibiwa na \'$username\', tarehe: $t'  where id='$id'";
-mysql_query($qreplied) or die(mysql_error());
+mysqli_query($zalongwa,$qreplied) or die(mysqli_error());
 
   //$insertGoTo = "housingcheckmessage.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -67,11 +67,11 @@ mysql_query($qreplied) or die(mysql_error());
 				 url = admissionCheckMessage.php">';
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_suggestionbox = "SELECT suggestion.received, suggestion.fromid, suggestion.toid, suggestion.message FROM suggestion";
-$suggestionbox = mysql_query($query_suggestionbox, $zalongwa) or die(mysql_error());
-$row_suggestionbox = mysql_fetch_assoc($suggestionbox);
-$totalRows_suggestionbox = mysql_num_rows($suggestionbox);
+$suggestionbox = mysqli_query($zalongwa,$query_suggestionbox) or die(mysqli_error());
+$row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
+$totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
 
 $RegNo = $_GET['from'];
  ?>
@@ -111,5 +111,5 @@ $RegNo = $_GET['from'];
 <?php
 //}
 include('../footer/footer.php');
-mysql_free_result($suggestionbox);
+mysqli_free_result($suggestionbox);
 ?>

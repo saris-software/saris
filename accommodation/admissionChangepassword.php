@@ -54,15 +54,15 @@ echo ("Password too short, Password must be at least 5 characters!");
 exit;
 }
 $sql = "SELECT * FROM security WHERE password ='$hashold'";
-$Result1 = mysqli_query($sql, $zalongwa) or die(mysqli_error());
+$Result1 = mysqli_query($zalongwa,$sql) or die(mysqli_error());
 if(!mysqli_num_rows($Result1)){
 		echo 'Invalid Password, 
 		<br> Click the Back Button to Try'; 
 		exit;
 }else
   $updateSQL = "UPDATE security SET password='$hashnew' WHERE UserName='$txtusername' AND password ='$hashold'";
-  mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($updateSQL, $zalongwa) or die(mysqli_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$updateSQL) or die(mysqli_error());
 
   $updateGoTo = "../Login.php";
   if (isset($_SERVER['QUERY_STRING'])) {
@@ -79,7 +79,7 @@ if (isset($_COOKIE['UserName'])) {
   $colname_changepassword = (get_magic_quotes_gpc()) ? $_COOKIE['UserName'] : addslashes($_COOKIE['UserName']);
 }
 $query_changepassword = sprintf("SELECT * FROM security WHERE UserName = '$username'", $colname_changepassword);
-$changepassword = mysqli_query($query_changepassword, $zalongwa) or die(mysqli_error());
+$changepassword = mysqli_query($zalongwa,$query_changepassword) or die(mysqli_error());
 $row_changepassword = mysqli_fetch_assoc($changepassword);
 $totalRows_changepassword = mysqli_num_rows($changepassword);
 ?>

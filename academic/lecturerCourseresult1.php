@@ -18,8 +18,8 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 				
 	#Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+	$dborg = mysqli_query($zalongwa, $qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
 	$org = $row_org['Name'];
 	$address = $row_org['Address'];
 	$phone = $row_org['tel'];
@@ -43,14 +43,14 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 					  WHERE (AYear='$year' AND CourseCode = '$coursecode' AND ProgrammeofStudy = '$deg') ORDER BY student.Name";	
 	}
 	
-	$dbregno = mysql_query($qregno) or die("No Exam Results for the course - $coursecode - in the year - $year ");
-	$total_rows = mysql_num_rows($dbregno);
+	$dbregno = mysqli_query($zalongwa, $qregno) or die("No Exam Results for the course - $coursecode - in the year - $year ");
+	$total_rows = mysqli_num_rows($dbregno);
 	
 	if($total_rows>0){
 		#getcourse information
 		$qcourseinfo = "SELECT * FROM course WHERE coursecode = '$coursecode'";
-		$dbcourseinfo = mysql_query($qcourseinfo);
-		$row_courseinfo = mysql_fetch_assoc($dbcourseinfo);
+		$dbcourseinfo = mysqli_query($zalongwa, $qcourseinfo);
+		$row_courseinfo = mysqli_fetch_assoc($dbcourseinfo);
 		$coursename=$row_courseinfo['CourseName'];
 		$coursedept=$row_courseinfo['Department'];
 		$courseprog=$row_courseinfo['Programme'];
@@ -59,8 +59,8 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 		$levelcode=$row_courseinfo['StudyLevel'];
 		#get study level name
 		$qlevel = "SELECT StudyLevel FROM programmelevel WHERE Code='$levelcode'";
-		$dblevel = mysql_query($qlevel);
-		$row_level = mysql_fetch_assoc($dblevel);
+		$dblevel = mysqli_query($zalongwa, $qlevel);
+		$row_level = mysqli_fetch_assoc($dblevel);
 		$level = $row_level['StudyLevel'];
 		
 		#start pdf
@@ -103,8 +103,8 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 		//$pdf->text($x+6, $y+14, 'DEPARTMENT OF '.strtoupper($coursedept)); 
 		#get programme name
 		$qcprog ="SELECT Title FROM programme WHERE ProgrammeCode='$deg'";
-		$dbcprog = mysql_query($qcprog);
-		$row_cprog =mysql_fetch_assoc($dbcprog);
+		$dbcprog = mysqli_query($zalongwa, $qcprog);
+		$row_cprog =mysqli_fetch_assoc($dbcprog);
 		//$pdf->text($x+6, $y+28, 'PROGRAMME: '.strtoupper($row_cprog['Title'])); 
 		$pdf->text($x+6, $y+42, 'SEMESTER EXAMINATION: '.strtoupper($level).' - '.strtoupper($courseyear).' - '.$year);
 		
@@ -214,8 +214,8 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 		
 		#get coursename
 		$qcourse = "Select StudyLevel from course where CourseCode = '$coursecode'";
-		$dbcourse = mysql_query($qcourse);
-		$row_course = mysql_fetch_array($dbcourse);
+		$dbcourse = mysqli_query($zalongwa, $qcourse);
+		$row_course = mysqli_fetch_array($dbcourse);
 		$studylevel = $row_course['StudyLevel'];
 
 		$pdf->text($x+2, $y+53, 'Grandtotal  '); 
@@ -272,7 +272,7 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 	include 'includes/gradescale.php';
 	 */
  #output file
- $filename = ereg_replace("[[:space:]]+", "",$coursecode);
+ $filename = preg_replace("[[:space:]]+", "",$coursecode);
  $pdf->output($filename.'.pdf');
 }#end if isset pdf
 #get connected to the database and verfy current session
@@ -289,25 +289,25 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 	$szTitle = 'Course Record Sheet Examination Result';
 	include('lecturerheader.php');
 	
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AcademicYear = mysql_query($query_AcademicYear, $zalongwa) or die(mysql_error());
-$row_AcademicYear = mysql_fetch_assoc($AcademicYear);
-$totalRows_AcademicYear = mysql_num_rows($AcademicYear);
-mysql_select_db($database_zalongwa, $zalongwa);
+$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error($zalongwa));
+$row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
+$totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
+mysqli_select_db($zalongwa, $database_zalongwa);
 
 $query_degree = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$degree = mysql_query($query_degree, $zalongwa) or die(mysql_error());
-$row_degree = mysql_fetch_assoc($degree);
-$totalRows_degree = mysql_num_rows($degree);
+$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error($zalongwa));
+$row_degree = mysqli_fetch_assoc($degree);
+$totalRows_degree = mysqli_num_rows($degree);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 //$query_Hostel = "SELECT CourseCode FROM course ORDER BY CourseCode";
 
 #get current year
 $qcurrentyear = 'SELECT AYear FROM academicyear where Status = 1';
-$dbcurrentyear = mysql_query($qcurrentyear);
-$row_current = mysql_fetch_array($dbcurrentyear);
+$dbcurrentyear = mysqli_query($zalongwa, $qcurrentyear);
+$row_current = mysqli_fetch_array($dbcurrentyear);
 $ayear = $row_current['AYear'];
 
 if ($privilege ==3) {
@@ -322,9 +322,9 @@ $query_Hostel = "
 		SELECT CourseCode FROM course ORDER BY CourseCode";
 }
 
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die('query ,$query_Hostel, not executed');
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa, $query_Hostel) or die('query ,$query_Hostel, not executed');
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -365,8 +365,8 @@ $coursecode = trim(addslashes($_POST['Hall']));
 $qregno="SELECT DISTINCT RegNo FROM 
 			 examresult 
 				 WHERE (AYear='$year' AND CourseCode = '$coursecode') ORDER BY RegNo";	
-$dbregno = mysql_query($qregno) or die("No Exam Results for the course - $coursecode - in the year - $year ");
-$total_rows = mysql_num_rows($dbregno);
+$dbregno = mysqli_query($zalongwa, $qregno) or die("No Exam Results for the course - $coursecode - in the year - $year ");
+$total_rows = mysqli_num_rows($dbregno);
 
 	if($total_rows>0){
 	#initialise the table
@@ -398,11 +398,11 @@ $total_rows = mysql_num_rows($dbregno);
 		?>
 					<option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
 					<?php
-		} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-		  $rows = mysql_num_rows($AcademicYear);
+		} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+		  $rows = mysqli_num_rows($AcademicYear);
 		  if($rows > 0) {
-			  mysql_data_seek($AcademicYear, 0);
-			  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+			  mysqli_data_seek($AcademicYear, 0);
+			  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 		  }
 		?>
 				  </select></td>
@@ -416,11 +416,11 @@ $total_rows = mysql_num_rows($dbregno);
 		?>
 					<option value="<?php echo $row_Hostel['CourseCode']?>"><?php echo $row_Hostel['CourseCode']?></option>
 					  <?php
-		} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-		  $rows = mysql_num_rows($Hostel);
+		} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+		  $rows = mysqli_num_rows($Hostel);
 		  if($rows > 0) {
-			  mysql_data_seek($Hostel, 0);
-			  $row_Hostel = mysql_fetch_assoc($Hostel);
+			  mysqli_data_seek($Hostel, 0);
+			  $row_Hostel = mysqli_fetch_assoc($Hostel);
 		  }
 		?>
 				  </select></td>
@@ -458,11 +458,11 @@ do {
 ?>
             <option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
             <?php
-} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-  $rows = mysql_num_rows($AcademicYear);
+} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+  $rows = mysqli_num_rows($AcademicYear);
   if($rows > 0) {
-      mysql_data_seek($AcademicYear, 0);
-	  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+      mysqli_data_seek($AcademicYear, 0);
+	  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
   }
 ?>
           </select></td>
@@ -476,11 +476,11 @@ do {
 ?>
             <option value="<?php echo $row_Hostel['CourseCode']?>"><?php echo $row_Hostel['CourseCode']?></option>
               <?php
-} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-  $rows = mysql_num_rows($Hostel);
+} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+  $rows = mysqli_num_rows($Hostel);
   if($rows > 0) {
-      mysql_data_seek($Hostel, 0);
-	  $row_Hostel = mysql_fetch_assoc($Hostel);
+      mysqli_data_seek($Hostel, 0);
+	  $row_Hostel = mysqli_fetch_assoc($Hostel);
   }
 ?>
           </select></td>
@@ -496,11 +496,11 @@ do {
 ?>
                           <option value="<?php echo $row_degree['ProgrammeCode']?>"><?php echo $row_degree['ProgrammeName']?></option>
                           <?php
-} while ($row_degree = mysql_fetch_assoc($degree));
-  $rows = mysql_num_rows($degree);
+} while ($row_degree = mysqli_fetch_assoc($degree));
+  $rows = mysqli_num_rows($degree);
   if($rows > 0) {
-      mysql_data_seek($degree, 0);
-	  $row_degree = mysql_fetch_assoc($degree);
+      mysqli_data_seek($degree, 0);
+	  $row_degree = mysqli_fetch_assoc($degree);
   }
 ?>
                         </select>

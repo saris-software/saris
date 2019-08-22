@@ -9,17 +9,17 @@ if (isset($_GET['pageNum_ExamOfficerGradeBook'])) {
 }
 $startRow_ExamOfficerGradeBook = $pageNum_ExamOfficerGradeBook * $maxRows_ExamOfficerGradeBook;
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_ExamOfficerGradeBook = "SELECT CourseCode, AYear, SemesterID FROM examresult";
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysql_query($query_limit_ExamOfficerGradeBook, $zalongwa) or die(mysql_error());
-$row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook);
+$ExamOfficerGradeBook = mysqli_query($zalongwa,$query_limit_ExamOfficerGradeBook) or die(mysql_error());
+$row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {
   $totalRows_ExamOfficerGradeBook = $_GET['totalRows_ExamOfficerGradeBook'];
 } else {
-  $all_ExamOfficerGradeBook = mysql_query($query_ExamOfficerGradeBook);
-  $totalRows_ExamOfficerGradeBook = mysql_num_rows($all_ExamOfficerGradeBook);
+  $all_ExamOfficerGradeBook = mysqli_query($zalongwa,$query_ExamOfficerGradeBook);
+  $totalRows_ExamOfficerGradeBook = mysqli_num_rows($all_ExamOfficerGradeBook);
 }
 $totalPages_ExamOfficerGradeBook = ceil($totalRows_ExamOfficerGradeBook/$maxRows_ExamOfficerGradeBook)-1;
 
@@ -58,8 +58,8 @@ require_once('../Connections/zalongwa.php');
 
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
 //$sqldel = "delete from stats where (YEAR(CURRENT_DATE)-YEAR(received))- (RIGHT(CURRENT_DATE,5)<RIGHT(received,5))>1";
-$result = mysql_query($sql) or die("Siwezi kuingiza data.<br>" . mysql_error());
-mysql_close($zalongwa);
+$result = mysqli_query($zalongwa,$sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
+mysqlo_close($zalongwa);
 ?> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang=en-US>
@@ -121,14 +121,14 @@ a:active {
 
 <body bgcolor="#FFFFCC">
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <tr> 
       <td width="100%" height="48"></td>
     </tr>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
       <tr bgcolor="#99CCCC">
         <td height="69" colspan="5" align="center" valign="middle">
@@ -136,14 +136,14 @@ a:active {
       </tr>
       <tr bgcolor="#FFFFCC" class="normaltext">
         <td height="28" colspan="3" align="center" valign="middle" nowrap>
-        <div align="left" class="style24"><span class="style29"><font face="Verdana" color="#FFFF00"><b><font color="006699"><a href="/index.html">Welcome</a> </font></b></font><font face="Verdana"><b><span class="style42">--&gt;</span></b></font></span><font face="Verdana"><b> User Menu</b></font><span class="style29"><font face="Verdana"> </font> </span> </div></td>
+        <div align="left" class="style24"><span class="style29"><span face="Verdana" color="#FFFF00"><b><span color="006699"><a href="/index.html">Welcome</a> </span></b></span><span family="Verdana"><b><span class="style42">--&gt;</span></b></span></span><span family="Verdana"><b> User Menu</b></span><span class="style29"><span face="Verdana"> </span> </span> </div></td>
         <td valign="middle" align="center" colspan="2">
           <form action="/academic/lecturerexamofficerpublishresults.php" method="get" class="style24">
-            <div align="right"><span class="style42"><font face="Verdana"><b>Search</b></font></span> <font color="006699" face="Verdana"><b>
+            <div align="right"><span class="style42"><span face="Verdana"><b>Search</b></span></span> <span color="006699" face="Verdana"><b>
               <input type="text" name="content" size="15">
-              </b></font><font color="#FFFF00" face="Verdana"><b>
+              </b></span><span color="#FFFF00" face="Verdana"><b>
               <input type="submit" value="GO" name="go">
-            </b></font> </div>
+            </b></span> </div>
         </form></td>
       </tr>
       <tr>
@@ -265,7 +265,7 @@ a:active {
                 <td><?php echo "<a href=\"lecturerexamofficerpublishresults.php?login=$course\">Publish</a>";?></td>
                 <td><?php echo "<a href=\"lectureraddexamresults.php?login=$course\">Edit</a>";?></td>
               </tr>
-              <?php } while ($row_ExamOfficerGradeBook = mysql_fetch_assoc($ExamOfficerGradeBook)); ?>
+              <?php } while ($row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook)); ?>
             </table>
             <p>&nbsp;<a href="<?php printf("%s?pageNum_ExamOfficerGradeBook=%d%s", $currentPage, max(0, $pageNum_ExamOfficerGradeBook - 1), $queryString_ExamOfficerGradeBook); ?>">Previous</a> <span class="style64">.....</span>Records: <?php echo min($startRow_ExamOfficerGradeBook + $maxRows_ExamOfficerGradeBook, $totalRows_ExamOfficerGradeBook) ?>/<?php echo $totalRows_ExamOfficerGradeBook ?> <span class="style64">..... </span><a href="<?php printf("%s?pageNum_ExamOfficerGradeBook=%d%s", $currentPage, min($totalPages_ExamOfficerGradeBook, $pageNum_ExamOfficerGradeBook + 1), $queryString_ExamOfficerGradeBook); ?>">Next</a> </p>
         </div></td>
@@ -291,16 +291,16 @@ a:active {
         <td><img height="1" width="10" src="/images/spacer.gif"></td>
       </tr>
     </table>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
-  </center>
+  <div style="text-align: center;">
+  </div>
 </div>
 
 </body>
 
 </html>
 <?php
-mysql_free_result($ExamOfficerGradeBook);
+mysqli_free_result($ExamOfficerGradeBook);
 ?>

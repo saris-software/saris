@@ -17,7 +17,7 @@
 $browser  = $_SERVER["HTTP_USER_AGENT"];   
 $ip  =  $_SERVER["REMOTE_ADDR"];   
 $sql="INSERT INTO stats(ip,browser,received,page) VALUES('$ip','$browser',now(),'$username')";   
-$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error());
+$result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mysqli_error($zalongwa));
 
 #Control Refreshing the page
 #if not refreshed set refresh = 0
@@ -26,20 +26,20 @@ $result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mys
 #populate academic year combo box
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error());
+$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error($zalongwa));
 $row_AYear = mysqli_fetch_assoc($AYear);
 $totalRows_AYear = mysqli_num_rows($AYear);
 
 //check if is a Departmental examination officer
 $query_userdept = "SELECT Dept FROM security where UserName = '$username' AND Dept<>0";
-$userdept = mysqli_query($zalongwa, $query_userdept) or die(mysqli_error());
+$userdept = mysqli_query($zalongwa, $query_userdept) or die(mysqli_error($zalongwa));
 $row_userdept = mysqli_fetch_assoc($userdept);
 $totalRows_userdept = mysqli_num_rows($userdept);
 mysqli_select_db($zalongwa, $database_zalongwa);
 
 //check if is Faculty examination officer
 $query_userfac = "SELECT Faculty FROM security where UserName = '$username' AND Dept=0";
-$userfac = mysqli_query($zalongwa, $query_userfac) or die(mysqli_error());
+$userfac = mysqli_query($zalongwa, $query_userfac) or die(mysqli_error($zalongwa));
 $row_userfac = mysqli_fetch_assoc($userfac);
 $totalRows_userfac = mysqli_num_rows($userfac);
 $fac = $row_userfac["Faculty"];
@@ -64,7 +64,7 @@ if($totalRows_userdept>0){
 								ORDER BY DeptName ASC";
 								}
 								
-$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error());
+$dept = mysqli_query($zalongwa, $query_dept) or die(mysqli_error($zalongwa));
 $row_dept = mysqli_fetch_assoc($dept);
 $totalRows_dept = mysqli_num_rows($dept);
 
@@ -93,14 +93,14 @@ $query_examcategory = "SELECT Id,Description FROM examcategory WHERE (Id > 2) OR
 else{
 $query_examcategory = "SELECT Id,Description FROM examcategory ORDER BY Id";
 }
-$examcategory = mysqli_query($zalongwa, $query_examcategory) or die(mysqli_error());
+$examcategory = mysqli_query($zalongwa, $query_examcategory) or die(mysqli_error($zalongwa));
 $row_examcategory = mysqli_fetch_assoc($examcategory);
 $totalRows_examcategory = mysqli_num_rows($examcategory);
 
 #populate Exam Marker combo box
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_exammarker = "SELECT Id, Name FROM exammarker ORDER BY Name";
-$exammarker = mysqli_query($zalongwa, $query_exammarker) or die(mysqli_error());
+$exammarker = mysqli_query($zalongwa, $query_exammarker) or die(mysqli_error($zalongwa));
 $row_exammarker = mysqli_fetch_assoc($exammarker);
 $totalRows_exammarker = mysqli_num_rows($exammarker);
 
@@ -141,7 +141,7 @@ $query_coursecode = "
 }
 
 
-$coursecode = mysqli_query($zalongwa, $query_coursecode) or die(mysqli_error());
+$coursecode = mysqli_query($zalongwa, $query_coursecode) or die(mysqli_error($zalongwa));
 
 ?>
  <fieldset>

@@ -23,7 +23,7 @@ $year = addslashes($_GET['ayear']);
 echo "Deleting Candidate - ".$user;
 
 $qdelete="DELETE FROM allocation WHERE RegNo = '$user' AND AYear='$year'";
-$dbdelete_user = mysql_query($qdelete)or die('Cannot delete this user account!!');
+$dbdelete_user = mysqli_query($zalongwa,$qdelete)or die('Cannot delete this user account!!');
 
 //after deleting go back to user list
 echo '<meta http-equiv = "refresh" content ="0; url = housingroomallocation.php">';

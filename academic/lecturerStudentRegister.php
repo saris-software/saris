@@ -224,8 +224,8 @@ $capacity = $row_capacity['Capacity'];
 						   GetSQLValueString($_POST['examcat'], "text"),
 						   GetSQLValueString($_POST['checked'], "text"));
 	
-	  mysqli_select_db($database_zalongwa, $zalongwa);
-	  $Result1 = mysqli_query($insertSQL, $zalongwa) or die(mysqli_error());
+	  mysqli_select_db($zalongwa,$database_zalongwa);
+	  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error($zalongwa));
 	  
 	  echo '<meta http-equiv = "refresh" content ="0; 
 							url = lecturerStudentRegister.php">';
@@ -242,7 +242,7 @@ $key=trim($_POST["candidate"]);
 $query_candidate = "SELECT student.Name, student.RegNo
 						  FROM student 
 						  WHERE (student.RegNo ='$key')";
-$candidate = mysqli_query($query_candidate, $zalongwa) or die(mysqli_error());
+$candidate = mysqli_query($zalongwa,$query_candidate) or die(mysqli_error($zalongwa));
 $row_candidate = mysqli_fetch_assoc($candidate);
 $totalRows_candidate = mysqli_num_rows($candidate);
 

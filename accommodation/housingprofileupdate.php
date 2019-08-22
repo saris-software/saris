@@ -9,7 +9,7 @@ $email = addslashes($_POST['textEmail']);
 if(!empty($name)) {
 
 $sql = "UPDATE Security SET FullName='$name', Position='$status', Email='$email' WHERE UserName = '$username'";
-$query = mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$query = mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
 if ($query)echo "Database Updated:";
 	echo '<meta http-equiv = "refresh" content ="0; 
 		url = housingprofile.php">';
@@ -17,5 +17,5 @@ if ($query)echo "Database Updated:";
 echo '<meta http-equiv = "refresh" content ="0; 
 	url = housingprofileEdit.php">';
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?>

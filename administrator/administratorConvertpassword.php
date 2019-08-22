@@ -16,7 +16,7 @@
 <?php
 # get all users
 $quser="SELECT password, RegNo FROM security ORDER BY RegNo";	
-$dbuser = mysqli_query($quser) or die("No Single User");
+$dbuser = mysqli_query($zalongwa,$quser) or die("No Single User");
 	
 	while($row_user = mysqli_fetch_array($dbuser)){
 		$regno= $row_user['RegNo'];
@@ -27,7 +27,7 @@ $dbuser = mysqli_query($quser) or die("No Single User");
 					
 		//Update security
 		$sql = "UPDATE security SET password='$hash' WHERE RegNo = '$regno'";
-		$query = mysqli_query($sql) or die("Cannot query the database.<br>");
+		$query = mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>");
 		
 		echo $regno.' Password Ecoded<br>';
 }

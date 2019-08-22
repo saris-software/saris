@@ -36,8 +36,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "staff")) {
                        GetSQLValueString($_POST['szAddress'], "text"),
                        GetSQLValueString($_POST['szTelephone'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error());
 }
 ?>
 <?php 

@@ -15,9 +15,9 @@
 
 	#populate Payment Category Combo Box
 	$query_paytype = "SELECT Id, Description FROM tblcautionfee ORDER BY Id ASC";
-	$paytype = mysql_query($query_paytype, $zalongwa) or die(mysql_error());
-	$row_paytype = mysql_fetch_assoc($paytype);
-	$totalRows_paytype = mysql_num_rows($paytype);
+	$paytype = mysqli_query($zalongwa,$query_paytype) or die(mysqli_error());
+	$row_paytype = mysqli_fetch_assoc($paytype);
+	$totalRows_paytype = mysqli_num_rows($paytype);
 	
 	
 function add($f){
@@ -219,7 +219,7 @@ function check(){
 				}else{
 				$sql="INSERT INTO tblcautionfee(RegNo, PayType, Amount, ReceiptNo, ReceiptDate, User, Description, Received) 
 										VALUES('$regno','$category','$amount','$receiptno','$rpDate','$username','$comments',now())";   
-				$result = mysql_query($sql) or die("Kuna matatizo fulani, Jaribu baadaye" . mysql_error());
+				$result = mysqli_query($zalongwa,$sql) or die("Kuna matatizo fulani, Jaribu baadaye" . mysql_error());
 			}
 		}
   }  
@@ -232,9 +232,9 @@ $key=trim($_POST["candidate"]);
 $query_candidate = "SELECT student.Name, student.RegNo
 						  FROM student 
 						  WHERE (student.RegNo ='$key')";
-$candidate = mysql_query($query_candidate, $zalongwa) or die(mysql_error());
-$row_candidate = mysql_fetch_assoc($candidate);
-$totalRows_candidate = mysql_num_rows($candidate);
+$candidate = mysqli_query($zalongwa,$query_candidate) or die(mysqli_error());
+$row_candidate = mysqli_fetch_assoc($candidate);
+$totalRows_candidate = mysqli_num_rows($candidate);
 
 }
 //display the form if candidate is found
@@ -317,8 +317,8 @@ if((@$totalRows_candidate>0)||($errored==1)){
   <?php
 //display privious refund report
 $qrefunded = "SELECT * FROM tblcautionfee WHERE RegNo = '$key' Order By Received Desc";
-$refunded = mysql_query($qrefunded);
-$num_row_refunded = mysql_num_rows($refunded);
+$refunded = mysqli_query($zalongwa,$qrefunded);
+$num_row_refunded = mysqli_num_rows($refunded);
 if ($num_row_refunded > 0) {
 		?>
 		This Candidate was Previously Refunded the Following:
@@ -335,12 +335,12 @@ if ($num_row_refunded > 0) {
 	<?php 
 	$i=1;
 	
-		while($row_refunded = mysql_fetch_assoc($refunded)) {
+		while($row_refunded = mysqli_fetch_assoc($refunded)) {
 			//search payment category
 			$pay=$row_refunded['Paytype'];
 			$qpay="select Description from paytype where Id='$pay'";
-			$dbpay=mysql_query($qpay);
-			$row_pay=mysql_fetch_assoc($dbpay);
+			$dbpay=mysqli_query($zalongwa,$qpay);
+			$row_pay=mysqli_fetch_assoc($dbpay);
 			//print student report
 			?>
 			<tr>

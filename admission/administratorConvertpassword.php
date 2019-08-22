@@ -13,7 +13,6 @@
 	$szTitle = 'Encode User Passwords';
 	include('admissionheader.php')
 ?>
-<?php
 # get all users
 $quser="SELECT password, RegNo FROM security ORDER BY RegNo";	
 $dbuser = mysqli_query($zalongwa, $quser) or die("No Single User");

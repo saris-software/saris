@@ -13,15 +13,15 @@ require_once('../Connections/zalongwa.php');
 
 //get current year
 $qyear="SELECT AYear FROM academicyear WHERE Status=1";	
-$dbyear = mysql_query($qyear) or die("No Single year umeliwa");
-$row_year = mysql_fetch_array($dbyear);
+$dbyear = mysqli_query($zalongwa,$qyear) or die("No Single year umeliwa");
+$row_year = mysqli_fetch_array($dbyear);
 $currentyear = $row_year['AYear'];
 
 # get all users
 $quser="SELECT RegNo FROM allocation WHERE AYear='$currentyear' ORDER BY HID,RegNo";	
-$dbuser = mysql_query($quser) or die("No Single User umeliwa");
-$dbusertenant = mysql_query($quser) or die("No Single User Hujaliwa");
-$row_usertenant = mysql_fetch_array($dbuser);
+$dbuser = mysqli_query($zalongwa,$quser) or die("No Single User umeliwa");
+$dbusertenant = mysqli_query($zalongwa,$quser) or die("No Single User Hujaliwa");
+$row_usertenant = mysqli_fetch_array($dbuser);
 		
 $sn = 0;
 	?>
@@ -35,17 +35,17 @@ $sn = 0;
 					<td><div align="center"><strong>Year</strong></div></td>
                   </tr>
 	<?php
-	while($row_user = mysql_fetch_array($dbusertenant)){
+	while($row_user = mysqli_fetch_array($dbusertenant)){
 
 		$regno= $row_user['RegNo'];
 		$qtenant = "SELECT student.Name, allocation.RegNo, hostel.HName, allocation.RNumber, allocation.AYear, hostel.HID
                     FROM (allocation INNER JOIN student ON allocation.RegNo = student.RegNo) INNER JOIN hostel ON allocation.HID = hostel.HID
 		            WHERE (allocation.RegNo='$regno') ORDER BY hostel.HName, allocation.RegNo ";
-		$dbtenant = mysql_query($qtenant) or die("No Single User");
-		$total_rows = mysql_num_rows($dbtenant);
+		$dbtenant = mysqli_query($zalongwa,$qtenant) or die("No Single User");
+		$total_rows = mysqli_num_rows($dbtenant);
 		if($total_rows==1){
 		$sn = $sn+1;
-			$row_tenant = mysql_fetch_array($dbtenant);
+			$row_tenant = mysqli_fetch_array($dbtenant);
 			$tenantname= $row_tenant['Name'];
 			$room= $row_tenant['RNumber'];
 			$hall= $row_tenant['HName'];

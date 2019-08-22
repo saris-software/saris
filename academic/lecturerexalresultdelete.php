@@ -32,13 +32,13 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 if ((isset($_GET['RegNo'])) && ($_GET['RegNo'] != "")) {
   #delete in examregister 
   $deleteSQL = "DELETE FROM examregister WHERE  (RegNo='$regno') AND (CourseCode = '$key') AND (AYear = '$ayear')";                   
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($deleteSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $deleteSQL) or die(mysqli_error($zalongwa));
   
   #delete in examresult
   $deleteSQL2 = "DELETE FROM examresult WHERE  (RegNo='$regno') AND (CourseCode = '$key') AND (AYear = '$ayear')";                    
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($deleteSQL2, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $deleteSQL2) or die(mysqli_error($zalongwa));
 
 
   $deleteGoTo = "lecturerCourseAllocation.php";

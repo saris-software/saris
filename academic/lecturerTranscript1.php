@@ -3,7 +3,7 @@
 if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	#get post variables
 	$rawkey = addslashes(trim($_POST['key']));
-	$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+	$key = preg_replace("[[:space:]]+", " ",$rawkey);
 	#get content table raw height
 	$rh= addslashes(trim($_POST['sex']));
 	$temp= addslashes(trim($_POST['temp']));
@@ -34,17 +34,17 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	}
 	#check if is a reprint
 	$qtranscounter = "SELECT RegNo, received FROM transcriptcount where RegNo='$key'";
-	$dbtranscounter = mysql_query($qtranscounter);
-	@$transcounter = mysql_num_rows($dbtranscounter);
+	$dbtranscounter = mysqli_query($zalongwa,$qtranscounter);
+	@$transcounter = mysqli_num_rows($dbtranscounter);
 	
 	if ($transcounter>0){
-		$row_transcounter = mysql_fetch_array($dbtranscounter);
+		$row_transcounter = mysqli_fetch_array($dbtranscounter);
 		$lastprinted = $row_result['received'];
 	}
 	#Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+	$dborg = mysqli_query($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
 	$org = $row_org['Name'];
 	$post = $row_org['Address'];
 	$phone = $row_org['tel'];
@@ -60,8 +60,8 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	$tpg =$pg;
 
 	$qstudent = "SELECT * from student WHERE regno = '$key'";
-	$dbstudent = mysql_query($qstudent); 
-	$row_result = mysql_fetch_array($dbstudent);
+	$dbstudent = mysqli_query($zalongwa,$qstudent);
+	$row_result = mysqli_fetch_array($dbstudent);
 		$sname = $row_result['Name'];
 		$regno = $row_result['RegNo'];
 		$degree = $row_result['ProgrammeofStudy'];
@@ -78,8 +78,8 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 		$checkit = strlen($photo);
 		#get campus name
 		$qcampus = "SELECT * FROM campus where CampusID='$campusid'";
-		$dbcampus = mysql_query($qcampus);
-		$row_campus= mysql_fetch_assoc($dbcampus);
+		$dbcampus = mysqli_query($zalongwa,$qcampus);
+		$row_campus= mysqli_fetch_assoc($dbcampus);
 		$campus = $row_campus['Campus'];
 		
 		if ($checkit > 8){
@@ -89,16 +89,16 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 		}
 		#get degree name
 		$qdegree = "Select Title, Faculty FROM programme WHERE ProgrammeCode = '$degree'";
-		$dbdegree = mysql_query($qdegree);
-		$row_degree = mysql_fetch_array($dbdegree);
+		$dbdegree = mysqli_query($zalongwa,$qdegree);
+		$row_degree = mysqli_fetch_array($dbdegree);
 		$programme = $row_degree['Title'];
 		$faculty = $row_degree['Faculty'];
 		
 		#get subject combination
 		$qsubjectcomb = "SELECT SubjectName FROM subjectcombination WHERE SubjectID='$subjectid'";
-		$dbsubjectcom = mysql_query($qsubjectcomb);
-		$row_subjectcom = mysql_fetch_assoc($dbsubjectcom);
-		$counter = mysql_num_rows($dbsubjectcom );
+		$dbsubjectcom = mysqli_query($zalongwa,$qsubjectcomb);
+		$row_subjectcom = mysqli_fetch_assoc($dbsubjectcom);
+		$counter = mysqli_num_rows($dbsubjectcom );
 		if ($counter>0){
 		$subject = $row_subjectcom['SubjectName'];
 		}
@@ -214,14 +214,14 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	
 	//query academeic year
 	$qayear = "SELECT DISTINCT AYear FROM examresult WHERE RegNo = '$regno' and checked=1 ORDER BY AYear ASC";
-	$dbayear = mysql_query($qayear);
+	$dbayear = mysqli_query($zalongwa,$qayear);
 	
 	#query project
 	/*
 	$qproject = "SELECT ayear, thesis FROM thesis WHERE RegNo = '$key'";
-	$dbproject = mysql_query($qproject);
-	$row_project = mysql_fetch_assoc($dbproject);
-	$thesisresult = mysql_num_rows($dbproject);
+	$dbproject = mysqli_query($zalongwa,$qproject);
+	$row_project = mysqli_fetch_assoc($dbproject);
+	$thesisresult = mysqli_num_rows($dbproject);
 	$thesis = $row_project['thesis'];
 	$thesisyear = $row_project['ayear'];
 	*/
@@ -229,7 +229,7 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	$acyear = 0;
 	
 	//query exam results sorted per years
-	while($rowayear = mysql_fetch_object($dbayear)){
+	while($rowayear = mysqli_fetch_object($dbayear)){
 		$acyear = $acyear +1;
 		$currentyear = $rowayear->AYear;
 		if ($temp ==2)
@@ -265,11 +265,11 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 					  ORDER BY examresult.AYear, examresult.coursecode ASC";	
 		}
 
-		$result = mysql_query($query_examresult); 
-		$query = @mysql_query($query_examresult);
-		$dbcourseUnit = mysql_query($query_examresult);
+		$result = mysqli_query($zalongwa,$query_examresult);
+		$query = @mysqli_query($zalongwa,$query_examresult);
+		$dbcourseUnit = mysqli_query($zalongwa,$query_examresult);
 		
-		if (mysql_num_rows($query) > 0){
+		if (mysqli_num_rows($query) > 0){
 				
 						$totalunit=0;
 						$unittaken=0;
@@ -337,7 +337,7 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 					
 					#calculate results
 					$i=1;
-					while($row_course = mysql_fetch_array($dbcourseUnit)){
+					while($row_course = mysqli_fetch_array($dbcourseUnit)){
 						$course= $row_course['CourseCode'];
 						$unit = $row_course['Units'];
 						$cname = $row_course['CourseName'];
@@ -601,12 +601,12 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if (isset($_POST['search']) && ($_POST['search'] == "PreView")) {
 #get post variables
 $rawkey = $_POST['key'];
-$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+$key = preg_replace("[[:space:]]+", " ",$rawkey);
 
 //select student
 $qstudent = "SELECT * from student WHERE regno = '$key'";
-$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-$row_result = mysql_fetch_array($dbstudent);
+$dbstudent = mysqli_query($zalongwa,$qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error());
+$row_result = mysqli_fetch_array($dbstudent);
 			$name = $row_result['Name'];
 			$regno = $row_result['regno'];
 			$degree = $row_result['ProgrammeofStudy'];
@@ -614,8 +614,8 @@ $row_result = mysql_fetch_array($dbstudent);
 			
 			//get degree name
 			$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-			$dbdegree = mysql_query($qdegree);
-			$row_degree = mysql_fetch_array($dbdegree);
+			$dbdegree = mysqli_query($zalongwa,$qdegree);
+			$row_degree = mysqli_fetch_array($dbdegree);
 			$programme = $row_degree['Title'];
 			
 			echo  "$name - $regno <br> $programme";	
@@ -623,10 +623,10 @@ $row_result = mysql_fetch_array($dbstudent);
 				
 //query academeic year
 $qayear = "SELECT DISTINCT AYear FROM examresult WHERE RegNo = '$RegNo' ORDER BY AYear ASC";
-$dbayear = mysql_query($qayear);
+$dbayear = mysqli_query($zalongwa,$qayear);
 
 //query exam results sorted per years
-while($rowayear = mysql_fetch_object($dbayear)){
+while($rowayear = mysqli_fetch_object($dbayear)){
 $currentyear = $rowayear->AYear;
 
 			# get all courses for this candidate
@@ -635,8 +635,8 @@ $currentyear = $rowayear->AYear;
 							 WHERE (RegNo='$RegNo') AND 
 							 (course.Programme = '$degree') AND 
 							 AYear='$currentyear'";	
-			$dbcourse = mysql_query($qcourse) or die("No Exam Results for the Candidate - $key ");
-			$total_rows = mysql_num_rows($dbcourse);
+			$dbcourse = mysqli_query($zalongwa,$qcourse) or die("No Exam Results for the Candidate - $key ");
+			$total_rows = mysqli_num_rows($dbcourse);
 			
 			if($total_rows>0){
 			#initialise s/no
@@ -644,16 +644,16 @@ $currentyear = $rowayear->AYear;
 			#print name and degree
 			//select student
 				$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$RegNo'";
-				$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-				$row_result = mysql_fetch_array($dbstudent);
+				$dbstudent = mysqli_query($zalongwa,$qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error());
+				$row_result = mysqli_fetch_array($dbstudent);
 				$name = $row_result['Name'];
 				$regno = $row_result['RegNo'];
 				$degree = $row_result['ProgrammeofStudy'];
 				
 				//get degree name
 				$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-				$dbdegree = mysql_query($qdegree);
-				$row_degree = mysql_fetch_array($dbdegree);
+				$dbdegree = mysqli_query($zalongwa,$qdegree);
+				$row_degree = mysqli_fetch_array($dbdegree);
 				$programme = $row_degree['Title'];
 							
 							#initialise
@@ -673,7 +673,7 @@ $currentyear = $rowayear->AYear;
     <td width="31" nowrap scope="col">GPA</td>
   </tr>
   <?php
-		while($row_course = mysql_fetch_array($dbcourse)){
+		while($row_course = mysqli_fetch_array($dbcourse)){
 				$course= $row_course['CourseCode'];
 				$unit= $row_course['Units'];
 				$coursename= $row_course['CourseName'];
@@ -715,7 +715,7 @@ $currentyear = $rowayear->AYear;
 							}
 						}
 				}//ends while rowayear	
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 
 }else{
 

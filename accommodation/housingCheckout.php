@@ -27,12 +27,12 @@
 	
 		//validate this regno
 		$qregno =  "select Name, RegNo from student where RegNo='$regno'";
-		$dbregno=mysql_query($qregno);
-		if(mysql_num_rows($dbregno)>0){
+		$dbregno=mysqli_query($zalongwa,$qregno);
+		if(mysqli_num_rows($dbregno)>0){
 				//check max checkin
 				$qmaxindate = "select max(CheckIn) from allocation where RegNo='$regno'";
-				$dbmaxindate = mysql_query($qmaxindate);
-				$row_maxindate = mysql_fetch_assoc($dbmaxindate);
+				$dbmaxindate = mysqli_query($zalongwa,$qmaxindate);
+				$row_maxindate = mysqli_fetch_assoc($dbmaxindate);
 				$maxindate = $row_maxindate['max(CheckIn)'];
 				if($maxindate>$checkout){
 					echo 'Database not Updated <br>';
@@ -63,12 +63,12 @@
 
 				//update max checkout
 				$qmaxdate = "select max(CheckOut) from allocation where RegNo='$regno'";
-				$dbmaxdate = mysql_query($qmaxdate);
-				$row_maxdate = mysql_fetch_assoc($dbmaxdate);
+				$dbmaxdate = mysqli_query($zalongwa,$qmaxdate);
+				$row_maxdate = mysqli_fetch_assoc($dbmaxdate);
 				$maxdate = $row_maxdate['max(CheckOut)'];
 				
 				$qupdate = "UPDATE allocation SET Checkout = '$checkout' WHERE RegNo='$regno' and CheckOut ='$maxdate' ";
-				$dbupdate = mysql_query($qupdate);
+				$dbupdate = mysqli_query($zalongwa,$qupdate);
 				if($dbupdate){
 				echo 'Database Updated';
 						?>

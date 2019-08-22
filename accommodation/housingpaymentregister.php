@@ -15,15 +15,15 @@
 
 	#populate Payment Category Combo Box
 	$query_paytype = "SELECT Id, Description FROM paytype ORDER BY Id ASC";
-	$paytype = mysql_query($query_paytype, $zalongwa) or die(mysql_error());
-	$row_paytype = mysql_fetch_assoc($paytype);
-	$totalRows_paytype = mysql_num_rows($paytype);
+	$paytype = mysqli_query($zalongwa,$query_paytype) or die(mysqli_error());
+	$row_paytype = mysqli_fetch_assoc($paytype);
+	$totalRows_paytype = mysqli_num_rows($paytype);
 	
 	#populate Candidate Combo Box
 	$query_std = "SELECT  Name, RegNo FROM student ORDER BY RegNo ASC";
-	$std = mysql_query($query_std, $zalongwa) or die(mysql_error());
-	$row_std = mysql_fetch_assoc($std);
-	$totalRows_std = mysql_num_rows($std);
+	$std = mysqli_query($zalongwa,$query_std) or die(mysqli_error());
+	$row_std = mysqli_fetch_assoc($std);
+	$totalRows_std = mysqli_num_rows($std);
 
 function add($f){
   global $errorindicator,$errorclass,$Javascript;
@@ -141,8 +141,8 @@ function check(){
 		#check if receiptno exist
 		if(!empty($receiptno)){
 			$sql = "SELECT ReceiptNo FROM tblcautionfee WHERE ReceiptNo = '$receiptno'";
-			$result = mysql_query($sql);
-			$num_row = mysql_num_rows($result);
+			$result = mysqli_query($zalongwa,$sql);
+			$num_row = mysqli_num_rows($result);
 			if ($num_row > 0) {
 					echo "Can't Save Records, ZALONGWA Imegundua Kuwa,<br> Receipt Number Hii, $receiptno, Ishatumika Tayari";
 					echo "<br> Tafadhari Chagua Nyingine!<hr><br>";
@@ -384,7 +384,7 @@ function check(){
 				}else{
 				$sql="INSERT INTO tblcautionfee(RegNo, PayType, Amount, ReceiptNo, ReceiptDate, User, Description, Received) 
 										VALUES('$regno','$category','$amount','$receiptno','$rpDate','$username','$comments',now())";   
-				$result = mysql_query($sql) or die("Kuna matatizo fulani, Jaribu baadaye" . mysql_error());
+				$result = mysqli_query($zalongwa,$sql) or die("Kuna matatizo fulani, Jaribu baadaye" . mysql_error());
 			}
 		}
   }  
@@ -397,9 +397,9 @@ $key=trim($_POST["candidate"]);
 $query_candidate = "SELECT student.Name, student.RegNo, student.ProgrammeofStudy
 						  FROM student 
 						  WHERE (student.RegNo ='$key')";
-$candidate = mysql_query($query_candidate, $zalongwa) or die(mysql_error());
-$row_candidate = mysql_fetch_assoc($candidate);
-$totalRows_candidate = mysql_num_rows($candidate);
+$candidate = mysqli_query($zalongwa,$query_candidate) or die(mysqli_error());
+$row_candidate = mysqli_fetch_assoc($candidate);
+$totalRows_candidate = mysqli_num_rows($candidate);
 }
 //display the form is candidate is found
 if((@$totalRows_candidate>0)||($errored==1)){ 

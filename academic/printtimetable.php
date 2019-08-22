@@ -243,7 +243,7 @@ $objPHPExcel->getProperties()->setCreator("Zalongwa")
 	 
 	 
 	}
-	 $result = mysqli_query($zalongwa,($sql);
+	 $result = mysqli_query($zalongwa,$sql);
 	 $num = mysqli_num_rows($result);
 	$timetable=array();
 	
