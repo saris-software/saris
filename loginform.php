@@ -69,8 +69,7 @@
                     if (isset($loginerror) && $loginerror != "") {
                         ?>
                         <b class="small">
-                            <style
-                            =font-color:"Brown"><?php echo $loginerror ?></font></b>
+                            <style=font-color:"Brown"><?php echo $loginerror ?></font></b>
                         <?php
                         session_cache_limiter('nocache');
                         $_SESSION = array();
