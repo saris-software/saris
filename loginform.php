@@ -2,8 +2,7 @@
 <HTML xmlns="http://www.w3.org/1999/xhtml">
 <HEAD id=Head1><TITLE>Zalongwa SARIS Software</TITLE>
     <META http-equiv=Content-Type content="text/html; charset=utf-8">
-    <LINK
-            href="login_files/Generic.css" type=text/css rel=stylesheet>
+    <LINK href="login_files/Generic.css" type=text/css rel=stylesheet>
     <META content="MSHTML 6.00.6000.16809" name=GENERATOR>
     <style type="text/css">
         body {
@@ -44,17 +43,17 @@
     <INPUT type=hidden value=1 name=validate>
     <DIV class=loginForm>
         <DIV>
-            <IMG style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px"
-                 src="login_files/top_banner.png"></DIV>
+            <!--<IMG style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px"
+                 src="login_files/top_banner.jpg" alt=""></DIV>-->
+            <img src="../saris/login_files/top_banner.jpg" alt="">
+        </DIV>
         <DIV class=loginOuterFormContents>
             <DIV class=loginLeftBorder></DIV>
             <DIV class=loginInnerFormContents>
                 <DIV class=loginErrorRow style="PADDING-TOP: 20px"></DIV>
                 <div align="center" class="style1">SARIS LOGIN FORM</div>
                 <DIV class=loginFormRow style="PADDING-TOP: 20px"><SPAN class=loginFormHeader>Username:</SPAN>
-                    <INPUT id=textusername
-                           style="BORDER-RIGHT: silver 1px solid;border-radius: 4px; BORDER-TOP: silver 1px solid; BORDER-LEFT: silver 1px solid; WIDTH: 170px; BORDER-BOTTOM: silver 1px solid"
-                           name=textusername value="<?php echo $_SESSION['username'] ?>"></DIV>
+                    <INPUT id=textusername style="BORDER-RIGHT: silver 1px solid;border-radius: 4px; BORDER-TOP: silver 1px solid; BORDER-LEFT: silver 1px solid; WIDTH: 170px; BORDER-BOTTOM: silver 1px solid" name=textusername value="<?php echo $_SESSION['username'] ?>"></DIV>
                 <br>
                 <DIV class=loginFormRow><SPAN class=loginFormHeader>Password:</SPAN>
                     <INPUT id=textpassword
@@ -88,8 +87,7 @@
 
             <DIV class=loginRightBorder></DIV>
         </DIV>
-        <DIV><IMG
-                    style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px"
+        <DIV><IMG style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px"
                     src="login_files/fade_bottom.gif"></DIV>
     </DIV>
     <SCRIPT type=text/javascript>
