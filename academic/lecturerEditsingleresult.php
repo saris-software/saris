@@ -63,7 +63,7 @@ if(isset($_POST['coursecode'])){
 		
 	#delete empty examscore records
 	$sql_del = "delete from examresult where examscore=''";
-	$db_del = mysql_query($sql_del);
+	$db_del = mysqli_query($zalongwa, $sql_del);
 
 	#Refresh exam result page
 	echo "Database Updated Successfuly!";
@@ -83,8 +83,8 @@ if (isset($_GET['Candidate'])) {
 
 				#query status
 				$qstatus = "SELECT Status FROM examregister WHERE CourseCode='$course' AND RegNo='$key'";
-				$dbstatus=mysql_query($qstatus);
-				$row_status=mysql_fetch_array($dbstatus);
+				$dbstatus=mysqli_query($zalongwa, $qstatus);
+				$row_status=mysqli_fetch_array($dbstatus);
 
 				//display results in editable form
 				?>

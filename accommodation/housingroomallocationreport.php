@@ -179,20 +179,20 @@ $sql = "SELECT student.Name, allocation.RegNo, hostel.HName, allocation.RNumber,
 FROM (allocation INNER JOIN student ON allocation.RegNo = student.RegNo) INNER JOIN hostel ON allocation.HID = hostel.HID
 WHERE hostel.HName='$hall' AND allocation.AYear='$year' ORDER BY allocation.RegNo DESC";
 //(((roomapplication.Hall)='$hall') And
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($zalongo,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
 
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($zalongwa,$query);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
+if (mysqli_num_rows($query) > 0){
 echo "UDSM Student Information System <br>";
 echo "ROOM ALLOCATION REPORT <br>ACADEMIC YEAR: $year";
 echo "<p>Total Occupants: $totalRows_query </p>";
 echo "<table border='1'>";
 echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> Hall/Hostel </td><td> Room No.: </td></tr>";
 $i=1;
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$Name = stripslashes($result["Name"]);
 		$RegNo = stripslashes($result["RegNo"]);
 		$hall = stripslashes($result["HName"]);
@@ -208,7 +208,7 @@ echo "</table>";
 }else{
 echo "Sorry, No One has Applied for a Room in This Year <br>";
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?>
           		
         <div align="center"></div></td>

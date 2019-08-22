@@ -1,24 +1,24 @@
 <?php
 #convert data
 $qresults = "SELECT * FROM examresult";
-$dbresult = mysql_query($qresults);
-while($row_reults = mysql_fetch_assoc($dbresult)){
-	$regno = $row_reults['RegNo'];
-	$examno = $row_reults['ExamNo'];
-	$coursecode = $row_reults['CourseCode'];
-	$coursework = $row_reults['Coursework'];
-	$exam = $row_reults['Exam'];
-	$ayear = $row_reults['AYear'];
-	$checked = $row_reults['checked'];
-	$user = $row_reults['user'];
-	$semester = $row_reults['SemesterID'];
-	$count = $row_reults['Count'];
-	$status = $row_reults['Status'];
-	$comment = $row_reults['Comment'];
-	$recorddate = $row_reults['RecordDate'];
-	
-	#insert Exam Marks into SUZA table
-	$qinsertexam = "INSERT INTO examresultsuza SET 
+$dbresult = mysqli_query($zalongwa,$qresults);
+while ($row_reults = mysqli_fetch_assoc($dbresult)) {
+    $regno = $row_reults['RegNo'];
+    $examno = $row_reults['ExamNo'];
+    $coursecode = $row_reults['CourseCode'];
+    $coursework = $row_reults['Coursework'];
+    $exam = $row_reults['Exam'];
+    $ayear = $row_reults['AYear'];
+    $checked = $row_reults['checked'];
+    $user = $row_reults['user'];
+    $semester = $row_reults['SemesterID'];
+    $count = $row_reults['Count'];
+    $status = $row_reults['Status'];
+    $comment = $row_reults['Comment'];
+    $recorddate = $row_reults['RecordDate'];
+
+    #insert Exam Marks into SUZA table
+    $qinsertexam = "INSERT INTO examresultsuza SET 
 							AYear = '$ayear',
 							Semester ='$semester',
 							Marker = '',
@@ -35,10 +35,10 @@ while($row_reults = mysql_fetch_assoc($dbresult)){
 							Count = '$count',
 							Comment = '$comment'
 							";
-	$dbinsertexam = mysql_query($qinsertexam);
-	
-	#insert Coursework Marks into SUZA table
-	$qinsertexam = "INSERT INTO examresultsuza SET 
+    $dbinsertexam = mysqli_query($zalongwa,$qinsertexam);
+
+    #insert Coursework Marks into SUZA table
+    $qinsertexam = "INSERT INTO examresultsuza SET 
 							AYear = '$ayear',
 							Semester ='$semester',
 							Marker = '',
@@ -55,7 +55,7 @@ while($row_reults = mysql_fetch_assoc($dbresult)){
 							Count = '$count',
 							Comment = '$comment'
 							";
-	$dbinsertexam = mysql_query($qinsertexam);
+    $dbinsertexam = mysqli_query($zalongwa,$qinsertexam);
 }
 echo 'Data Migrated Successfull';
 ?>

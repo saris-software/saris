@@ -34,7 +34,7 @@
 			$semester = $_POST['semester'];
 			$cohort = $_POST['cohort'];
 			$checked = $_POST['button'];
-			$qcode = mysqli_query("SELECT ProgrammeName, Title FROM programme WHERE ProgrammeCode='$prog'");
+			$qcode = mysqli_query($zalongwa, "SELECT ProgrammeName, Title FROM programme WHERE ProgrammeCode='$prog'");
 			$code = mysqli_fetch_assoc($qcode);
 			$shorts = $code['ProgrammeName'];
 			$title = $code['Title'];
@@ -43,10 +43,10 @@
 			
 			$tabl = "examnumber_".$initial;
 			if($checked == 'Y'){
-				$num = mysqli_query("SELECT * FROM $tabl WHERE Semester='$semester' AND EntryYear = '$cohort' LIMIT 1");
+				$num = mysqli_query($zalongwa, "SELECT * FROM $tabl WHERE Semester='$semester' AND EntryYear = '$cohort' LIMIT 1");
 				}
 			else{
-				$num = mysqli_query("SELECT * FROM $tabl WHERE Semester='$semester' LIMIT 1");
+				$num = mysqli_query($zalongwa, "SELECT * FROM $tabl WHERE Semester='$semester' LIMIT 1");
 				}
 				
 			if(($row = mysqli_num_rows($num)) == 0){
@@ -74,13 +74,13 @@
 					<?php
 						
 						if($checked == 'Y'){
-								$sel = mysqli_query("SELECT e.RegNo, e.ExamNo, e.EntryYear, s.Name, s.Sex 
+								$sel = mysqli_query($zalongwa, "SELECT e.RegNo, e.ExamNo, e.EntryYear, s.Name, s.Sex 
 												FROM $tabl e, student s	WHERE e.RegNo = s.RegNo 
 												AND e.EntryYear = '$cohort' ORDER BY e.EntryYear DESC, s.Name ASC");
 							}
 							
 						else{
-								$sel = mysqli_query("SELECT e.RegNo, e.ExamNo, e.EntryYear, s.Name, s.Sex 
+								$sel = mysqli_query($zalongwa, "SELECT e.RegNo, e.ExamNo, e.EntryYear, s.Name, s.Sex 
 													FROM $tabl e, student s WHERE e.RegNo = s.RegNo 
 													ORDER BY e.EntryYear DESC, s.Name ASC");
 							}
@@ -123,7 +123,7 @@
 			
 			$prog = $_POST['prog'];
 			$semester = $_POST['semester'];
-			$qcode = mysqli_query("SELECT ProgrammeName, Title FROM programme WHERE ProgrammeCode='$prog'");
+			$qcode = mysqli_query($zalongwa, "SELECT ProgrammeName, Title FROM programme WHERE ProgrammeCode='$prog'");
 			$code = mysqli_fetch_assoc($qcode);
 			$shorts = $code['ProgrammeName'];
 			$title = $code['Title'];
@@ -131,7 +131,7 @@
 			$initial = $short[1];
 			
 			$tabl = "examnumber_".$initial;	
-			$num = mysqli_query("SELECT * FROM $tabl WHERE Semester='$semester' LIMIT 1");
+			$num = mysqli_query($zalongwa, "SELECT * FROM $tabl WHERE Semester='$semester' LIMIT 1");
 			if(0 == mysqli_num_rows($num)){
 					$contents = "There\tare\tNO\tExamination\tnumbers\tgenerated \n";
 					header ("Content-Type: application/x-msexcel");
@@ -144,13 +144,13 @@
 			else{
 					$lim = mysqli_fetch_assoc($num);
 					$year = $lim['AYear'];
-			i		$yearsem = $lim['Semester'];
+			    	$yearsem = $lim['Semester'];
 					$yeasem = str_replace(" ","\t",$yearsem);
 					$title = str_replace(" ","\t",$title);
 					$contents .= $title."<br />".$year."\t-\t".$yearsem."Students\tExamination\tNumbers\n";
 					$contents .= "SNO NAME REG_NUMBER EXAM_NUMBER SEX ENTRY_YEAR\n";
 
-					$sel = mysqli_query("SELECT e.RegNo, e.ExamNo, e.EntryYear, s.Name, s.Sex FROM $tabl e, student s 
+					$sel = mysqli_query($zalongwa, "SELECT e.RegNo, e.ExamNo, e.EntryYear, s.Name, s.Sex FROM $tabl e, student s 
 										WHERE e.RegNo = s.RegNo ORDER BY e.EntryYear DESC, s.Name ASC");
 					$sn = 1;
 					
@@ -210,12 +210,12 @@
 		include('lecturerheader.php');
 		
 		
-		$query_degree = mysqli_query("SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeCode");
-		$query_degree1 = mysqli_query("SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeCode");
-		$query_ayear = mysqli_query("SELECT AYear FROM academicyear ORDER BY AYear DESC");
-		$query_ayear1 = mysqli_query("SELECT AYear FROM academicyear ORDER BY AYear DESC");
-		$query_sem = mysqli_query("SELECT Semester FROM terms ORDER BY Semester Limit 2");
-		$query_sem2 = mysqli_query("SELECT Semester FROM terms ORDER BY Semester Limit 2");
+		$query_degree = mysqli_query($zalongwa, "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeCode");
+		$query_degree1 = mysqli_query($zalongwa, "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeCode");
+		$query_ayear = mysqli_query($zalongwa, "SELECT AYear FROM academicyear ORDER BY AYear DESC");
+		$query_ayear1 = mysqli_query($zalongwa, "SELECT AYear FROM academicyear ORDER BY AYear DESC");
+		$query_sem = mysqli_query($zalongwa, "SELECT Semester FROM terms ORDER BY Semester Limit 2");
+		$query_sem2 = mysqli_query($zalongwa, "SELECT Semester FROM terms ORDER BY Semester Limit 2");
 		
 		?>
 		<style type="text/css">
@@ -397,7 +397,7 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 					
 		else{
 			
-			$sql = mysqli_query("SELECT AYear FROM academicyear where Status = 1");
+			$sql = mysqli_query($zalongwa, "SELECT AYear FROM academicyear where Status = 1");
 			$acyr = mysqli_fetch_assoc($sql);
 			$ayear = $acyr['AYear'];
 			
@@ -414,10 +414,10 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 				
 			//select all students within the institution limits(years of study-wise)
 			else{
-				$group = mysqli_query("SELECT DISTINCT RegNo, EntryYear, GradYear from student WHERE ProgrammeofStudy='$prog' 
+				$group = mysqli_query($zalongwa, "SELECT DISTINCT RegNo, EntryYear, GradYear from student WHERE ProgrammeofStudy='$prog' 
 										AND EntryYear>='$cohort' ORDER BY EntryYear ASC, RegNo DESC");
 										
-				$qcode = mysqli_query("SELECT ProgrammeName FROM programme WHERE ProgrammeCode='$prog'");
+				$qcode = mysqli_query($zalongwa, "SELECT ProgrammeName FROM programme WHERE ProgrammeCode='$prog'");
 				$code = mysqli_fetch_assoc($qcode);
 				$shorts = $code['ProgrammeName'];
 				$short = explode(" ",$shorts);
@@ -444,26 +444,26 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 						
 						//auto generate table name and create the table
 						$tabl = "examnumber_".$initial;
-						$table = mysqli_query("CREATE TABLE IF NOT EXISTS $tabl 
+						$table = mysqli_query($zalongwa, "CREATE TABLE IF NOT EXISTS $tabl 
 											(RegNo varchar(50) PRIMARY KEY, ExamNo varchar(50) UNIQUE KEY, 
 											EntryYear varchar(9),AYear varchar(9), Semester varchar(11))");
 							
 						//check if the table has any record(s)		
-						$trial = mysqli_query("SELECT * FROM $tabl WHERE AYear='$ayear' AND Semester='$sem'");
+						$trial = mysqli_query($zalongwa, "SELECT * FROM $tabl WHERE AYear='$ayear' AND Semester='$sem'");
 						if($try = mysqli_num_rows($trial) > 0){
 							
-							$checks = mysqli_query("SELECT * FROM $tabl WHERE AYear='$ayear' 
+							$checks = mysqli_query($zalongwa, "SELECT * FROM $tabl WHERE AYear='$ayear' 
 													AND EntryYear='$entrys' AND Semester='$sem'");
 							
 							//check if that cohort exists
 							if($num = mysqli_num_rows($checks) > 0){
-								$check = mysqli_query("SELECT * FROM $tabl WHERE AYear=$ayear AND Semester='$sem' 
+								$check = mysqli_query($zalongwa, "SELECT * FROM $tabl WHERE AYear=$ayear AND Semester='$sem' 
 														AND RegNo = '$regnos'");
 														
 								if($nums = mysqli_num_rows($check) == 0){
 									
 									//fetch the last examnumber									
-									$enum = mysqli_query("SELECT * FROM $tabl ORDER BY ExamNo DESC LIMIT 1");
+									$enum = mysqli_query($zalongwa, "SELECT * FROM $tabl ORDER BY ExamNo DESC LIMIT 1");
 									$endn = mysqli_fetch_array($enum);
 									
 									$ends = substr($endn['ExamNo'],-4);
@@ -521,7 +521,7 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 									}
 
 									$qinsrt = "INSERT INTO $tabl VALUES ('$regnos','$xamno','$entrys','$ayear','$sem')";
-									$insrt = mysqli_query($zalongwa,$qinsrt);
+									$insrt = mysqli_query($zalongwa, $qinsrt);
 									
 									if($insrt){
 										echo "$regnos has Examination number $xamno<br/>";										
@@ -537,7 +537,7 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 								}
 								
 							else{
-								$xzst = mysqli_query("SELECT * FROM $tabl WHERE AYear='$ayear' AND Semester='$sem' 
+								$xzst = mysqli_query($zalongwa, "SELECT * FROM $tabl WHERE AYear='$ayear' AND Semester='$sem' 
 													AND RegNo = '$regnos'");
 								
 								//check if that cohort has exam numbers
@@ -548,7 +548,7 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 								else{
 									//generate exam numbers for the specified cohort
 									//fetch the last examnumber									
-									$enum = mysqli_query("SELECT * FROM $tabl ORDER BY ExamNo DESC LIMIT 1");
+									$enum = mysqli_query($zalongwa, "SELECT * FROM $tabl ORDER BY ExamNo DESC LIMIT 1");
 									$endn = mysqli_fetch_array($enum);
 									
 									$ends = substr($endn['ExamNo'],-4);
@@ -606,7 +606,7 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 									}
 
 									$qinsrt = "INSERT INTO $tabl VALUES ('$regnos','$xamno','$entrys','$ayear','$sem')";
-									$insrt = mysqli_query($zalongwa,$qinsrt);
+									$insrt = mysqli_query($zalongwa, $qinsrt);
 									
 									if($insrt){
 										echo "$regnos has Examination number $xamno<br/>";										
@@ -620,7 +620,7 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 							
 						else{
 							
-							mysqli_query("DELETE FROM $tabl");
+							mysqli_query($zalongwa, "DELETE FROM $tabl");
 							/*for random generation of numbers
 							 * $nux = mt_rand(1, $students);
 							 * if(strlen($nux) == 1){ $nux = "000".$nux;}
@@ -636,7 +636,7 @@ if(isset($_POST['Generate']) && ($_POST['Generate'] == "Generate")){
 							 * $xamno = $initial."/".$mid.$nux;
 							 */
 							$qinsrt = "INSERT INTO $tabl VALUES ('$regnos','$xamno','$entrys','$ayear','$sem')";
-							$insrt = mysqli_query($zalongwa,$qinsrt);
+							$insrt = mysqli_query($zalongwa, $qinsrt);
 							
 							if($insrt){
 								echo "$regnos has Examination number $xamno<br/>";										

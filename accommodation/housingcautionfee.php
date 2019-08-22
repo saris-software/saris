@@ -50,29 +50,29 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmCautionFee")) {
                        GetSQLValueString($_POST['amount'], "double"),
                        GetSQLValueString($_POST['receipt'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa,$database_zalongwa);
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error());
   //echo '<meta http-equiv = "refresh" content ="0; 
 	//url = housingindex.php">';
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_cautionfeeform = "SELECT RegNo, Amount, ReceiptNo, `Date` FROM tblcautionfee";
-$cautionfeeform = mysql_query($query_cautionfeeform, $zalongwa) or die(mysql_error());
-$row_cautionfeeform = mysql_fetch_assoc($cautionfeeform);
-$totalRows_cautionfeeform = mysql_num_rows($cautionfeeform);
+$cautionfeeform = mysqli_query($query_cautionfeeform, $zalongwa) or die(mysqli_error());
+$row_cautionfeeform = mysqli_fetch_assoc($cautionfeeform);
+$totalRows_cautionfeeform = mysqli_num_rows($cautionfeeform);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_cautionfee = "SELECT Name, RegNo FROM student ORDER BY RegNo ASC";
-$cautionfee = mysql_query($query_cautionfee, $zalongwa) or die(mysql_error());
-$row_cautionfee = mysql_fetch_assoc($cautionfee);
-$totalRows_cautionfee = mysql_num_rows($cautionfee);
+$cautionfee = mysqli_query($zalongwa,$query_cautionfee) or die(mysqli_error());
+$row_cautionfee = mysqli_fetch_assoc($cautionfee);
+$totalRows_cautionfee = mysqli_num_rows($cautionfee);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_Ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$Ayear = mysql_query($query_Ayear, $zalongwa) or die(mysql_error());
-$row_Ayear = mysql_fetch_assoc($Ayear);
-$totalRows_Ayear = mysql_num_rows($Ayear);
+$Ayear = mysqli_query($zalongwa,$query_Ayear) or die(mysqli_error());
+$row_Ayear = mysqli_fetch_assoc($Ayear);
+$totalRows_Ayear = mysqli_num_rows($Ayear);
  ?>
  
               <form action="<?php echo $editFormAction; ?>" method="POST" name="frmCautionFee" id="frmCautionFee">
@@ -100,9 +100,9 @@ $totalRows_Ayear = mysql_num_rows($Ayear);
               </form>
         
 <?php
-mysql_free_result($cautionfeeform);
+mysqli_free_result($cautionfeeform);
 
-mysql_free_result($cautionfee);
+mysqli_free_result($cautionfee);
 
-mysql_free_result($Ayear);
+mysqli_free_result($Ayear);
 ?>

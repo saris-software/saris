@@ -18,17 +18,17 @@ $colname_studentsuggestion = "1";
 if (isset($_COOKIE['RegNo'])) {
   $colname_studentsuggestion = (get_magic_quotes_gpc()) ? $_COOKIE['RegNo'] : addslashes($_COOKIE['RegNo']);
 }
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa);
 $query_studentsuggestion = "SELECT id, received, fromid, toid, message,replied FROM suggestion WHERE toid = 'admin' ORDER BY received DESC";
 $query_limit_studentsuggestion = sprintf("%s LIMIT %d, %d", $query_studentsuggestion, $startRow_studentsuggestion, $maxRows_studentsuggestion);
-$studentsuggestion = mysql_query($query_limit_studentsuggestion, $zalongwa) or die(mysql_error());
-$row_studentsuggestion = mysql_fetch_assoc($studentsuggestion);
+$studentsuggestion = mysqli_query($query_limit_studentsuggestion, $zalongwa) or die(mysqli_error($zalongwa));
+$row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion);
 
 if (isset($_GET['totalRows_studentsuggestion'])) {
   $totalRows_studentsuggestion = $_GET['totalRows_studentsuggestion'];
 } else {
-  $all_studentsuggestion = mysql_query($query_studentsuggestion);
-  $totalRows_studentsuggestion = mysql_num_rows($all_studentsuggestion);
+  $all_studentsuggestion = mysqli_query($zalongwa,$query_studentsuggestion);
+  $totalRows_studentsuggestion = mysqli_num_rows($all_studentsuggestion);
 }
 $totalPages_studentsuggestion = ceil($totalRows_studentsuggestion/$maxRows_studentsuggestion)-1;
 
@@ -91,12 +91,12 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
                 <td valign="top"><div align="right" class="style2">Comments:</div></td>
                 <td><span class="style2"><?php echo $row_studentsuggestion['replied']; ?></span></td>
             </tr>
-            <?php } while ($row_studentsuggestion = mysql_fetch_assoc($studentsuggestion)); ?>
+            <?php } while ($row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion)); ?>
 </table>
 <p><a href="<?php printf("%s?pageNum_studentsuggestion=%d%s", $currentPage, max(0, $pageNum_studentsuggestion - 1), $queryString_studentsuggestion); ?>">Previous</a> Message: <?php echo min($startRow_studentsuggestion + $maxRows_studentsuggestion, $totalRows_studentsuggestion) ?> of <?php echo $totalRows_studentsuggestion ?> <span class="style64 style1">...</span><a href="<?php printf("%s?pageNum_studentsuggestion=%d%s", $currentPage, min($totalPages_studentsuggestion, $pageNum_studentsuggestion + 1), $queryString_studentsuggestion); ?>">Next</a> <span class="style64 style1">.......</span><?php echo "<a href=\"admissionSuggestionBox.php?from=$from&id=$id\">Reply Message</a>" ?></p>
        
 <?php
 
 include('../footer/footer.php');
-mysql_free_result($studentsuggestion);
+mysqli_free_result($studentsuggestion);
 ?>

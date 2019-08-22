@@ -1,342 +1,322 @@
 <?php
 
-	#reset gpa calculation values
+#reset gpa calculation values
 
-	$point = '';
+$point = '';
 
-	$grade = '';
+$grade = '';
 
-	$remark = '';
+$remark = '';
 
-	
 
-	#query Project Exam
+#query Project Exam
 
-	$qproj = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=8";
+$qproj = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=8";
 
-	$dbproj=mysql_query($qproj);
+$dbproj = mysqli_query($zalongwa, $qproj);
 
-	$row_proj=mysql_fetch_array($dbproj);
+$row_proj = mysqli_fetch_array($dbproj);
 
-	$row_proj_total=mysql_num_rows($dbproj);
+$row_proj_total = mysqli_num_rows($dbproj);
 
-	$projdate=$row_proj['ExamDate'];
+$projdate = $row_proj['ExamDate'];
 
-	$projscore=$row_proj['ExamScore'];
+$projscore = $row_proj['ExamScore'];
 
-	if(($row_proj_total>0)&&($projscore<>'')){
+if (($row_proj_total > 0) && ($projscore <> '')) {
 
-		$remarks = '';
+    $remarks = '';
 
-		$aescore = number_format($projscore,1);
+    $aescore = number_format($projscore, 1);
 
-		#empty coursework
+    #empty coursework
 
-		$test2score ='n/a';
+    $test2score = 'n/a';
 
-	}else{
+} else {
 
-			$remarks = "Inc";
+    $remarks = "Inc";
 
-			$test2score ='';
+    $test2score = '';
 
-			$aescore = '';
+    $aescore = '';
 
-	}
+}
 
-	
 
-	#get total marks
+#get total marks
 
-	if (($row_sup_total>0)&&($supscore<>'')){
+if (($row_sup_total > 0) && ($supscore <> '')) {
 
-				$tmarks = $supscore;
+    $tmarks = $supscore;
 
-				if($tmarks>=50){
+    if ($tmarks >= 50) {
 
-					$gradesupp='C';
+        $gradesupp = 'C';
 
-					$remark = 'PASS';
+        $remark = 'PASS';
 
-				}
+    }
 
-	}elseif(($row_proj_total>0)&&($projscore<>'')){
+} elseif (($row_proj_total > 0) && ($projscore <> '')) {
 
-		$tmarks = $projscore;
+    $tmarks = $projscore;
 
-	}elseif(($row_tp_total>0)&&($tpscore<>'')){
+} elseif (($row_tp_total > 0) && ($tpscore <> '')) {
 
-		$tmarks = $tpscore;
+    $tmarks = $tpscore;
 
-	}elseif(($row_pt_total>0)&&($ptscore<>'')){
+} elseif (($row_pt_total > 0) && ($ptscore <> '')) {
 
-		$tmarks = $ptscore;
+    $tmarks = $ptscore;
 
-	}elseif(($total_sp>0)&&($spscore<>'')){
+} elseif (($total_sp > 0) && ($spscore <> '')) {
 
-		$tmarks = $test2score + $spscore;
+    $tmarks = $test2score . $spscore;
 
-	}else{
+} else {
 
-		$tmarks = $test2score + $aescore;
+    $tmarks = $test2score . $aescore;
 
-	}
+}
 
-	
 
-	#round marks
+#round marks
 
-    $marks = number_format($tmarks,0);
+$marks = number_format($tmarks, 0);
 
 
+#grade marks
 
-	#grade marks
+if ($remarks == 'Inc') {
 
-   if($remarks =='Inc'){
+    $grade = 'I';
 
-		$grade='I';
+    $igrade = 'I';
 
-		$igrade='I';
+    $remark = 'Inc.';
 
-		$remark = 'Inc.';
+    $point = 0;
 
-		$point=0;
+    $sgp = $point * $unit;
 
-		$sgp=$point*$unit;
+} else {
 
-	}else{
+    if ($marks >= 75) {
 
-		if($marks>=75){
+        $grade = 'A';
 
-			$grade='A';
+        $remark = 'PASS';
 
-			$remark = 'PASS';
+        $point = 5;
 
-			$point=5;
+        $sgp = $point * $unit;
 
-			$sgp=$point*$unit;
+        $totalsgp = $totalsgp + $sgp;
 
-			$totalsgp=$totalsgp+$sgp;
+        $unittaken = $unittaken + $unit;
 
-			$unittaken=$unittaken+$unit;
+    } elseif ($marks >= 65) {
 
-		}elseif($marks>=65){
+        $grade = 'B+';
 
-			$grade='B+';
+        $remark = 'PASS';
 
-			$remark = 'PASS';
+        $point = 4;
 
-			$point=4;
+        $sgp = $point * $unit;
 
-			$sgp=$point*$unit;
+        $totalsgp = $totalsgp + $sgp;
 
-			$totalsgp=$totalsgp+$sgp;
+        $unittaken = $unittaken + $unit;
 
-			$unittaken=$unittaken+$unit;
+    } elseif ($marks >= 55) {
 
-		}elseif($marks>=55){
+        $grade = 'B';
 
-			$grade='B';
+        $remark = 'PASS';
 
-			$remark = 'PASS';
+        $point = 3;
 
-			$point=3;
+        $sgp = $point * $unit;
 
-			$sgp=$point*$unit;
+        $totalsgp = $totalsgp + $sgp;
 
-			$totalsgp=$totalsgp+$sgp;
+        $unittaken = $unittaken + $unit;
 
-			$unittaken=$unittaken+$unit;
+    } elseif ($marks >= 45) {
 
-		}elseif($marks>=45){
+        $grade = 'C';
 
-                        $grade='C';
+        $remark = 'PASS';
 
-                        $remark = 'PASS';
+        $point = 2;
 
-                        $point=2;
+        $sgp = $point * $unit;
 
-                        $sgp=$point*$unit;
+        $totalsgp = $totalsgp + $sgp;
 
-                        $totalsgp=$totalsgp+$sgp;
+        $unittaken = $unittaken + $unit;
 
-                        $unittaken=$unittaken+$unit;
+    } elseif ($marks >= 35) {
 
-                }elseif($marks>=35){
+        $grade = 'D';
 
-			$grade='D';
+        $remark = 'FAIL';
 
-			$remark = 'FAIL';
+        $fsup = '!';
 
-			$fsup='!';
+        $supp = '!';
 
-			$supp='!';
+        $point = 1;
 
-			$point=1;
+        $sgp = $point * $unit;
 
-			$sgp=$point*$unit;
+        $totalsgp = $totalsgp + $sgp;
 
-			$totalsgp=$totalsgp+$sgp;
+        $unittaken = $unittaken + $unit;
 
-			$unittaken=$unittaken+$unit;
+    } else {
 
-		}else{
+        $grade = 'F';
 
-			$grade='F';
+        $remark = 'FAIL';
 
-			$remark = 'FAIL';
+        $fsup = '!';
 
-			$fsup='!';
+        $supp = '!';
 
-			$supp='!';
+        $point = 0;
 
-			$point=0;
+        $sgp = $point * $unit;
 
-			$sgp=$point*$unit;
+        $totalsgp = $totalsgp + $sgp;
 
-			$totalsgp=$totalsgp+$sgp;
+        $unittaken = $unittaken + $unit;
 
-			$unittaken=$unittaken+$unit;
+    }
 
-		}
+}
 
-	}
 
-	
+#check if ommited
 
-	#check if ommited
+$qcount = "SELECT DISTINCT Count FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo'";
 
-	$qcount = "SELECT DISTINCT Count FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo'";
+$dbcount = mysqli_query($zalongwa, $qcount);
 
-	$dbcount=mysql_query($qcount);
+$row_count = mysqli_fetch_array($dbcount);
 
-	$row_count=mysql_fetch_array($dbcount);
+$count = $row_count['Count'];
 
-	$count =$row_count['Count'];
+if ($count == 1) {
 
-	if ($count==1){
+    $sgp = 0;
 
-	$sgp =0;
+    $unit = 0;
 
-	$unit=0;
+    $coursename = '*' . $coursename;
 
-	$coursename ='*'.$coursename;
+}
 
-	}
 
-	
+#manage supplimentary exams
 
-	#manage supplimentary exams
+if ($gradesupp == 'C') {
 
-	if ($gradesupp=='C'){
+    if ($tmarks >= 45) {
 
-		if($tmarks>=45){
+        $unittaken = $unittaken - $unit;
 
-			$unittaken=$unittaken-$unit;
+        $totalsgp = $totalsgp - $sgp;
 
-			$totalsgp=$totalsgp-$sgp;
+        $grade = 'C'; // put the fixed value of a supplimentary grade
 
-			$grade='C'; // put the fixed value of a supplimentary grade
+        $point = 2; // put the fixed value for SUPP point whic is equivalent to 50 marks
 
-			$point=2; // put the fixed value for SUPP point whic is equivalent to 50 marks
+        $sgp = $point * $unit;
 
-			$sgp=$point*$unit;
+        $totalsgp = $totalsgp + $sgp;
 
-			$totalsgp=$totalsgp+$sgp;
+        $unittaken = $unittaken + $unit;
 
-			$unittaken=$unittaken+$unit;
+        #empty gradesupp
 
-			#empty gradesupp
+        $gradesupp = '';
 
-			$gradesupp='';
+    } else {
 
-		}else{
+        $grade = 'F';
 
-			$grade='F';
+        $remark = 'FAIL';
 
-			$remark = 'FAIL';
+        $fsup = '!';
 
-			$fsup='!';
+        $supp = '!';
 
-			$supp='!';
+        $point = 0;
 
-			$point=0;
+        $sgp = $point * $unit;
 
-			$sgp=$point*$unit;
+        $totalsgp = $totalsgp + $sgp;
 
-			$totalsgp=$totalsgp+$sgp;
+        $unittaken = $unittaken + $unit;
 
-			$unittaken=$unittaken+$unit;
+    }
 
-		}
+}
 
-	}
 
+#test Final Exam
 
+if (($aescore < 20) && ($nullae == 0)) {
 
-   	#test Final Exam
+    $grade = 'F';
 
-	if(($aescore < 20) && ($nullae==0))
+    $remark = 'F-EXM';
 
-	{
+    $egrade = '*';
 
-		$grade='F';
+    $fsup = '!';
 
-		$remark = 'F-EXM';
+    $supp = '!';
 
-		$egrade='*';
+} elseif (($aescore < 20) && ($nullae == 1)) {
 
-		$fsup='!';
+    $grade = 'I';
 
-		$supp='!';
+    $igrade = 'I';
 
-	}elseif (($aescore < 20) && ($nullae==1))
+    $remark = 'ABSC';
 
-	{
+}
 
-		$grade='I';
 
-		$igrade='I';
+#prohibit the printing of zeros in coursework and exam
 
-		$remark = 'ABSC';
+if ($grade == 'I' and $marks == 0) {
 
-	}	
+    $marks = '';
 
-   
+    $remark = 'ABSC';
 
-	
-
-	
-
-	
-
-	#prohibit the printing of zeros in coursework and exam
-
-	if ($grade=='I' and $marks==0){
-
-		$marks = '';
-
-		$remark = 'ABSC';
-
-	}
-
+}
 
 
 #manage $aescore100
 
 $aescore100 = $aescore;
 
-$aescore='';
-
+$aescore = '';
 
 
 #get course semester
 
 $qsem = "SELECT YearOffered FROM course WHERE CourseCode = '$course'";
 
-$dbsem = mysql_query($qsem);
+$dbsem = mysqli_query($zalongwa, $qsem);
 
-$row_sem = mysql_fetch_assoc($dbsem);
+$row_sem = mysqli_fetch_assoc($dbsem);
 
 $semname = $row_sem['YearOffered'];
 
@@ -344,9 +324,9 @@ $semname = $row_sem['YearOffered'];
 
 $qsemid = "SELECT Id FROM terms WHERE Semester = '$semname'";
 
-$dbsemid = mysql_query($qsemid );
+$dbsemid = mysqli_query($zalongwa, $qsemid);
 
-$row_semid = mysql_fetch_assoc($dbsemid);
+$row_semid = mysqli_fetch_assoc($dbsemid);
 
 $semid = $row_semid['Id'];
 

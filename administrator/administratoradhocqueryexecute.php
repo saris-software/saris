@@ -30,7 +30,7 @@ require_once('../Connections/zalongwa.php');
 					$strSQL = stripslashes("$sql");
 					echo "Query Executed: $strSQL\n <hr>";
 					// Execute Query
-					$result = @mysqli_query($strSQL);
+					$result = @mysqli_query($zalongwa,$strSQL);
 					if(!$result) {
 							echo "Execution Status: \n --Samahani Sana, Query Not Executed!<hr>";
 							exit;

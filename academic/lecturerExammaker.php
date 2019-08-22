@@ -46,16 +46,16 @@ if ($coursenameFound) {
  $insertSQL = sprintf("INSERT INTO exammarker (Id, Name) VALUES (%s, %s)",
    GetSQLValueString($_POST['txtCode'], "text"),
    GetSQLValueString($_POST['txtTitle'], "text"));                   
-  mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 }
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
  					   $updateSQL = sprintf("UPDATE exammarker SET Name=%s WHERE Id=%s",
                        GetSQLValueString($_POST['txtTitle'], "text"),
                        GetSQLValueString($_POST['id'], "int"));
 
-  mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($updateSQL, $zalongwa) or die(mysqli_error());
+  mysqli_select_db($zalongwa, $database_zalongwa);
+  $Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
  }
  
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -107,7 +107,7 @@ $query_inst = "SELECT * FROM exammarker ORDER BY Id ASC";
 }
 //$query_inst = "SELECT * FROM course ORDER BY CourseCode ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
 $row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
@@ -185,7 +185,7 @@ $key = $_GET['edit'];
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_instEdit = "SELECT * FROM exammarker WHERE Id ='$key'";
-$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error());
+$instEdit = mysqli_query($zalongwa, $query_instEdit) or die(mysqli_error($zalongwa));
 $row_instEdit = mysqli_fetch_assoc($instEdit);
 $totalRows_instEdit = mysqli_num_rows($instEdit);
 

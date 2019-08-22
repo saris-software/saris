@@ -18,8 +18,8 @@ $year=addslashes($_POST["AYear"]);
 
 #Get all student in this cohot
 $qstudent = "SELECT Name, RegNo from student WHERE EntryYear = '$year'";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 
  if ($totalstudent > 0) {
 	?>
@@ -51,28 +51,28 @@ $totalstudent = mysql_num_rows($dbstudent);
 	$grandtotalpaid=0;
 	$grandtotalpenalty=0;
 		
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$totalpaid =0;
 						
 			//query caution fee paid
 			$qcautionfee = "SELECT Amount FROM tblcautionfee WHERE RegNo = '$regno' AND Paytype = 2";
-			$dbcautionfee = mysql_query($qcautionfee);
+			$dbcautionfee = mysqli_query($zalongwa,$qcautionfee);
 						
 			//sum up caution fee payments
-			while ($rowcautionfee = mysql_fetch_array($dbcautionfee)){
+			while ($rowcautionfee = mysqli_fetch_array($dbcautionfee)){
 				$amount = $rowcautionfee['Amount'];
 				$totalpaid = $totalpaid+$amount;
 				}
 				$grandtotalpaid = $grandtotalpaid+$totalpaid;
 			//query penalty fee paid
 			$qpenalty = "SELECT Amount FROM tblcautionfee WHERE RegNo = '$regno' AND Paytype = 3";
-			$dbpenalty = mysql_query($qpenalty);
+			$dbpenalty = mysqli_query($zalongwa,$qpenalty);
 			$totalpenalty =0;
 			
 			//sum up penalty payments
-			while ($rowpenalty = mysql_fetch_array($dbpenalty)){
+			while ($rowpenalty = mysqli_fetch_array($dbpenalty)){
 				$penaltyamount = $rowpenalty['Amount'];
 				$totalpenalty = $totalpenalty+$penaltyamount;
 				}
@@ -89,9 +89,9 @@ $totalstudent = mysql_num_rows($dbstudent);
 				<td> <?php echo number_format($totalpaid - $totalpenalty,2,'.',',') ?> <div align="right"></div></td>
 			  <td nowrap> 
 			  <?php $qrefund = "select RegNo FROM tblcautionfee WHERE (RegNo = '$regno' AND Paytype > 9) Order By Received Desc";
-			  		$refund = mysql_query($qrefund);
-					$row_refund= mysql_fetch_array($refund);
-					$row_num = mysql_num_rows($refund);
+			  		$refund = mysqli_query($zalongwa,$qrefund);
+					$row_refund= mysqli_fetch_array($refund);
+					$row_num = mysqli_num_rows($refund);
 						if($row_num>0){
 									echo "<a href=\"housingRefundReport.php?id=$regno\">Yes</a>";
 									}else{
@@ -123,8 +123,8 @@ $year=addslashes($_POST["RentalAYear"]);
 
 #Get all student in this cohot
 $qstudent = "SELECT Name, RegNo from student WHERE EntryYear = '$year' ORDER BY Name ASC";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 
  if ($totalstudent > 0) {
 	?>
@@ -147,15 +147,15 @@ $totalstudent = mysql_num_rows($dbstudent);
 	$i=1;
 	$grandtotalpaid=0;
 	$totalpaid =0;
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			
 						
 			//query caution fee paid
 			$qcautionfee = "SELECT * FROM tblcautionfee WHERE RegNo = '$regno' AND Paytype = 1";
-			$dbcautionfee = mysql_query($qcautionfee);
-			$rowcautionfee = mysql_fetch_array($dbcautionfee);
+			$dbcautionfee = mysqli_query($zalongwa,$qcautionfee);
+			$rowcautionfee = mysqli_fetch_array($dbcautionfee);
 						
 					
 			//print student report
@@ -210,16 +210,16 @@ if (isset($_POST["candidate"])){
 								student.RegNo = tblcautionfee.RegNo 
 						WHERE (student.RegNo = '$key') 
 								ORDER BY tblcautionfee.Received DESC";
-@$cautionfeepaid = mysql_query($query_cautionfeepaid, $zalongwa) or die(mysql_error());
-@$row_cautionfeepaid = mysql_fetch_assoc($cautionfeepaid);
-@$totalRows_cautionfeepaid = mysql_num_rows($cautionfeepaid);
+@$cautionfeepaid = mysqli_query($zalongwa,$query_cautionfeepaid) or die(mysqli_error());
+@$row_cautionfeepaid = mysqli_fetch_assoc($cautionfeepaid);
+@$totalRows_cautionfeepaid = mysqli_num_rows($cautionfeepaid);
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_Ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$Ayear = mysql_query($query_Ayear, $zalongwa) or die(mysql_error());
-$row_Ayear = mysql_fetch_assoc($Ayear);
-$totalRows_Ayear = mysql_num_rows($Ayear);
+$Ayear = mysqli_query($zalongwa,$query_Ayear) or die(mysqli_error());
+$row_Ayear = mysqli_fetch_assoc($Ayear);
+$totalRows_Ayear = mysqli_num_rows($Ayear);
 
 ?>
 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post" name="search" id="search">
@@ -248,11 +248,11 @@ do {
 ?>
                     <option value="<?php echo $row_Ayear['AYear']?>"><?php echo $row_Ayear['AYear']?></option>
                     <?php
-} while ($row_Ayear = mysql_fetch_assoc($Ayear));
-  $rows = mysql_num_rows($Ayear);
+} while ($row_Ayear = mysqli_fetch_assoc($Ayear));
+  $rows = mysqli_num_rows($Ayear);
   if($rows > 0) {
-      mysql_data_seek($Ayear, 0);
-	  $row_Ayear = mysql_fetch_assoc($Ayear);
+      mysqli_data_seek($Ayear, 0);
+	  $row_Ayear = mysqli_fetch_assoc($Ayear);
   }
 ?>
                   </select>
@@ -268,11 +268,11 @@ do {
 ?>
                     <option value="<?php echo $row_Ayear['AYear']?>"><?php echo $row_Ayear['AYear']?></option>
                     <?php
-} while ($row_Ayear = mysql_fetch_assoc($Ayear));
-  $rows = mysql_num_rows($Ayear);
+} while ($row_Ayear = mysqli_fetch_assoc($Ayear));
+  $rows = mysqli_num_rows($Ayear);
   if($rows > 0) {
-      mysql_data_seek($Ayear, 0);
-	  $row_Ayear = mysql_fetch_assoc($Ayear);
+      mysqli_data_seek($Ayear, 0);
+	  $row_Ayear = mysqli_fetch_assoc($Ayear);
   }
 ?>
                   </select></td>
@@ -300,11 +300,11 @@ do {
 ?>
                     <option value="<?php echo $row_Ayear['AYear']?>"><?php echo $row_Ayear['AYear']?></option>
                     <?php
-} while ($row_Ayear = mysql_fetch_assoc($Ayear));
-  $rows = mysql_num_rows($Ayear);
+} while ($row_Ayear = mysqli_fetch_assoc($Ayear));
+  $rows = mysqli_num_rows($Ayear);
   if($rows > 0) {
-      mysql_data_seek($Ayear, 0);
-	  $row_Ayear = mysql_fetch_assoc($Ayear);
+      mysqli_data_seek($Ayear, 0);
+	  $row_Ayear = mysqli_fetch_assoc($Ayear);
   }
 ?>
                   </select>
@@ -320,11 +320,11 @@ do {
 ?>
                     <option value="<?php echo $row_Ayear['AYear']?>"><?php echo $row_Ayear['AYear']?></option>
                     <?php
-} while ($row_Ayear = mysql_fetch_assoc($Ayear));
-  $rows = mysql_num_rows($Ayear);
+} while ($row_Ayear = mysqli_fetch_assoc($Ayear));
+  $rows = mysqli_num_rows($Ayear);
   if($rows > 0) {
-      mysql_data_seek($Ayear, 0);
-	  $row_Ayear = mysql_fetch_assoc($Ayear);
+      mysqli_data_seek($Ayear, 0);
+	  $row_Ayear = mysqli_fetch_assoc($Ayear);
   }
 ?>
                   </select></td>
@@ -342,8 +342,8 @@ do {
 			//search degree code
 			$dcode=$row_cautionfeepaid['ProgrammeofStudy'];
 			$qdegree="select ProgrammeName from programme where ProgrammeCode='$dcode'";
-			$dbdegre = mysql_query($qdegree);
-			$row_degree=mysql_fetch_assoc($dbdegre);
+			$dbdegre = mysqli_query($zalongwa,$qdegree);
+			$row_degree=mysqli_fetch_assoc($dbdegre);
 			
 						
 		 echo $row_cautionfeepaid['Name'].": ".$row_cautionfeepaid['RegNo']."; ".$row_degree['ProgrammeName']; ; ?>
@@ -367,8 +367,8 @@ do {
 					//search payment category
 					$pay=$row_cautionfeepaid['Paytype'];
 					$qpay="select Description from paytype where Id='$pay'";
-					$dbpay=mysql_query($qpay);
-					$row_pay=mysql_fetch_assoc($dbpay);
+					$dbpay=mysqli_query($zalongwa,$qpay);
+					$row_pay=mysqli_fetch_assoc($dbpay);
 			  ?>
               <tr>
                 <td nowrap><?php  echo $row_pay['Description']; ?></td>
@@ -380,14 +380,14 @@ do {
                 <td><?php echo $row_cautionfeepaid['Description'];?></td>
               </tr>
               <?php 
-			  } while ($row_cautionfeepaid = mysql_fetch_assoc($cautionfeepaid)); ?>
+			  } while ($row_cautionfeepaid = mysqli_fetch_assoc($cautionfeepaid)); ?>
 </table>
             <?php }?>
             
 <?php
 @
 
-mysql_free_result($cautionfeepaid);
+mysqli_free_result($cautionfeepaid);
 
-mysql_free_result($Ayear);
+mysqli_free_result($Ayear);
 ?>

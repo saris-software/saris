@@ -19,7 +19,7 @@ include('lecturerMenu.php');
 	
 	#populate semester Box
 	$query_semester = "SELECT Description FROM terms ORDER BY Semester ASC";
-	$semester = mysqli_query($zalongwa,$query_semester) or die(mysql_error($zalongwa));
+	$semester = mysqli_query($zalongwa,$query_semester) or die(mysqli_error($zalongwa));
 	$row_semester = mysqli_fetch_assoc($semester);
 	$totalRows_semester = mysqli_num_rows($semester);
 	

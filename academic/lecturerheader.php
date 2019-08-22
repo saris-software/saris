@@ -1,5 +1,6 @@
 <?php
 
+require_once('../Connections/zalongwa.php');
 /*
 	This is the header to be included for all files.
 	Variables to be set before including this file are as follows:
@@ -38,7 +39,7 @@
 	}
 	#get organisation name
 
-	
+
 	$qname = 'SELECT Name, Address FROM organisation';
 	$dbname = mysqli_query($zalongwa, $qname);
 	$name_row = mysqli_fetch_assoc($dbname);

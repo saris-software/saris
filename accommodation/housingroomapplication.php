@@ -8,8 +8,8 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 	
 	#Get Organisation Name
 	$qorg = "SELECT * FROM organisation";
-	$dborg = mysql_query($qorg);
-	$row_org = mysql_fetch_assoc($dborg);
+	$dborg = mysqli_query($zalongwa,$qorg);
+	$row_org = mysqli_fetch_assoc($dborg);
 	$org = $row_org['Name'];
 	$post = $row_org['Address'];
 	$phone = $row_org['tel'];
@@ -37,9 +37,9 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 				WHERE s.RegNo = ra.RegNo AND ra.AllCriteria = c.CriteriaID 
 				AND ra.AppYear='$year' AND c.ShortName = '$citeria' ORDER BY s.Name";
 	 }
-		$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-		$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-		$row_result = mysql_fetch_assoc($query);
+		$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+		$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+		$row_result = mysqli_fetch_assoc($query);
 	
 		$pdf = &PDF::factory('p', 'a4');      // Set up the pdf object. 
 		$pdf->open();                         // Start the document. 
@@ -85,15 +85,15 @@ if (isset($_POST['printPDF']) && ($_POST['printPDF'] == "Print PDF")) {
 	#minimize fonts for content printing
 	$pdf->setFont('Arial', '', 9);  
 	//$all_query = mysql_query($query);
-	$totalRows_query = mysql_num_rows($query);
+	$totalRows_query = mysqli_num_rows($query);
 	/* Printing Results in html */
-	while ($app_row = mysql_fetch_assoc($result)){
+	while ($app_row = mysqli_fetch_assoc($result)){
 	
 		//get degree name
 		$degree = $app_row['ProgrammeofStudy'];
 		$qdegree = "Select ProgrammeName from programme where ProgrammeCode = '$degree'";
-		$dbdegree = mysql_query($qdegree);
-		$row_degree = mysql_fetch_array($dbdegree);
+		$dbdegree = mysqli_query($zalongwa,$qdegree);
+		$row_degree = mysqli_fetch_array($dbdegree);
 		$programme = $row_degree['ProgrammeName'];
 		
 		
@@ -218,19 +218,19 @@ if (isset($_POST['search']) && ($_POST['search'] == "Search"))
 		FROM (student INNER JOIN roomapplication ON student.RegNo = roomapplication.RegNo) INNER JOIN criteria ON roomapplication.AllCriteria = criteria.CriteriaID
     	WHERE (student.Name LIKE '%$key%') OR (student.RegNo LIKE '%$key%') ORDER BY student.Name ASC";
 	
-	$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-	$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+	$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+	$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
 	
-	$all_query = mysql_query($query);
-	$totalRows_query = mysql_num_rows($query);
+	$all_query = mysqli_query($zalongwa,$query);
+	$totalRows_query = mysqli_num_rows($query);
 	/* Printing Results in html */
-	if (mysql_num_rows($query) > 0)
+	if (mysqli_num_rows($query) > 0)
 	{
 		echo "<p>Total Applications: $totalRows_query </p>";
 		echo "<table border='1'cellpadding='0' cellspacing='0' bordercolor='#006600'>";
 		echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> Application Criteria </td><td>Hostel</td></tr>";
 		$i=1;
-		while($result = mysql_fetch_array($query)) 
+		while($result = mysqli_fetch_array($query))
 		{
 				$Name = stripslashes($result["Name"]);
 				$RegNo = stripslashes($result["RegNo"]);
@@ -242,7 +242,7 @@ if (isset($_POST['search']) && ($_POST['search'] == "Search"))
 					echo "<td align=\"left\" valign=\"middle\">$citeria</td>";
 					echo "<td align=\"left\" valign=\"middle\">$hall</td></tr>";
 				$sql="UPDATE roomapplication SET Status = 1, Processed = now()";
-				$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+				$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
 			$i=$i+1;
 		}
 		echo "</table>";
@@ -254,80 +254,77 @@ if (isset($_POST['search']) && ($_POST['search'] == "Search"))
 		  exit;
 }
 
-if (isset($_POST['print']) && ($_POST['print'] == "PreView")) 
-{
+if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 // get posted values
-@$year=$_POST['ayear'];
-@$all = $_POST['check'];
-@$citeria =$_POST['criteria'];
+    @$year = $_POST['ayear'];
+    @$all = $_POST['check'];
+    @$citeria = $_POST['criteria'];
 
-	if ($all =='on'){
-		$sql = "SELECT s.Name, s.Sex, s.ProgrammeofStudy, s.Faculty, ra.RegNo, 
+    if ($all == 'on') {
+        $sql = "SELECT s.Name, s.Sex, s.ProgrammeofStudy, s.Faculty, ra.RegNo, 
 				ra.Hall, ra.AppYear, c.ShortName FROM student s, roomapplication ra, criteria c
 				WHERE s.RegNo = ra.RegNo AND ra.AllCriteria = c.CriteriaID AND ra.AppYear='$year'
 				ORDER BY s.ProgrammeofStudy, s.RegNo ";
-	}else{
-		$sql = "SELECT s.Name, s.Sex, ra.RegNo, ra.Hall, ra.AppYear, c.ShortName
+    } else {
+        $sql = "SELECT s.Name, s.Sex, ra.RegNo, ra.Hall, ra.AppYear, c.ShortName
 				FROM student s, roomapplication ra, criteria c
 				WHERE s.RegNo = ra.RegNo AND ra.AllCriteria = c.CriteriaID 
 				AND ra.AppYear='$year' AND c.ShortName = '$citeria' ORDER BY s.Name";
-	 }
-	$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-	$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-	
-	$all_query = mysql_query($query);
-	$totalRows_query = mysql_num_rows($query);
-	/* Printing Results in html */
-	if (mysql_num_rows($query) > 0)
-	{
-		echo '<b>Application Criteria: </b>'.$citeria;
-		echo "<p><b>Total Applications:</b> $totalRows_query </p>";
-		echo "<table border='1'cellpadding='0' cellspacing='0' bordercolor='#006600'>";
-		echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> Sex </td><td> Criteria </td><td>Hostel</td></tr>";
-		$i=1;
-		while($result = mysql_fetch_array($query)) 
-		{
-				$Name = stripslashes($result["Name"]);
-				$sex = stripslashes($result["Sex"]);
-				$RegNo = stripslashes($result["RegNo"]);
-				$hall = stripslashes($result["Hall"]);
-				$citeria = stripslashes($result["ShortName"]);
-					echo "<tr><td>$i</td>";
-					echo "<td  align=\"left\" valign=\"middle\" norwap>$Name</td>";
-					echo "<td align=\"right\" valign=\"middle\">$RegNo</td>";
-					echo "<td align=\"left\" valign=\"middle\">$sex</td>";
-					echo "<td align=\"left\" valign=\"middle\">$citeria</td>";
-					echo "<td align=\"left\" valign=\"middle\">$hall</td></tr>";
-				$sql="UPDATE roomapplication SET Status = 1, Processed = now()";
-				$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-			$i=$i+1;
-		}
-		echo "</table>";
-	}
-	else{echo "Sorry, No One has Applied for a Room in This Year <br>";}
-mysql_close($zalongwa);
-exit;
+    }
+    $result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+    $query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+
+    $all_query = mysqli_query($zalongwa,$query);
+    $totalRows_query = mysqli_num_rows($query);
+    /* Printing Results in html */
+    if (mysqli_num_rows($query) > 0) {
+        echo '<b>Application Criteria: </b>' . $citeria;
+        echo "<p><b>Total Applications:</b> $totalRows_query </p>";
+        echo "<table border='1'cellpadding='0' cellspacing='0' bordercolor='#006600'>";
+        echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> Sex </td><td> Criteria </td><td>Hostel</td></tr>";
+        $i = 1;
+        while ($result = mysqli_fetch_array($query)) {
+            $Name = stripslashes($result["Name"]);
+            $sex = stripslashes($result["Sex"]);
+            $RegNo = stripslashes($result["RegNo"]);
+            $hall = stripslashes($result["Hall"]);
+            $citeria = stripslashes($result["ShortName"]);
+            echo "<tr><td>$i</td>";
+            echo "<td  align=\"left\" valign=\"middle\" norwap>$Name</td>";
+            echo "<td align=\"right\" valign=\"middle\">$RegNo</td>";
+            echo "<td align=\"left\" valign=\"middle\">$sex</td>";
+            echo "<td align=\"left\" valign=\"middle\">$citeria</td>";
+            echo "<td align=\"left\" valign=\"middle\">$hall</td></tr>";
+            $sql = "UPDATE roomapplication SET Status = 1, Processed = now()";
+            $result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+            $i = $i + 1;
+        }
+        echo "</table>";
+    } else {
+        echo "Sorry, No One has Applied for a Room in This Year <br>";
+    }
+    mysqli_close($zalongwa);
+    exit;
 }
-#============================
 
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AcademicYear = mysql_query($query_AcademicYear, $zalongwa) or die(mysql_error());
-$row_AcademicYear = mysql_fetch_assoc($AcademicYear);
-$totalRows_AcademicYear = mysql_num_rows($AcademicYear);
+$AcademicYear = mysqli_query($zalongwa,$query_AcademicYear) or die(mysqli_error());
+$row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
+$totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_Hostel = "SELECT HID, HName FROM hostel";
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa,$query_Hostel) or die(mysqli_error());
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_criteria = "SELECT ShortName FROM criteria ORDER BY ShortName";
-$criteria = mysql_query($query_criteria, $zalongwa) or die(mysql_error());
-$row_criteria = mysql_fetch_assoc($criteria);
-$totalRows_criteria = mysql_num_rows($criteria);
+$criteria = mysqli_query($zalongwa,$query_criteria) or die(mysqli_error());
+$row_criteria = mysqli_fetch_assoc($criteria);
+$totalRows_criteria = mysqli_num_rows($criteria);
 if(!$username){
 	echo ("Session Expired, <a href=\"ReLogin.php\"> Click Here<a> to Re-Login");
 	
@@ -372,11 +369,11 @@ do {
 ?>
             <option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
             <?php
-} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-  $rows = mysql_num_rows($AcademicYear);
+} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+  $rows = mysqli_num_rows($AcademicYear);
   if($rows > 0) {
-      mysql_data_seek($AcademicYear, 0);
-	  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+      mysqli_data_seek($AcademicYear, 0);
+	  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
   }
 ?>
           </select></td>
@@ -389,11 +386,11 @@ do {
 ?>
             <option value="<?php echo $row_criteria['ShortName']?>"><?php echo $row_criteria['ShortName']?></option>
             <?php
-} while ($row_criteria = mysql_fetch_assoc($criteria));
-  $rows = mysql_num_rows($criteria);
+} while ($row_criteria = mysqli_fetch_assoc($criteria));
+  $rows = mysqli_num_rows($criteria);
   if($rows > 0) {
-      mysql_data_seek($criteria, 0);
-	  $row_criteria = mysql_fetch_assoc($criteria);
+      mysqli_data_seek($criteria, 0);
+	  $row_criteria = mysqli_fetch_assoc($criteria);
   }
 ?>
           </select></td>
@@ -410,8 +407,8 @@ do {
 
 
 <?php
-mysql_free_result($AcademicYear);
+mysqli_free_result($AcademicYear);
 
-mysql_free_result($Hostel);
+mysqli_free_result($Hostel);
 
 ?>

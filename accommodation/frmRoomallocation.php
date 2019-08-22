@@ -1,10 +1,10 @@
 <?php require_once('../Connections/zalongwa.php'); ?>
 <?php
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_Hostel = "SELECT HID, HName FROM hostel ORDER BY HName ASC";
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa,$query_Hostel) or die(mysqli_error());
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,12 +24,12 @@ $totalRows_Hostel = mysql_num_rows($Hostel);
     <td><a href="frmRoomallocationDetail.php?recordID=<?php echo $row_Hostel['HID']; ?>"> <?php echo $row_Hostel['HID']; ?>&nbsp; </a> </td>
     <td><?php echo $row_Hostel['HName']; ?>&nbsp; </td>
   </tr>
-  <?php } while ($row_Hostel = mysql_fetch_assoc($Hostel)); ?>
+  <?php } while ($row_Hostel = mysqli_fetch_assoc($Hostel)); ?>
 </table>
 <br>
 <?php echo $totalRows_Hostel ?> Records Total
 </body>
 </html>
 <?php
-mysql_free_result($Hostel);
+mysqli_free_result($Hostel);
 ?>

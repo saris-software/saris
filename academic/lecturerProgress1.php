@@ -6,7 +6,7 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	$inst= addslashes(trim($_POST['cmbInst']));
 	$cat= addslashes(trim($_POST['cat']));
 	$award= addslashes(trim($_POST['award']));
-	$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+	$key = preg_replace("[[:space:]]+", " ",$rawkey);
 	#get content table raw height
 	$rh= addslashes(trim($_POST['sex']));
 
@@ -31,8 +31,8 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	
 	#check if u belongs to this faculty
 	$qFacultyID = "SELECT FacultyID from faculty WHERE FacultyName = '$inst'";
-	$dbFacultyID = mysql_query($qFacultyID);
-	$rowFacultyID = mysql_fetch_array($dbFacultyID);
+	$dbFacultyID = mysqli_query($zalongwa, $qFacultyID);
+	$rowFacultyID = mysqli_fetch_array($dbFacultyID);
 	$studentFacultyID = $rowFacultyID['FacultyID'];
 
 	include('includes/PDF.php');
@@ -41,8 +41,8 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	$tpg =$pg;
 	//select student
 	$qstudent = "SELECT * from student WHERE RegNo = '$key'";
-	$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-	$row_result = mysql_fetch_array($dbstudent);
+	$dbstudent = mysqli_query($zalongwa, $qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
+	$row_result = mysqli_fetch_array($dbstudent);
 		$sname = $row_result['Name'];
 		$regno = $row_result['RegNo'];
 		$deg = $row_result['ProgrammeofStudy'];
@@ -59,14 +59,14 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 		$subject = $row_result['Subject'];
 		#get campus name
 		$qcampus = "SELECT Campus FROM campus where CampusID='$campusid'";
-		$dbcampus = mysql_query($qcampus);
-		$row_campus= mysql_fetch_assoc($dbcampus);
+		$dbcampus = mysqli_query($zalongwa, $qcampus);
+		$row_campus= mysqli_fetch_assoc($dbcampus);
 		$campus = $row_campus['Campus'];
 
 		//get degree name
 		$qdegree = "Select Title from programme where ProgrammeCode = '$deg'";
-		$dbdegree = mysql_query($qdegree);
-		$row_degree = mysql_fetch_array($dbdegree);
+		$dbdegree = mysqli_query($zalongwa, $qdegree);
+		$row_degree = mysqli_fetch_array($dbdegree);
 		$programme = $row_degree['Title'];
 
 	$pdf = &PDF::factory('p', 'a4');      // Set up the pdf object. 
@@ -228,8 +228,8 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 				
 				#get officer fullname
 				$qname="SELECT FullName FROM security WHERE UserName='$username'";
-				$dbname=mysql_query($qname);
-				$row_name=mysql_fetch_assoc($dbname);
+				$dbname=mysqli_query($zalongwa, $qname);
+				$row_name=mysqli_fetch_assoc($dbname);
 				$ofname=$row_name['FullName'];
 				#see if we have a space to rint signature
 				$b=$y+17;
@@ -278,11 +278,11 @@ $szSubSection = 'Cand. Statement';
 $szTitle = 'Student\'s Statement of Examination Results';
 include('lecturerheader.php');
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa, $database_zalongwa);
 $query_campus = "SELECT FacultyName FROM faculty WHERE FacultyID='$userFaculty' ORDER BY FacultyName ASC";
-$campus = mysql_query($query_campus, $zalongwa) or die(mysql_error());
-$row_campus = mysql_fetch_assoc($campus);
-$totalRows_campus = mysql_num_rows($campus);
+$campus = mysqli_query($zalongwa, $query_campus) or die(mysqli_error($zalongwa));
+$row_campus = mysqli_fetch_assoc($campus);
+$totalRows_campus = mysqli_num_rows($campus);
 
 
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -317,7 +317,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if (isset($_POST['search']) && ($_POST['search'] == "PreView")) {
 #get post variables
 $rawkey = $_POST['key'];
-$key = ereg_replace("[[:space:]]+", " ",$rawkey);
+$key = preg_replace("[[:space:]]+", " ",$rawkey);
 include 'includes/showexamresults.php';
 
 }else{
