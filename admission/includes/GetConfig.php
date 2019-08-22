@@ -4,7 +4,8 @@
 
 if(isset($ForceConfigReload) OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	$sql = 'SELECT confname, confvalue FROM config'; // dont care about the order by
-	$ConfigResult = DB_query($sql,$db);
+    /** @var db $db */
+    $ConfigResult = DB_query($sql,$db);
 	while( $myrow = DB_fetch_row($ConfigResult) ) { 
 		if (is_numeric($myrow[1])){
 			//the variable name is given by $myrow[0]

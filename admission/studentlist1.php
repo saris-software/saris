@@ -39,8 +39,8 @@ $student="SELECT * FROM student";
 }
 include('styles.inc');
 
-$cat=mysql_query($student ." LIMIT $offset,$rowPerPage");
-$num=mysql_num_rows($cat);
+$cat=mysqli_query($student ." LIMIT $offset,$rowPerPage");
+$num=mysqli_num_rows($cat);
 echo "<table class='dtable' width='750' cellspacing='0' cellpadding='0'>";
 echo"<tr>
 <th>S/N</th>
@@ -48,7 +48,7 @@ echo"<tr>
 <th>AdmissionNo</th>
 <th>OPTION</th>
 </tr>";
-while($j=mysql_fetch_array($cat))
+while($j=mysqli_fetch_array($cat))
 {
 echo"<form action='olevel.php' method='GET'>
 <tr class='dhead'>
@@ -64,10 +64,10 @@ echo"<form action='olevel.php' method='GET'>
 $sn++;
 }
 echo "</table>";
-$rec=mysql_query($student);
-$numrows=mysql_num_rows($rec);
-$resu=mysql_query($rec);
-$row=mysql_fetch_array($rec);
+$rec=mysqli_query($zalongwa, $student);
+$numrows=mysqli_num_rows($rec);
+$resu=mysqli_query($zalongwa, $rec);
+$row=mysqli_fetch_array($rec);
 $maxPage=ceil($numrows/$rowPerPage);
 $self=$_SERVER['PHP_SELF'];
 $nav='';
@@ -108,12 +108,12 @@ $last='&nbsp;';
 }
 $d=date('Y');
 $cd=date('d/m/y');
-echo"<center><table>
+echo "<div style=\"text-align: center;\"><table>
 <tr>
 <td>&nbsp;$prev&nbsp; </td>
 <td>&nbsp;&nbsp;Page $nm of $maxPage&nbsp;</td>
 <td>&nbsp;$next&nbsp;</td>
-</tr></table></center>";
+</tr></table></div>";
 ?>
 
 

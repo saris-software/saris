@@ -84,7 +84,7 @@ a:active {
   </center>
 </div>
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <table width="100%" height="101%" border="0" cellpadding="0" cellspacing="0" bordercolor="#990000">
       <tr bgcolor="#99CCCC">
         <td height="69" colspan="7" align="center" valign="middle"> <img src="images/Nkurumah.gif" width="724" height="69" align="left"></td>
@@ -190,10 +190,10 @@ a:active {
 require_once('Connections/zalongwa.php');
 
 $sql = "SELECT FullName, Email, Position, UserName, Registered FROM security WHERE UserName = '$username'";
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 echo "<table border='1'>";
 echo "<tr><td> Name </td><td> Login ID </td><td> Status </td><td> E-Post </td><td> Registered </td></tr>";
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$Name = stripslashes($result["FullName"]);
 		$username = stripslashes($result["UserName"]);
 		$position = stripslashes($result["Position"]);
@@ -213,11 +213,11 @@ echo "</table>";
         <td width="36" bgcolor="#99CCCC">&nbsp;</td>
       </tr>
     </table>
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
-  </center>
+  <div style="text-align: center;">
+  </div>
 </div>
 
 </body>

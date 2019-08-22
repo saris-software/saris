@@ -54,18 +54,19 @@ $sql = "SELECT student.Id, student.Name, student.Sex, student.ProgrammeofStudy, 
 FROM (allocation RIGHT JOIN student ON allocation.RegNo = student.RegNo) LEFT JOIN hostel ON allocation.HID = hostel.HID
 WHERE (student.Name LIKE '%$key%') OR (student.RegNo LIKE '%$key%') ORDER BY student.Name, allocation.AYear  DESC";
 
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa
+    ));
 
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($zalongwa, $query);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
+if (mysqli_num_rows($query) > 0){
 echo "<p>Total Records Found: $totalRows_query </p>";
 echo "<table border='1'>";
 echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> Sex </td><td> Degree </td><td> Faculty </td><td> Sponsor </td><td> Registered </td><td> Hostel </td><td> Room No.: </td><td> Academic Year </td></tr>";
 $i=1;
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$id = stripslashes($result["Id"]);
 		$year = stripslashes($result["AYear"]);
 		$Name = stripslashes($result["Name"]);
@@ -96,7 +97,7 @@ $key= stripslashes($key);
 echo "Sorry, No Records Found <br>";
 echo "That Match With Your Searck Key \"$key \" ";
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 
 }else{
 

@@ -12,12 +12,12 @@
 	#populate academic year combo box
 	mysqlI_select_db($database_zalongwa, $zalongwa);
 	$query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-	$AYear = mysqlI_query($zalongwa, $query_AYear) or die(mysqli_error());
+	$AYear = mysqlI_query($zalongwa, $query_AYear) or die(mysqli_error($zalongwa));
 	$row_AYear = mysqli_fetch_assoc($AYear);
 
 	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_post = "SELECT * FROM electionpost ORDER BY Post ASC";
-	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error());
+	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error($zalongwa));
 	$row_post = mysqli_fetch_assoc($post);
 	$totalRows_post = mysqli_num_rows($post);
 

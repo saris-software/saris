@@ -76,14 +76,12 @@ a:active {
 
 <body bgcolor="#FFFFCC">
 <div align="center">
-  <center>
-    <tr> 
-      <td width="100%" height="48"></td>
+    <tr>
+        <td width="100%" height="48"></td>
     </tr>
-  </center>
 </div>
 <div align="center">
-  <center>
+  <div style="text-align: center;">
     <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#990000">
       <tr bgcolor="#99CCCC">
         <td height="69" colspan="7" align="center" valign="middle"> <img src="images/Nkurumah.gif" width="724" height="69" align="left"></td>
@@ -372,7 +370,8 @@ To update the details of this applicant, fill in the boxes below with the correc
 
 
 <!-- A Separate Layer for the Calendar -->
-<script language="JavaScript" src="<?php echo $szRootURL ?>/modules/datepicker/Calendar1-901.js" type="text/javascript"></script>
+            <script language="JavaScript" src="<?php /** @var szRootURL $szRootURL */
+echo $szRootURL ?>/modules/datepicker/Calendar1-901.js" type="text/javascript"></script>
 
 <!--	form validation scripts	-->
 <script language="JavaScript" type="text/javascript">
@@ -395,11 +394,11 @@ To update the details of this applicant, fill in the boxes below with the correc
       </tr>
     </table>
 	
-  </center>
+  </div>
 </div>
 <div align="center">
-  <center>
-  </center>
+  <div style="text-align: center;">
+  </div>
 </div>
 
 </body>

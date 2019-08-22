@@ -13,15 +13,15 @@ include('admissionMenu.php');
 
 <?php #populate academic year combobox
 	$query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-	$AYear = mysql_query($query_AYear, $zalongwa) or die(mysql_error());
-	$row_AYear = mysql_fetch_assoc($AYear);
-	$totalRows_AYear = mysql_num_rows($AYear);
+	$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error($zalongwa));
+	$row_AYear = mysqli_fetch_assoc($AYear);
+	$totalRows_AYear = mysqli_num_rows($AYear);
 	
 	#populate degree combobox
 	$query_degree = "SELECT ProgrammeCode,ProgrammeName,Faculty FROM programme ORDER BY ProgrammeName";
-	$degree = mysql_query($query_degree, $zalongwa) or die(mysql_error());
-	$row_degree = mysql_fetch_assoc($degree);
-	$totalRows_degree = mysql_num_rows($degree);
+	$degree = mysqli_query($zalongwa, $query_degree) or die(mysqli_error($zalongwa));
+	$row_degree = mysqli_fetch_assoc($degree);
+	$totalRows_degree = mysqli_num_rows($degree);
 ?>
 <form name="form1" method="post" action="">
   <table width="200" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
@@ -36,11 +36,11 @@ include('admissionMenu.php');
 									?>
             <option value="<?php echo $row_AYear['AYear']?>"><?php echo $row_AYear['AYear']?></option>
             <?php
-								} while ($row_AYear = mysql_fetch_assoc($AYear));
-  								$rows = mysql_num_rows($AYear);
+								} while ($row_AYear = mysqli_fetch_assoc($AYear));
+  								$rows = mysqli_num_rows($AYear);
   								if($rows > 0) {
-      								mysql_data_seek($AYear, 0);
-	  								$row_AYear = mysql_fetch_assoc($AYear);
+      								mysqli_data_seek($AYear, 0);
+	  								$row_AYear = mysqli_fetch_assoc($AYear);
   								}
 						?>
         </select>
@@ -59,11 +59,11 @@ include('admissionMenu.php');
 									?>
                       				<option value="<?php echo $row_degree['ProgrammeName']?>"><?php echo $row_degree['ProgrammeName']?></option>
                       				<?php
-								} while ($row_degree = mysql_fetch_assoc($degree));
-  								$rows = mysql_num_rows($degree);
+								} while ($row_degree = mysqli_fetch_assoc($degree));
+  								$rows = mysqli_num_rows($degree);
   								if($rows > 0) {
-      								mysql_data_seek($degree, 0);
-	  								$row_degree = mysql_fetch_assoc($degree);
+      								mysqli_data_seek($degree, 0);
+	  								$row_degree = mysqli_fetch_assoc($degree);
   								}
 						?>
         </select>
@@ -89,10 +89,10 @@ include('admissionMenu.php');
   <?php require_once('../Connections/zalongwa.php');
 
 $sql = "SELECT FullName, Email, Position, UserName, Registered FROM security WHERE UserName = '$username'";
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 echo "<table border='1'>";
 echo "<tr><td> Name </td><td> Login ID </td><td> Status </td><td> E-Post </td><td> Registered </td></tr>";
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$Name = stripslashes($result["FullName"]);
 		$username = stripslashes($result["UserName"]);
 		$position = stripslashes($result["Position"]);

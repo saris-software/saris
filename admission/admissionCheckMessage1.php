@@ -27,13 +27,13 @@ if (isset($_COOKIE['RegNo'])) {
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_studentsuggestion = "SELECT id, received, fromid, toid, message,replied FROM suggestion WHERE toid = 'admin' ORDER BY received DESC";
 $query_limit_studentsuggestion = sprintf("%s LIMIT %d, %d", $query_studentsuggestion, $startRow_studentsuggestion, $maxRows_studentsuggestion);
-$studentsuggestion = mysqli_query($query_limit_studentsuggestion, $zalongwa) or die(mysqli_error());
+$studentsuggestion = mysqli_query($zalongwa, $query_limit_studentsuggestion) or die(mysqli_error($zalongwa));
 $row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion);
 
 if (isset($_GET['totalRows_studentsuggestion'])) {
   $totalRows_studentsuggestion = $_GET['totalRows_studentsuggestion'];
 } else {
-  $all_studentsuggestion = mysqli_query($query_studentsuggestion , $zalongwa);
+  $all_studentsuggestion = mysqli_query($zalongwa, $query_studentsuggestion);
   $totalRows_studentsuggestion = mysqli_num_rows($all_studentsuggestion);
 }
 $totalPages_studentsuggestion = ceil($totalRows_studentsuggestion/$maxRows_studentsuggestion)-1;
@@ -82,7 +82,7 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
 								
 								//get degree name
 								$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-								$dbdegree = mysqli_query($qdegree , $zalongwa);
+								$dbdegree = mysqli_query($zalongwa, $qdegree);
 								$row_degree = mysqli_fetch_array($dbdegree);
 								$programme = $row_degree['Title'];
 								echo  "$name - $regno - $programme";	

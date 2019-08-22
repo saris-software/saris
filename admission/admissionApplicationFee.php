@@ -45,13 +45,13 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AcademicYear = mysqli_query($query_AcademicYear, $zalongwa) or die(mysqli_error());
+$AcademicYear = mysqli_query($zalongwa, $query_AcademicYear) or die(mysqli_error($zalongwa));
 $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 $totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
 
 mysqli_select_db($database_zalongwa, $zalongwa);
 $query_Hostel = "SELECT ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$Hostel = mysqli_query($query_Hostel, $zalongwa) or die(mysqli_error());
+$Hostel = mysqli_query($zalongwa, $query_Hostel) or die(mysqli_error($zalongwa));
 $row_Hostel = mysqli_fetch_assoc($Hostel);
 $totalRows_Hostel = mysqli_num_rows($Hostel);
 
@@ -66,17 +66,17 @@ $all = $_POST['check'];
 		# Genda Statistics
 		//get total female students
 		$query_sexf = "SELECT Id FROM student WHERE (student.EntryYear='$year') AND Sex = 'F'";
-		$sexf = mysqli_query($query_sexf, $zalongwa) or die(mysqli_error());
+		$sexf = mysqli_query($zalongwa, $query_sexf) or die(mysqli_error($zalongwa));
 		$row_sexf = mysqli_fetch_assoc($sexf);
 		$totalRows_sexf = mysqli_num_rows($sexf);
 		//get total male student
 		$query_sexm = "SELECT Id FROM student WHERE (student.EntryYear='$year') AND Sex = 'M'";
-		$sexm = mysqli_query($query_sexm, $zalongwa) or die(mysqli_error());
+		$sexm = mysqli_query($zalongwa, $query_sexm) or die(mysqli_error($zalongwa));
 		$row_sexm = mysqli_fetch_assoc($sexm);
 		$totalRows_sexm = mysqli_num_rows($sexm);
 		//get unknown sex
 		$query_sexu = "SELECT Id FROM student WHERE (student.EntryYear='$year') AND Sex = ''";
-		$sexu = mysqli_query($query_sexu, $zalongwa) or die(mysqli_error());
+		$sexu = mysqli_query($zalongwa, $query_sexu) or die(mysqli_error($zalongwa));
 		$row_sexu = mysqli_fetch_assoc($sexu);
 		$totalRows_sexu = mysqli_num_rows($sexu);
 		//calculate
@@ -94,19 +94,19 @@ $all = $_POST['check'];
 		//get total female students
 		$query_sexf = "SELECT Id FROM student WHERE (student.EntryYear='$year') 
 						AND (student.ProgrammeofStudy = '$hall') AND Sex = 'F'";
-		$sexf = mysqli_query($query_sexf, $zalongwa) or die(mysqli_error());
+		$sexf = mysqli_query($zalongwa, $query_sexf) or die(mysqli_error($zalongwa));
 		$row_sexf = mysqli_fetch_assoc($sexf);
 		$totalRows_sexf = mysqli_num_rows($sexf);
 		//get total male student
 		$query_sexm = "SELECT Id FROM student WHERE (student.EntryYear='$year') 
 						AND (student.ProgrammeofStudy = '$hall') AND Sex = 'M'";
-		$sexm = mysqli_query($query_sexm, $zalongwa) or die(mysqli_error());
+		$sexm = mysqli_query($zalongwa, $query_sexm) or die(mysqli_error($zalongwa));
 		$row_sexm = mysqli_fetch_assoc($sexm);
 		$totalRows_sexm = mysqli_num_rows($sexm);
 		//get unknown sex
 		$query_sexu = "SELECT Id FROM student WHERE (student.EntryYear='$year') 
 						AND (student.ProgrammeofStudy = '$hall') AND Sex = ''";
-		$sexu = mysqli_query($query_sexu, $zalongwa) or die(mysqli_error());
+		$sexu = mysqli_query($zalongwa, $query_sexu) or die(mysqli_error($zalongwa));
 		$row_sexu = mysqli_fetch_assoc($sexu);
 		$totalRows_sexu = mysqli_num_rows($sexu);
 		//calculate

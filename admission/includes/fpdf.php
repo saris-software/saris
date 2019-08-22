@@ -476,31 +476,45 @@ function AddFont($family,$style='',$file='')
 	if(!isset($name))
 		$this->Error('Could not include font definition file');
 	$i=count($this->fonts)+1;
-	$this->fonts[$family.$style]=array('i'=>$i,'type'=>$type,'name'=>$name,'desc'=>$desc,'up'=>$up,'ut'=>$ut,'cw'=>$cw,'enc'=>$enc,'file'=>$file);
-	if($diff)
-	{
-		//Search existing encodings
-		$d=0;
-		$nb=count($this->diffs);
-		for($i=1;$i<=$nb;$i++)
-			if($this->diffs[$i]==$diff)
-			{
-				$d=$i;
-				break;
-			}
-		if($d==0)
+	/** @var type $type */
+	/** @var desc $desc */
+	/** @var up $up */
+	/** @var ut $ut */
+	/** @var cw $cw */
+	/** @var enc $enc */
+	$this->fonts[$family.$style]= ['i'=>$i,'type'=>$type,'name'=>$name,'desc'=>$desc,'up'=>$up,'ut'=>$ut,'cw'=>$cw,'enc'=>$enc,'file'=>$file];
+	if (isset($diff)) {
+		if($diff)
 		{
-			$d=$nb+1;
-			$this->diffs[$d]=$diff;
+			//Search existing encodings
+			$d=0;
+			$nb=count($this->diffs);
+			for($i=1;$i<=$nb;$i++)
+				if($this->diffs[$i]==$diff)
+				{
+					$d=$i;
+					break;
+				}
+			if($d==0)
+			{
+				$d=$nb+1;
+				$this->diffs[$d]=$diff;
+			}
+			$this->fonts[$family.$style]['diff']=$d;
 		}
-		$this->fonts[$family.$style]['diff']=$d;
 	}
 	if($file)
 	{
 		if($type=='TrueType')
-			$this->FontFiles[$file]=array('length1'=>$originalsize);
+			if (isset($originalsize)) {
+				$this->FontFiles[$file]=array('length1'=>$originalsize);
+			}
 		else
-			$this->FontFiles[$file]=array('length1'=>$size1,'length2'=>$size2);
+			if (isset($size1)) {
+				if (isset($size2)) {
+					$this->FontFiles[$file]=array('length1'=>$size1,'length2'=>$size2);
+				}
+			}
 	}
 }
 

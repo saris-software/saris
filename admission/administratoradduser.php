@@ -16,7 +16,7 @@
 
 #populate module combo box
 	$query_module = "SELECT moduleid, modulename FROM modules";
-	$module = mysqli_query($query_module, $zalongwa) or die(mysqli_error());
+	$module = mysqli_query($zalongwa, $query_module) or die(mysqli_error($zalongwa));
 	$row_module = mysqli_fetch_assoc($module);
 	$totalRows_module = mysqli_num_rows($module);
 

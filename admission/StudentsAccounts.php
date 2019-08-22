@@ -20,9 +20,9 @@ require_once('../Connections/zalongwa.php');
 //ZALONGWA SARIS ACCOUNT CREATING
 
 $sql = "SELECT * FROM student"; 
-$update = mysql_query($sql) or die(mysql_error());
-$students=mysql_num_rows($update);
-while($update_row = mysql_fetch_array($update))
+$update = mysqli_query($zalongwa, $sql) or die(mysqli_error($zalongwa));
+$students=mysqli_num_rows($update);
+while($update_row = mysqli_fetch_array($update))
 {
 $rawname = $update_row['Name'];
 $rawname=strtolower($rawname);
@@ -46,14 +46,14 @@ $part2= "{jlungo-hash}";
 $hash=$part2.$part1;
 $UserName=addslashes($UserName);
 //TEST EXISTENSE
-$test=mysql_query("select * from security where UserName='$UserName'");
+$test=mysqli_query("select * from security where UserName='$UserName'");
 if(!$test)
 {
 ///CREATING......
 $plug="insert into security(UserName,FullName,RegNo,Position,Email,password)
  values('$UserName','$FullName','$RegNo','$Position','$Email','$hash')";
 
-$pl=mysql_query($plug)or die(mysql_error());
+$pl=mysqli_query($zalongwa, $plug)or die(mysqli_error($zalongwa));
 }else
 {
 //UserName already Exist

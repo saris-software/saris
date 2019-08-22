@@ -19,11 +19,11 @@
 	$id = $_GET['id'];
 	#delete candidate
 	$qdelete = "DELETE FROM student WHERE Id = '$id'";
-	$dbdelete = mysql_query($qdelete);
+	$dbdelete = mysqli_query($zalongwa, $qdelete);
 	
 	#delete examresults
 	$qdeleteresult = "DELETE FROM examresult WHERE RegNo='$regno'";
-	mysql_query($qdeleteresult);
+	mysqli_query($zalongwa, $qdeleteresult);
 	
 	#print message
 	if($dbdelete){

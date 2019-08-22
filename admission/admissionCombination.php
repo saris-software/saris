@@ -24,7 +24,7 @@ $name = preg_replace("[[:space:]]+", " ",$rawname);
 #check if subject exist exist
 $sql ="SELECT SubjectID 			
 	  FROM subjectcombination WHERE (SubjectID  = '$code')";
-$result = mysqli_query($sql , $zalongwa) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
+$result = mysqli_query($zalongwa, $sql) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
 $coursecodeFound = mysqli_num_rows($result);
 if ($coursecodeFound) {
           $coursefound   = mysqli_result($result,0,'SubjectID');
@@ -34,7 +34,7 @@ if ($coursecodeFound) {
 #check if subject name exist
 $namesql ="SELECT SubjectName 			
 	  FROM subjectcombination WHERE (SubjectName  = '$name')";
-$nameresult = mysqli_query($namesql , $zalongwa) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
+$nameresult = mysqli_query($zalongwa, $namesql) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
 $coursenameFound = mysqli_num_rows($nameresult);
 if ($coursenameFound) {
           $namefound   = mysqli_result($nameresult,0,'SubjectName');
@@ -46,7 +46,7 @@ if ($coursenameFound) {
    GetSQLValueString($_POST['txtCode'], "text"),
    GetSQLValueString($_POST['txtTitle'], "text"));                   
   mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($insertSQL, $zalongwa) or die(mysqli_error());
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 }
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
  					   $updateSQL = sprintf("UPDATE subjectcombination SET SubjectName=%s WHERE SubjectID=%s",
@@ -54,7 +54,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
                        GetSQLValueString($_POST['id'], "int"));
 
   mysqli_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysqli_query($updateSQL, $zalongwa) or die(mysqli_error());
+  $Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error($zalongwa));
  }
  
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -104,13 +104,13 @@ $query_inst = "SELECT * FROM subjectcombination ORDER BY SubjectID ASC";
 }
 //$query_inst = "SELECT * FROM course ORDER BY CourseCode ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysqli_query($query_limit_inst, $zalongwa) or die(mysqli_error());
+$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
 $row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
-  $all_inst = mysqli_query($query_inst);
+  $all_inst = mysqli_query($zalongwa, $query_inst);
   $totalRows_inst = mysqli_num_rows($all_inst);
 }
 

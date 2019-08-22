@@ -16,20 +16,20 @@
 					FROM electiondate ed, electionpost ep WHERE ep.Id=ed.PostId 
 					ORDER BY ed.Period DESC, ep.Post DESC";
 					
-	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error());
+	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error($zalongwa));
 	$row_post = mysqli_fetch_assoc($post);
 	$totalRows_post = mysqli_num_rows($post);
 	
 	mysqli_select_db($database_zalongwa, $zalongwa);
 	$elct_post = "SELECT * FROM electionpost ORDER BY Post DESC";
 					
-	$elct = mysqli_query($zalongwa, $elct_post) or die(mysqli_error());
+	$elct = mysqli_query($zalongwa, $elct_post) or die(mysqli_error($zalongwa));
 	$row_elct = mysqli_fetch_assoc($elct);
 	$totalRows_elct = mysqli_num_rows($elct);
 
 	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_ayear = "SELECT * FROM academicyear ORDER BY AYear DESC";
-	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error());
+	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error($zalongwa));
 	$row_ayear = mysqli_fetch_assoc($ayear);
 	$totalRows_ayear = mysqli_num_rows($ayear);
 
@@ -65,7 +65,8 @@
 		GetSQLValueString($_POST['txtStart'], "text"),
 		GetSQLValueString($_POST['textEnd'], "text"));                   
 		mysqli_select_db($database_zalongwa, $zalongwa);
-		$Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
+		$Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa
+        ));
 		}
 
 	if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
@@ -135,7 +136,7 @@
 
 	//$query_inst = "SELECT * FROM course ORDER BY CourseCode ASC";
 	$query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-	$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+	$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error($zalongwa));
 	$row_inst = mysqli_fetch_assoc($inst);
 
 	if (isset($_GET['totalRows_inst'])) {

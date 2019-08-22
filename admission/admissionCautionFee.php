@@ -62,7 +62,7 @@ $qtype = "SELECT DISTINCT Description ";
 $qtype .= "FROM tblcautionfee ";
 $qtype .= "ORDER BY Description ";
 
-$dbtype = mysqli_query($qtype, $zalongwa) or die(mysqli_error());
+$dbtype = mysqli_query($zalongwa, $qtype) or die(mysqli_error($zalongwa));
 
 //query for crosstab
 $qx = "SELECT RegNo";
@@ -76,8 +76,8 @@ $qx .= "GROUP BY tblcautionfee.RegNo";
 
 //print($qx);
 
-if(!($dbx = mysqli_query($qx, $zalongwa))){
-	print("MySQL reports: " . mysqli_error() . "\n");
+if(!($dbx = mysqli_query($zalongwa, $qx))){
+	print("MySQL reports: " . mysqli_error($zalongwa) . "\n");
 	exit();
 	}
 ?>

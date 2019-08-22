@@ -523,7 +523,9 @@ class PDF {
 #LUNGO'S EXTENSIONS
 //include('class.pdf.php');
 	function addJpegFromFile($img,$x,$y,$w=0,$h=0){
-		$this->Image($img, $x, $this->h-$y-$h, $w, $h);
+        if (isset($this)) {
+            $this->Image($img, $x, $this->h - $y -$h, $w, $h);
+        }
 	}
 
 

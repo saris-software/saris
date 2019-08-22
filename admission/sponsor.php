@@ -4,10 +4,10 @@ include("phpgraphlib.php");
 $graph=new PHPGraphLib(500,300); 
 $dataArray=array();
 $sql="SELECT Sponsor,COUNT(*) AS 'count' FROM student GROUP BY student.Sponsor";
-$result = mysql_query($sql) or die('Query failed: ' . mysql_error());	
+$result = mysqli_query($zalongwa, $sql) or die('Query failed: ' . mysqli_error($zalongwa));
 if($result)
 {
-while($row = mysql_fetch_assoc($result))
+while($row = mysqli_fetch_assoc($result))
 {	
 $salesgroup=$row["Sponsor"];
 $count=$row["count"];

@@ -42,8 +42,8 @@ if(isset($_POST['print']))
 		{
 			#Fetch Records
 			$sql = "SELECT * FROM student WHERE Id ='$Eq[$i]'"; 
-			$update = mysql_query($sql);
-			$update_row = mysql_fetch_array($update);
+			$update = mysqli_query($zalongwa, $sql);
+			$update_row = mysqli_fetch_array($update);
 			$regno = addslashes($update_row['RegNo']);
 			$stdid = addslashes($update_row['Id']);
 			$AdmissionNo = addslashes($update_row['AdmissionNo']);     
@@ -103,8 +103,8 @@ if(isset($_POST['print']))
 			$Action="Deleted";
 			#get degree programme
 			$qprogram = "SELECT ProgrammeName FROM programme WHERE ProgrammeCODE ='$degree'";
-			$dbprogram = mysql_query($qprogram);
-			$row_program = mysql_fetch_assoc($dbprogram);
+			$dbprogram = mysqli_query($zalongwa, $qprogram);
+			$row_program = mysqli_fetch_assoc($dbprogram);
 			$degree = $row_program['ProgrammeName'];
 			
 		$photo = $update_row['Photo'];
@@ -137,8 +137,11 @@ if(isset($_POST['print']))
 		
 			// Print labels
 			//for($i=1;$i<=$count;$i++) {
-				$text = sprintf("%s\n%s\n%s %s\n%s %s\n%s %s\n%s %s\n %s\n %s\n", "$org", 'STUDENT IDENTITY CARD', 'RegNo.:', "$regno", 'Name:  ', "$surname", 'Course:', "$degree", 'Expiry date:', '31 July 2013', '__________________________', '        Student\'s Signature');
-				$pdf->Image($imgfile, $posX+76, $posY+25); 
+            /** @var org $org */
+            $text = sprintf("%s\n%s\n%s %s\n%s %s\n%s %s\n%s %s\n %s\n %s\n", "$org", 'STUDENT IDENTITY CARD', 'RegNo.:', "$regno", 'Name:  ', "$surname", 'Course:', "$degree", 'Expiry date:', '31 July 2013', '__________________________', '        Student\'s Signature');
+            /** @var posX $posX */
+            /** @var posY $posY */
+            $pdf->Image($imgfile, $posX+76, $posY+25);
 				$pdf->Add_Label($text);
 			//}
 		}
@@ -227,13 +230,13 @@ $pageNum=$_GET['page'];
 $offset=($pageNum-1)*$rowPerPage;
 $k=$offset+1;
 $query=$look." LIMIT $offset,$rowPerPage";
-$result=mysql_query($query);
+$result=mysqli_query($zalongwa, $query);
 
 echo"<form action='$_SERVER[PHP_SELF]' method='POST' name='frm1'>";
-echo"<center>
+echo "<div style=\"text-align: center;\">
 <table width='950' cellspacing='0' cellpadding='0'>
 <tr><th>Select Students to Delete</th></tr></table>
-</center>";
+</div>";
 echo "<table cellspacing='0' border='1' width='950' cellpadding='0'>
 <tr bgcolor='#ccccf'>
 <th>V</th>
@@ -244,13 +247,13 @@ echo "<table cellspacing='0' border='1' width='950' cellpadding='0'>
 <th>Study Programme</th>
 <th>Registered</th>
 </tr>";
-while($r=mysql_fetch_array($result))
+while($r=mysqli_fetch_array($result))
 {
 		$degree =$r[ProgrammeofStudy];
 		#get degree programme
 		$qprogram = "SELECT ProgrammeName FROM programme WHERE ProgrammeCODE ='$degree'";
-		$dbprogram = mysql_query($qprogram);
-		$row_program = mysql_fetch_assoc($dbprogram);
+		$dbprogram = mysqli_query($zalongwa, $qprogram);
+		$row_program = mysqli_fetch_assoc($dbprogram);
 		$degree = $row_program['ProgrammeName'];
 echo "<tr>
 <td><input type='checkbox' name='Eq[]' value='$r[Id]'></td>
@@ -266,10 +269,10 @@ $k++;
 echo"</table>";
 
 
-$data=mysql_query($look);
-$numrows=mysql_num_rows($data);
-$result=mysql_query($data);
-$row=mysql_fetch_array($data);
+$data=mysqli_query($zalongwa, $look);
+$numrows=mysqli_num_rows($data);
+$result=mysqli_query($zalongwa, $data);
+$row=mysqli_fetch_array($data);
 
 
 $maxPage=ceil($numrows/$rowPerPage);
@@ -310,12 +313,12 @@ else
 $next='&nbsp;';
 $last='&nbsp;';
 }
-echo"<table>
+echo "<table>
 <tr>
 <td width='200'>&nbsp;&nbsp;&nbsp;&nbsp;$prev&nbsp;&nbsp;</td>
 <td width='200'>&nbsp;&nbsp;Page $nm of $maxPage&nbsp;&nbsp;</td>
 <td width='200'>&nbsp;&nbsp;$next&nbsp;&nbsp;</td>
-<td>&nbsp;&nbsp;&nbsp;<font color='#CCCCCC'></font></td>
+<td>&nbsp;&nbsp;&nbsp;<span style=\"color: #CCCCCC; \"></span></td>
 </tr></table></center>";
 //End of Pagination
 

@@ -63,7 +63,7 @@ $category=$_GET['category'];
 if(isset($_GET['deleteCode']))
 {
 $deleteCode=$_GET['deleteCode'];
-$d=mysql_query("delete from olevel_results where Id='$deleteCode'");
+$d=mysqli_query("delete from olevel_results where Id='$deleteCode'", $zalongwa);
 }
 //******************Save Record
 if(isset($_GET['save']))
@@ -74,8 +74,8 @@ $indexNo=$_GET['indexNo'];
 $reg=$_GET['regno'];
 $grad=$_GET['marks'];
 $category=$_GET['category'];
-$s=mysql_query("insert into olevel_results(subjectID,indexNo,regno,grade,category) 
-values('$subjectCode','$indexNo','$reg','$grad','$category')")or die(mysql_error());
+$s=mysqli_query("insert into olevel_results(subjectID,indexNo,regno,grade,category) 
+values('$subjectCode','$indexNo','$reg','$grad','$category')", $zalongwa)or die(mysqli_error($zalongwa));
 }
 //***********Save Changes after edit
 if(isset($_GET['saveEdit']))
@@ -87,7 +87,7 @@ $grade=$_GET['grade1'];
 $Id=$_GET['Id'];
 $user=$_GET['usr'];
 $category=$_GET['category'];
-$e=mysql_query("update olevel_results set subjectID='$subjectID',regno='$regno',indexNo='$indexNo',grade='$grade' where  Id='$Id'");
+$e=mysqli_query("update olevel_results set subjectID='$subjectID',regno='$regno',indexNo='$indexNo',grade='$grade' where  Id='$Id'", $zalongwa);
 }
 $me=$_SERVER['PHP_SELF'];
 if(isset($_GET['user']))
@@ -139,7 +139,7 @@ default:$query="select * from olevel_results";
 $query="select * from olevel_results";
 }
 $order=$_GET['order'];
-$data=mysql_query($query)or die(mysql_error());
+$data=mysqli_query($zalongwa, $query)or die(mysqli_error($zalongwa));
 echo"<form action='$me' method='GET'>";
 echo"<table  cellspacing='0' cellpadding='0' class='dtable'>";
 echo"<tr class='dhead'>
@@ -159,10 +159,10 @@ echo"</th>";
 echo"<th colspan='2' class='ficha'>ACTION</th>
 </tr>";
 $j=1;
-while($r=mysql_fetch_array($data))
+while($r=mysqli_fetch_array($data))
 {
-$c=mysql_query("select * from olevel_results where Id='$r[Id]'");
-$cp=mysql_fetch_array($c);
+$c=mysqli_query("select * from olevel_results where Id='$r[Id]'", $zalongwa);
+$cp=mysqli_fetch_array($c);
 if($edit==true && $user==$r['Id'])
 {
 $state1=1;
@@ -179,16 +179,16 @@ echo"<td>";
 echo"<select name='subjectID'>";
 if($r['subjectID'])
 {
-$query_somo=mysql_query("select * from subject_olevel where subjectID='$r[subjectID]'");
-$sm=mysql_fetch_array($query_somo);
+$query_somo=mysqli_query("select * from subject_olevel where subjectID='$r[subjectID]'", $zalongwa);
+$sm=mysqli_fetch_array($query_somo);
 echo"<option value='$sm[subjectID]'>$sm[subjectName]</option>";
 }else
 {
 echo"<option value=''>--Select Subject--</option>";
 }
 $somo_query="select * from subject_olevel where subjectID !='$r[subjectID]'";
-$somo=mysql_query($somo_query);
-while($s=mysql_fetch_array($somo))
+$somo=mysqli_query($zalongwa, $somo_query);
+while($s=mysqli_fetch_array($somo))
 {
 echo"<option value='$s[subjectID]'>$s[subjectName]</option>";
 }
@@ -294,8 +294,8 @@ $query="select * from subject_olevel";
 }
 echo"<select name='subjectCode'>";
 echo"<option value=''>--Select Subject--</option>";
-$somo=mysql_query($query);
-while($s=mysql_fetch_array($somo))
+$somo=mysqli_query($zalongwa, $query);
+while($s=mysqli_fetch_array($somo))
 {
 echo"<option value='$s[subjectID]'>$s[subjectName]</option>";
 }

@@ -12,7 +12,8 @@ If (isset($_POST['Language'])) {
 	$_SESSION['Language'] = $_POST['Language'];
 	$Language = $_POST['Language'];
 } elseif (!isset($_SESSION['Language'])) {
-	$_SESSION['Language'] = $DefaultLanguage;
+    /** @var DefaultLanguage $DefaultLanguage */
+    $_SESSION['Language'] = $DefaultLanguage;
 	$Language = $DefaultLanguage;
 } else {
 	$Language = $_SESSION['Language'];
