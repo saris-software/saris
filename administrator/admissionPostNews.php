@@ -126,9 +126,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
              }
 		} 
 
-  mysqli_select_db($database_zalongwa, $zalongwa);
+  mysqli_select_db($zalongwa,$database_zalongwa);
 
-  $Result1 = mysqli_query($insertSQL, $zalongwa) or die(mysqli_error($zalongwa));
+  $Result1 = mysqli_query($zalongwa,$insertSQL) or die(mysqli_error($zalongwa));
 
 
 

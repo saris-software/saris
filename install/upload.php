@@ -89,7 +89,7 @@ function getFileExtension($str) {
         return $ext;
 }
 
-function executeSQLFromFile($filename,$zalongwa) { 
+function executeSQLFromFile($zalongwa,$filename) {
 $success = true; 
 $fp = fopen($filename,"r"); 
 $sql = fread($fp,filesize($filename)); 
@@ -98,9 +98,9 @@ fclose($fp);
 // Make Array of SQL items 
 $sqlArr = explode(";\r",$sql); 
 for($k=0; $k < count($sqlArr)-1; $k++) { 
-if (!@mysql_query($sqlArr[$k],$zalongwa)) { 
+if (!@mysqli_query($zalongwa,$sqlArr[$k])) {
 $success = false; 
-die(mysql_error()); 
+die(mysqli_error($zalongwa));
 } 
 } 
 
