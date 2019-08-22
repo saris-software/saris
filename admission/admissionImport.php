@@ -135,7 +135,7 @@ if (isset($_POST['import']) && ($_POST['import'] == "Import Data")) {
 					$nemu=addslashes($arr[3]);
 					$name=strtoupper($nem).", ".ucwords($nemu);			  
 
-					$chas = mysqli_query("SELECT RegNo FROM student WHERE RegNo='$arr[1]'", $zalongwa);
+					$chas = mysqli_query($zalongwa, "SELECT RegNo FROM student WHERE RegNo='$arr[1]'", $zalongwa);
 												
 					if($overwrite==1 AND sizeof($arr)<7){
 						echo "<p style='color:maroon'>ERROR: You can not overwrite student(s) without registration number(s)</p>";					

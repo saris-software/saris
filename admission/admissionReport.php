@@ -6,12 +6,12 @@ $ayear=$_POST['ayear'];
 $faculty=$_POST['faculty'];
 if($faculty=="all")
 {
-$db=mysql_query("select * from faculty ORDER by FacultyName");
+$db=mysqli_query("select * from faculty ORDER by FacultyName", $zalongwa);
 $dept=strtoupper('ALL DEPARTMENTS');
 }else
 {
-$dp=mysql_query("select * from faculty where FacultyID='$faculty'");
-$d=mysql_fetch_array($dp);
+$dp=mysqli_query("select * from faculty where FacultyID='$faculty'",$zalongwa);
+$d=mysqli_fetch_array($dp);
 $dept=strtoupper($d['FacultyName']);
 }
 $pdf= new PDF_TOC(); 
@@ -28,10 +28,10 @@ $pdf->AddPage();
 $pdf->startPageNums();
 if($faculty=="all")
 {
-$faculty=mysql_query("select * from faculty ORDER by FacultyName");
+$faculty=mysqli_query("select * from faculty ORDER by FacultyName", $zalongwa);
 }else
 {
-$faculty=mysql_query("select * from faculty  where FacultyID='$faculty' ORDER by FacultyName");
+$faculty=mysqli_query("select * from faculty  where FacultyID='$faculty' ORDER by FacultyName", $zalongwa);
 }
 ##################################################################
 function  titleCase($string) 
@@ -43,7 +43,7 @@ function  titleCase($string)
         $string=strtoupper($string); 
         while  ($i<$len): 
                 $char=substr($string,$i,1); 
-                if  (ereg( "[A-Z]",$last)): 
+                if  (preg( "[A-Z]",$last)):
                         $new.=strtolower($char); 
                 else: 
                         $new.=strtoupper($char); 
@@ -54,20 +54,20 @@ function  titleCase($string)
         return($new); 
 }
 ####################################################
-while($f=mysql_fetch_array($faculty))
+while($f=mysqli_fetch_array($faculty))
 {
-$registered=mysql_query("select * from student,programme where programme.ProgrammeCode=student.ProgrammeofStudy  and programme.Faculty='$f[FacultyName]' and student.EntryYear='$ayear'")or die(mysql_error());
-$nms=mysql_num_rows($registered);
+$registered=mysqli_query("select * from student,programme where programme.ProgrammeCode=student.ProgrammeofStudy  and programme.Faculty='$f[FacultyName]' and student.EntryYear='$ayear'", $zalongwa)or die(mysqli_error());
+$nms=mysqli_num_rows($registered);
 if($nms>0)
 {
 $department=strtoupper($f['FacultyName']);	
 $pdf->TOC_Entry($department, 0);
-$query=mysql_query("select * from programme where Faculty='$f[FacultyName]' ORDER by ProgrammeName");	
-while($r=mysql_fetch_array($query))
+$query=mysqli_query("select * from programme where Faculty='$f[FacultyName]' ORDER by ProgrammeName", $zalongwa);
+while($r=mysqli_fetch_array($query))
 {
 $Ename=$r['Title']." ".$r['ProgrammeName'];
-$darasa=mysql_query("select * from student where ProgrammeofStudy='$r[ProgrammeCode]' and student.EntryYear='$ayear' and regno!='' ORDER by Name");
-$num=mysql_num_rows($darasa);
+$darasa=mysqli_query("select * from student where ProgrammeofStudy='$r[ProgrammeCode]' and student.EntryYear='$ayear' and regno!='' ORDER by Name", $zalongwa);
+$num=mysqli_num_rows($darasa);
 if($num>0)
 {
 $Ename=strtoupper($Ename);
@@ -83,19 +83,22 @@ $pdf->SetFont('Times','',10);
 $pdf->TOC_Entry($Ename, 1);
 //$pdf->TOC_Entry($Ename, 2);
 $k=1; 
-while($c=mysql_fetch_array($darasa))
+while($c=mysqli_fetch_array($darasa))
 {
 #################TITLE CASE FUNCTION
 if($c['Sex']=='M'){
-$male++;
+    /** @var male $male */
+    $male++;
 }
 else{
 if($c['Sex']=='F'){
-$female++;
+    /** @var female $female */
+    $female++;
 }
 else
 {
-$unknown++;
+    /** @var unknown $unknown */
+    $unknown++;
 }
 }
 	        $rawname = $c['Name'];

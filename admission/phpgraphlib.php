@@ -355,6 +355,7 @@ class PHPGraphLib
 					$lineY1=$y1;
 					if(isset($lineX2))
 					{
+						/** @var lineY2 $lineY2 */
 						imageline($this->image, $lineX2, $lineY2, $lineX1, $lineY1, $this->line_color[$data_set_num]);
 						$lineX2=$lineX1;
 						$lineY2=$lineY1;
@@ -1067,11 +1068,11 @@ class PHPGraphLib
 		switch (strtolower($currency_type)) 
 		{
 			case 'dollar': $this->data_currency = '$'; break;
-			case 'yen': $this->data_currency = '¥'; break;
-			case 'pound': $this->data_currency = '£'; break;
-			case 'lira': $this->data_currency = '£'; break;
+			case 'yen': $this->data_currency = 'ï¿½'; break;
+			case 'pound': $this->data_currency = 'ï¿½'; break;
+			case 'lira': $this->data_currency = 'ï¿½'; break;
 			/* Euro doesn't display properly...
-			case 'euro': $this->data_currency = '€'; break; */
+			case 'euro': $this->data_currency = 'ï¿½'; break; */
 			
 			/* Franc doesn't display properly
 			case 'franc': $this->data_currency = '?'; break; */
@@ -1143,6 +1144,7 @@ class PHPGraphLib
 			$parts = ',' . substr($input, -3) . $parts;	
 			$input = substr($input, 0, strlen($input)-3);
 		}
+		/** @var currency_part $currency_part */
 		$input = $sign_part . $currency_part . $input . $parts . $decimal_part;
 		return $input;
 	}
@@ -1150,7 +1152,7 @@ class PHPGraphLib
 		return $input . '%';
 	}
 	function formatDataAsDegrees($input) {
-		return $input . '°';
+		return $input . 'ï¿½';
 	}
 	function formatDataAsGeneric($input) {
 		return $input . $this->data_format_generic;

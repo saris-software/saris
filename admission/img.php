@@ -8,8 +8,8 @@
 		$num = $det[0];
 		$per = $det[1];
 		
-		$download_file = mysql_query("SELECT Photo, Size FROM electioncandidate WHERE RegNo='$num' AND Period='$per'");
-		list($content, $size, ) = mysql_fetch_array($download_file);
+		$download_file = mysqli_query("SELECT Photo, Size FROM electioncandidate WHERE RegNo='$num' AND Period='$per'", $zalongwa);
+		list($content, $size, ) = mysqli_fetch_array($download_file);
 			
 		@header("Content-length:$size");
 		//@header("Content-type:$type");
@@ -78,9 +78,9 @@
 			$fileName = addslashes($fileName);
 			}
 			
-		mysql_query("UPDATE electioncandidate SET Photo='$content', Size='$fileSize' WHERE RegNo='$num' AND Period='$per'");
+		mysqli_query("UPDATE electioncandidate SET Photo='$content', Size='$fileSize' WHERE RegNo='$num' AND Period='$per'", $zalongwa);
 		
-		if(mysql_error()){
+		if(mysqli_error($zalongwa)){
 			$error = urlencode("The file $fileName failed to upload");
 			$location = "index.php?error=$error";
 			

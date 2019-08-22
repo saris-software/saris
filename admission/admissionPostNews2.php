@@ -49,23 +49,24 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmsuggestion")) {
                        GetSQLValueString($_POST['message'], "text"),
 		       GetSQLValueString($_POST['recepient'], "text"));
 
-  mysql_select_db($database_zalongwa, $zalongwa);
-  $Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+  mysqli_select_db($database_zalongwa, $zalongwa);
+  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
 
   //$insertGoTo = "housingcheckmessage.php";
   if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+      /** @var insertGoTo $insertGoTo */
+      $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
   echo '<meta http-equiv = "refresh" content ="0; 
 				 url = studentNews.php">';
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_suggestionbox = "SELECT received, fromid, toid, message FROM news ORDER BY received DESC";
-$suggestionbox = mysql_query($query_suggestionbox, $zalongwa) or die(mysql_error());
-$row_suggestionbox = mysql_fetch_assoc($suggestionbox);
-$totalRows_suggestionbox = mysql_num_rows($suggestionbox);
+$suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_error());
+$row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
+$totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
 
 $RegNo = $_GET['from'];
  ?>
@@ -114,5 +115,5 @@ echo"</select>";
 <?php
 //}
 include('../footer/footer.php');
-mysql_free_result($suggestionbox);
+mysqli_free_result($suggestionbox);
 ?>

@@ -13,7 +13,7 @@ require_once('../Connections/zalongwa.php');
 include('styles.inc');
 
 echo "
-<form action='admissionBook.php' method='POST'>
+<form action='admissionbook.php' method='POST'>
 <table class='dtable' border='0'>
 <tr>
 <td>Academic Year:</td>

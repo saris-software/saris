@@ -11,27 +11,27 @@
 	$today = date('Y-m-d');
 
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_post = "SELECT ed.PostId, ed.Period, ed.StartDate, ed.EndDate, ep.Post 
 					FROM electiondate ed, electionpost ep WHERE ep.Id=ed.PostId 
 					ORDER BY ed.Period DESC, ep.Post DESC";
 					
-	$post = mysql_query($query_post, $zalongwa) or die(mysql_error());
-	$row_post = mysql_fetch_assoc($post);
-	$totalRows_post = mysql_num_rows($post);
+	$post = mysqli_query($zalongwa, $query_post) or die(mysqli_error());
+	$row_post = mysqli_fetch_assoc($post);
+	$totalRows_post = mysqli_num_rows($post);
 	
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($zalongwa, $database_zalongwa);
 	$elct_post = "SELECT * FROM electionpost ORDER BY Post DESC";
 					
-	$elct = mysql_query($elct_post, $zalongwa) or die(mysql_error());
-	$row_elct = mysql_fetch_assoc($elct);
-	$totalRows_elct = mysql_num_rows($elct);
+	$elct = mysqli_query($zalongwa, $elct_post) or die(mysqli_error());
+	$row_elct = mysqli_fetch_assoc($elct);
+	$totalRows_elct = mysqli_num_rows($elct);
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 	$query_ayear = "SELECT * FROM academicyear ORDER BY AYear DESC";
-	$ayear = mysql_query($query_ayear, $zalongwa) or die(mysql_error());
-	$row_ayear = mysql_fetch_assoc($ayear);
-	$totalRows_ayear = mysql_num_rows($ayear);
+	$ayear = mysqli_query($zalongwa, $query_ayear) or die(mysqli_error());
+	$row_ayear = mysqli_fetch_assoc($ayear);
+	$totalRows_ayear = mysqli_num_rows($ayear);
 
 	$currentPage = $_SERVER["PHP_SELF"];
 	$editFormAction = $_SERVER['PHP_SELF'];
@@ -41,16 +41,16 @@
 
 	if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "frmInst")) {
 		$rawcode = $_POST['cmbPost'];
-		$code = ereg_replace("[[:space:]]+", " ",$rawcode);
+		$code = preg_replace("[[:space:]]+", " ",$rawcode);
 		$rawperiod = $_POST['ayear'];
-		$period = ereg_replace("[[:space:]]+", " ",$rawperiod);
+		$period = preg_replace("[[:space:]]+", " ",$rawperiod);
 
 		#check if subject name exist
 		$namesql ="SELECT * FROM electioncandidate WHERE Period='$period' AND 
 					Post IN (SELECT Post FROM electionpost WHERE Id='$code')";
 		
-		$nameresult = mysql_query($namesql) or die("Service not available.<br>");
-		$coursenameFound = mysql_num_rows($nameresult);
+		$nameresult = mysqli_query($zalongwa, $namesql) or die("Service not available.<br>");
+		$coursenameFound = mysqli_num_rows($nameresult);
 		if($coursenameFound<1) {
 			$error = urlencode("Please set candidates for the post first");
 			$url = "admissionEelectiondate.php?new=1&error=$error";
@@ -64,8 +64,8 @@
 		GetSQLValueString($_POST['ayear'], "text"),
 		GetSQLValueString($_POST['txtStart'], "text"),
 		GetSQLValueString($_POST['textEnd'], "text"));                   
-		mysql_select_db($database_zalongwa, $zalongwa);
-		$Result1 = mysql_query($insertSQL, $zalongwa) or die(mysql_error());
+		mysqli_select_db($database_zalongwa, $zalongwa);
+		$Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
 		}
 
 	if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit")) {
@@ -75,8 +75,8 @@
                        GetSQLValueString($_POST['cmbPost'], "text"),
                        GetSQLValueString($_POST['ayear'], "text"));
 
-		mysql_select_db($database_zalongwa, $zalongwa);
-		$Result1 = mysql_query($updateSQL, $zalongwa) or die(mysql_error());
+		mysqli_select_db($database_zalongwa, $zalongwa);
+		$Result1 = mysqli_query($zalongwa, $updateSQL) or die(mysqli_error());
 		}
  
 	function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = ""){
@@ -119,7 +119,7 @@
 		}
 	$startRow_inst = $pageNum_inst * $maxRows_inst;
 
-	mysql_select_db($database_zalongwa, $zalongwa);
+	mysqli_select_db($database_zalongwa, $zalongwa);
 	if (isset($_GET['course'])) {
 		$rawkey=$_GET['course'];
 		$key = addslashes($rawkey);
@@ -135,15 +135,15 @@
 
 	//$query_inst = "SELECT * FROM course ORDER BY CourseCode ASC";
 	$query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-	$inst = mysql_query($query_limit_inst, $zalongwa) or die(mysql_error());
-	$row_inst = mysql_fetch_assoc($inst);
+	$inst = mysqli_query($zalongwa, $query_limit_inst) or die(mysqli_error());
+	$row_inst = mysqli_fetch_assoc($inst);
 
 	if (isset($_GET['totalRows_inst'])) {
 		$totalRows_inst = $_GET['totalRows_inst'];
 		} 
 	else{
-		$all_inst = mysql_query($query_inst);
-		$totalRows_inst = mysql_num_rows($all_inst);
+		$all_inst = mysqli_query($zalongwa, $query_inst);
+		$totalRows_inst = mysqli_num_rows($all_inst);
 		}
 	$totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 
@@ -179,7 +179,7 @@
 		  </tr>
 		  <?php 
 			$x++;
-			} while ($row_inst = mysql_fetch_array($inst)); ?>
+			} while ($row_inst = mysqli_fetch_array($inst)); ?>
 		</table>
 		<a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a><span class="style1">......<span class="style2"><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> </span>..........</span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>		
 <?php
@@ -197,11 +197,11 @@
 		?>
 				<option value="<?php echo $row_post['Id']?>"><?php echo $row_post['Post']?></option>
 				<?php
-		} while ($row_post = mysql_fetch_assoc($elct));
-		  $rows = mysql_num_rows($post);
+		} while ($row_post = mysqli_fetch_assoc($elct));
+		  $rows = mysqli_num_rows($post);
 		  if($rows > 0) {
-			  mysql_data_seek($elct, 0);
-			  $row_post = mysql_fetch_assoc($elct);
+			  mysqli_data_seek($elct, 0);
+			  $row_post = mysqli_fetch_assoc($elct);
 		  }
 		?>
 			  </select></td>
@@ -214,11 +214,11 @@
 		?>
 				<option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
 				<?php
-		} while ($row_ayear = mysql_fetch_assoc($ayear));
-		  $rows = mysql_num_rows($ayear);
+		} while ($row_ayear = mysqli_fetch_assoc($ayear));
+		  $rows = mysqli_num_rows($ayear);
 		  if($rows > 0) {
-			  mysql_data_seek($ayear, 0);
-			  $row_ayear = mysql_fetch_assoc($ayear);
+			  mysqli_data_seek($ayear, 0);
+			  $row_ayear = mysqli_fetch_assoc($ayear);
 		  }
 		?>
 			  </select></td>
@@ -270,12 +270,12 @@
 		$key = $_GET['edit'];
 		$period = $_GET['period'];
 		
-		$get_detail = mysql_query("SELECT ed.PostId, ed.Period, ed.StartDate, ed.EndDate,ep.Post 
+		$get_detail = mysqli_query($zalongwa, "SELECT ed.PostId, ed.Period, ed.StartDate, ed.EndDate,ep.Post 
 								FROM electiondate ed, electionpost ep 
 								WHERE (ed.PostId='$key' AND ed.Period ='$period' AND ep.Id=ed.PostId) 
 								ORDER BY ed.Period DESC, ep.Post DESC");
 		
-		$post_detail = mysql_fetch_array($get_detail);
+		$post_detail = mysqli_fetch_array($get_detail);
 		?>
 		<form action="<?php echo $editFormAction; ?>" method="POST" name="frmInst" id="frmInst">
 		  <table width="200" border="1" cellpadding="3" cellspacing="0" bordercolor="#006600">
@@ -339,11 +339,12 @@
 	# include the footer
 	include("../footer/footer.php");
 
-@mysql_free_result($inst);
+@mysqli_free_result($inst);
 
-@mysql_free_result($instEdit);
+/** @var instEdit $instEdit */
+@mysqli_free_result($instEdit);
 
-@mysql_free_result($faculty);
+@mysqli_free_result($faculty);
 
-@mysql_free_result($campus);
+@mysqli_free_result($campus);
 ?>

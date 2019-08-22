@@ -1,5 +1,5 @@
 <?php
-   #POST connected to the database and verfy current session
+   #POST connected to the database and verify current session
     require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 	# initialise globals

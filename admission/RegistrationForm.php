@@ -1,4 +1,5 @@
 <?php
+
 if (isset($_GET['id'])) 
 {
 #get post variables
@@ -22,9 +23,9 @@ $state4="disabled";
 $label_edit="<a href='$_SERVER[PHP_SELF]?id=$id&RegNo=$reg&edit=yes'><img src='../includes/img/edit.png' alt='Click to Edit This Record'>Edit</a>";
 }
 $sql = "SELECT * FROM student WHERE Id ='$id' and RegNo='$reg'"; 
-$update = mysql_query($sql);
-$update_row = mysql_fetch_array($update);
-$totalRows_update = mysql_num_rows($update);
+$update = mysqli_query($zalongwa, $sql);
+$update_row = mysqli_fetch_array($update);
+$totalRows_update = mysqli_num_rows($update);
 	$regno = $update_row['RegNo'];
 	$stdid = $update_row['Id'];
 	$AdmissionNo = $update_row['AdmissionNo'];     
@@ -254,17 +255,17 @@ if(!$bday)
 }	
 if(!$dtDOB)
 {
-$dtDOB_error="<font color='red'>*Date of birth Must be Filled</font>";
+$dtDOB_error= "<span style=\"color: red; \">*Date of birth Must be Filled</span>";
 }
 	 
 if(!$surname)
 {
-$surname_error="<font color='red'>*Surname Must be Filled</font>";
+$surname_error= "<span style=\"color: red; \">*Surname Must be Filled</span>";
 }	 
 	
 if(!$firstname)
 {
-$firstname_error="<font color='red'>*First Name Must be Filled</font>";
+$firstname_error= "<span style=\"color: red; \">*First Name Must be Filled</span>";
 }
 /* 
 if(!$middlename)
@@ -275,11 +276,11 @@ $middlename_error="<font color='red'>*Middle Name Must be Filled</font>";
  
 if(!$sponsor)
 {
-$sponsor_error="<font color='red'>*Sponsor Must be Filled</font>";
+$sponsor_error= "<span style=\"color: red; \">*Sponsor Must be Filled</span>";
 }
 if(!$country)
 {
-$country_error="<font color='red'>*Country Must be Filled</font>";
+$country_error= "<span style=\"color: red; \">*Country Must be Filled</span>";
 }
 if(!$region)
 {
@@ -287,11 +288,11 @@ if(!$region)
 }
 if(!$maritalstatus)
 {
-$maritalstatus_error="<font color='red'>*Marital Status Must be Filled</font>";
+$maritalstatus_error= "<span style=\"color: red; \">*Marital Status Must be Filled</span>";
 }
 if(!$address)
 {
-$address_error="<font color='red'>*Address Must be Filled</font>";
+$address_error= "<span style=\"color: red; \">*Address Must be Filled</span>";
 }
 if(!$religion)
 {
@@ -303,11 +304,11 @@ if(!$denomination)
 }
 if(!$postaladdress)
 {
-$postaladdress_error="<font color='red'>*Postal Address Must be Filled</font>";
+$postaladdress_error= "<span style=\"color: red; \">*Postal Address Must be Filled</span>";
 }
 if(!$residenceaddress)
 {
-$residenceaddress_error="<font color='red'>*Residentaddress Address Must be Filled</font>";
+$residenceaddress_error= "<span style=\"color: red; \">*Residentaddress Address Must be Filled</span>";
 }
 /*
 if(!$disability)
@@ -317,7 +318,7 @@ $disability_error="<font color='red'>*Disability Must be Filled</font>";
 */
 if(!$status)
 {
-$status_error="<font color='red'>*Status Address Must be Filled</font>";
+$status_error= "<span style=\"color: red; \">*Status Address Must be Filled</span>";
 }
 if(!$gyear)
 {
@@ -332,8 +333,8 @@ if(!$name)
 form();
 #check if RegNo Exist
 $qRegNo = "SELECT RegNo FROM student WHERE RegNo = '$regno'";
-$dbRegNo = mysql_query($qRegNo);
-$total = mysql_num_rows($dbRegNo);
+$dbRegNo = mysqli_query($zalongwa, $qRegNo);
+$total = mysqli_num_rows($dbRegNo);
 if ($total==1)
 {
 echo"
@@ -348,7 +349,8 @@ Registration Number $regno already in use.
 else
 {
 #insert record
-$sql="INSERT INTO student
+    /** @var Subject $Subject */
+    $sql="INSERT INTO student
 (Name,AdmissionNo,
 Sex,DBirth,
 MannerofEntry,MaritalStatus,
@@ -488,8 +490,8 @@ echo"<option value=''>[Select Year]</option>";
 {
 echo"<option value='$ayear'>$ayear</option>";
 }
-$nm=mysql_query("SELECT AYear FROM academicyear where AYear!='$ayear' ORDER BY AYear DESC");
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query("SELECT AYear FROM academicyear where AYear!='$ayear' ORDER BY AYear DESC");
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[AYear]'>$show[AYear]</option>";      
 }
@@ -519,13 +521,13 @@ echo"<option value=''>[Select Campus]</option>";
 }
 else
 {
-$query_campus1 = mysql_query("SELECT CampusID, Campus FROM campus where CampusID='$campus'");
-$camp=mysql_fetch_array($query_campus1);
+$query_campus1 = mysqli_query("SELECT CampusID, Campus FROM campus where CampusID='$campus'");
+$camp=mysqli_fetch_array($query_campus1);
 echo"<option value='$campus'>$camp[Campus]</option>";
 } 
 $query_campus = "SELECT CampusID, Campus FROM campus ORDER BY Campus ASC";
-$nm=mysql_query($query_campus);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($query_campus);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[CampusID]'>$show[Campus]</option>";      
 }   
@@ -548,13 +550,13 @@ if(!$degree)
 echo"<option value=''>[Select Programme]</option>";
 }else
 {
-$take=mysql_query("select * from programme where ProgrammeCode='$degree'")or die(mysql_error());
-$t=mysql_fetch_array($take);
+$take=mysqli_query("select * from programme where ProgrammeCode='$degree'")or die(mysqli_error($zalongwa));
+$t=mysqli_fetch_array($take);
 echo"<option value='$degree'>$t[ProgrammeName]</option>";
 }  
 $query_degree = "SELECT ProgrammeCode,ProgrammeName,Faculty FROM programme ORDER BY ProgrammeName";
-$nm=mysql_query($query_degree);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($query_degree);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[ProgrammeCode]'>$show[ProgrammeName]</option>";      
      
@@ -612,8 +614,8 @@ echo"<option value=''>[Select Class]</option>";
 {
 echo"<option value='$class'>$class</option>";
 }
-$nm=mysql_query("SELECT name FROM classstream where name!='$class' ORDER BY name ASC");
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query("SELECT name FROM classstream where name!='$class' ORDER BY name ASC");
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[name]'>$show[name]</option>";      
 }
@@ -634,8 +636,8 @@ echo"<option value=''>[Select Sponsor]</option>";
 echo"<option value='$sponsor'>$sponsor</option>";
 }  
 $query_sponsor = "SELECT Name FROM sponsors ORDER BY SponsorID ASC";
-$nm=mysql_query($query_sponsor);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($query_sponsor);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[Name]'>$show[Name]</option>";      
     
@@ -657,13 +659,13 @@ if(!$studylevel)
 echo"<option value=''>[Select Level of Study]</option>";
 }else
 {
-$take=mysql_query("select * from studylevel where LevelCode='$studylevel'");
-$t=mysql_fetch_array($take);
+$take=mysqli_query("select * from studylevel where LevelCode='$studylevel'");
+$t=mysqli_fetch_array($take);
 echo"<option value='$studylevel'>$t[LevelName]</option>";
 }  
 $query_studylevel = "SELECT LevelCode,LevelName FROM studylevel ORDER BY LevelName";
-$nm=mysql_query($query_studylevel);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($query_studylevel);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[LevelCode]'>$show[LevelName]</option>";      
  
@@ -683,13 +685,13 @@ if(!$manner)
 echo"<option value=''>[Select Manner of Entry]</option>";
 }else
 {
-$query_Manner =mysql_query("SELECT ID, MannerofEntry FROM mannerofentry where ID='$manner'");
-$mana=mysql_fetch_array($query_Manner);
+$query_Manner =mysqli_query("SELECT ID, MannerofEntry FROM mannerofentry where ID='$manner'");
+$mana=mysqli_fetch_array($query_Manner);
 echo"<option value='$manner'>$mana[MannerofEntry]</option>";
 }  
 $query_MannerofEntry = "SELECT ID, MannerofEntry FROM mannerofentry ORDER BY MannerofEntry ASC";
-$nm=mysql_query($query_MannerofEntry);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($query_MannerofEntry);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[ID]'>$show[MannerofEntry]</option>";      
 }       
@@ -723,14 +725,14 @@ echo"<option value=''>[Select Sect of Religion ]</option>";
 }  
 
 $query_denomination2 = "SELECT * FROM religion";
-$nr=mysql_query($query_denomination2);
-while($l=mysql_fetch_array($nr))
+$nr=mysqli_query($query_denomination2);
+while($l=mysqli_fetch_array($nr))
 {
 //echo"<optgroup label='$l[Religion]'>";
 //$query_denomination = "SELECT * FROM denomination where ReligionID='$l[ReligionID]' ORDER BY denomination ASC";
 $query_denomination = "SELECT * FROM religion where ReligionID='$l[ReligionID]' ORDER BY Religion ASC";
-$nm=mysql_query($query_denomination);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($query_denomination);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[Religion]'>$show[Religion]</option>";      
 }
@@ -787,13 +789,13 @@ if($disabilityCategory)
 echo"<option value='None'>[Select Disability]</option>";
 } 
 $query_disability3 = "SELECT * FROM disability"; 
-$nm3=mysql_query($query_disability3);
-while($s= mysql_fetch_array($nm3))
+$nm3=mysqli_query($query_disability3);
+while($s= mysqli_fetch_array($nm3))
 {
 echo"<optgroup label='$s[disability]'>";      
 $query_disability2 = "SELECT * FROM disabilitycategory where DisabilityCode='$s[DisabilityCode]'";
-$nm2=mysql_query($query_disability2);
-while($show = mysql_fetch_array($nm2) )
+$nm2=mysqli_query($query_disability2);
+while($show = mysqli_fetch_array($nm2) )
 { 	 
 echo"<option  value='$show[disabilityCategory]'>$show[disabilityCategory]</option>";      
 }
@@ -892,8 +894,8 @@ else
 echo "<option value='Tanzania'>Tanzania</option>";
 }
 $query_country = "SELECT szCountry FROM country ORDER BY szCountry";
-$countrys = mysql_query($query_country);
-while ($row_country = mysql_fetch_array($countrys))
+$countrys = mysqli_query($query_country);
+while ($row_country = mysqli_fetch_array($countrys))
 {
 ?>
   <option value="<?php echo $row_country['szCountry']?>"> <?php echo $row_country['szCountry']?></option>
@@ -923,8 +925,8 @@ else
 echo "<option value='Tanzanian'>Tanzanian</option>";
 }
 $query_nationality = "SELECT nationality FROM nationality";
-$nationalitys = mysql_query($query_nationality);
-while ($row_nationality = mysql_fetch_array($nationalitys))
+$nationalitys = mysqli_query($query_nationality);
+while ($row_nationality = mysqli_fetch_array($nationalitys))
 {
 ?>
   <option value="<?php echo $row_nationality['nationality']?>"> <?php echo $row_nationality['nationality']?></option>
@@ -949,13 +951,13 @@ if(!$status)
 echo"<option value=''>[Select Status]</option>";
 }else
 {
-$query_studentStatus1 = mysql_query("SELECT StatusID,Status FROM studentstatus where StatusID='$status'");
-$stat=mysql_fetch_array($query_studentStatus1);
+$query_studentStatus1 = mysqli_query("SELECT StatusID,Status FROM studentstatus where StatusID='$status'", $zalongwa);
+$stat=mysqli_fetch_array($query_studentStatus1);
 echo"<option value='$status'>$stat[Status]</option>";
 }  
 $query_studentStatus = "SELECT StatusID,Status FROM studentstatus ORDER BY StatusID";
-$nm=mysql_query($query_studentStatus);
-while($show = mysql_fetch_array($nm) )
+$nm=mysqli_query($query_studentStatus);
+while($show = mysqli_fetch_array($nm) )
 {  										 
 echo"<option  value='$show[StatusID]'>$show[Status]</option>";      
       
@@ -1190,8 +1192,8 @@ if(isset($_POST['actionupdate']))
 		$currentaddaress=$_POST['currentaddaress'];
 
 $qRegNo = "SELECT RegNo FROM student WHERE RegNo = '$regno'";
-$dbRegNo = mysql_query($qRegNo);
-$total = mysql_num_rows($dbRegNo);
+$dbRegNo = mysqli_query($zalongwa, $qRegNo);
+$total = mysqli_num_rows($dbRegNo);
 if ($total>1) 
 {
 echo "ZALONGWA SARIS database system has detected that,<br> this Registration ". $regno. " is already in use";
@@ -1239,7 +1241,7 @@ else
 	Class='$class',
 	currentaddaress='$currentaddaress'
 	where Id='$stdid'";
-$dbstudent = mysql_query($sql) or die(mysql_error().' - mmeona wenyewe?');
+$dbstudent = mysqli_query($zalongwa, $sql) or die(mysqli_error($zalongwa).' - mmeona wenyewe?');
 if(!$dbstudent)
 {
 echo "Admision Record Cannot be Updated - ".$dbstudent;

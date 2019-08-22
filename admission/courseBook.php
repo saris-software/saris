@@ -34,21 +34,21 @@ function  titleCase($string)
 ##################################################################
 
 $pdf->startPageNums();
-$faculty=mysql_query("select * from faculty ORDER by FacultyName");
-while($f=mysql_fetch_array($faculty))
+$faculty=mysqli_query("select * from faculty ORDER by FacultyName", $zalongwa);
+while($f=mysqli_fetch_array($faculty))
 {
-$registered=mysql_query("select * from course,programme where programme.ProgrammeCode=course.Programme and programme.Faculty='$f[FacultyName]'")or die(mysql_error());
-$nms=mysql_num_rows($registered);
+$registered=mysqli_query("select * from course,programme where programme.ProgrammeCode=course.Programme and programme.Faculty='$f[FacultyName]'", $zalongwa)or die(mysqli_error($zalongwa));
+$nms=mysqli_num_rows($registered);
 if($nms>0)
 {
 $department=$f['FacultyName'];	
 $pdf->TOC_Entry($department, 0);
-$query=mysql_query("select * from programme where Faculty='$f[FacultyName]' ORDER by ProgrammeName");	
-while($r=mysql_fetch_array($query))
+$query=mysqli_query("select * from programme where Faculty='$f[FacultyName]' ORDER by ProgrammeName", $zalongwa);
+while($r=mysqli_fetch_array($query))
 {
 $Ename=$r['Title']." ".$r['ProgrammeName'];
-$darasa=mysql_query("select * from course where Programme='$r[ProgrammeCode]' ORDER by CourseName");
-$num=mysql_num_rows($darasa);
+$darasa=mysqli_query("select * from course where Programme='$r[ProgrammeCode]' ORDER by CourseName", $zalongwa);
+$num=mysqli_num_rows($darasa);
 if($num>0)
 {
 $Ename=strtoupper($Ename);
@@ -63,7 +63,7 @@ $Ename=titleCase($Ename);
 $pdf->SetFont('Times','',10);
 $pdf->TOC_Entry($Ename, 1);
 $k=1;
-while($c=mysql_fetch_array($darasa))
+while($c=mysqli_fetch_array($darasa))
 {
 $coname=$k.". ".$c['CourseName']." (".$c['CourseCode'].")";
 $pdf->Cell(0,5,$coname,0,1,'L');

@@ -54,7 +54,7 @@ if($count<=0)
 {
 echo "<table>
 <tr><td>
-<font color='red'>Choose Student please.</font>
+<span style=\"color: red; \">Choose Student please.</span>
 </td></tr>
 </table>";
 }
@@ -65,8 +65,8 @@ for($j=0;$j<$count;$j++)
 {
 #Fetch Records
 $sql = "SELECT * FROM student WHERE Id ='$Eq[$j]'"; 
-$update = mysql_query($sql) or die(mysql_error());
-$update_row = mysql_fetch_array($update)or die(mysql_error());
+$update = mysqli_query($zalongwa, $sql) or die(mysqli_error());
+$update_row = mysqli_fetch_array($update)or die(mysqli_error());
 	$regno = addslashes($update_row['RegNo']);
 	$stdid = addslashes($update_row['Id']);
 	$AdmissionNo = addslashes($update_row['AdmissionNo']);     
@@ -127,7 +127,9 @@ $ActUser=$_SESSION['username'];
 $Action="Deleted";
 //***********             
 #insert record
-$sql="INSERT INTO studentlog
+    /** @var disability $disability */
+    /** @var Subject $Subject */
+    $sql="INSERT INTO studentlog
 (Name,AdmissionNo,
 Sex,DBirth,
 MannerofEntry,MaritalStatus,
@@ -203,10 +205,10 @@ now(),
 '$ActUser'
 )";
 //echo $sql;
-$plg=mysql_query($sql)or die(mysql_error());
+$plg=mysqli_query($zalongwa, $sql)or die(mysqli_error());
 if($plg)
 {
-$delete=mysql_query("delete from student where Id='$Eq[$j]'");
+$delete=mysqli_query("delete from student where Id='$Eq[$j]'", $zalongwa);
 }else
 {
 
@@ -251,12 +253,12 @@ $pageNum=$_GET['page'];
 $offset=($pageNum-1)*$rowPerPage;
 $k=$offset+1;
 $query=$look." LIMIT $offset,$rowPerPage";
-$result=mysql_query($query) or die(mysql_error());
+$result=mysqli_query($zalongwa, $query) or die(mysqli_error($zalongwa));
 echo"<form action='$_SERVER[PHP_SELF]' method='POST' name='frm1'>";
-echo"<center>
+echo "<div style=\"text-align: center;\">
 <table width='950' cellspacing='0' cellpadding='0'>
 <tr><th>Select Students to Delete</th></tr></table>
-</center>";
+</div>";
 echo "<table cellspacing='0' border='1' width='950' cellpadding='0'>
 <tr bgcolor='#ccccf'>
 <th>sN</th>
@@ -266,7 +268,7 @@ echo "<table cellspacing='0' border='1' width='950' cellpadding='0'>
 <th>Select
 </th>
 </tr>";
-while($r=mysql_fetch_array($result))
+while($r=mysqli_fetch_array($result))
 {
 echo "<tr>
 <td>&nbsp;$k</td>
@@ -282,10 +284,10 @@ $k++;
 echo"</table>";
 
 
-$data=mysql_query($look);
-$numrows=mysql_num_rows($data);
-$result=mysql_query($data);
-$row=mysql_fetch_array($data);
+$data=mysqli_query($zalongwa, $look);
+$numrows=mysqli_num_rows($data);
+$result=mysqli_query($zalongwa, $data);
+$row=mysqli_fetch_array($data);
 
 
 $maxPage=ceil($numrows/$rowPerPage);
@@ -326,12 +328,12 @@ else
 $next='&nbsp;';
 $last='&nbsp;';
 }
-echo"<table>
+echo "<table>
 <tr>
 <td width='200'>&nbsp;&nbsp;&nbsp;&nbsp;$prev&nbsp;&nbsp;</td>
 <td width='200'>&nbsp;&nbsp;Page $nm of $maxPage&nbsp;&nbsp;</td>
 <td width='200'>&nbsp;&nbsp;$next&nbsp;&nbsp;</td>
-<td>&nbsp;&nbsp;&nbsp;<font color='#CCCCCC'></font></td>
+<td>&nbsp;&nbsp;&nbsp;<span style=\"color: #CCCCCC; \"></span></td>
 </tr></table></center>";
 //End of Pagination
 

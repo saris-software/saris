@@ -29,7 +29,7 @@ return false;
 if(isset($_POST['Remove']))
 {
 $stid=$_POST['stid'];
-$remove_log=mysqli_query("delete from studentlog where Id='$stid'", $zalongwa)or die(mysqli_error());
+$remove_log=mysqli_query("delete from studentlog where Id='$stid'")or die(mysqli_error($zalongwa));
 }
 if(isset($_POST['delete']))
 {

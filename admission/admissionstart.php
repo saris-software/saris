@@ -54,13 +54,13 @@ $sql = "SELECT student.Id, student.Name, student.Sex, student.ProgrammeofStudy, 
 FROM student
 WHERE (student.Name LIKE '%$key%') OR (student.RegNo LIKE '%$key%') ORDER BY student.Name";
 
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+$query = @mysqli_query($zalongwa, $sql) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($zalongwa, $query);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
+if (mysqli_num_rows($query) > 0){
 echo "<p>Total Records Found: $totalRows_query </p>";
 echo "<table border='1' cellpadding='0' cellspacing='0'>";
 echo "<tr>
@@ -76,7 +76,7 @@ echo "<tr>
 <th> Photo </th>
 </tr>";
 $i=1;
-while($result = mysql_fetch_array($query))
+while($result = mysqli_fetch_array($query))
  {
 		$id = stripslashes($result["Id"]);
 		$year = stripslashes($result["AYear"]);
@@ -92,8 +92,8 @@ while($result = mysql_fetch_array($query))
 		$citeria = stripslashes($result["RNumber"]);
 			//get degree name
 			$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-			$dbdegree = mysql_query($qdegree);
-			$row_degree = mysql_fetch_array($dbdegree);
+			$dbdegree = mysqli_query($zalongwa, $qdegree);
+			$row_degree = mysqli_fetch_array($dbdegree);
 			$programme = $row_degree['Title'];
 
 			echo "<tr><td><a href=\"admissionRegistrationForm.php?id=$id&RegNo=$RegNo\">$i</a></td>";
@@ -115,7 +115,7 @@ $key= stripslashes($key);
 echo "Sorry, No Records Found <br>";
 echo "That Match With Your Searck Key \"$key \" ";
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 
 }else{
 
