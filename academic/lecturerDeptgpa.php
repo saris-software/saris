@@ -10,33 +10,34 @@
 	global $szSection, $szSubSection;
 	$szSection = 'Examination';
 	$szSubSection = 'Annual GPA';
+
 	$szTitle = 'Annual GPA Report';
 	include('lecturerheader.php');
 $editFormAction = $_SERVER['PHP_SELF'];
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_studentlist = "SELECT RegNo, Name, ProgrammeofStudy FROM student ORDER BY ProgrammeofStudy  ASC";
-$studentlist = mysql_query($query_studentlist, $zalongwa) or die(mysql_error());
-$row_studentlist = mysql_fetch_assoc($studentlist);
-$totalRows_studentlist = mysql_num_rows($studentlist);
+$studentlist = mysqli_query($zalongwa,$query_studentlist) or die(mysqli_error($zalongwa));
+$row_studentlist = mysqli_fetch_assoc($studentlist);
+$totalRows_studentlist = mysqli_num_rows($studentlist);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_degree = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
-$degree = mysql_query($query_degree, $zalongwa) or die(mysql_error());
-$row_degree = mysql_fetch_assoc($degree);
-$totalRows_degree = mysql_num_rows($degree);
+$degree = mysqli_query($zalongwa,$query_degree) or die(mysqli_error($zalongwa));
+$row_degree = mysqli_fetch_assoc($degree);
+$totalRows_degree = mysqli_num_rows($degree);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$ayear = mysql_query($query_ayear, $zalongwa) or die(mysql_error());
-$row_ayear = mysql_fetch_assoc($ayear);
-$totalRows_ayear = mysql_num_rows($ayear);
+$ayear = mysqli_query($zalongwa,$query_ayear) or die(mysqli_error($zalongwa));
+$row_ayear = mysqli_fetch_assoc($ayear);
+$totalRows_ayear = mysqli_num_rows($ayear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_dept = "SELECT Faculty, DeptName FROM department ORDER BY DeptName, Faculty ASC";
-$dept = mysql_query($query_dept, $zalongwa) or die(mysql_error());
-$row_dept = mysql_fetch_assoc($dept);
-$totalRows_dept = mysql_num_rows($dept);
+$dept = mysqli_query($zalongwa,$query_dept) or die(mysqli_error($zalongwa));
+$row_dept = mysqli_fetch_assoc($dept);
+$totalRows_dept = mysqli_num_rows($dept);
 ?>
 <?php
 			
@@ -64,12 +65,12 @@ $prog=$_POST['degree'];
 $cohotyear = $_POST['cohot'];
 $ayear = $_POST['ayear'];
 $qprog= "SELECT ProgrammeCode, Title FROM programme WHERE ProgrammeCode='$prog'";
-$dbprog = mysql_query($qprog);
-$row_prog = mysql_fetch_array($dbprog);
+$dbprog = mysqli_query($zalongwa,$qprog);
+$row_prog = mysqli_fetch_array($dbprog);
 $progname = $row_prog['Title'];
 $qyear= "SELECT AYear FROM academicyear WHERE AYear='$cohotyear'";
-$dbyear = mysql_query($qyear);
-$row_year = mysql_fetch_array($dbyear);
+$dbyear = mysqli_query($zalongwa,$qyear);
+$row_year = mysqli_fetch_array($dbyear);
 $year = $row_year['AYear'];
 
 $deg=$_POST['degree'];
@@ -121,10 +122,10 @@ $cohot = $_POST['cohot'];
 $dept = $_POST['dept'];
 
 $qstudent = "SELECT Name, RegNo, ProgrammeofStudy FROM student WHERE (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot')";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$gpoints = 0;
@@ -141,9 +142,9 @@ $i=1;
 							  (course.Department = '$dept')
 						    )";
 			
-			$dbdept = mysql_query($qdept);
-			$dbdeptUnit = mysql_query($qdept);
-			$dbdeptGrade = mysql_query($qdept);
+			$dbdept = mysqli_query($zalongwa,$qdept);
+			$dbdeptUnit = mysqli_query($zalongwa,$qdept);
+			$dbdeptGrade = mysqli_query($zalongwa,$qdept);
 			
 			?>
 			<table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0">
@@ -152,7 +153,7 @@ $i=1;
 					  <?php echo $i.".0" ?>
 							<br>
 							<span class="style1">................................</span></td>
-							<?php while($rowdept = mysql_fetch_array($dbdept)) { ?>
+							<?php while($rowdept = mysqli_fetch_array($dbdept)) { ?>
 							<td colspan="4" nowrap scope="col"><?php echo $rowdept['DeptName']; ?></td> 
 							<?php } ?>
 							<td><div align="center">Total</div></td>
@@ -163,7 +164,7 @@ $i=1;
 				  </tr>
 				  <tr>
 							<td width="15"><?php echo $name; ?> </td>
-							<?php while($rowdeptUnit = mysql_fetch_array($dbdeptUnit)) { ?>
+							<?php while($rowdeptUnit = mysqli_fetch_array($dbdeptUnit)) { ?>
 							<td><div align="center">Units</div></td>
 							<td><div align="center">SGP</div></td>
 							<td><div align="center">GPA</div></td>
@@ -174,24 +175,24 @@ $i=1;
 							<td><div align="center">GPA</div></td>
 							<td><div align="center">Grade</div></td>
 							<td rowspan="2"><?php $qsupp = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'Fail')";
-								$dbsupp = mysql_query($qsupp);
-								$dbsupptotal = mysql_query($qsupp);
-								$total = mysql_num_rows($dbsupptotal);
+								$dbsupp = mysqli_query($zalongwa,$qsupp);
+								$dbsupptotal = mysqli_query$zalongwa,($qsupp);
+								$total = mysqli_num_rows($dbsupptotal);
 								if($total >0){
 								echo "Supp: ";
-								while($rowsupp = mysql_fetch_array($dbsupp)) {
+								while($rowsupp = mysqli_fetch_array($dbsupp)) {
 								echo $rowsupp['CourseCode'].", ";
 								} 
 								echo "\n";
 								echo "\n";
 								}//else{echo "PASS";}
 							?>					          <div align="left"><?php $qinc = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'I')";
-								$dbqinc = @mysql_query($qinc);
-								$dbinctotal = mysql_query($qinc);
-								$totalinc = mysql_num_rows($dbinctotal);
+								$dbqinc = @mysqli_query($zalongwa, $qinc);
+								$dbinctotal = mysqli_query($zalongwa, $qinc);
+								$totalinc = mysqli_num_rows($dbinctotal);
 								if($totalinc >0){
 								echo "SE: ";
-								while($rowinc = @mysql_fetch_array($dbqinc)) {
+								while($rowinc = @mysqli_fetch_array($dbqinc)) {
 								echo $rowinc['CourseCode'] .", ";
 								}
 								echo "\n";
@@ -201,7 +202,7 @@ $i=1;
 				  </tr>
         			<tr>
 					<td width="15"><?php echo $regno ?></td>
-					<?php while($rowdeptGrade = mysql_fetch_array($dbdeptGrade)) { 
+					<?php while($rowdeptGrade = mysqli_fetch_array($dbdeptGrade)) { 
 						$dept = $rowdeptGrade['DeptName'];
 						@$updateSQL = "SELECT 
 										   examresult.RegNo,
@@ -225,17 +226,17 @@ $i=1;
 											(checked=1) AND (Count=0) AND 
 											(course.Department = '$dept')
 										   )";
-           	$result = mysql_query($updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
-			$query = @mysql_query($updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+           	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" .  mysqli_error($zalongwa));
 							
-			if (mysql_num_rows($query) > 0){
+			if (mysqli_num_rows($query) > 0){
 					$totalunit=0;
 					$unittaken=0;
 					$sgp=0;
 					$totalsgp=0;
 					$gpa=0;	
 			
-				while($result = mysql_fetch_array($query)) {
+				while($result = mysqli_fetch_array($query)) {
 					$unit = $result['Units'];
 					$totalunit=$totalunit+$unit;
 					$ayear = $result['AYear'];
@@ -341,11 +342,11 @@ $dept = $_POST['dept'];
 
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE 
 (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot') ORDER BY Subject, Name ASC";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 //initialise S/No
 $i=1;
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$sex = $rowstudent['Sex'];
@@ -363,9 +364,9 @@ $i=1;
 							  (examresult.AYear = '$year')
 						    ) ORDER BY DeptName ASC";
 			
-			$dbdept = mysql_query($qdept);
-			$dbdeptUnit = mysql_query($qdept);
-			$dbdeptGrade = mysql_query($qdept);
+			$dbdept = mysqli_query($zalongwa,$qdept);
+			$dbdeptUnit = mysqli_query($zalongwa,$qdept);
+			$dbdeptGrade = mysqli_query($zalongwa,$qdept);
 			
 			?>
 			<table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0">
@@ -373,7 +374,7 @@ $i=1;
 				  <td width="20" rowspan="2" nowrap><?php echo $i ?></td>
 				  <td width="170" height="20" rowspan="2" nowrap><?php echo $name.": <br> ".$regno ?></td>
 				  <td width="13" rowspan="2" nowrap><div align="center"><?php echo $sex ?></div></td>
-				<?php while($rowdept = mysql_fetch_array($dbdept)) 
+				<?php while($rowdept = mysqli_fetch_array($dbdept)) 
 				{ ?>
 							<td colspan="4" nowrap scope="col"><?php echo substr($rowdept['DeptName'],0,8); ?>
 						    <div align="center"></div></td> 
@@ -385,7 +386,7 @@ $i=1;
 							<td width="100" nowrap>Remarks</td>
 			  </tr>
 				<tr>
-					<?php while($rowdeptGrade = mysql_fetch_array($dbdeptGrade)) { 
+					<?php while($rowdeptGrade = mysqli_fetch_array($dbdeptGrade)) { 
 						@$dept = $rowdeptGrade['DeptName'];
 						@$updateSQL = "SELECT 
 										   examresult.RegNo,
@@ -410,17 +411,17 @@ $i=1;
 											(course.Department = '$dept') 
 											
 										   )";
-									$result = mysql_query($updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
-									$query = @mysql_query($updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+									$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+									$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" .  mysqli_error($zalongwa));
 													
-									if (mysql_num_rows($query) > 0){
+									if (mysqli_num_rows($query) > 0){
 											$totalunit=0;
 											$unittaken=0;
 											$sgp=0;
 											$totalsgp=0;
 											$gpa=0;	
 									
-										while($result = mysql_fetch_array($query)) {
+										while($result = mysqli_fetch_array($query)) {
 											$unit = $result['Units'];
 											$totalunit=$totalunit+$unit;
 											$ayear = $result['AYear'];
@@ -526,33 +527,33 @@ $i=1;
 											}else{
 											//check if has existing course
 										$qcourse = "SELECT CourseCode from examresult WHERE (RegNo = '$regno') AND (AYear = '$year')";
-										$dbcourse = mysql_query($qcourse);
-										$totalcourse = mysql_num_rows($dbcourse);
+										$dbcourse = mysqli_query($zalongwa,$qcourse);
+										$totalcourse = mysqli_num_rows($dbcourse);
 										if($totalcourse == 0){
 										echo "DISCO";
 										}else{
 													$qsupp = "SELECT CourseCode FROM examresult 
 															  WHERE (RegNo = '$regno') AND (Remarks = 'Fail') AND (AYear = '$year')";
-													$dbsupp = mysql_query($qsupp);
-													$dbsupptotal = mysql_query($qsupp);
-													$total = mysql_num_rows($dbsupptotal);
+													$dbsupp = mysqli_query($zalongwa,$qsupp);
+													$dbsupptotal = mysqli_query($zalongwa,$qsupp);
+													$total = mysqli_num_rows($dbsupptotal);
 													if(intval($total) == 0){
 															echo "PASS";  
 																}else{
 																	   echo "Supp: ";
-																	   while($rowsupp = mysql_fetch_array($dbsupp)) {
+																	   while($rowsupp = mysqli_fetch_array($dbsupp)) {
 																	     echo $rowsupp['CourseCode'].", ";
 																		}
 															   }
 													?>					         
 													<?php $qinc = "SELECT CourseCode FROM examresult 
 															WHERE (RegNo = '$regno') AND (Remarks = 'I') AND (AYear = '$year')";
-															$dbqinc = @mysql_query($qinc);
-															$dbinctotal = mysql_query($qinc);
-															$totalinc = mysql_num_rows($dbinctotal);
+															$dbqinc = @mysqli_query($zalongwa, $qinc);
+															$dbinctotal = mysqli_query($zalongwa, $qinc);
+															$totalinc = mysqli_num_rows($dbinctotal);
 														if($totalinc >=1){
 														echo "SE: ";
-															while($rowinc = @mysql_fetch_array($dbqinc)) {
+															while($rowinc = @mysqli_fetch_array($dbqinc)) {
 															echo $rowinc['CourseCode'] .", ";
 													  }
 													}
@@ -573,10 +574,10 @@ $cohot = $_POST['cohot'];
 $dept = $_POST['dept'];
 
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot')";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$sex = $rowstudent['Sex'];
@@ -594,9 +595,9 @@ $i=1;
 							  (course.Department = '$dept')
 						    )";
 			
-			$dbdept = mysql_query($qdept);
-			$dbdeptUnit = mysql_query($qdept);
-			$dbdeptGrade = mysql_query($qdept);
+			$dbdept = mysqli_query($zalongwa,$qdept);
+			$dbdeptUnit = mysqli_query($zalongwa,$qdept);
+			$dbdeptGrade = mysqli_query($zalongwa,$qdept);
 			
 			?>
 			<table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0">
@@ -604,7 +605,7 @@ $i=1;
 				  <td width="20" rowspan="2" nowrap><?php echo $i ?></td>
 				  <td width="170" height="20" rowspan="2" nowrap><?php echo $name.": <br> ".$regno ?></td>
 				  <td width="13" rowspan="2" nowrap><div align="center"><?php echo $sex ?></div></td>
-				<?php while($rowdept = mysql_fetch_array($dbdept)) 
+				<?php while($rowdept = mysqli_fetch_array($dbdept)) 
 				{ ?>
 							<td colspan="4" nowrap scope="col"><?php echo substr($rowdept['DeptName'],0,8); ?>
 						    <div align="center"></div></td> 
@@ -616,7 +617,7 @@ $i=1;
 							<td width="100" nowrap>Remarks</td>
 			  </tr>
 				<tr>
-					<?php while($rowdeptGrade = mysql_fetch_array($dbdeptGrade)) { 
+					<?php while($rowdeptGrade = mysqli_fetch_array($dbdeptGrade)) { 
 						@$dept = $rowdeptGrade['DeptName'];
 						@$updateSQL = "SELECT 
 										   examresult.RegNo,
@@ -640,17 +641,17 @@ $i=1;
 											(course.Department = '$dept') 
 											
 										   )";
-									$result = mysql_query($updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
-									$query = @mysql_query($updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+									$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+									$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" .  mysqli_error($zalongwa));
 													
-									if (mysql_num_rows($query) > 0){
+									if (mysqli_num_rows($query) > 0){
 											$totalunit=0;
 											$unittaken=0;
 											$sgp=0;
 											$totalsgp=0;
 											$gpa=0;	
 									
-										while($result = mysql_fetch_array($query)) {
+										while($result = mysqli_fetch_array($query)) {
 											$unit = $result['Units'];
 											$totalunit=$totalunit+$unit;
 											$ayear = $result['AYear'];
@@ -748,12 +749,12 @@ $i=1;
 						      </div></td>
 					<td width="100" nowrap>
 						<?php $qsupp = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'Fail')";
-								$dbsupp = mysql_query($qsupp);
-								$dbsupptotal = mysql_query($qsupp);
-								$total = mysql_num_rows($dbsupptotal);
+								$dbsupp = mysqli_query($zalongwa,$qsupp);
+								$dbsupptotal = mysqli_query($zalongwa,$qsupp);
+								$total = mysqli_num_rows($dbsupptotal);
 								if($total >0){
 									echo "Supp: ";
-									while($rowsupp = mysql_fetch_array($dbsupp)) {
+									while($rowsupp = mysqli_fetch_array($dbsupp)) {
 									echo $rowsupp['CourseCode'].", ";
 									} 
 								//echo "\n";
@@ -766,12 +767,12 @@ $i=1;
 								}else {echo "DISCO.";}
 */
 							?>					         <?php $qinc = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'I')";
-								$dbqinc = @mysql_query($qinc);
-								$dbinctotal = mysql_query($qinc);
-								$totalinc = mysql_num_rows($dbinctotal);
+								$dbqinc = @mysqli_query($zalongwa, $qinc);
+								$dbinctotal = mysqli_query($zalongwa, $qinc);
+								$totalinc = mysqli_num_rows($dbinctotal);
 								if($totalinc >0){
 								echo "SE: ";
-								while($rowinc = @mysql_fetch_array($dbqinc)) {
+								while($rowinc = @mysqli_fetch_array($dbqinc)) {
 								echo $rowinc['CourseCode'] .", ";
 								}
 								//echo "\n";
@@ -791,10 +792,10 @@ $cohot = $_POST['cohot'];
 $dept = $_POST['dept'];
 
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot')";
-$dbstudent = mysql_query($qstudent);
-$totalstudent = mysql_num_rows($dbstudent);
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+$totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
-	while($rowstudent = mysql_fetch_array($dbstudent)) {
+	while($rowstudent = mysqli_fetch_array($dbstudent)) {
 			$name = $rowstudent['Name'];
 			$regno = $rowstudent['RegNo'];
 			$sex = $rowstudent['Sex'];
@@ -810,9 +811,9 @@ $i=1;
 						    ) 
 							ORDER BY AYear ASC";
 			
-			$dbdept = mysql_query($qdept);
-			$dbdeptUnit = mysql_query($qdept);
-			$dbdeptGrade = mysql_query($qdept);
+			$dbdept = mysqli_query($zalongwa,$qdept);
+			$dbdeptUnit = mysqli_query($zalongwa,$qdept);
+			$dbdeptGrade = mysqli_query($zalongwa,$qdept);
 			
 			?>
 			<table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0">
@@ -820,7 +821,7 @@ $i=1;
 				  <td width="20" rowspan="2" nowrap><?php echo $i ?></td>
 				  <td width="170" height="20" rowspan="2" nowrap><?php echo $name.": <br> ".$regno ?></td>
 				  <td width="13" rowspan="2" nowrap><div align="center"><?php echo $sex ?></div></td>
-				<?php while($rowdept = mysql_fetch_array($dbdept)) 
+				<?php while($rowdept = mysqli_fetch_array($dbdept)) 
 				{ ?>
 							<td colspan="4" nowrap scope="col"><?php echo substr($rowdept['AYear'],0,8); ?>
 						    <div align="center"></div></td> 
@@ -832,7 +833,7 @@ $i=1;
 							<td width="100" nowrap>Remarks</td>
 			  </tr>
 				<tr>
-					<?php while($rowdeptGrade = mysql_fetch_array($dbdeptGrade)) { 
+					<?php while($rowdeptGrade = mysqli_fetch_array($dbdeptGrade)) { 
 						@$dept = $rowdeptGrade['AYear'];
 						@$updateSQL = "SELECT 
 										   examresult.RegNo,
@@ -855,17 +856,17 @@ $i=1;
 											(examresult.AYear = '$dept')  AND
 											(checked=1) AND (Count=0) 											
 										   )";
-									$result = mysql_query($updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
-									$query = @mysql_query($updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+									$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
+									$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" .  mysqli_error($zalongwa));
 													
-									if (mysql_num_rows($query) > 0){
+									if (mysqli_num_rows($query) > 0){
 											$totalunit=0;
 											$unittaken=0;
 											$sgp=0;
 											$totalsgp=0;
 											$gpa=0;	
 									
-										while($result = mysql_fetch_array($query)) {
+										while($result = mysqli_fetch_array($query)) {
 											$unit = $result['Units'];
 											$totalunit=$totalunit+$unit;
 											$ayear = $result['AYear'];
@@ -963,12 +964,12 @@ $i=1;
 						      </div></td>
 					<td width="100" nowrap>
 						<?php $qsupp = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'Fail')";
-								$dbsupp = mysql_query($qsupp);
-								$dbsupptotal = mysql_query($qsupp);
-								$total = mysql_num_rows($dbsupptotal);
+								$dbsupp = mysqli_query($zalongwa,$qsupp);
+								$dbsupptotal = mysqli_query($zalongwa,$qsupp);
+								$total = mysqli_num_rows($dbsupptotal);
 								if($total >0){
 									echo "Supp: ";
-									while($rowsupp = mysql_fetch_array($dbsupp)) {
+									while($rowsupp = mysqli_fetch_array($dbsupp)) {
 									echo $rowsupp['CourseCode'].", ";
 									} 
 								//echo "\n";
@@ -981,12 +982,12 @@ $i=1;
 								}else {echo "DISCO.";}
 */
 							?>					         <?php $qinc = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'I')";
-								$dbqinc = @mysql_query($qinc);
-								$dbinctotal = mysql_query($qinc);
-								$totalinc = mysql_num_rows($dbinctotal);
+								$dbqinc = @mysqli_query($zalongwa, $qinc);
+								$dbinctotal = mysqli_query($zalongwa, $qinc);
+								$totalinc = mysqli_num_rows($dbinctotal);
 								if($totalinc >0){
 								echo "SE: ";
-								while($rowinc = @mysql_fetch_array($dbqinc)) {
+								while($rowinc = @mysqli_fetch_array($dbqinc)) {
 								echo $rowinc['CourseCode'] .", ";
 								}
 								//echo "\n";
@@ -1018,11 +1019,11 @@ do {
 ?>
                           <option value="<?php echo $row_degree['ProgrammeCode']?>"><?php echo $row_degree['ProgrammeName']?></option>
                           <?php
-} while ($row_degree = mysql_fetch_assoc($degree));
-  $rows = mysql_num_rows($degree);
+} while ($row_degree = mysqli_fetch_assoc($degree));
+  $rows = mysqli_num_rows($degree);
   if($rows > 0) {
-      mysql_data_seek($degree, 0);
-	  $row_degree = mysql_fetch_assoc($degree);
+      mysqli_data_seek($degree, 0);
+	  $row_degree = mysqli_fetch_assoc($degree);
   }
 ?>
                         </select>
@@ -1037,11 +1038,11 @@ do {
 ?>
                         <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
                         <?php
-} while ($row_ayear = mysql_fetch_assoc($ayear));
-  $rows = mysql_num_rows($ayear);
+} while ($row_ayear = mysqli_fetch_assoc($ayear));
+  $rows = mysqli_num_rows($ayear);
   if($rows > 0) {
-      mysql_data_seek($ayear, 0);
-	  $row_ayear = mysql_fetch_assoc($ayear);
+      mysqli_data_seek($ayear, 0);
+	  $row_ayear = mysqli_fetch_assoc($ayear);
   }
 ?>
                     </select>
@@ -1057,11 +1058,11 @@ do {
 ?>
                         <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
                         <?php
-} while ($row_ayear = mysql_fetch_assoc($ayear));
-  $rows = mysql_num_rows($ayear);
+} while ($row_ayear = mysqli_fetch_assoc($ayear));
+  $rows = mysqli_num_rows($ayear);
   if($rows > 0) {
-      mysql_data_seek($ayear, 0);
-	  $row_ayear = mysql_fetch_assoc($ayear);
+      mysqli_data_seek($ayear, 0);
+	  $row_ayear = mysqli_fetch_assoc($ayear);
   }
 ?>
                     </select>
@@ -1077,11 +1078,11 @@ do {
 ?>
                         <option value="<?php echo $row_dept['DeptName']?>"><?php echo $row_dept['DeptName']?></option>
                         <?php
-} while ($row_dept = mysql_fetch_assoc($dept));
-  $rows = mysql_num_rows($dept);
+} while ($row_dept = mysqli_fetch_assoc($dept));
+  $rows = mysqli_num_rows($dept);
   if($rows > 0) {
-      mysql_data_seek($dept, 0);
-	  $row_dept = mysql_fetch_assoc($dept);
+      mysqli_data_seek($dept, 0);
+	  $row_dept = mysqli_fetch_assoc($dept);
   }
 ?>
                     </select>
