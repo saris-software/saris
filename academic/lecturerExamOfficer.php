@@ -12,7 +12,7 @@ $startRow_ExamOfficerGradeBook = $pageNum_ExamOfficerGradeBook * $maxRows_ExamOf
 mysqli_select_db($zalongwa,$database_zalongwa);
 $query_ExamOfficerGradeBook = "SELECT CourseCode, AYear, SemesterID FROM examresult";
 $query_limit_ExamOfficerGradeBook = sprintf("%s LIMIT %d, %d", $query_ExamOfficerGradeBook, $startRow_ExamOfficerGradeBook, $maxRows_ExamOfficerGradeBook);
-$ExamOfficerGradeBook = mysqli_query($zalongwa,$query_limit_ExamOfficerGradeBook) or die(mysql_error());
+$ExamOfficerGradeBook = mysqli_query($zalongwa,$query_limit_ExamOfficerGradeBook) or die(mysqli_error($zalongwa));
 $row_ExamOfficerGradeBook = mysqli_fetch_assoc($ExamOfficerGradeBook);
 
 if (isset($_GET['totalRows_ExamOfficerGradeBook'])) {

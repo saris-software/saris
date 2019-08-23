@@ -46,7 +46,7 @@ if (($unittaken > 0) && ($totalinccount == 0)) {
             $pdf->line($xpoint + 25, $y, $xpoint + 25, $y + 15);
             $pdf->line($x + $cw + 170, $y, $x + $cw + 170, $y + 15);
             $ovavg = ($sem1avg + $sem2avg) / 2;
-            $ovgpa = ($sem1gpa + $sem2gpa) / 2;
+            $ovgpa = ($sem1gpa . $sem2gpa) / 2;
             if ($ovavg > 0) {
                 $pdf->text($x + $cw + 335 - $ovrw, $y + 12, number_format($ovgpa, 4, '.', ''));
             }

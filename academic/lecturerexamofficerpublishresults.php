@@ -34,7 +34,7 @@ $totalRows_sem = mysqli_num_rows($sem);
 //populate coursecode combo box
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_course = "SELECT CourseCode FROM course ORDER BY CourseCode ASC";
-$course = mysqli_query($zalongwa, $query_course) or die(mysqli_error());
+$course = mysqli_query($zalongwa, $query_course) or die(mysqli_error($zalongwa));
 $row_course = mysqli_fetch_assoc($course);
 $totalRows_course = mysqli_num_rows($course);
 

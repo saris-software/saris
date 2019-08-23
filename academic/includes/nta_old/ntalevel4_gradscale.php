@@ -1,6 +1,6 @@
 <?php
 #get raw results
-include 'getrawresult.php';
+include '../getrawresult.php';
 #grade marks
 if ($nullca == 1 and $test2score == 0) {
     $grade = 'I';

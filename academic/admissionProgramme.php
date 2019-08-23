@@ -10,6 +10,8 @@
 
     define ("DATAGRID_DIR", "../datagrid/");                              /* Ex.: "datagrid/" */ 
     define ("PEAR_DIR", "../datagrid/pear/");                    /* Ex.: "datagrid/pear/" */
+    include ('../datagrid/pear/DB.php');
+    require ('../datagrid/datagrid.class.php');
     
    require_once(DATAGRID_DIR.'datagrid.class.php');
     require_once(PEAR_DIR.'PEAR.php');
@@ -34,6 +36,8 @@
 ##  *** (example of PostgreSQL connection string)
 ##  *** $result_conn = $db_conn->connect(DB::parseDSN('pgsql://root:12345@localhost/mydatabase)); 
 ##  === (Examples of connections to other db types see in "docs/pear/" folder)
+
+
     $db_conn = DB::factory('mysql');  /* don't forget to change on appropriate db type */
     $result_conn = $db_conn->connect(DB::parseDSN('mysql://'.$DB_USER.':'.$DB_PASS.'@'.$DB_HOST.'/'.$DB_NAME));
     if(DB::isError($result_conn)){ die($result_conn->getDebugInfo()); }
@@ -44,6 +48,7 @@
   $debug_mode = false;        /* display SQL statements while processing */    
   $messaging = true;          /* display system messages on a screen */ 
   $unique_prefix = "prs_";    /* prevent overlays - must be started with a letter */
+
   $dgrid = new DataGrid($debug_mode, $messaging, $unique_prefix, DATAGRID_DIR);
 ##  *** set encoding and collation (default: utf8/utf8_unicode_ci)
 /// $dg_encoding = "utf8";

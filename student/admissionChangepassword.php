@@ -87,11 +87,11 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
         <!--
 
         function fmAdd_onsubmit() {
-            if (fmAdd.txtoldPWD.value == "" || fmAdd.txtnewPWD.value == "" || fmAdd.selectPosition.value == "" || fmAdd.txtrenewPWD.value == "") {
+            if (fmAdd.txtoldPWD.value === "" || fmAdd.txtnewPWD.value === "" || fmAdd.selectPosition.value === "" || fmAdd.txtrenewPWD.value === "") {
                 window.alert("OUT Student Information System Asks You to Fill in the Blank Text Fields");
                 return false;
             }
-            if (fmAdd.txtnewPWD.value != fmAdd.txtrenewPWD.value) {
+            if (fmAdd.txtnewPWD.value !== fmAdd.txtrenewPWD.value) {
                 window.alert("Password Texts donot Match, Enter them again, ZALONGWA");
                 return false;
             }
@@ -103,9 +103,9 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
         //form object
         //var fmAdd=document.forms(0);
         //Boolean to track if error found
-        var foundErr;
+        let foundErr;
         //Form element index number which the first error occured
-        var focusOn;
+        let focusOn;
 
         function check_form() {
             foundErr = false;
@@ -121,7 +121,7 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
             if (fmAdd.txtnewPWD.value.length < 5) {
                 alert("Birth Date too short! Birth Date must be at least 5 Charaters");
                 foundErr = true;
-                if (focusOn == -1) focusOn = 1;
+                if (focusOn === -1) focusOn = 1;
             }
 
             //Hass any error occured?
@@ -220,22 +220,21 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
                                                 <div align="right"></div>
                                             </TD>
                                             <TD VALIGN=TOP ALIGN=LEFT>
-                                                <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif"
-                                                                        size="2" color="#000000">
+                                                <div align="left"><span
+                                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
                                                         <?php echo $row_changepassword['RegNo']; ?>
-                                                    </font><font color="#0000CC"></font></div>
+                                                    </span><span style="color: #0000CC; "></span></div>
                                             </TD>
                                             <td></td>
                                         </TR>
                                         <TR>
                                             <TD colspan="2" VALIGN=MIDDLE rowspan="2" ALIGN=RIGHT nowrap>
-                                                <div align="right"><font color="#0000CC">POSITION:</font></div>
+                                                <div align="right"><span style="color: #0000CC; ">POSITION:</span></div>
                                             </TD>
                                             <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT>
-                                                <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif"
-                                                                        size="2"
-                                                                        color="#000000"><?php echo $row_changepassword['Position']; ?>
-                                                    </font></div>
+                                                <div align="left"><span
+                                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; "><?php echo $row_changepassword['Position']; ?>
+                                                    </span></div>
                                             </TD>
                                             <td height="9"></td>
                                         </TR>
@@ -247,16 +246,16 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
                                         </TR>
                                         <TR>
                                             <TD colspan="2" rowspan="2" ALIGN=RIGHT VALIGN=MIDDLE nowrap>
-                                                <div align="right"><font color="#0000CC">LOGIN (eg. jlungo for Juma
-                                                        Lungo): </font></div>
+                                                <div align="right"><span style="color: #0000CC; ">LOGIN (eg. jlungo for Juma
+                                                        Lungo): </span></div>
                                             </TD>
                                             <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT>
-                                                <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif"
-                                                                        size="2" color="#000000">
+                                                <div align="left"><span
+                                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
                                                         <?php echo $row_changepassword['UserName']; ?>
                                                         <input name="username" type="hidden" id="username"
                                                                value="<?php echo $row_changepassword['UserName']; ?>">
-                                                    </font></div>
+                                                    </span></div>
                                             </TD>
                                             <td height="9"></td>
                                         </TR>
@@ -274,11 +273,11 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
                                                 <div align="right"></div>
                                             </TD>
                                             <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT>
-                                                <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif"
-                                                                        size="2" color="#000000">
+                                                <div align="left"><span
+                                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
                                                         <input name="txtoldPWD" type="password" id="txtoldPWD"
                                                                size="30">
-                                                    </font></div>
+                                                    </span></div>
                                             </TD>
                                             <td></td>
                                         </TR>
@@ -299,11 +298,11 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
                                                 <div align="right"></div>
                                             </TD>
                                             <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT>
-                                                <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif"
-                                                                        size="2" color="#000000">
+                                                <div align="left"><span
+                                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">
                                                         <input name="txtnewPWD" type="password" id="txtnewPWD"
                                                                size="30">
-                                                    </font></div>
+                                                    </span></div>
                                             </TD>
                                             <td></td>
                                         </TR>
@@ -324,11 +323,11 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
                                                 <div align="right"><font color="#0000CC">Comfirm Password: </font></div>
                                             </TD>
                                             <TD VALIGN=MIDDLE rowspan="2" ALIGN=LEFT>
-                                                <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif"
-                                                                        size="2" color="#0000CC">
+                                                <div align="left"><span
+                                                            style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #0000CC; ">
                                                         <input name="txtrenewPWD" type="password" id="txtrenewPWD"
                                                                size="30">
-                                                    </font></div>
+                                                    </span></div>
                                             </TD>
                                             <td></td>
                                         </TR>
@@ -384,7 +383,7 @@ $totalRows_changepassword = mysqli_num_rows($changepassword);
                                 </TD>
                             </TR>
                         </TABLE>
-                        <font color="#FFE5B2"> ........... </font></div>
+                        <span style="color: #FFE5B2; "> ........... </span></div>
                 </TD>
                 <TD VALIGN=TOP ALIGN=LEFT BGCOLOR="#993300"></TD>
             </TR>

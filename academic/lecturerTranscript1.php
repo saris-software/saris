@@ -434,7 +434,7 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 							$pg=$pg+1;
 							$tpg =$pg;
 							#insert transcript content header
-							include 'includes/transciptheader';						}
+							include 'includes/transcriptheader.php';						}
 						
 	 }
 						#get annual units and Points
@@ -605,7 +605,7 @@ $key = preg_replace("[[:space:]]+", " ",$rawkey);
 
 //select student
 $qstudent = "SELECT * from student WHERE regno = '$key'";
-$dbstudent = mysqli_query($zalongwa,$qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error());
+$dbstudent = mysqli_query($zalongwa,$qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
 $row_result = mysqli_fetch_array($dbstudent);
 			$name = $row_result['Name'];
 			$regno = $row_result['regno'];
@@ -644,7 +644,7 @@ $currentyear = $rowayear->AYear;
 			#print name and degree
 			//select student
 				$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$RegNo'";
-				$dbstudent = mysqli_query($zalongwa,$qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error());
+				$dbstudent = mysqli_query($zalongwa,$qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
 				$row_result = mysqli_fetch_array($dbstudent);
 				$name = $row_result['Name'];
 				$regno = $row_result['RegNo'];

@@ -304,7 +304,7 @@ if (($sponsor=='0') and ($stream=='0') and ($status=='0') and ($cohort!='0') and
 		if (mysqli_num_rows($query_std) > 0)
 		{
 	
-				$pdf = &PDF::factory('p', 'a4');      // Set up the pdf object. 
+				$pdf = PDF::factory('p', 'a4');      // Set up the pdf object.
 				$pdf->open();                         // Start the document. 
 				$pdf->setCompression(true);           // Activate compression. 
 				$pdf->addPage();  

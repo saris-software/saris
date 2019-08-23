@@ -144,7 +144,7 @@
 				}
 				
 			//include pdf creator
-			include 'includes/print_pdf_annual_report.php';
+			include '../academic/includes/print_pdf_annual_report.php';
 			undergraduateReport($progname,$class,$faculty,$deg,$cohot,$year,$coursearray);
 			}
 		exit;
@@ -280,7 +280,7 @@
 				exit;
 				}
 			
-			include 'includes/print_excel_annual.php';							
+			include 'includes/print_excel_annual.php';
 			}
 		}
  

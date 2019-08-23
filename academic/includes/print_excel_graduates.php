@@ -31,7 +31,7 @@ error_reporting(E_ALL);
 date_default_timezone_set('Europe/London');
 
 /** PHPExcel */
-require_once '../Classes/PHPExcel.php';
+require_once '../../Classes/PHPExcel.php';
 
 $papersize = 'PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4';
 $fontstyle = 'Arial';

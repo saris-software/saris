@@ -38,7 +38,7 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 	}
 	$certarray = array();
 	#query list of basic certificate programs
-	$qcert = mysqli_query("SELECT programmecode FROM programme WHERE title LIKE '%certificate%'") or die(mysql_error());
+	$qcert = mysqli_query($zalongwa, "SELECT programmecode FROM programme WHERE title LIKE '%certificate%'") or die(mysqli_error($zalongwa));
 	$qcertnum = mysqli_num_rows($qcert);
 	while($row_cert = mysqli_fetch_assoc($qcert)){
 		$certarray[] = $row_cert['programmecode'];

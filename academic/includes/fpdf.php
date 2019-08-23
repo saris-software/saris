@@ -73,7 +73,7 @@ if (!class_exists('FPDF')) {
          *                               Public methods                                 *
          *                                                                              *
          *******************************************************************************/
-        function FPDF($orientation = 'P', $unit = 'mm', $format = 'A4')
+        function __construct($orientation = 'P', $unit = 'mm', $format = 'A4')
         {
             //Some checks
             $this->_dochecks();
@@ -889,7 +889,7 @@ if (!class_exists('FPDF')) {
             if (is_string($h))
                 $this->y += $this->lasth;
             else
-                $this->y += $h;
+                $this->y .= $h;
         }
 
         function GetX()

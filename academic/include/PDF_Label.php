@@ -80,7 +80,7 @@ class PDF_Label extends FPDF {
 			$Tformat = $this->_Avery_Labels[$format];
 		}
 
-		parent::FPDF('P', $unit, $Tformat['paper-size']);
+		parent::__construct('P', $unit, $Tformat['paper-size']);
 		$this->_Metric_Doc = $unit;
 		$this->_Set_Format($Tformat);
 		$this->SetFont('Arial');

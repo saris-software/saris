@@ -20,21 +20,21 @@ $currentPage = $_SERVER["PHP_SELF"];
 //populate academic year combo box
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_AYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error());
+$AYear = mysqli_query($zalongwa, $query_AYear) or die(mysqli_error($zalongwa));
 $row_AYear = mysqli_fetch_assoc($AYear);
 $totalRows_AYear = mysqli_num_rows($AYear);
 
 //populate semester combo box
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_sem = "SELECT Semester FROM terms ORDER BY Semester ASC";
-$sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error());
+$sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error($zalongwa));
 $row_sem = mysqli_fetch_assoc($sem);
 $totalRows_sem = mysqli_num_rows($sem);
 
 //populate coursecode combo box
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_course = "SELECT CourseCode FROM course ORDER BY CourseCode ASC";
-$course = mysqli_query($zalongwa, $query_course) or die(mysqli_error());
+$course = mysqli_query($zalongwa, $query_course) or die(mysqli_error($zalongwa));
 $row_course = mysqli_fetch_assoc($course);
 $totalRows_course = mysqli_num_rows($course);
 

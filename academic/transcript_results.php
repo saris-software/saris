@@ -310,7 +310,7 @@ $dbayear = mysqli_query($zalongwa,$qayear);
 							$pg=$pg+1;
 							$tpg =$pg;
 							#insert transcript content header
-							include 'includes/transciptheader';						}
+							include 'includes/transcriptheader.php';						}
 						
 	 } //ends while rowayear
 
