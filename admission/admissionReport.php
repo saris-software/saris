@@ -6,11 +6,11 @@ $ayear=$_POST['ayear'];
 $faculty=$_POST['faculty'];
 if($faculty=="all")
 {
-$db=mysqli_query("select * from faculty ORDER by FacultyName", $zalongwa);
+$db=mysqli_query("select * from faculty ORDER by FacultyName");
 $dept=strtoupper('ALL DEPARTMENTS');
 }else
 {
-$dp=mysqli_query("select * from faculty where FacultyID='$faculty'",$zalongwa);
+$dp=mysqli_query("select * from faculty where FacultyID='$faculty'");
 $d=mysqli_fetch_array($dp);
 $dept=strtoupper($d['FacultyName']);
 }
@@ -28,10 +28,10 @@ $pdf->AddPage();
 $pdf->startPageNums();
 if($faculty=="all")
 {
-$faculty=mysqli_query("select * from faculty ORDER by FacultyName", $zalongwa);
+$faculty=mysqli_query("select * from faculty ORDER by FacultyName");
 }else
 {
-$faculty=mysqli_query("select * from faculty  where FacultyID='$faculty' ORDER by FacultyName", $zalongwa);
+$faculty=mysqli_query("select * from faculty  where FacultyID='$faculty' ORDER by FacultyName");
 }
 ##################################################################
 function  titleCase($string) 
@@ -56,17 +56,17 @@ function  titleCase($string)
 ####################################################
 while($f=mysqli_fetch_array($faculty))
 {
-$registered=mysqli_query("select * from student,programme where programme.ProgrammeCode=student.ProgrammeofStudy  and programme.Faculty='$f[FacultyName]' and student.EntryYear='$ayear'", $zalongwa)or die(mysqli_error());
+$registered=mysqli_query("select * from student,programme where programme.ProgrammeCode=student.ProgrammeofStudy  and programme.Faculty='$f[FacultyName]' and student.EntryYear='$ayear'")or die(mysqli_error());
 $nms=mysqli_num_rows($registered);
 if($nms>0)
 {
 $department=strtoupper($f['FacultyName']);	
 $pdf->TOC_Entry($department, 0);
-$query=mysqli_query("select * from programme where Faculty='$f[FacultyName]' ORDER by ProgrammeName", $zalongwa);
+$query=mysqli_query("select * from programme where Faculty='$f[FacultyName]' ORDER by ProgrammeName");
 while($r=mysqli_fetch_array($query))
 {
 $Ename=$r['Title']." ".$r['ProgrammeName'];
-$darasa=mysqli_query("select * from student where ProgrammeofStudy='$r[ProgrammeCode]' and student.EntryYear='$ayear' and regno!='' ORDER by Name", $zalongwa);
+$darasa=mysqli_query("select * from student where ProgrammeofStudy='$r[ProgrammeCode]' and student.EntryYear='$ayear' and regno!='' ORDER by Name");
 $num=mysqli_num_rows($darasa);
 if($num>0)
 {

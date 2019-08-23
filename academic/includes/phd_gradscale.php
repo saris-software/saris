@@ -6,7 +6,7 @@ $remark = '';
 
 #query Coursework
 $qtest2 = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=4";
-$dbtest2 = mysql_query($qtest2);
+$dbtest2 = mysqli_query($zalongwa, $qtest2);
 $total_test2 = mysqli_num_rows($dbtest2);
 $row_test2 = mysqli_fetch_array($dbtest2);
 $value_test2score = $row_test2['ExamScore'];
@@ -19,7 +19,7 @@ if (($total_test2 > 0) && ($value_test2score <> '')) {
 
 #query Annual Exam
 $qae = "SELECT ExamCategory, Examdate, ExamScore, AYear FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=5";
-$dbae = mysql_query($qae);
+$dbae = mysqli_query($zalongwa, $qae);
 $total_ae = mysqli_num_rows($dbae);
 $row_ae = mysqli_fetch_array($dbae);
 $value_aescore = $row_ae['ExamScore'];
@@ -33,7 +33,7 @@ if (($total_ae > 0) && ($value_aescore <> '')) {
 
 #query Special Exam
 $qsp = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=7";
-$dbsp = mysql_query($qsp);
+$dbsp = mysqli_query($zalongwa, $qsp);
 $total_sp = mysqli_num_rows($dbsp);
 $row_sp = mysqli_fetch_array($dbsp);
 $value_spscore = $row_sp['ExamScore'];
@@ -48,7 +48,7 @@ if (($total_sp > 0) && ($value_spscore <> '')) {
 
 #query Supplimentatary Exam
 $qsup = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=6";
-$dbsup = mysql_query($qsup);
+$dbsup = mysqli_query($zalongwa, $qsup);
 $row_sup = mysqli_fetch_array($dbsup);
 $row_sup_total = mysqli_num_rows($dbsup);
 $supdate = $row_sup['ExamDate'];
@@ -62,7 +62,7 @@ if (($row_sup_total > 0) && ($supscore <> '')) {
 
 #query Project Exam
 $qpro = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=8";
-$dbpro = mysql_query($qpro);
+$dbpro = mysqli_query($zalongwa, $qpro);
 $row_pro = mysqli_fetch_array($dbpro);
 $row_pro_total = mysqli_num_rows($dbpro);
 $prodate = $row_pro['ExamDate'];
@@ -76,7 +76,7 @@ if (($row_pro_total > 0) && ($proscore <> '')) {
 
 #query Traching Practice Exam
 $qtp = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=9";
-$dbtp = mysql_query($qtp);
+$dbtp = mysqli_query($zalongwa, $qtp);
 $row_tp = mysqli_fetch_array($dbtp);
 $row_tp_total = mysqli_num_rows($dbtp);
 $tpdate = $row_tp['ExamDate'];
@@ -90,7 +90,7 @@ if (($row_tp_total > 0) && ($tpscore <> '')) {
 
 #query Practical Training Exam
 $qpt = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE CourseCode='$course' AND RegNo='$RegNo' AND ExamCategory=10";
-$dbpt = mysql_query($qpt);
+$dbpt = mysqli_query($zalongwa, $qpt);
 $row_pt = mysqli_fetch_array($dbpt);
 $row_pt_total = mysqli_num_rows($dbpt);
 $ptdate = $row_pt['ExamDate'];

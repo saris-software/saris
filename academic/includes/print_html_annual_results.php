@@ -734,10 +734,10 @@ $degree = $deg;
             <?php
             //get annual remark
             $annualptc = ($sem1ptc + $sem2ptc) / 2;
-            include '../academic/includes/sem1and2ovremark.php';
+            include 'sem1and2ovremark.php';
 
             //get gpa classification
-            include '../academic/includes/classification.php';
+            include 'classification.php';
             echo $classification;
             ?>
         </td>

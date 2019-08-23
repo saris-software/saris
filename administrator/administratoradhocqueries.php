@@ -41,7 +41,7 @@
               <td><label for="strSQL"></label><textarea name="strSQL" cols="95" rows="6" id="strSQL"></textarea></td>
               </tr>
             <tr>
-              <td><div text-align ="center">
+              <td><div style="text-align: center">
                 <input type="submit" name="Submit" value="Execute Query">
               </div></td>
               </tr>

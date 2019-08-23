@@ -36,7 +36,7 @@ if (("$hw1score1" != "$hw1score" && "$hw1score" <> "") || $hw1score > 40) {
 							Semester = '$course_sem',
 							Checked = '$course_published'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 1";
-        mysqli_select_db($database_zalongwa, $zalongwa);
+        mysqli_select_db($zalongwa, $database_zalongwa);
         $Result1 = mysqli_query($zalongwa,$updateSQL);
     } else {
         #insert
@@ -52,7 +52,7 @@ if (("$hw1score1" != "$hw1score" && "$hw1score" <> "") || $hw1score > 40) {
 							Checked = '$course_published',
 							ExamScore = '$hw1score'
 						";
-        mysqli_select_db($database_zalongwa, $zalongwa);
+        mysqli_select_db($zalongwa, $database_zalongwa);
         $Result1 = mysqli_query($zalongwa,$updateSQL);
     }
 }
@@ -73,7 +73,7 @@ if (("$hw2score1" != "$hw2score" && "$hw2score" <> "") || $hw2score > 40) {
 							Semester = '$course_sem', 
 							ExamScore = '$hw2score'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 2";
-        mysqli_select_db($database_zalongwa, $zalongwa);
+        mysqli_select_db($zalongwa, $database_zalongwa);
         $Result1 = mysqli_query($zalongwa,$updateSQL);
     } else {
         #insert
@@ -110,7 +110,7 @@ if (("$qz1score1" != "$qz1score" && "$qz1score" <> "") || $qz1score > 40) {
 							Semester = '$course_sem', 
 							ExamScore = '$qz1score'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 3";
-        mysqli_select_db($database_zalongwa, $zalongwa);
+        mysqli_select_db($zalongwa, $database_zalongwa);
         $Result1 = mysqli_query($zalongwa,$updateSQL);
     } else {
         #insert
@@ -126,7 +126,7 @@ if (("$qz1score1" != "$qz1score" && "$qz1score" <> "") || $qz1score > 40) {
 							Checked = '$course_published',
 							ExamScore = '$qz1score'
 						";
-        mysqli_select_db($database_zalongwa, $zalongwa);
+        mysqli_select_db($zalongwa, $database_zalongwa);
         $Result1 = mysqli_query($zalongwa,$updateSQL);
     }
 }
@@ -221,7 +221,7 @@ if (("$gascore1" != "$gascore" && "$gascore" <> "") || $gascore > 40) {
 							Semester = '$course_sem', 
 							ExamScore = '$gascore'
 						WHERE RegNo='$regno' AND CourseCode='$key' AND ExamCategory = 6";
-        mysqli_select_db($database_zalongwa, $zalongwa);
+        mysqli_select_db($zalongwa, $database_zalongwa);
         $Result1 = mysqli_query($zalongwa,$updateSQL);
     } else {
         #insert
@@ -237,7 +237,7 @@ if (("$gascore1" != "$gascore" && "$gascore" <> "") || $gascore > 40) {
 							Checked = '$course_published',
 							ExamScore = '$gascore'
 						";
-        mysqli_select_db($database_zalongwa, $zalongwa);
+        mysqli_select_db($zalongwa, $database_zalongwa);
         $Result1 = mysqli_query($zalongwa,$updateSQL);
     }
 }
@@ -275,7 +275,7 @@ if (("$supscore1" != "$supscore" && "$supscore" <> "") || $supscore > 100) {
 							Checked = '$course_published',
 							ExamScore = '$supscore'
 						";
-        mysqli_select_db($database_zalongwa, $zalongwa);
+        mysqli_select_db($zalongwa, $database_zalongwa);
         $Result1 = mysqli_query($zalongwa,$updateSQL);
     }
 }

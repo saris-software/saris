@@ -58,7 +58,7 @@ EOD;
 			//get user module
 			if($module == 3){
 				//check if the student has not cleared the fees
-				$chekdue = mysqli_query("SELECT * FROM studentremark WHERE RegNo='$key' AND Semester='$currentsemester' 
+				$chekdue = mysqli_query($zalongwa,"SELECT * FROM studentremark WHERE RegNo='$key' AND Semester='$currentsemester' 
 								AND AYear='$currentyear' AND Remark<>''");
 				$getdue = mysqli_num_rows($chekdue);
 				$row=mysqli_fetch_array($chekdue);
@@ -158,7 +158,7 @@ if($getdue != '0' && !empty($remarkDescription)){
 						$class = (fmod($sn,2) == '0')? "bgcolor='#ceceff'":"bgcolor='#ffffff'";
 						$sn=$sn+1;
 						$exam_ayear = $currentyear;						
-						include '../academic/includes/choose_studylevel.php';
+						include 'choose_studylevel.php';
 						
 						//display results
 						echo "<tr $class>

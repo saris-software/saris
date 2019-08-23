@@ -889,7 +889,7 @@ if (!class_exists('FPDF')) {
             if (is_string($h))
                 $this->y += $this->lasth;
             else
-                $this->y += $h;
+                $this->y .= $h;
         }
 
         function GetX()
