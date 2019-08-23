@@ -63,7 +63,7 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
 			}
 		}
 		#start pdf
-		include('includes/PDF.php');
+		include('include/PDF.php');
 		$pdf = &PDF::factory($layout, $paper);      
 		$pdf->open();                         
 		$pdf->setCompression(true);           
@@ -513,7 +513,7 @@ $i=1;
 						$RegNo = $key;
 						
 						#include grading scale
-						include 'includes/choose_studylevel.php';									
+						include '../academic/includes/choose_studylevel.php';
 				?>
 				
 				<td><div align="center"><?php echo $grade;?></div></td>
@@ -634,7 +634,7 @@ $i=1;
 							
 						$RegNo = $key;
 						#insert grading results
-						include 'includes/choose_studylevel.php';
+						include '../academic/includes/choose_studylevel.php';
 				?>
 				
 				<td><div align="center"><?php echo $grade;?></div></td>

@@ -2,7 +2,7 @@
 #get connected to the database and verfy current session
 require_once('../Connections/sessioncontrol.php');
 require_once('../Connections/zalongwa.php');
-include('includes/PDF.php');
+include('include/PDF.php');
 
 #start pdf
 if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF"))

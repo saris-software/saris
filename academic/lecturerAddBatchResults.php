@@ -4,14 +4,14 @@
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('admissionMenu.php');
-	
+	include('../admission/admissionMenu.php');
+
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Financial Reports';
 	$szSubSection = 'Rental Charges';
 	$szTitle = 'Accommodation Rental Charges';
-	include('admissionheader.php');
+	include('../admission/admissionheader.php');
 
 	#populate Payment Category Combo Box
 	$query_paytype = "SELECT Id, Description FROM paytype ORDER BY Id ASC";

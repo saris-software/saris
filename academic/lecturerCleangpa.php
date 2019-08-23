@@ -151,7 +151,7 @@ $currentyear = $rowayear->AYear;
 
 					$RegNo = $key;
 					#insert grading results
-					include 'includes/choose_studylevel.php';
+					include("choose_studylevel.php");
 				#display results
 				?>
 	<tr>
@@ -264,7 +264,7 @@ $currentyear = $rowayear->AYear;
 
 					$RegNo = $key;
 					#insert grading results
-					include 'includes/choose_studylevel.php';
+					include 'choose_studylevel.php';
 				#display results
 
 				?>
