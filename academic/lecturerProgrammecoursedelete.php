@@ -11,7 +11,7 @@ if ((isset($_GET['course'])) && ($_GET['major'] != "")) {
   $deleteSQL = "DELETE FROM courseprogramme WHERE  (ProgrammeID='$major') AND (CourseCode = '$key') AND (AYear = '$ayear')";
                     
   mysqli_select_db($zalongwa, $database_zalongwa);
-  $Result1 = mysqli_query($deleteSQL, $zalongwa);
+  $Result1 = mysqli_query($zalongwa, $deleteSQL);
 
   $deleteGoTo = "lecturerProgrammecourselist.php?edit=$major";
   if (isset($_SERVER['QUERY_STRING'])) {

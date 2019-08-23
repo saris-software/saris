@@ -30,7 +30,8 @@ $coursecodeFound = mysqli_num_rows($result);
 if ($coursecodeFound) {
 
 //    This mysql result function need to be modified
-          $coursefound   = mysql_result($result,0,'SubjectID');
+            $coursefound = mysqli_fetch_array($result['SubjectID']);
+         // $coursefound   = mysql_result($result,0,'SubjectID');
 			print " This Combination Code: '".$coursefound."' Do Exists!!"; 
 			exit;
 }
@@ -40,7 +41,8 @@ $namesql ="SELECT SubjectName
 $nameresult = mysqli_query($zalongwa, $namesql) or die("Tunasikitika Kuwa Hatuwezi Kukuhudumia Kwa Sasa.<br>");
 $coursenameFound = mysqli_num_rows($nameresult);
 if ($coursenameFound) {
-          $namefound   = mysql_result($nameresult,0,'SubjectName');
+            $namefound = mysqli_fetch_array($nameresult['SubjectName']);
+          //$namefound   = mysql_result($nameresult,0,'SubjectName');
 			print " This Subject Combination: '".$namefound."' Do Exists!!"; 
 			exit;
  }

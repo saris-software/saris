@@ -287,7 +287,7 @@ class DB
      * @access public
      */
     
-    function &factory($type, $options = false)
+    function  &factory($type, $options = false)
     {
         
         if (!is_array($options)) {

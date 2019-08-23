@@ -13,19 +13,19 @@ include('lecturerMenu.php');
 
 	#populate academic year Combo Box
 	$query_paytype = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-	$paytype = mysqli_query($zalongwa, $query_paytype) or die(mysqli_error());
+	$paytype = mysqli_query($zalongwa, $query_paytype) or die(mysqli_error($zalongwa));
 	$row_paytype = mysqli_fetch_assoc($paytype);
 	$totalRows_paytype = mysqli_num_rows($paytype);
 	
 	#populate semester Box
 	$query_semester = "SELECT Description FROM terms ORDER BY Semester ASC LIMIT 2";
-	$semester = mysqli_query($zalongwa, $query_semester) or die(mysqli_error());
+	$semester = mysqli_query($zalongwa, $query_semester) or die(mysqli_error($zalongwa));
 	$row_semester = mysqli_fetch_assoc($semester);
 	$totalRows_semester = mysqli_num_rows($semester);
 	
 	#populate course list combo box
 	$query_course = "SELECT Remark, Description FROM examremark ORDER BY Remark ASC";
-	$course = mysqli_query($zalongwa, $query_course) or die(mysqli_error());
+	$course = mysqli_query($zalongwa, $query_course) or die(mysqli_error($zalongwa));
 	$row_course = mysqli_fetch_assoc($course);
 	$totalRows_course = mysqli_num_rows($course);
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -208,7 +208,7 @@ $capacity = $row_capacity['Remark'];
 						   GetSQLValueString($_POST['course'], "text"));
 	
 	  mysqli_select_db($zalongwa, $database_zalongwa);
-	  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error());
+	  $Result1 = mysqli_query($zalongwa, $insertSQL) or die(mysqli_error($zalongwa));
 	  echo '<meta http-equiv = "refresh" content ="0; 
 							url = lecturerStudentRemarker.php">';
 	}else{
@@ -222,7 +222,7 @@ $key=trim($_POST["candidate"]);
 $query_candidate = "SELECT student.Name, student.RegNo
 						  FROM student 
 						  WHERE (student.RegNo ='$key')";
-$candidate = mysqli_query($query_candidate, $zalongwa) or die(mysqli_error());
+$candidate = mysqli_query($zalongwa, $query_candidate) or die(mysqli_error());
 $row_candidate = mysqli_fetch_assoc($candidate);
 $totalRows_candidate = mysqli_num_rows($candidate);
 

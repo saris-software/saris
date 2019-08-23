@@ -56,7 +56,7 @@ $dept = $_POST['dept'];
 											  (examresult.AYear = '$year')
 										   )";
            	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
-			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];
@@ -175,7 +175,7 @@ $dept = $_POST['dept'];
 											  (examresult.AYear = '$year')
 										   )";
            	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
-			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];
@@ -286,7 +286,7 @@ FROM examresult
    INNER JOIN student ON (examresult.RegNo = student.RegNo)
 				WHERE  student.ProgrammeofStudy = '$deg' AND examresult.RegNo = '$reg[$c]' ";
            	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
-			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];
@@ -397,7 +397,7 @@ FROM examresult
    INNER JOIN student ON (examresult.RegNo = student.RegNo)
 				WHERE  examresult.RegNo = '$reg[$c]' ";
            	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
-			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysql_error());
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
 			$row_result = mysqli_fetch_array($result);
 			$name = $row_result['Name'];
 			$degree = $row_result['ProgrammeofStudy'];

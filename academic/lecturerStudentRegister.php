@@ -13,19 +13,19 @@ include('lecturerMenu.php');
 
 	#populate academic year Combo Box
 	$query_paytype = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-	$paytype = mysqli_query( $zalongwa,$query_paytype) or die(mysqli_error());
+	$paytype = mysqli_query( $zalongwa,$query_paytype) or die(mysqli_error($zalongwa));
 	$row_paytype = mysqli_fetch_assoc($paytype);
 	$totalRows_paytype = mysqli_num_rows($paytype);
 	
 	#populate semester Box
 	$query_semester = "SELECT Description FROM terms ORDER BY Semester ASC";
-	$semester = mysqli_query($zalongwa,$query_semester) or die(mysqli_error());
+	$semester = mysqli_query($zalongwa,$query_semester) or die(mysqli_error($zalongwa));
 	$row_semester = mysqli_fetch_assoc($semester);
 	$totalRows_semester = mysqli_num_rows($semester);
 	
 	#populate course list combo box
 	$query_course = "SELECT CourseCode, CourseName FROM course ORDER BY CourseCode ASC";
-	$course = mysqli_query($zalongwa,$query_course) or die(mysqli_error());
+	$course = mysqli_query($zalongwa,$query_course) or die(mysqli_error($zalongwa));
 	$row_course = mysqli_fetch_assoc($course);
 	$totalRows_course = mysqli_num_rows($course);
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 

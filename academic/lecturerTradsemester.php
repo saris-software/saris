@@ -409,13 +409,13 @@ $totalRows_degree = mysqli_num_rows($degree);
 
 mysqli_select_db($zalongwa,$database_zalongwa);
 $query_ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$ayear = mysqli_query($zalongwa,$query_ayear) or die(mysqli_error());
+$ayear = mysqli_query($zalongwa,$query_ayear) or die(mysqli_error($zalongwa));
 $row_ayear = mysqli_fetch_assoc($ayear);
 $totalRows_ayear = mysqli_num_rows($ayear);
 
 mysqli_select_db($zalongwa,$database_zalongwa);
 $query_sem = "SELECT Semester FROM terms ORDER BY Semester";
-$sem = mysqli_query($query_sem, $zalongwa) or die(mysqli_error($zalongwa));
+$sem = mysqli_query($zalongwa, $query_sem) or die(mysqli_error($zalongwa));
 $row_sem = mysqli_fetch_assoc($sem);
 $totalRows_sem = mysqli_num_rows($sem);
 
@@ -509,7 +509,7 @@ $i=1;
 					<td width="20" rowspan="2" nowrap scope="col"><div align="left"></div> <?php echo $i ?></td>
 					<td width="160" rowspan="2" nowrap scope="col"><?php echo $name.": ".$regno; ?> </td>
 					<td width="13" rowspan="2" nowrap><div align="center"><?php echo $sex ?></div></td>
-							<?php while($rowcourse = mysql_fetch_array($dbcourse)) { ?>
+							<?php while($rowcourse = mysqli_fetch_array($dbcourse)) { ?>
 							<td><div align="center"><?php echo $rowcourse['CourseCode']; ?></div></td> 
 							<?php } ?>
 							<td><div align="center">Units</div></td>
@@ -630,7 +630,7 @@ $i=1;
 					<td width="20" rowspan="2" nowrap scope="col"><div align="left"></div> <?php echo $i ?></td>
 					<td width="160" rowspan="2" nowrap scope="col"><?php echo $name.": ".$regno; ?> </td>
 					<td width="13" rowspan="2" nowrap><div align="center"><?php echo $sex ?></div></td>
-							<?php while($rowcourse = mysql_fetch_array($dbcourse)) { ?>
+							<?php while($rowcourse = mysqli_fetch_array($dbcourse)) { ?>
 							<td><div align="center"><?php echo $rowcourse['CourseCode']; ?></div></td> 
 							<?php } ?>
 							<td><div align="center">Units</div></td>

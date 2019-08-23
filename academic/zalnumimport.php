@@ -142,11 +142,11 @@ if ($fileavailable==1){
 		  $exno = $exnum[0];
 		  $table = "examnumber_".$exno;
 		  
-		  $tabs = mysqli_query("CREATE TABLE IF NOT EXISTS $table 
+		  $tabs = mysqli_query($zalongwa, "CREATE TABLE IF NOT EXISTS $table 
 											(RegNo varchar(50) PRIMARY KEY, ExamNo varchar(50) UNIQUE KEY, 
 											EntryYear varchar(9),AYear varchar(9), Semester varchar(11))");
 											
-		  $usajili = mysqli_query("SELECT RegNo FROM $table WHERE AYear='2010/2011' AND Semester='Semester II' AND ExamNo='$arr[0]'");
+		  $usajili = mysqli_query($zalongwa, "SELECT RegNo FROM $table WHERE AYear='2010/2011' AND Semester='Semester II' AND ExamNo='$arr[0]'");
 		  $rows = mysqli_num_rows($usajili);
 		  
 		  if($rows != 0){

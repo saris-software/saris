@@ -211,7 +211,7 @@ if ($fileavailable==1){
 		//course work uploading
 		else*/
 		{
-		  $usajili = mysqli_query("SELECT * FROM student WHERE RegNo='$arr[0]'");
+		  $usajili = mysqli_query($zalongwa, "SELECT * FROM student WHERE RegNo='$arr[0]'");
 		  $rows = mysqli_num_rows($usajili);
 		  $register = mysqli_fetch_array($usajili);
 		  

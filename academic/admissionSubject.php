@@ -27,7 +27,8 @@ $sql ="SELECT course.CourseCode
 $result = mysqli_query($zalongwa, $sql);
 $coursecodeFound = mysqli_num_rows($result);
 if ($coursecodeFound) {
-          $coursefound   = mysql_result($result,0,'CourseCode');
+    $coursefound = mysqli_fetch_array($result['CourseCode']);
+          //$coursefound   = mysql_result($result,0,'CourseCode');
 			print " This Course Code: '".$coursefound."' Do Exists!!"; 
 			echo '<meta http-equiv = "refresh" content ="1; 
 				url = admissionSubject.php?new=1">';

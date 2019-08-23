@@ -1,4 +1,5 @@
 <?php
+	require ('../../Connections/zalongwa.php');
 	#query Supplementatary Exam
 	$qsup = "SELECT ExamCategory, Examdate, ExamScore FROM examresult WHERE RegNo='$key' AND ExamCategory=7 AND ExamScore>0";
 	$dbsup=mysqli_query($zalongwa,$qsup);

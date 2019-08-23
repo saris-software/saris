@@ -1,6 +1,7 @@
 <?php 
 #get connected to the database and verfy current session
 	require_once('../Connections/sessioncontrol.php');
+	require ('../Connections/zalongwa.php');
     # initialise globals
 	include('../academic/lecturerMenu.php');
 	
@@ -144,7 +145,7 @@ if ($fileavailable==1){
 		  $exno = $exnum[0];
 		  $table = "examnumber_".$exno;
 		  
-		  $usajili = mysqli_query("SELECT RegNo FROM $table WHERE AYear='$impayear' AND Semester='$impsem' AND ExamNo='$arr[0]'");
+		  $usajili = mysqli_query($zalongwa, "SELECT RegNo FROM $table WHERE AYear='$impayear' AND Semester='$impsem' AND ExamNo='$arr[0]'");
 		  echo $usajili; exit;
 		  $rows = mysqli_num_rows($usajili);
 		  $register = mysqli_fetch_array($usajili);
@@ -209,7 +210,7 @@ if ($fileavailable==1){
 			 
 		//course work uploading
 		else{
-		  $usajili = mysqli_query("SELECT * FROM student WHERE RegNo='$arr[0]'");
+		  $usajili = mysqli_query($zalongwa, "SELECT * FROM student WHERE RegNo='$arr[0]'");
 		  $rows = mysqli_num_rows($usajili);
 		  $register = mysqli_fetch_array($usajili);
 		  

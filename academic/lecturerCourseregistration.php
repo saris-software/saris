@@ -16,7 +16,7 @@ $editFormAction = $_SERVER['PHP_SELF'];
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_studentlist = "SELECT RegNo, Name, ProgrammeofStudy FROM student ORDER BY ProgrammeofStudy  ASC";
-$studentlist = mysqli_query($zalongwa, $query_studentlist) or die(mysql_error());
+$studentlist = mysqli_query($zalongwa, $query_studentlist) or die(mysqli_error($zalongwa));
 $row_studentlist = mysqli_fetch_assoc($studentlist);
 $totalRows_studentlist = mysqli_num_rows($studentlist);
 
@@ -200,7 +200,7 @@ $i=1;
 			
 			$dbdept = mysqli_query($zalongwa, $qdept);
 			$dbdeptUnit = mysqli_query($zalongwa, $qdept);
-			$dbdeptGrade = mysqli_query($qdept);
+			$dbdeptGrade = mysqli_query($zalongwa, $qdept);
 			
 			?>
 			<table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0">
@@ -253,7 +253,7 @@ $i=1;
 					<td width="20" nowrap scope="col"><div align="left"></div> <?php echo $i ?></td>
 					<td width="160" nowrap scope="col"><?php echo $name.": ".$regno; ?> </td>
 					<td width="13" nowrap><div align="center"><?php echo $sex ?></div></td>
-							<?php while($rowdept = mysql_fetch_array($dbdept)) { ?>
+							<?php while($rowdept = mysqli_fetch_array($dbdept)) { ?>
 							<td><div align="center"><?php echo $rowdept['CourseCode']; ?></div></td> 
 							<?php } ?>
 				  </tr>				

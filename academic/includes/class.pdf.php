@@ -26,7 +26,7 @@ if ($_SESSION['Language']=='zh_CN'){
 
 class Cpdf extends PDF_Language {
 	
-	function Cpdf($pageSize=array(0,0,612,792)) {
+	function __construct($pageSize=array(0,0,612,792)) {
 	
 		$this->PDF_Language( 'P', 'pt',array($pageSize[2]-$pageSize[0],$pageSize[3]-$pageSize[1]));
 		$this->setAutoPageBreak(0);

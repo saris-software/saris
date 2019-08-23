@@ -19,8 +19,8 @@ function RotatedImage($file,$x,$y,$w,$h,$angle)
 	$this->Rotate(0);
 }
 }
-require_once('../Connections/sessioncontrol.php');
-	require_once('../Connections/zalongwa.php');
+require_once('../../Connections/sessioncontrol.php');
+	require_once('../../Connections/zalongwa.php');
 
 $pdf=new PDF();
 $pdf->AddPage();
