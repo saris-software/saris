@@ -34,12 +34,12 @@ if (isset($_COOKIE['RegNo'])) {
   $colname_studentsuggestion = (get_magic_quotes_gpc()) ? $_COOKIE['RegNo'] : addslashes($_COOKIE['RegNo']);
 }
 
-mysqli_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_studentsuggestion = "SELECT id, received, fromid, toid, message,replied FROM suggestion 
 							WHERE toid = '$RegNo' or toid = '$username' or toid=2 ORDER BY received DESC";
 
 $query_limit_studentsuggestion = sprintf("%s LIMIT %d, %d", $query_studentsuggestion, $startRow_studentsuggestion, $maxRows_studentsuggestion);
-$studentsuggestion = mysqli_query($query_limit_studentsuggestion, $zalongwa) or die(mysqli_error());
+$studentsuggestion = mysqli_query($zalongwa,$query_limit_studentsuggestion) or die(mysqli_error());
 $row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion);
 
 
@@ -47,7 +47,7 @@ if (isset($_GET['totalRows_studentsuggestion'])) {
   $totalRows_studentsuggestion = $_GET['totalRows_studentsuggestion'];
 } 
 else {
-  $all_studentsuggestion = mysqli_query($query_studentsuggestion);
+  $all_studentsuggestion = mysqli_query($zalongwa,$query_studentsuggestion);
   $totalRows_studentsuggestion = mysqli_num_rows($all_studentsuggestion);
 }
 
@@ -90,7 +90,7 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
 
 								//select student
 								$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$from'";
-								$dbstudent = mysqli_query($qstudent) or die("This student has no results".  mysql_error()); 
+								$dbstudent = mysqli_query($zalongwa,$qstudent) or die("This student has no results".  mysql_error());
 
 								if($rows = mysqli_num_rows($dbstudent) != 0){
 									$row_result = mysqli_fetch_array($dbstudent);

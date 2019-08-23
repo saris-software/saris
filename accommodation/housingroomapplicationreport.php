@@ -175,18 +175,18 @@ $sql = "SELECT student.Name, roomapplication.RegNo, roomapplication.Hall, roomap
 FROM (student INNER JOIN roomapplication ON student.RegNo = roomapplication.RegNo) INNER JOIN criteria ON roomapplication.AllCriteria = criteria.CriteriaID
 WHERE (roomapplication.AppYear='$year') AND (criteria.ShortName = '$citeria') ORDER BY criteria.ShortName";
  }
-$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
-$query = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+$result = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
+$query = @mysqli_query($zalongwa,$sql) or die("Cannot query the database.<br>" . mysqli_error());
 
-$all_query = mysql_query($query);
-$totalRows_query = mysql_num_rows($query);
+$all_query = mysqli_query($zalongwa,$query);
+$totalRows_query = mysqli_num_rows($query);
 /* Printing Results in html */
-if (mysql_num_rows($query) > 0){
+if (mysqli_num_rows($query) > 0){
 echo "<p>Total Applications: $totalRows_query </p>";
 echo "<table border='1'>";
 echo "<tr><td> S/No </td><td> Name </td><td> RegNo </td><td> Allocation Criteria </td><td>Description</td></tr>";
 $i=1;
-while($result = mysql_fetch_array($query)) {
+while($result = mysqli_fetch_array($query)) {
 		$Name = stripslashes($result["Name"]);
 		$RegNo = stripslashes($result["RegNo"]);
 		$hall = stripslashes($result["Hall"]);
@@ -197,7 +197,7 @@ while($result = mysql_fetch_array($query)) {
 			echo "<td align=\"left\" valign=\"middle\">$citeria</td>";
 			echo "<td align=\"left\" valign=\"middle\">$hall</td></tr>";
 		$sql="UPDATE roomapplication SET Status = 1, Processed = now()";
-		$result = @mysql_query($sql) or die("Cannot query the database.<br>" . mysql_error());
+		$result = @mysqli_query($sql) or die("Cannot query the database.<br>" . mysqli_error());
 	$i=$i+1;
 	}
 echo "</table>";
@@ -205,7 +205,7 @@ echo "</table>";
 }else{
 echo "Sorry, No One has Applied for a Room in This Year <br>";
 }
-mysql_close($zalongwa);
+mysqli_close($zalongwa);
 ?>
 		  
           <div align="center"></div></td><td width="34" bgcolor="#99CCCC">&nbsp;</td>

@@ -269,5 +269,9 @@ if (isset($sponsor)) {
 		}
 	}
 }
+<<<<<<< HEAD
 	$query_std = @mysqli_query($zalongwa, $sql);
 ?>	
+=======
+	$query_std = @mysqli_query($zalongwa,$sql);
+>>>>>>> 405deaf205e94a03209d90942b67c69ccb9635b3

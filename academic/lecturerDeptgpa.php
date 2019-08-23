@@ -10,9 +10,31 @@
 	global $szSection, $szSubSection;
 	$szSection = 'Examination';
 	$szSubSection = 'Annual GPA';
+
 	$szTitle = 'Annual GPA Report';
 	include('lecturerheader.php');
 $editFormAction = $_SERVER['PHP_SELF'];
+mysqli_select_db($zalongwa,$database_zalongwa);
+$query_studentlist = "SELECT RegNo, Name, ProgrammeofStudy FROM student ORDER BY ProgrammeofStudy  ASC";
+$studentlist = mysqli_query($zalongwa,$query_studentlist) or die(mysqli_error($zalongwa));
+$row_studentlist = mysqli_fetch_assoc($studentlist);
+$totalRows_studentlist = mysqli_num_rows($studentlist);
+
+mysqli_select_db($zalongwa,$database_zalongwa);
+$query_degree = "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeName ASC";
+$degree = mysqli_query($zalongwa,$query_degree) or die(mysqli_error($zalongwa));
+$row_degree = mysqli_fetch_assoc($degree);
+$totalRows_degree = mysqli_num_rows($degree);
+
+mysqli_select_db($zalongwa,$database_zalongwa);
+$query_ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
+$ayear = mysqli_query($zalongwa,$query_ayear) or die(mysqli_error($zalongwa));
+$row_ayear = mysqli_fetch_assoc($ayear);
+$totalRows_ayear = mysqli_num_rows($ayear);
+
+mysqli_select_db($zalongwa,$database_zalongwa);
+$query_dept = "SELECT Faculty, DeptName FROM department ORDER BY DeptName, Faculty ASC";
+$dept = mysqli_query($zalongwa,$query_dept) or die(mysqli_error($zalongwa));
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_studentlist = "SELECT RegNo, Name, ProgrammeofStudy FROM student ORDER BY ProgrammeofStudy  ASC";
@@ -64,11 +86,18 @@ $prog=$_POST['degree'];
 $cohotyear = $_POST['cohot'];
 $ayear = $_POST['ayear'];
 $qprog= "SELECT ProgrammeCode, Title FROM programme WHERE ProgrammeCode='$prog'";
+$dbprog = mysqli_query($zalongwa,$qprog);
+$row_prog = mysqli_fetch_array($dbprog);
+$progname = $row_prog['Title'];
+$qyear= "SELECT AYear FROM academicyear WHERE AYear='$cohotyear'";
+$dbyear = mysqli_query($zalongwa,$qyear);
+
 $dbprog = mysqli_query($zalongwa, $qprog);
 $row_prog = mysqli_fetch_array($dbprog);
 $progname = $row_prog['Title'];
 $qyear= "SELECT AYear FROM academicyear WHERE AYear='$cohotyear'";
 $dbyear = mysqli_query($zalongwa, $qyear);
+
 $row_year = mysqli_fetch_array($dbyear);
 $year = $row_year['AYear'];
 
@@ -121,7 +150,11 @@ $cohot = $_POST['cohot'];
 $dept = $_POST['dept'];
 
 $qstudent = "SELECT Name, RegNo, ProgrammeofStudy FROM student WHERE (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot')";
+
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+
 $dbstudent = mysqli_query($zalongwa, $qstudent);
+
 $totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
 	while($rowstudent = mysqli_fetch_array($dbstudent)) {
@@ -141,9 +174,15 @@ $i=1;
 							  (course.Department = '$dept')
 						    )";
 			
+
+			$dbdept = mysqli_query($zalongwa,$qdept);
+			$dbdeptUnit = mysqli_query($zalongwa,$qdept);
+			$dbdeptGrade = mysqli_query($zalongwa,$qdept);
+
 			$dbdept = mysqli_query($zalongwa, $qdept);
 			$dbdeptUnit = mysqli_query($zalongwa, $qdept);
 			$dbdeptGrade = mysqli_query($zalongwa, $qdept);
+
 			
 			?>
 			<table style="width=100%; height=100%; border=1; cellpadding=0; cellspacing=0">
@@ -174,8 +213,13 @@ $i=1;
 							<td><div align="center">GPA</div></td>
 							<td><div align="center">Grade</div></td>
 							<td rowspan="2"><?php $qsupp = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'Fail')";
+
+								$dbsupp = mysqli_query($zalongwa,$qsupp);
+								$dbsupptotal = mysqli_query$zalongwa,($qsupp);
+
 								$dbsupp = mysqli_query($zalongwa, $qsupp);
 								$dbsupptotal = mysqli_query($zalongwa, $qsupp);
+
 								$total = mysqli_num_rows($dbsupptotal);
 								if($total >0){
 								echo "Supp: ";
@@ -225,8 +269,13 @@ $i=1;
 											(checked=1) AND (Count=0) AND 
 											(course.Department = '$dept')
 										   )";
+
+           	$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+			$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" .  mysqli_error($zalongwa));
+
            	$result = mysqli_query($zalongwa, $updateSQL) or die("Mwanafunzi huyu hana matokeo");
 			$query = @mysqli_query($zalongwa, $updateSQL) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+
 							
 			if (mysqli_num_rows($query) > 0){
 					$totalunit=0;
@@ -341,7 +390,11 @@ $dept = $_POST['dept'];
 
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE 
 (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot') ORDER BY Subject, Name ASC";
+
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+
 $dbstudent = mysqli_query($zalongwa, $qstudent);
+
 $totalstudent = mysqli_num_rows($dbstudent);
 //initialise S/No
 $i=1;
@@ -363,9 +416,15 @@ $i=1;
 							  (examresult.AYear = '$year')
 						    ) ORDER BY DeptName ASC";
 			
+
+			$dbdept = mysqli_query($zalongwa,$qdept);
+			$dbdeptUnit = mysqli_query($zalongwa,$qdept);
+			$dbdeptGrade = mysqli_query($zalongwa,$qdept);
+
 			$dbdept = mysqli_query($zalongwa, $qdept);
 			$dbdeptUnit = mysqli_query($zalongwa, $qdept);
 			$dbdeptGrade = mysqli_query($zalongwa, $qdept);
+
 			
 			?>
 			<table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0">
@@ -410,8 +469,13 @@ $i=1;
 											(course.Department = '$dept') 
 											
 										   )";
+
+									$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+									$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" .  mysqli_error($zalongwa));
+
 									$result = mysqli_query($zalongwa, $updateSQL) or die("Mwanafunzi huyu hana matokeo");
 									$query = @mysqli_query($zalongwa, $updateSQL) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+
 													
 									if (mysqli_num_rows($query) > 0){
 											$totalunit=0;
@@ -526,15 +590,24 @@ $i=1;
 											}else{
 											//check if has existing course
 										$qcourse = "SELECT CourseCode from examresult WHERE (RegNo = '$regno') AND (AYear = '$year')";
+
+										$dbcourse = mysqli_query($zalongwa,$qcourse);
+
 										$dbcourse = mysqli_query($zalongwa, $qcourse);
+
 										$totalcourse = mysqli_num_rows($dbcourse);
 										if($totalcourse == 0){
 										echo "DISCO";
 										}else{
 													$qsupp = "SELECT CourseCode FROM examresult 
 															  WHERE (RegNo = '$regno') AND (Remarks = 'Fail') AND (AYear = '$year')";
+
+													$dbsupp = mysqli_query($zalongwa,$qsupp);
+													$dbsupptotal = mysqli_query($zalongwa,$qsupp);
+
 													$dbsupp = mysqli_query($zalongwa, $qsupp);
 													$dbsupptotal = mysqli_query($zalongwa, $qsupp);
+
 													$total = mysqli_num_rows($dbsupptotal);
 													if(intval($total) == 0){
 															echo "PASS";  
@@ -573,7 +646,11 @@ $cohot = $_POST['cohot'];
 $dept = $_POST['dept'];
 
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot')";
+
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+
 $dbstudent = mysqli_query($zalongwa, $qstudent);
+
 $totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
 	while($rowstudent = mysqli_fetch_array($dbstudent)) {
@@ -594,9 +671,15 @@ $i=1;
 							  (course.Department = '$dept')
 						    )";
 			
+
+			$dbdept = mysqli_query($zalongwa,$qdept);
+			$dbdeptUnit = mysqli_query($zalongwa,$qdept);
+			$dbdeptGrade = mysqli_query($zalongwa,$qdept);
+
 			$dbdept = mysqli_query($zalongwa, $qdept);
 			$dbdeptUnit = mysqli_query($zalongwa, $qdept);
 			$dbdeptGrade = mysqli_query($zalongwa, $qdept);
+
 			
 			?>
 			<table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0">
@@ -640,8 +723,13 @@ $i=1;
 											(course.Department = '$dept') 
 											
 										   )";
+
+									$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo");
+									$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" .  mysqli_error($zalongwa));
+
 									$result = mysqli_query($zalongwa, $updateSQL) or die("Mwanafunzi huyu hana matokeo");
 									$query = @mysqli_query($zalongwa, $updateSQL) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+
 													
 									if (mysqli_num_rows($query) > 0){
 											$totalunit=0;
@@ -748,8 +836,13 @@ $i=1;
 						      </div></td>
 					<td width="100" nowrap>
 						<?php $qsupp = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'Fail')";
+
+								$dbsupp = mysqli_query($zalongwa,$qsupp);
+								$dbsupptotal = mysqli_query($zalongwa,$qsupp);
+
 								$dbsupp = mysqli_query($zalongwa, $qsupp);
 								$dbsupptotal = mysqli_query($zalongwa, $qsupp);
+
 								$total = mysqli_num_rows($dbsupptotal);
 								if($total >0){
 									echo "Supp: ";
@@ -791,7 +884,11 @@ $cohot = $_POST['cohot'];
 $dept = $_POST['dept'];
 
 $qstudent = "SELECT Name, RegNo, Sex, ProgrammeofStudy FROM student WHERE (ProgrammeofStudy = '$deg') AND (EntryYear = '$cohot')";
+
+$dbstudent = mysqli_query($zalongwa,$qstudent);
+
 $dbstudent = mysqli_query($zalongwa, $qstudent);
+
 $totalstudent = mysqli_num_rows($dbstudent);
 $i=1;
 	while($rowstudent = mysqli_fetch_array($dbstudent)) {
@@ -810,9 +907,15 @@ $i=1;
 						    ) 
 							ORDER BY AYear ASC";
 			
+
+			$dbdept = mysqli_query($zalongwa,$qdept);
+			$dbdeptUnit = mysqli_query($zalongwa,$qdept);
+			$dbdeptGrade = mysqli_query($zalongwa,$qdept);
+
 			$dbdept = mysqli_query($zalongwa, $qdept);
 			$dbdeptUnit = mysqli_query($zalongwa, $qdept);
 			$dbdeptGrade = mysqli_query($zalongwa, $qdept);
+
 			
 			?>
 			<table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0">
@@ -855,8 +958,13 @@ $i=1;
 											(examresult.AYear = '$dept')  AND
 											(checked=1) AND (Count=0) 											
 										   )";
+
+									$result = mysqli_query($zalongwa,$updateSQL) or die("Mwanafunzi huyu hana matokeo"); 
+									$query = @mysqli_query($zalongwa,$updateSQL) or die("Cannot query the database.<br>" .  mysqli_error($zalongwa));
+
 									$result = mysqli_query($zalongwa, $updateSQL) or die("Mwanafunzi huyu hana matokeo");
 									$query = @mysqli_query($zalongwa, $updateSQL) or die("Cannot query the database.<br>" . mysqli_error($zalongwa));
+
 													
 									if (mysqli_num_rows($query) > 0){
 											$totalunit=0;
@@ -963,8 +1071,13 @@ $i=1;
 						      </div></td>
 					<td width="100" nowrap>
 						<?php $qsupp = "SELECT CourseCode FROM examresult WHERE (RegNo = '$regno') AND (Remarks = 'Fail')";
+
+								$dbsupp = mysqli_query($zalongwa,$qsupp);
+								$dbsupptotal = mysqli_query($zalongwa,$qsupp);
+
 								$dbsupp = mysqli_query($zalongwa, $qsupp);
 								$dbsupptotal = mysqli_query($zalongwa, $qsupp);
+
 								$total = mysqli_num_rows($dbsupptotal);
 								if($total >0){
 									echo "Supp: ";

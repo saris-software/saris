@@ -40,7 +40,7 @@
 			//$sql = "show full processlist";
 			echo "<hr>";
 			echo "4.0 List of Databases:  ";
-				$db_list = mysqli_list_dbs($zalongwa);
+				$db_list = mysqli_list_db($zalongwa);
 				while ($row = mysqli_fetch_object($db_list)) {
     				echo $row->Database . ",\n";
 					}

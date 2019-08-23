@@ -36,17 +36,17 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$AcademicYear = mysql_query($query_AcademicYear, $zalongwa) or die(mysql_error());
-$row_AcademicYear = mysql_fetch_assoc($AcademicYear);
-$totalRows_AcademicYear = mysql_num_rows($AcademicYear);
+$AcademicYear = mysqli_query($zalongwa,$query_AcademicYear) or die(mysqli_error());
+$row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
+$totalRows_AcademicYear = mysqli_num_rows($AcademicYear);
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_Hostel = "SELECT HID, HName FROM hostel";
-$Hostel = mysql_query($query_Hostel, $zalongwa) or die(mysql_error());
-$row_Hostel = mysql_fetch_assoc($Hostel);
-$totalRows_Hostel = mysql_num_rows($Hostel);
+$Hostel = mysqli_query($zalongwa,$query_Hostel) or die(mysqli_error());
+$row_Hostel = mysqli_fetch_assoc($Hostel);
+$totalRows_Hostel = mysqli_num_rows($Hostel);
 
 
 if(!$username){
@@ -216,11 +216,11 @@ do {
 ?>
             <option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
             <?php
-} while ($row_AcademicYear = mysql_fetch_assoc($AcademicYear));
-  $rows = mysql_num_rows($AcademicYear);
+} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
+  $rows = mysqli_num_rows($AcademicYear);
   if($rows > 0) {
-      mysql_data_seek($AcademicYear, 0);
-	  $row_AcademicYear = mysql_fetch_assoc($AcademicYear);
+      mysqli_data_seek($AcademicYear, 0);
+	  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
   }
 ?>
           </select></td>
@@ -233,11 +233,11 @@ do {
 ?>
             <option value="<?php echo $row_Hostel['HName']?>"><?php echo $row_Hostel['HName']?></option>
               <?php
-} while ($row_Hostel = mysql_fetch_assoc($Hostel));
-  $rows = mysql_num_rows($Hostel);
+} while ($row_Hostel = mysqli_fetch_assoc($Hostel));
+  $rows = mysqli_num_rows($Hostel);
   if($rows > 0) {
-      mysql_data_seek($Hostel, 0);
-	  $row_Hostel = mysql_fetch_assoc($Hostel);
+      mysqli_data_seek($Hostel, 0);
+	  $row_Hostel = mysqli_fetch_assoc($Hostel);
   }
 ?>
           </select></td>
@@ -265,8 +265,8 @@ do {
 
 </html>
 <?php
-mysql_free_result($AcademicYear);
+mysqli_free_result($AcademicYear);
 
-mysql_free_result($Hostel);
+mysqli_free_result($Hostel);
 
 ?>

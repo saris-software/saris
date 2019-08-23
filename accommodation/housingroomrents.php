@@ -11,9 +11,9 @@ $year=addslashes($_POST["AYear"]);
 $query_cautionfeepaid = "SELECT student.Name, student.EntryYear, studentpayments.RegNo, studentpayments.Amount, 
 studentpayments.Receipt, studentpayments.Date FROM student INNER JOIN studentpayments ON 
 student.RegNo = studentpayments.RegNo WHERE student.EntryYear='$year' ORDER BY Name";
-$cautionfeepaid = mysql_query($query_cautionfeepaid, $zalongwa) or die(mysql_error());
-$row_cautionfeepaid = mysql_fetch_assoc($cautionfeepaid);
-$totalRows_cautionfeepaid = mysql_num_rows($cautionfeepaid);
+$cautionfeepaid = mysqli_query($zalongwa,$query_cautionfeepaid) or die(mysqli_error());
+$row_cautionfeepaid = mysqli_fetch_assoc($cautionfeepaid);
+$totalRows_cautionfeepaid = mysqli_num_rows($cautionfeepaid);
 }
 if (isset($_POST["candidate"])){
 @$key=$_POST["candidate"];
@@ -21,16 +21,16 @@ if (isset($_POST["candidate"])){
 studentpayments.Receipt, studentpayments.Date FROM student INNER JOIN studentpayments ON 
 student.RegNo = studentpayments.RegNo WHERE ((student.Name LIKE '%$key%') 
 OR (studentpayments.RegNo LIKE '%$key%')) ORDER BY Name";
-@$cautionfeepaid = mysql_query($query_cautionfeepaid, $zalongwa) or die(mysql_error());
-@$row_cautionfeepaid = mysql_fetch_assoc($cautionfeepaid);
-@$totalRows_cautionfeepaid = mysql_num_rows($cautionfeepaid);
+@$cautionfeepaid = mysqli_query($zalongwa,$query_cautionfeepaid) or die(mysqli_error());
+@$row_cautionfeepaid = mysqli_fetch_assoc($cautionfeepaid);
+@$totalRows_cautionfeepaid = mysqli_num_rows($cautionfeepaid);
 }
 
-mysql_select_db($database_zalongwa, $zalongwa);
+mysqli_select_db($database_zalongwa, $zalongwa);
 $query_Ayear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";
-$Ayear = mysql_query($query_Ayear, $zalongwa) or die(mysql_error());
-$row_Ayear = mysql_fetch_assoc($Ayear);
-$totalRows_Ayear = mysql_num_rows($Ayear);
+$Ayear = mysqli_query($zalongwa,$query_Ayear) or die(mysqli_error());
+$row_Ayear = mysqli_fetch_assoc($Ayear);
+$totalRows_Ayear = mysqli_num_rows($Ayear);
 
 if(!$auth_level){
 	echo ("Session Expired, <a href=\"ReLogin.php\"> Click Here<a> to Re-Login");
@@ -211,11 +211,11 @@ do {
 ?>
                     <option value="<?php echo $row_Ayear['AYear']?>"><?php echo $row_Ayear['AYear']?></option>
                     <?php
-} while ($row_Ayear = mysql_fetch_assoc($Ayear));
-  $rows = mysql_num_rows($Ayear);
+} while ($row_Ayear = mysqli_fetch_assoc($Ayear));
+  $rows = mysqli_num_rows($Ayear);
   if($rows > 0) {
-      mysql_data_seek($Ayear, 0);
-	  $row_Ayear = mysql_fetch_assoc($Ayear);
+      mysqli_data_seek($Ayear, 0);
+	  $row_Ayear = mysqli_fetch_assoc($Ayear);
   }
 ?>
                   </select>
@@ -253,7 +253,7 @@ do {
                 <td nowrap><?php echo $row_cautionfeepaid['Date']; ?></td>
               </tr>
               <?php $amount = $amount+$j;
-			  $i=$i+1;} while ($row_cautionfeepaid = mysql_fetch_assoc($cautionfeepaid)); ?>
+			  $i=$i+1;} while ($row_cautionfeepaid = mysqli_fetch_assoc($cautionfeepaid)); ?>
             </table>
             <?php } if (@$amount >0){ echo "Room Rents Grand Total:  $amount";}// Show if recordset not empty ?>
             <p>&nbsp;</p>
@@ -287,7 +287,7 @@ do {
 <?php
 @
 
-mysql_free_result($cautionfeepaid);
+mysqli_free_result($cautionfeepaid);
 
-mysql_free_result($Ayear);
+mysqli_free_result($Ayear);
 ?>
