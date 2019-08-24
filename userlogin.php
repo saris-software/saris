@@ -82,7 +82,7 @@ if (isset($_POST['textusername'])) {
             exit;
         }
     } else {
-        $_SESSION['loginerror'] = 'Sign in Failed, Try Again!';
+        //$_SESSION['loginerror'] = 'Sign in Failed, Try Again!';
         echo '<meta http-equiv = "refresh" content ="0; 
 		url = index.php">';
         exit;
