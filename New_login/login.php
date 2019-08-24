@@ -30,7 +30,7 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	<FORM action="../userlogin.php" method="post" onkeypress="return WebForm_FireDefaultButton(event, 'btnLogin')" id="idpform"
+	<FORM action="userlogin.php" method="post" onkeypress="return WebForm_FireDefaultButton(event, 'btnLogin')" id="idpform"
       name="idpform">
 
 	<div class="limiter">
