@@ -3,7 +3,7 @@
 //session_cache_limiter('nocache');
 	@$loginerror  = $_SESSION['loginerror'];
 	
-	require_once('Connections/newzalongwacon.php');
+	require_once('Connections/zalongwacon.php');
 	#Get Organisation Name
 
 	$qorg = "SELECT * FROM organisation";

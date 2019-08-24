@@ -18,6 +18,7 @@
 	$website = $row_org['website'];
 	$city = $row_org['city'];
 	
-	include 'loginform.php';
+	//include 'loginform.php';
+	include 'New_login/login.php';
 
 	?>
