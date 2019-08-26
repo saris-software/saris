@@ -224,7 +224,7 @@ if (fmAdd.txtLastName.value === "" || fmAdd.txtFirstName.value === "" || fmAdd.s
 							}
 							?>
 										 <TR>
-                            <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap <?php echo $missingLastname ? 'style=color: rgb(990000)':'';?>>
+                            <TD VERTICAL-ALIGN=MIDDLE TEXT-ALIGN=RIGHT colspan="4" height="28" nowrap <?php echo '$missingLastname' ? 'style=color: rgb(990000)':'';?>>
                                 <div text-align="right" class="large"><span style="color:#0000CC ">LAST NAME:</span></div></TD>
                             <TD colspan="2" TEXT-ALIGN=LEFT VERTICAL-ALIGN=MIDDLE><div text-align="left"><span
                                             style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; color: #000000; ">

@@ -18,10 +18,10 @@ $colname_studentsuggestion = "1";
 if (isset($_COOKIE['RegNo'])) {
   $colname_studentsuggestion = (get_magic_quotes_gpc()) ? $_COOKIE['RegNo'] : addslashes($_COOKIE['RegNo']);
 }
-mysqli_select_db($database_zalongwa);
+mysqli_select_db($zalongwa,$database_zalongwa);
 $query_studentsuggestion = "SELECT id, received, fromid, toid, message,replied FROM suggestion WHERE toid = 'admin' ORDER BY received DESC";
 $query_limit_studentsuggestion = sprintf("%s LIMIT %d, %d", $query_studentsuggestion, $startRow_studentsuggestion, $maxRows_studentsuggestion);
-$studentsuggestion = mysqli_query($query_limit_studentsuggestion, $zalongwa) or die(mysqli_error($zalongwa));
+$studentsuggestion = mysqli_query($zalongwa,$query_limit_studentsuggestion) or die(mysqli_error($zalongwa));
 $row_studentsuggestion = mysqli_fetch_assoc($studentsuggestion);
 
 if (isset($_GET['totalRows_studentsuggestion'])) {
@@ -68,16 +68,16 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
 						  $id=$row_studentsuggestion['id']; 
 								//select student
 								$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$from'";
-								$dbstudent = mysql_query($qstudent) or die("Mwanafunzi huyu hana matokeo".  mysql_error()); 
-								$row_result = mysql_fetch_array($dbstudent);
+								$dbstudent = mysqli_query($zalongwa,$qstudent) or die("Mwanafunzi huyu hana matokeo".  mysqli_error($zalongwa));
+								$row_result = mysqli_fetch_array($dbstudent);
 								$name = $row_result['Name'];
 								$regno = $row_result['RegNo'];
 								$degree = $row_result['ProgrammeofStudy'];
 								
 								//get degree name
 								$qdegree = "Select Title from programme where ProgrammeCode = '$degree'";
-								$dbdegree = mysql_query($qdegree);
-								$row_degree = mysql_fetch_array($dbdegree);
+								$dbdegree = mysqli_query($zalongwa,$qdegree);
+								$row_degree = mysqli_fetch_array($dbdegree);
 								$programme = $row_degree['Title'];
 								echo  "$name - $regno - $programme";	
 							//echo $row_studentsuggestion['fromid'];

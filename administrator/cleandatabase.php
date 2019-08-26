@@ -128,7 +128,7 @@ do {
 ?>
             <option value="<?php echo $row_AcademicYear['AYear']?>"><?php echo $row_AcademicYear['AYear']?></option>
             <?php
-} while ($row_AcademicYear = mysqli_fetch_assoc($zalongwa,$AcademicYear));
+} while ($row_AcademicYear = mysqli_fetch_assoc($AcademicYear));
   $rows = mysqli_num_rows($AcademicYear);
   if($rows > 0) {
       mysqli_data_seek($AcademicYear, 0);

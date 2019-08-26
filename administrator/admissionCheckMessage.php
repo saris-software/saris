@@ -88,7 +88,7 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
 						  $id=$row_studentsuggestion['id']; 
 								//select student
 								$qstudent = "SELECT Name, RegNo, ProgrammeofStudy from student WHERE RegNo = '$from'";
-								$dbstudent = mysqli_query($zalongwa,$qstudent) or die("This student has no results".  mysql_error());
+								$dbstudent = mysqli_query($zalongwa,$qstudent) or die("This student has no results".  mysqli_error($zalongwa));
 								
 								if($rows = mysqli_num_rows($dbstudent) != 0){
 									$row_result = mysqli_fetch_array($dbstudent);
