@@ -85,7 +85,7 @@ class PDF {
     function &factory($orientation = 'P', $format = 'A4')
     {
         /* Create the PDF object. */
-        $pdf = &new PDF();
+        $pdf = new PDF();
 
         /* Page format. */
         $format = strtolower($format);
