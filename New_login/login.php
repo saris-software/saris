@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-	<title>SARIS Software</title>
+	<title>Welcome to Mwalimu Nyerere Memorial Academy</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -37,7 +37,7 @@
 			<div class="wrap-login100 p-t-30 p-b-50">
 				<div class="login100-form validate-form p-b-30 p-t-0">
 					<span class="login100-form-title p-b-0">
-						<img src="New_login/images/logo.png" alt="">
+						 <img style="height: 100px; width: 100px;  " src="New_login/images/log.png" alt="">
 					</span>
                       <div align="center" class="style1 p-t-10" style="color:lightgray;" >SARIS LOGIN FORM</div>
                                         
