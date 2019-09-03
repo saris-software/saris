@@ -85,6 +85,30 @@
 				</ul>
 				</li>
 				
+<nav class="breadcrumb">
+
+<a class="breadcrumb-item" href="studentindex.php">Home</a>
+<a class="breadcrumb-item" href="javascript:history.back();">Back</a>
+<span class="breadcrumb-item active">Home</span>
+
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	<ul class="navbar-nav d-flex flex-row flex-nowrap ml-auto mr-sm-5 mr-md-5 mr-lg-0">
+	  
+	<a  href="admissionprofile.php"><img class="rounded-circle" width="40" 
+														   src="./images/profile.png"/>
+														
+		   <a href="admissionprofile.php"> Profile</a>
+
+														</a>
+			<a class="navbar-brand nav-link" href="../signout.php"><!--<img class="rounded-circle" width="40"
+																		 src="./img/user.svg"/>--> Logout</a>
+			<a class="navbar-brand nav-link" href="lecturerUserManual.php"> Help</a>
+		
+	</ul>
+
+</div>
+</nav>		
 			</ul>
 		</div><!-- /container -->
 		<script src="js/classie.js"></script>
