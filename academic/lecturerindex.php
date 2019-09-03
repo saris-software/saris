@@ -6,8 +6,8 @@ require_once('../Connections/zalongwa.php');
 
 
 # initialise globals
-include('lecturerMenu.php');
-include('lecturerheader.php');
+include('NewlecturerMenu.php');
+//include('lecturerMenu.php');
 
 
 	# include the header
@@ -15,7 +15,7 @@ include('lecturerheader.php');
 	$szSection = 'Profile';
 	$szSubSection = 'Profile';
 	$szTitle = 'Academic Module';
-	//include ('lecturerheader.php');
+//	include('lecturerheader.php');
 
 #Store Login History	
 $browser  =  $_SERVER["HTTP_USER_AGENT"];   
@@ -27,7 +27,7 @@ $result = mysqli_query($zalongwa, $sql) or die("Siwezi kuingiza data.<br>" . mys
 
 	
 ?>
-		Welcome to the Academic Module.<br>
+		Academic Module.<br>
 <br>
 <?php
 

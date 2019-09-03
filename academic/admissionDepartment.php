@@ -1,12 +1,14 @@
 <?php 
 require_once('../Connections/sessioncontrol.php');
 # include the header
-include('lecturerMenu.php');
+	include("admissionpolicy.php");
+
+//include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Policy Setup';
 	$szTitle = 'Department Information';
 	$szSubSection = 'Department';
-	include("lecturerheader.php");
+	//include("lecturerheader.php");
 ?>
 <?php
 $currentPage = $_SERVER["PHP_SELF"];

@@ -4,12 +4,14 @@
     require_once('../Connections/zalongwa.php');
 
 # include the header
-include('lecturerMenu.php');
+include('administration.php');
+
+// include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Administration';
 	$szTitle = 'Register Student Remarks';
 	$szSubSection = 'Student Remarks';
-	include("lecturerheader.php");
+	// include("lecturerheader.php");
 
 	#populate academic year Combo Box
 	$query_paytype = "SELECT AYear FROM academicyear ORDER BY AYear DESC";

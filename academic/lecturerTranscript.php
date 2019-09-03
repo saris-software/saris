@@ -495,14 +495,14 @@ $pdf->line(50, $ytitle+78, 50, $ytitle+90);
 require_once('../Connections/sessioncontrol.php');
 require_once('../Connections/zalongwa.php');
 # initialise globals
-require_once('lecturerMenu.php');
+require_once('examination.php');
 
 # include the header
 global $szSection, $szSubSection;
 $szSection = 'Examination';
 $szSubSection = 'Cand. Transcript';
 $szTitle = 'Transcript of Examination Results';
-require_once('lecturerheader.php');
+//require_once('lecturerheader.php');
 
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {

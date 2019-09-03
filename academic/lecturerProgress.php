@@ -321,14 +321,14 @@ if (isset($_POST['PrintPDF']) && ($_POST['PrintPDF'] == "Print PDF")) {
 require_once('../Connections/sessioncontrol.php');
 require_once('../Connections/zalongwa.php');
 # initialise globals
-include('lecturerMenu.php');
+include('examination.php');
 
 # include the header
 global $szSection, $szSubSection;
 $szSection = 'Examination';
 $szSubSection = 'Cand. Statement';
 $szTitle = 'Student\'s Statement of Examination Results';
-include('lecturerheader.php');
+//include('lecturerheader.php');
 
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_campus = "SELECT FacultyName FROM faculty WHERE FacultyID='$userFaculty' ORDER BY FacultyName ASC";

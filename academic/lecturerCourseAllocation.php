@@ -4,14 +4,17 @@
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
-	
+	// include('lecturerMenu.php');
+
+  include('administration.php');
+
+
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Administration';
 	$szSubSection = 'Course Allocation';
 	$szTitle = 'Lecturer Course Allocation';
-	include('lecturerheader.php');
+	// include('lecturerheader.php');
 ?>
 <?php
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 

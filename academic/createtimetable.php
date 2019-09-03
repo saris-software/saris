@@ -2,12 +2,15 @@
 require_once('../Connections/sessioncontrol.php');
 
 # include the header
-include('lecturerMenu.php');
+// include('lecturerMenu.php');
+
+include('timetable.php');
+
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Timetable';
 	$szTitle = 'Create timetable';
 	$szSubSection = 'Create Timetable';
-	include("lecturerheader.php");
+	// include("lecturerheader.php");
 ?>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="drag.js"></script>

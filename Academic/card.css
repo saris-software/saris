@@ -1,0 +1,144 @@
+body {
+    background-color: #eff0f1;
+}
+
+.card-block a {
+    color: #757575;
+    text-decoration: none;
+}
+.card-block  a:hover
+{
+    color:#424242;
+}
+
+.navbar-default {
+    width: 100%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.20);
+    -webkit-transition: .20s box-shadow;
+    transition: .20s box-shadow;
+    background-color: #b88cef;
+}
+
+.navbar-toggler {
+    cursor: pointer;
+    outline: 0;
+    padding-top: inherit;
+}
+
+
+/*  change navbar li colors, also active one but not disabled one */
+.navbar ul.navbar-nav li.nav-item a.nav-link {
+    color: #EEFF41;
+}
+/* change navbar-toggler inside lines color (stroke) */
+.navbar-light span.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='yellow' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    color: white;
+}
+/* change hamburger button border color */
+button.navbar-toggler.navbar-toggler-right {
+    border-color: yellow;
+
+}
+.navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover, .navbar-light .navbar-toggler:focus, .navbar-light .navbar-toggler:hover {
+    color: yellow;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+@media (max-width: 34em) {
+
+    .navbar {
+        padding-top: 5px;
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+
+    .navbar-toggler {
+        cursor: pointer;
+        outline: 0;
+        padding-top: inherit;
+    }
+
+    .nav-item {
+        padding-top: 30px;
+        padding-bottom: 0px;
+        margin-bottom: -3px;
+    }
+
+    .row {
+        margin: -7%;
+    }
+
+    .card {
+        margin: 2%;
+    }
+}
+@media (max-width: 48em) {
+    .card h5 {
+        font-size: 14px;
+    }
+}
+
+
+.card-header {
+
+    background-color: #263238;
+    color: white;
+    border-radius: 0px !important;
+    margin: 0px;
+}
+.card-header a {
+    color: #D0D0D0;
+
+}
+.card-header a:hover {
+    text-decoration: none !important;
+
+}
+.card-header a:active {
+     text-decoration: none !important;
+
+ }.card-header a:visited {
+     text-decoration: none !important;
+
+ }
+
+h3 {
+
+    font-size: medium;
+}
+
+
+footer {
+    bottom: 0;
+    width: 100%;
+    margin-top: 20px;
+    padding: 2px;
+    background-color: #324359;
+}
+
+footer p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: small;
+    margin: 0px;
+    color:#9E9E9E;
+
+}
+footer p a
+{
+    color: #E0E0E0;
+    text-decoration: none;
+}
+footer p a:hover
+{
+    color: #BDBDBD;
+    text-decoration: none;
+}
+
+.navbar .navbar-default .navbar-toggleable-md {
+    background-color: #b88cef;
+}

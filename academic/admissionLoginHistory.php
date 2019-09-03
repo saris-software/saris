@@ -2,13 +2,16 @@
 require_once('../Connections/sessioncontrol.php');
 require_once('../Connections/zalongwa.php');
 # include the header
-include('lecturerMenu.php');
+
+	include("security.php");
+
+//include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Security';
 	$szTitle = 'Security';
 	$szSubSection = 'Security';
 	//$additionalStyleSheet = './general.css';
-	include("lecturerheader.php");
+//	include("lecturerheader.php");
 //page content starts here
 
 @$username = $_SESSION['username'];

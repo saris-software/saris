@@ -3,15 +3,17 @@
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 	
-	# initialise globals
-	include('lecturerMenu.php');
+  # initialise globals
+  	include('help.php');
+
+	//include('lecturerMenu.php');
 	
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Help';
 	$szSubSection = 'User Manual';
 	$szTitle = 'Academic Module User Guide';
-	include('lecturerheader.php');
+	//include('lecturerheader.php');
 ?>
 <h1><a name="_Toc125001720">Module 1: Examination Module </a></h1>
 <p>NOTE: While this guide explain all menus, you may not see some menus because of your 'Access Privilege Level' (your rights given to the system). </p>

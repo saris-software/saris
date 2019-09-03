@@ -1,12 +1,15 @@
 <?php 
 require_once('../Connections/sessioncontrol.php');
 # include the header
-include('lecturerMenu.php');
+
+include("profile.php");
+
+//include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Profile';
 	$szTitle = 'User Profile';
 	$szSubSection = 'Policy Setup';
-	include("lecturerheader.php");
+//	include("lecturerheader.php");
 session_start();
 $privilege  = $_SESSION['privilege'];
 @$username = $_SESSION['username'];	

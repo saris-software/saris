@@ -1,12 +1,14 @@
 <?php require_once('../Connections/zalongwa.php'); 
 require_once('../Connections/sessioncontrol.php');
 # include the header
-include('lecturerMenu.php');
+include('policy.php');
+
+//include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Policy Setup';
 	$szTitle = 'Module Information';
 	$szSubSection = 'Module';
-	include("lecturerheader.php");
+	//include("lecturerheader.php");
 ?>
 <?php
 $currentPage = $_SERVER["PHP_SELF"];

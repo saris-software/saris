@@ -4,14 +4,14 @@
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
+	include('examination.php');
 	
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Examination';
 	$szSubSection = 'Grade Book';
 	$szTitle = 'Examination GradeBook';
-	include('lecturerheader.php');
+//	include('lecturerheader.php');
 
 #save user statistics
 $browser  = $_SERVER["HTTP_USER_AGENT"];   
@@ -144,7 +144,7 @@ $query_coursecode = "
 $coursecode = mysqli_query($zalongwa, $query_coursecode) or die(mysqli_error($zalongwa));
 
 ?>
- <fieldset>
+ <fieldset bgcolor="#999999">
 	<legend>Select Appropriate Entries</legend>
 	<?php 
 	echo $_POST['sem'].' - '.$_POST['ayear'];

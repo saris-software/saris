@@ -6,7 +6,8 @@
 
 	
 	# initialise globals
-	include('lecturerMenu.php');
+//	include('lecturerMenu.php');
+	include("communication.php");
 
 
 	# include the header
@@ -16,7 +17,7 @@
 	$szSubSection = 'Check Message';
 	$szTitle = 'Check Message';
 
-	include('lecturerheader.php');
+//	include('lecturerheader.php');
 
 
 $maxRows_studentsuggestion = 1;

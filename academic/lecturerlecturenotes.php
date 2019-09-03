@@ -1,12 +1,14 @@
 <?php 
 require_once('../Connections/sessioncontrol.php');
 # include the header
-include('lecturerMenu.php');
+include('e_learning.php');
+
+//include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'E-Learning';
 	$szTitle = 'Lecturer Notes and Assignments';
 	$szSubSection = '';
-	include("lecturerheader.php");
+//	include("lecturerheader.php");
 	
 
 $CourseCode = $_GET['CourseCode'];

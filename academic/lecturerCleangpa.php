@@ -4,14 +4,14 @@
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
+	include('examination.php');
 	
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Examination';
 	$szSubSection = 'Elective Courses';
 	$szTitle = 'Clean GPA by Removing Optional Courses';
-	include('lecturerheader.php');
+	//include('lecturerheader.php');
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
   $theValue = (!get_magic_quotes_gpc()) ? addslashes($theValue) : $theValue;

@@ -5,14 +5,14 @@
     include('includes/choose_studylevel.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
+	include('examination.php');
 	
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Examination';
 	$szSubSection = 'Search';
 	$szTitle = 'Examination Result';
-	include('lecturerheader.php');
+	//include('lecturerheader.php');
 
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {

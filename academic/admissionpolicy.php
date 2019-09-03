@@ -1,12 +1,12 @@
 <?php 
 require_once('../Connections/sessioncontrol.php');
 # include the header
-include('lecturerMenu.php');
+include('policy.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Policy Setup';
 	$szTitle = 'Policy Setup';
 	$szSubSection = 'Policy Setup';
-	include("lecturerheader.php");
+	//include("lecturerheader.php");
 	
 ?>
 <br>

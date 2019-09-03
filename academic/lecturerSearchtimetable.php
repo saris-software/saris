@@ -4,14 +4,16 @@
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
+	//include('lecturerMenu.php');
 	
+	include('timetable.php');
+
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Timetable';
 	$szSubSection = 'Find Allocated';
 	$szTitle = 'Lecturer Course Allocation';
-	include('lecturerheader.php');
+//	include('lecturerheader.php');
 ?>
 
 <?php

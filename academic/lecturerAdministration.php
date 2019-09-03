@@ -1,13 +1,16 @@
 <?php 
 require_once('../Connections/sessioncontrol.php');
 # include the header
-include('lecturerMenu.php');
+
+include('administration.php');
+
+//include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Administration';
 	$szTitle = 'Administration';
 	$szSubSection = '';
 	//$additionalStyleSheet = './general.css';
-	include("lecturerheader.php");
+//	include("lecturerheader.php");
 	
 ?>
 <br>

@@ -22,12 +22,14 @@
 			require_once('../Connections/sessioncontrol.php');
 			require_once('../Connections/zalongwa.php');
 			# include the header
-			include('lecturerMenu.php');		
-		
+			// include('lecturerMenu.php');		
+		  
+			include('administration.php');
+
 			$szSection = 'Administration';
 			$szTitle = 'Generate Examination Numbers';
 			$szSubSection = 'Exam Numbers';
-			include('lecturerheader.php');
+			// include('lecturerheader.php');
 			
 			
 			$prog = $_POST['prog'];
@@ -114,12 +116,14 @@
 		require_once('../Connections/sessioncontrol.php');
 		require_once('../Connections/zalongwa.php');
 		# include the header
-		include('lecturerMenu.php');		
+		//include('lecturerMenu.php');		
 		
+				include('administration.php');		
+
 		$szSection = 'Administration';
 		$szTitle = 'Generate Examination Numbers';
 		$szSubSection = 'Exam Numbers';
-		include('lecturerheader.php');
+		//include('lecturerheader.php');
 		
 		
 		$query_degree = mysqli_query($zalongwa, "SELECT ProgrammeCode, ProgrammeName FROM programme ORDER BY ProgrammeCode");

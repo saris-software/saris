@@ -102,12 +102,14 @@ $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 
 require_once('../Connections/sessioncontrol.php');
 # include the header
-include('lecturerMenu.php');
+include("admissionpolicy.php");
+
+//include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Policy Setup';
 	$szTitle = 'Faculty Information';
 	$szSubSection = 'Faculty';
-	include("lecturerheader.php");
+	//include("lecturerheader.php");
 	
 ?>
 <style type="text/css">

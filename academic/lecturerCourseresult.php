@@ -233,14 +233,14 @@ if (isset($_POST['PDF']) && ($_POST['PDF'] == "Print PDF")){
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
+	include('examination.php');
 	
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Examination';
 	$szSubSection = 'Course Result';
 	$szTitle = 'Course Record Sheet Examination Result';
-	include('lecturerheader.php');
+	//include('lecturerheader.php');
 	
 mysqli_select_db($zalongwa, $database_zalongwa);
 $query_AcademicYear = "SELECT AYear FROM academicyear ORDER BY AYear DESC";

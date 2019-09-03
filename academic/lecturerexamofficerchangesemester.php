@@ -4,14 +4,17 @@
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
+  
+  include('administration.php');
+
+  // include('lecturerMenu.php');
 	
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Administration';
 	$szSubSection = 'Change Semester';
 	$szTitle = 'Change Exam Semester';
-	include('lecturerheader.php');
+	// include('lecturerheader.php');
 ?>
 
 <?php

@@ -2,12 +2,15 @@
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 # include the header
-	include('lecturerMenu.php');
+
+include('administration.php');
+
+	// include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Administration';
 	$szTitle = 'Register Exam Markers';
 	$szSubSection = 'Exam Marker';
-	include('lecturerheader.php');
+	// include('lecturerheader.php');
 ?>
 <?php
 $currentPage = $_SERVER["PHP_SELF"];

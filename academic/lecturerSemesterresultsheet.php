@@ -277,14 +277,14 @@
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
+	include('examination.php');
 	
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Examination';
 	$szSubSection = 'Semester Results';
 	$szTitle = 'Printing Semester Examinations Results Report';
-	include('lecturerheader.php');
+//	include('lecturerheader.php');
 	$editFormAction = $_SERVER['PHP_SELF'];
 
 	mysqli_select_db($zalongwa, $database_zalongwa);

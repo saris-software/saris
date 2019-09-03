@@ -665,14 +665,14 @@ if(!is_null($status)){
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-	include('lecturerMenu.php');
+	include('administration.php');
 	
 	# include the header
 	global $szSection, $szSubSection;
 	$szSection = 'Administration';
 	$szSubSection = 'Class Lists';
 	$szTitle = 'Printing Class Lists';
-	include('lecturerheader.php');
+	//include('lecturerheader.php');
 
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
