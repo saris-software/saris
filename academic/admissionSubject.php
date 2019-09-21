@@ -176,57 +176,82 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_inst = sprintf("&totalRows_inst=%d%s", $totalRows_inst, $queryString_inst);
  
 ?>
-<style type="text/css">
-<!--
-.style1 {color: #000000}
-.style2 {color: #FFFFFF}
--->
-</style>
 
-
-<p><?php echo "<a href=\"admissionSubject.php?new=1\">"?>Add New Module </p>
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 <?php @$new=$_GET['new'];
 echo "</a>";
 if (@$new<>1){
 ?>
-<form name="form1" method="get" action="admissionSubject.php">
+
+<div class="container">
+<button style="float:right"><?php echo "<a href=\"admissionSubject.php?new=1\">"?>Add New Module </a>
+</button>
+
+  <h2>Modules</h2>
+  
+<form style="float:right" name="form1" method="get" action="admissionSubject.php">
               Search by Module Code
               <input name="course" type="text" id="course" maxlength="50">
               <input type="submit" name="Submit" value="Search">
 </form>
-	   
-<table border="1" cellpadding="0" cellspacing="0">
-  <tr>
-	<td><strong>Course</strong></td>
-	<td><strong>Description</strong></td>
-	<td><strong>Credits</strong></td>
-	<td><strong>SemesterOffered</strong></td>
-	<?php if ($privilege==2){  ?>
-	<td><strong>Delete</strong></td>
-	<?php }  ?>
-  </tr>
+  <p>Verify Your Information</p>            
+ <table class="table table-striped">
+ 
+ <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Course</th>
+        <th>Description</th>
+        <th>Credits</th>
+        <th>SemesterOffered</th>
+        <?php if ($privilege==2){  ?>
+       <th>Delete</th>
+       <?php }  ?>
+      </tr>
+    </thead>
+
+
   <?php do { ?>
 
   <tr><?php $id = $row_inst['Id'];?>
-      <td nowrap><?php $name = $row_inst['CourseCode']; echo "<a href=\"admissionSubject.php?edit=$id\">$name</a>"?></td>
+      <td nowrap><?php $name = $row_inst['CourseCode']; echo "$name"?></td>
 	  <td nowrap><?php echo $row_inst['CourseName'] ?></td>
 	  <td><?php echo $row_inst['Units']; ?></td>
 	  <td><?php echo $row_inst['YearOffered']; ?></td>
 	  <?php if ($privilege==2){  ?>
-	  <td nowrap><?php echo "<a href=\"lecturerCoursedelete.php?id=$id&code=$name\">Delete</a>"?></td>
+	  <td nowrap><button  type="submit" name="delete"  class="btn btn-default"><?php echo "<a href=\"lecturerCoursedelete.php?id=$id&code=$name\">Delete</a>"?></button></td>
 	  <?php } ?>
+ <td><button  type="submit" name="edit"  class="btn btn-default"><?php echo "<a href=\"admissionSubject.php?edit=$id\">Edit</a>"?></button><td>
+
   </tr>
   <?php } while ($row_inst = mysqli_fetch_assoc($inst)); ?>
 </table>
-<a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a><span class="style1"><span class="style2">......</span><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> <span class="style1"></span><span class="style2">..........</span></span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
-    			
+<button>
+<a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a>
+</button>
+<span class="style1"><span class="style2">......</span><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> <span class="style1"></span><span class="style2">..........</span></span>
+<button>
+<a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
+    	</button>		
 <?php }else{?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmInst" id="frmInst">
-  <table width="200" border="1" cellpadding="0" cellspacing="0" bordercolor="#006600">
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><div align="right">Programme:</div></th>
-<td><select name="cmbprog" id="cmbprog" title="<?php echo $row_prog['ProgrammeCode']; ?>">
-  <?php
+
+
+<div class="container">
+
+      <h2>Add new Module</h2>
+  <div class="form-group">
+      <label for="institution">Programme:</label>
+      <select class="form-control" id="cmbprog" name="cmbprog" title="="<?php echo $row_prog['ProgrammeCode']; ?>">
+     <?php
 do {  
 ?>
   <option value="<?php echo $row_prog['ProgrammeCode']?>"><?php echo $row_prog['Title']?></option>
@@ -238,12 +263,13 @@ do {
 	  $row_prog = mysqli_fetch_assoc($prog);
   }
 ?>
-      </select></td>
-    </tr>
- <tr bgcolor="#CCCCCC">
-      <th scope="row"><div align="right">Faculty:</div></th>
-<td><select name="cmbInst" id="cmbInst" title="<?php echo $row_campus['FacultyID']; ?>">
-  <?php
+      </select>
+ </div>
+    
+     <div class="form-group">
+      <label for="institution">Faculty:</label>
+      <select class="form-control" id="cmbInst" name="cmbInst" title="<?php echo $row_campus['FacultyName']?>">
+       <?php
 do {  
 ?>
   <option value="<?php echo $row_campus['FacultyID']?>"><?php echo $row_campus['FacultyName']?></option>
@@ -255,11 +281,13 @@ do {
 	  $row_campus = mysqli_fetch_assoc($campus);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><div align="right">Department:</div></th>
-      <td><select name="cmbFac" id="cmbFac" title="<?php echo $row_faculty['DeptName']; ?>">
+ 
+</select>
+    </div>
+     
+<div class="form-group">
+      <label for="address">Department:</label>
+      <select class="form-control" id="cmbFac" name="cmbFac" title="<?php echo $row_campus['FacultyName']?>">
         <?php
 do {  
 ?>
@@ -272,26 +300,36 @@ do {
 	  $row_faculty = mysqli_fetch_assoc($faculty);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Course Code:</div></th>
-      <td><input name="txtCode" type="text" id="txtCode" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Course Title:</div></th>
-      <td><input name="txtTitle" type="text" id="txtTitle" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Units:</div></th>
-      <td nowrap><input name="txtUnit" type="text" id="txtUnit" size="6">
-      <b>Capacity:</b>
-      <input name="txtCapacity" type="text" id="txtCapacity" size="10">
-	  </td>
-    </tr>
-	<tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Exam Regulation:</div></th>
-      <td><select name="cmbLevel" id="cmbLevel" title="<?php echo $row_studylevel['Code']; ?>">
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+<div class="form-inline">
+      <label for="head">Course Code:</label>
+        <input type="text" class="form-control" id="txtCode" placeholder="Enter Course Code" name="txtCode">
+
+   
+
+      <label for="address">Course Title:</label>
+        <input type="text" class="form-control" id="txtTitle" placeholder="Enter course title" name="txtTitle">
+ <label  for="Physical address">Unit:</label>
+
+        <input maxwidth="300" type="text" class="form-control" id="txtUnit" placeholder="Enter course unit" name="txtUnit">
+
+    
+      <label for="telephone">Capacity:</label>
+
+        <input type="text" class="form-control" id="txtCapacity" placeholder="Enter Course Capacity" name="txtCapacity">
+
+    </div>
+    </div><br>
+      
+
+    <div class="form-group" style="text-align:center">
+<div class="form-inline">
+      <label  for="Physical address">Exam Regulation:</label>
+
+       <select class="form-control" name="cmbLevel" id="cmbLevel" title="<?php echo $row_studylevel['Code']; ?>">
         <?php
 do {  
 ?>
@@ -304,11 +342,10 @@ do {
 	  $row_studylevel = mysqli_fetch_assoc($studylevel);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><div align="right">Semester:</div></th>
-      <td><select name="cmbSem" id="cmbSem" title="<?php echo $row_semester['Semester']; ?>">
+      </select>
+     <div class="form-group">
+      <label for="telephone">Semester:</label>
+<select class="form-control" name="cmbSem" id="cmbSem" title="<?php echo $row_semester['Semester']; ?>">
         <?php
 do {  
 ?>
@@ -321,17 +358,25 @@ do {
 	  $row_semester = mysqli_fetch_assoc($semester);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row">&nbsp;</th>
-      <td><div align="center">
-        <input type="submit" name="Submit" value="Add Record">
-      </div></td>
-    </tr>
-  </table>
+      </select>     
+    </div>
+    </div><br>
+    <br>
+        <div style="background:lightgray" class="form-group">        
+      <div style="text-align:center" class="col-sm-offset-2 col-sm-10">
+        <button  type="submit" name="Submit" >Add Record</button>
+      </div>
+    </div>
+     
+    
     <input type="hidden" name="MM_insert" value="frmInst">
+
+</div>
 </form>
+
+</div>
+
+
 <?php } 
 if (isset($_GET['edit'])){
 #get post variables
@@ -361,9 +406,15 @@ $queryString_inst = sprintf("&totalRows_inst=%d%s", $totalRows_inst, $queryStrin
 
 ?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmInstEdit" id="frmInstEdit">
- <table width="200" border="1" cellpadding="0" cellspacing="0" bordercolor="#006600">
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><div align="right">Programme:</div></th>
+
+
+
+<div class="container">
+
+      <h2>Edit Module</h2>
+  <div class="form-group">
+
+      <label for="institution">Programme:</label>
 <?php
 #get programme title
 $progcode = $row_instEdit['Programme'];
@@ -372,12 +423,14 @@ $dbprogtitle = mysqli_query($zalongwa, $qprogtitle);
 $row_progtitle = mysqli_fetch_assoc($dbprogtitle);
 $progtitle = $row_progtitle['Title'];
 ?>
-<td><select name="cmbprog" id="cmbprog" title="<?php echo $row_prog['ProgrammeCode']; ?>">
+
+      <select class="form-control" id="cmbprog" name="cmbprog" title="="<?php echo $row_prog['ProgrammeCode']; ?>">
 <option value="<?php echo $row_instEdit['Programme']?>"><?php echo $progtitle ?></option>
   <?php
 do {  
 ?>
 <option value="<?php echo $row_prog['ProgrammeCode']?>"><?php echo $row_prog['Title']?></option>
+
   <?php
 } while ($row_prog = mysqli_fetch_assoc($prog));
   $rows = mysqli_num_rows($prog);
@@ -386,10 +439,11 @@ do {
 	  $row_prog = mysqli_fetch_assoc($prog);
   }
 ?>
-      </select></td>
-    </tr>
-<tr bgcolor="#CCCCCC">
-      <th scope="row"><div align="right">Faculty:</div></th>
+      </select>
+       </div>
+    
+     <div class="form-group">
+      <label for="institution">Faculty:</label>
 <?php
 #get faculty name
 $facultyid = $row_instEdit['Faculty'];
@@ -398,7 +452,8 @@ $dbfacultytitle = mysqli_query($zalongwa, $qfacultytitle);
 $row_facultytitle = mysqli_fetch_assoc($dbfacultytitle);
 $facultytitle = $row_facultytitle['FacultyName'];
 ?>
-<td><select name="cmbInst" id="cmbInst" title="<?php echo $row_campus['FacultyID']; ?>">
+
+      <select class="form-control" id="cmbInst" name="cmbInst" title="<?php echo $row_campus['FacultyName']?>">
 <option value="<?php echo $row_instEdit['Faculty']?>"><?php echo $facultytitle?></option>
   <?php
 do {  
@@ -412,11 +467,14 @@ do {
 	  $row_campus = mysqli_fetch_assoc($campus);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><div align="right">Department:</div></th>
-      <td><select name="cmbFac" id="cmbFac" title="<?php echo $row_faculty['DeptName']; ?>">
+      </select>
+          </div>
+
+
+
+<div class="form-group">
+      <label for="address">Department:</label>
+    <select class="form-control" name="cmbFac" id="cmbFac" title="<?php echo $row_faculty['DeptName']; ?>">
 	  <option value="<?php echo $row_instEdit['Department']?>"><?php echo $row_instEdit['Department']?></option>
         <?php
 do {  
@@ -430,26 +488,40 @@ do {
 	  $row_faculty = mysqli_fetch_assoc($faculty);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Course Code:</div></th>
-      <td><?php echo $row_instEdit['CourseCode']; ?></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Course Title:</div></th>
-      <td><input name="txtTitle" type="text" id="txtTitle" value="<?php echo $row_instEdit['CourseName']; ?>" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Units:</div></th>
-      <td><input name="txtUnit" type="text" id="txtUnit" value="<?php echo $row_instEdit['Units']; ?>" size="6">
-      <b>Capacity:</b>
-	  <input name="txtCapacity" type="text" id="txtCapacity" value="<?php echo $row_instEdit['Capacity']; ?>"size="10">
-</td>
-    </tr>
-	<tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Exam Regulation:</div></th>
-		<?php
+      </select>
+          </div>
+    <br>
+    
+    
+    <div class="form-group">
+<div class="form-inline">
+      <label for="head">Course Code:</label>
+        <input type="text" class="form-control" id="txtCode" value="<?php echo $row_instEdit['CourseCode']; ?>"  name="txtCode">
+ &nbsp;&nbsp;&nbsp;&nbsp;
+   
+
+      <label for="address">Course Title:</label>
+        <input type="text" class="form-control" id="txtTitle" value="<?php echo $row_instEdit['CourseName']; ?>" name="txtTitle">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+
+ 
+ <label  for="Physical address">Unit:</label>
+        <input maxwidth="300" type="text" class="form-control" id="txtUnit" value="<?php echo $row_instEdit['Units']; ?>" name="txtUnit">
+ &nbsp;&nbsp;&nbsp;&nbsp;
+
+     <label for="telephone">Capacity:</label>
+        <input type="text" class="form-control" id="txtCapacity" value="<?php echo $row_instEdit['Capacity']; ?>" name="txtCapacity">
+
+    
+ 
+    </div>
+    </div><br>
+
+    <div class="form-group" style="text-align:center">
+<div class="form-inline">
+
+      <label  for="Physical address">Exam Regulation:</label>
+<?php
 		#get programme title
 		$studycode = $row_instEdit['StudyLevel'];
 		$qstudytitle = "SELECT StudyLevel FROM programmelevel WHERE Code = '$studycode'";
@@ -457,8 +529,8 @@ do {
 		$row_studytitle = mysqli_fetch_assoc($dbstudytitle);
 		$studytitle = $row_studytitle['StudyLevel'];
 		?>
-      <td><select name="cmbLevel" id="cmbLevel" title="<?php echo $row_studylevel['StudyLevel']; ?>">
-	  <option value="<?php echo $row_instEdit['StudyLevel']?>"><?php echo $studytitle?></option>
+       <select class="form-control" name="cmbLevel" id="cmbLevel" title="<?php echo $row_studylevel['Code']; ?>">
+        <option value="<?php echo $row_instEdit['StudyLevel']?>"><?php echo $studytitle?></option>
         <?php
 do {  
 ?>
@@ -471,13 +543,14 @@ do {
 	  $row_studylevel = mysqli_fetch_assoc($studylevel);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><div align="right">Semester:</div></th>
-      <td>
-	  <select name="cmbSem" id="cmbSem" title="<?php echo $row_semester['Semester']; ?>">
-	  <option value="<?php echo $row_instEdit['YearOffered'];?>"><?php echo $row_instEdit['YearOffered'];?></option>
+      </select>
+      
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <div class="form-group">
+      <label for="telephone">Semester:</label>
+<select class="form-control" name="cmbSem" id="cmbSem" title="<?php echo $row_semester['Semester']; ?>">
+<option value="<?php echo $row_instEdit['YearOffered'];?>"><?php echo $row_instEdit['YearOffered'];?></option>
 
         <?php
 		do {  
@@ -491,17 +564,28 @@ do {
 			  $row_semester = mysqli_fetch_assoc($semester);
 		  }
 		?>
-      </select></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><input name="id" type="hidden" id="id" value="<?php echo $key ?>"></th>
-      <td><div align="center">
-        <input type="submit" name="Submit" value="Edit Record">
-      </div></td>
-    </tr>
-  </table>
-  <input type="hidden" name="MM_update" value="frmInstEdit">
+      </select>
+          </div>
+    </div><br>
+    <br>
+  
+     <div style="background:lightgray" class="form-group">        
+      <div style="text-align:center" class="col-sm-offset-2 col-sm-10">
+        <button  type="submit" name="Submit" >Edit Record</button>
+      </div>
+    </div>
+     
+    
+    <input type="hidden" name="MM_insert" value="frmInst">
+
+
+</div>
 </form>
+
+</div>
+
+
+
 <?php
 }
 	# include the footer

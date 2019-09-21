@@ -79,7 +79,7 @@
 
  <div align="center">
 <input type="checkbox" style="color:blue;">Remember me</input><br>
-<a href="passwordrecover.php" class="style16"style="color:blue;"> Forgot your password ? </a><br>
+<a href="recoverpassword.php" class="style16"style="color:blue;"> Forgot your password ? </a><br>
  
         </div>
 				

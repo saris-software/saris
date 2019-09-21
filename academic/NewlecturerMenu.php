@@ -181,7 +181,7 @@ h1{
         <div class="col-sm-4 col-md-4">
             <div class="card" align="center">
 
-                <a href="Academic/academic_submenu/examination.php"> <img class="card-img-top img-fluid "
+                <a href="lecturerResults.php"> <img class="card-img-top img-fluid "
                                  style="width: 112px; height: inherit; padding-top: 15px; "
                                  src="./images/exam.jpeg"></a>
 
@@ -194,7 +194,7 @@ h1{
 <div class="col-sm-4 col-md-4 ">
             <div class="card" align="center">
 
-                <a href="Academic/academic_submenu/timetable.php"> <img class="card-img-top img-fluid "
+                <a href="lecturerTimetable.php"> <img class="card-img-top img-fluid "
                                  style="width: 112px; height: inherit; padding-top: 15px; "
                                  src="./images/timetable.jpeg"></a>
 
@@ -209,7 +209,7 @@ h1{
         <div class="col-sm-4 col-md-4 ">
             <div class="card" align="center">
 
-                <a href="Academic/academic_submenu/e_learning.php"> <img class="card-img-top img-fluid "
+                <a href="lecturerElearning.php"> <img class="card-img-top img-fluid "
                                  style="width: 112px; height: inherit; padding-top: 15px; "
                                  src="./images/e_learning.jpeg"></a>
 
@@ -226,12 +226,12 @@ h1{
         <div class="col-sm-4 col-md-4 ">
             <div class="card" align="center">
 
-                <a href="lecturercomm.php"> <img class="card-img-top img-fluid "
+                <a href="admissionComm.php"> <img class="card-img-top img-fluid "
                                  style="width: 112px; height: inherit; padding-top: 15px; "
                                  src="./images/comm.jpeg"></a>
 
                 <div class="card-block">
-                    <a href="lecturercomm.php"><h5 class="card-title">Communication</h5></a>
+                    <a href="admissionComm.php"><h5 class="card-title">Communication</h5></a>
 
                 </div>
             </div>
@@ -239,13 +239,13 @@ h1{
         <div class="col-sm-4 col-md-4 ">
             <div class="card" align="center">
 
-                <a href="lecturerSecurity.php"> <img class="card-img-top img-fluid "
+                <a href="admissionSecurity.php"> <img class="card-img-top img-fluid "
                                  style="width: 112px; height: inherit; padding-top: 15px; "
                                  src="./images/security1.png"></a>
 
                 <div class="card-block">
 
-                    <a href="lecturerSecurity.php"><h5 class="card-title">Security</h5></a>
+                    <a href="admissionSecurity.php"><h5 class="card-title">Security</h5></a>
                 </div>
             </div>
         </div>

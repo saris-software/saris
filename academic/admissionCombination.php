@@ -2,7 +2,7 @@
 	require_once('../Connections/sessioncontrol.php');
     require_once('../Connections/zalongwa.php');
 # include the header
-include("admissionpolicy.php");
+include("policy.php");
 
 	//include('lecturerMenu.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
@@ -124,67 +124,90 @@ if (isset($_GET['totalRows_inst'])) {
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 ?>
-<style type="text/css">
-<!--
-.style1 {color: #FFFFFF}
-.style2 {color: #000000}
--->
-</style>
 
-<p><?php echo "<a href=\"admissionCombination.php?new=1\">"?>Add New Subject Combination</p>
+
+
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 <?php @$new=$_GET['new'];
 echo "</a>";
 if (@$new<>1){
 ?>
-<form name="form1" method="get" action="<?php echo $editFormAction; ?>">
-              Search by Combination Name: 
-                <input name="course" type="text" id="course" maxlength="50">
-              <input type="submit" name="Submit" value="Search">
-       </form>
-	   
-<table border="1" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><strong>S/No</strong></td>
-	<td><strong>Subject Combination</strong></td>
-  </tr>
+
+<div class="container">
+<button style="float:right"><?php echo "<a href=\"admissionCombination.php?new=1\">"?>Add New Subject Combination</a>
+</button>
+
+  <h2>Subject Combination</h2>
+  
+<form  style="text-align:right" name="form1" method="get" action="<?php echo $editFormAction; ?>">
+              
+              <input name="course" type="text" id="course" placeholder="Search by combination name" maxlength="100">
+              <button type="submit" name="Submit">Search</button>
+</form>
+  <p>Verify Your Information</p>            
+ <table class="table table-striped">
+ 
+ <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>S/NO</th>
+        <th>Subject combination</th>
+      </tr>
+    </thead>
+
+
   <?php do { ?>
   <tr>
-     <td nowrap><?php $name = $row_inst['SubjectID']; echo "<a href=\"admissionCombination.php?edit=$name\">$name</a>"?></td>
+     <td nowrap><?php $name = $row_inst['SubjectID']; echo "$name"?></td>
 	 <td><?php echo $row_inst['SubjectName'] ?></td>
-	 </tr>
+	 <td nowrap><button  type="submit" name="delete"  class="btn btn-default"><?php echo "<a href=\"delete.php?id=$id&code=$name\">Delete</a>"?></button></td>
+	 
+ <td><button  type="submit" name="edit"  class="btn btn-default"><?php echo "<a href=\"admissionCombination.php?edit=$id\">Edit</a>"?></button><td>
+</tr>
+  
+  
   <?php } while ($row_inst = mysqli_fetch_assoc($inst)); ?>
 </table>
-<a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst);?>">Previous</a>
-    <span class="style1">......<span class="style2"><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst);?>/<?php echo $totalRows_inst ?> </span>..........</span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
+<button><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst);?>">Previous</a>
+</button>
+    <span class="style1">......<span class="style2"><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst);?>/<?php echo $totalRows_inst ?> </span>..........</span>
+    <button><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a></button><br>
        
 	   
 			
 <?php }else{?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmInst" id="frmInst">
-  <table width="200" border="1" cellpadding="0" cellspacing="0" bordercolor="#006600">
-    <tr bgcolor="#CCCCCC">
-      
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Combination Code:</div></th>
-      <td><input name="txtCode" type="text" id="txtCode" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Combination Name:</div></th>
-      <td><input name="txtTitle" type="text" id="txtTitle" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row">&nbsp;</th>
-      <td><div align="center">
+  
+  <div class="container">
+  
+<button><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst);?>">Previous</a>
+</button>
+  
+  
+  <div class="form-group">
+      <label for="head">Combination Code:</label>
+        <input type="text" class="form-control" id="txtCode" placeholder="Enter Course Code" name="txtCode">
+    </div>
+  <div class="form-group">
+      <label for="address">Combination Title:</label>
+        <input type="text" class="form-control" id="txtTitle" placeholder="Enter course title" name="txtTitle">
+ </div>
+
+<div align="center">
         <input type="submit" name="Submit" value="Add Record">
-      </div></td>
-    </tr>
-  </table>
+      </div>
     <input type="hidden" name="MM_insert" value="frmInst">
 </form>
+
+
 <?php } 
 if (isset($_GET['edit'])){
 #get post variables
@@ -213,30 +236,30 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_inst = sprintf("&totalRows_inst=%d%s", $totalRows_inst, $queryString_inst);
 
 ?>
+
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmInstEdit" id="frmInstEdit">
- <table width="200" border="1" cellpadding="0" cellspacing="0" bordercolor="#006600">
-    <tr bgcolor="#CCCCCC">
-      
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Combination Code:</div></th>
-      <td><input name="txtCode" type="hidden" id="txtCode" value="<?php echo $row_instEdit['SubjectID']; ?>" size="40"><?php echo $row_instEdit['SubjectID']; ?></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Combination Name:</div></th>
-      <td><input name="txtTitle" type="text" id="txtTitle" value="<?php echo $row_instEdit['SubjectName']; ?>" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><input name="id" type="hidden" id="id" value="<?php echo $key ?>"></th>
-      <td><div align="center">
+
+<div class="container">
+  
+  
+<button><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst);?>">Previous</a>
+</button>
+
+  <div class="form-group">
+      <label for="head">Combination Code:</label>
+        <input type="text" class="form-control" id="txtCode" value="<?php echo $row_instEdit['SubjectID']; ?>" name="txtCode">
+    </div>
+  <div class="form-group">
+      <label for="address">Combination Title:</label>
+        <input type="text" class="form-control" id="txtTitle" value="<?php echo $row_instEdit['SubjectName']; ?>" name="txtTitle">
+ </div>
+
+
+<input name="id" type="hidden" id="id" value="<?php echo $key ?>">
+      <div align="center">
         <input type="submit" name="Submit" value="Edit Record">
-      </div></td>
-    </tr>
-  </table>
-  <input type="hidden" name="MM_update" value="frmInstEdit">
+      </div>
+        <input type="hidden" name="MM_update" value="frmInstEdit">
 </form>
 <?php
 }

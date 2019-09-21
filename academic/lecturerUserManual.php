@@ -15,6 +15,20 @@
 	$szTitle = 'Academic Module User Guide';
 	//include('lecturerheader.php');
 ?>
+
+
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
 <h1><a name="_Toc125001720">Module 1: Examination Module </a></h1>
 <p>NOTE: While this guide explain all menus, you may not see some menus because of your 'Access Privilege Level' (your rights given to the system). </p>
 <p>The Examination Module has eight (8) Menus namely Profile, Policy Setup, Administration, Examination, E-Learning, Communication, Security, and Sign Out. </p>

@@ -278,12 +278,12 @@ $fill_from_array = array("3000"=>"Banned"); /* as "value"=>"option" */
 	require_once('../Connections/zalongwa.php');
 	require_once('../Connections/sessioncontrol.php');
 
-	include('lecturerMenu.php');
+	include('policy.php');
 	global $szSection, $szSubSection, $szTitle, $additionalStyleSheet;
 	$szSection = 'Policy Setup';
 	$szTitle = 'Programme Information';
 	$szSubSection = 'Programme';
-	include("lecturerheader.php");
+	//include("lecturerheader.php");
 	
         ## call of this method between HTML <HEAD> elements
         $dgrid->WriteCssClass();
