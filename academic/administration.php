@@ -76,7 +76,10 @@
     </li>
 	<li><a href="admissionNominalRoll.php" class='li-modal'>Class list</a>
     </li>
-		            	
+	<!--</li>
+	<li><a href="classListUpdate.php" class='li-modal'>Update Class list</a>
+    </li>
+		-->            	
 					  </ul>
 					  </div>
 				
@@ -101,8 +104,7 @@
 		   <a href="admissionprofile.php"> Profile</a>
 
 														</a>
-			<a class="navbar-brand nav-link" href="../signout.php"><!--<img class="rounded-circle" width="40"
-																		 src="./img/user.svg"/>--> Logout</a>
+<a class="navbar-brand nav-link" href="../signout.php"><!--<img class="rounded-circle" width="40" src="./img/user.svg"/>--> Logout</a>
 			<a class="navbar-brand nav-link" href="lecturerUserManual.php"> Help</a>
 		
 	</ul>

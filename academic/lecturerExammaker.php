@@ -121,57 +121,88 @@ if (isset($_GET['totalRows_inst'])) {
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst)-1;
 ?>
-<style type="text/css">
-<!--
-.style1 {color: #FFFFFF}
-.style2 {color: #000000}
--->
-</style>
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-<p><?php echo "<a href=\"lecturerExammaker.php?new=1\">"?>Add New Exam Marker </p>
+
+
+
+
 <?php @$new=$_GET['new'];
 echo "</a>";
 if (@$new<>1){
 ?>
 <form name="form1" method="get" action="<?php echo $editFormAction; ?>">
-              Search by Name: 
+            
+            
+<div class="container">
+<button style="float:right"><?php echo "<a href=\"lecturerExammaker.php?new=1\">"?>Add New Exam Marker</a>
+</button>
+
+
+<form style="float:right" name="form1" method="get" action="admissionDepartment.php">
+              Search by Name:
                 <input name="course" type="text" id="course" maxlength="50">
               <input type="submit" name="Submit" value="Search">
 </form>
-	   
-<table border="1" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><strong>S/No</strong></td>
-	<td><strong>Subject Combination</strong></td>
-  </tr>
+
+
+  <p>Verify Your Information</p>            
+ <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>S/NO</th>
+        <th>Subject Combination</th>
+      
+      </tr>
+    </thead>
   <?php do { ?>
   <tr>
      <td nowrap><?php $name = $row_inst['Id']; echo "<a href=\"lecturerExammaker.php?edit=$name\">$name</a>"?></td>
 	 <td><?php echo $row_inst['Name'] ?></td>
+ 
+  
+    <td><button  type="submit" name="edit"  class="btn btn-default"><?php echo "<a href=\"lecturerExammaker.php?edit=$id\" >Edit</a>"?></button><td>
+  
   </tr>
+
+
   <?php } while ($row_inst = mysqli_fetch_assoc($inst)); ?>
 </table>
-<a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a><span class="style1">......<span class="style2"><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> </span>..........</span><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a><br>
+<button><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a>
+</button>
+<span class="style1">......<span class="style2"><?php echo min($startRow_inst + $maxRows_inst, $totalRows_inst) ?>/<?php echo $totalRows_inst ?> </span>..........</span>
+<button>
+<a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, min($totalPages_inst, $pageNum_inst + 1), $queryString_inst); ?>">Next</a>
+</button>
+<br>
        
 	   
 			
 <?php }else{?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmInst" id="frmInst">
-  <table width="200" border="1" cellpadding="0" cellspacing="0" bordercolor="#006600">
-    <tr bgcolor="#CCCCCC">
-      
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Exam-marker Code:</div></th>
-      <td><input name="txtCode" type="text" id="txtCode" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Exam-marker Name:</div></th>
-      <td><input name="txtTitle" type="text" id="txtTitle" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      
-    </tr>
+ <div class="container">
+     <button><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a>
+</button>
+
+<div class="form-group">
+      <label for="address">Exam-marker Code:</label>
+        <input type="text" class="form-control"  name="txtCode" id="txtCode" value="Enter Exam maker code">
+
+    </div>
+<div class="form-group">
+      <label for="head">Exam-marker Name:</label>
+        <input type="text" class="form-control" ame="txtTitle" id="txtTitle" value="Exam maker code">
+
+    </div>
+
     <tr bgcolor="#CCCCCC">
       <th scope="row">&nbsp;</th>
       <td><div align="center">
@@ -210,28 +241,23 @@ $queryString_inst = sprintf("&totalRows_inst=%d%s", $totalRows_inst, $queryStrin
 
 ?>
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmInstEdit" id="frmInstEdit">
- <table width="200" border="1" cellpadding="0" cellspacing="0" bordercolor="#006600">
-    <tr bgcolor="#CCCCCC">
-      
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Exam-marker Code:</div></th>
-      <td><input name="txtCode" type="hidden" id="txtCode" value="<?php echo $row_instEdit['Id']; ?>" size="40"><?php echo $row_instEdit['Id']; ?></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th nowrap scope="row"><div align="right">Exam-marker Name:</div></th>
-      <td><input name="txtTitle" type="text" id="txtTitle" value="<?php echo $row_instEdit['Name']; ?>" size="40"></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <th scope="row"><input name="id" type="hidden" id="id" value="<?php echo $key ?>"></th>
-      <td><div align="center">
-        <input type="submit" name="Submit" value="Edit Record">
-      </div></td>
-    </tr>
-  </table>
+    <div class="container">
+    <button><a href="<?php printf("%s?pageNum_inst=%d%s", $currentPage, max(0, $pageNum_inst - 1), $queryString_inst); ?>">Previous</a>
+</button>
+
+<div class="form-group">
+      <label for="address">Exam-marker Code:</label>
+        <input type="text" class="form-control"  name="txtCode" id="txtCode" value="<?php echo $row_instEdit['Id'];?>">
+
+    </div>
+<div class="form-group">
+      <label for="head">Exam-marker Name:</label>
+        <input type="text" class="form-control" ame="txtTitle" id="txtTitle" value="<?php echo $row_instEdit['Name']; ?>">
+
+    </div>
+
+ 
+   </table>
   <input type="hidden" name="MM_update" value="frmInstEdit">
 </form>
 <?php

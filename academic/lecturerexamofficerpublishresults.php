@@ -93,6 +93,19 @@ echo "Database Update Succeful!";
 }else{
 //openup a form
 ?>
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
 <form name="form1" method="post" action="<?php echo $currentPage;?> ">
   <table width="400" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
 	  <tr><th colspan="2">PUBLISH EXAMRESULT PROGRAMME WISE</th></tr>

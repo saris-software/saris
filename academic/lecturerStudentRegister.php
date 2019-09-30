@@ -1,3 +1,4 @@
+
 <?php
 #get connected to the database and verify current session
 	require_once('../Connections/sessioncontrol.php');
@@ -74,11 +75,6 @@ function add($f)
   }  
   if(@preg_match('/<select/',$f)){
     @preg_match('/<select.*?>
-<style type="text/css">
-<!--
-.style4 {color: #CCCCCC}
--->
-</style>
 /',$f,$st);
     @preg_match_all('/<option value="(.*?)">(.*?)<\/option>/',$f,$allopt);
     foreach ($allopt[0] as $k=>$a){
@@ -151,6 +147,8 @@ function check()
   {
     
 ?>
+
+
   <h3>There has been an error:</h3>
   <p>You forgot to enter the following field(s)</p>
   <ul>
@@ -252,6 +250,8 @@ $totalRows_candidate = mysqli_num_rows($candidate);
 //display the form if candidate is found
 if((@$totalRows_candidate>0) || ($errored==1)){
 ?>
+
+
 			<form name="addpayment" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 			  <input type="hidden" name="required" value="regno" />
 			  <input name="user" type="hidden" id="user" value="<?php echo $username;?>">
@@ -343,16 +343,26 @@ do {
 	<?php
   }else{
   ?>
+  
+<!DOCTYPE>
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+
   <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post" name="search" id="search">
 						<fieldset>
 						 <legend>Search Candidate </legend>
-						 <table width="200" border="0" align="right" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-			  <tr>
-				<td nowrap><div align="right"><strong>Enter RegNo:</strong></div></td>
-				<td><input name="candidate" type="text" id = "candidate" value="" size = "30" maxlength="30"></td>
-				<td><input type="submit" name="Submit" value="GO"></td>
-			  </tr>
-			</table>
+<div align="right">
+  <input  placeholder="Enter RegNo:" name="candidate" type="text" id = "candidate">
+      <button type="submit" name="Submit">Search</button>
+    
 			</fieldset>
 			</form>
 			<?php }

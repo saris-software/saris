@@ -62,6 +62,9 @@
 					$year = $lim['AYear'];
 					$yearsem = $lim['Semester'];
 					?>
+					
+					
+					
 					<p style="font-weight:bold; width:700px;"><?php echo $title."<br />".$year." - ".$yearsem;?> Students Examination Numbers</p>
 					<table border="1" cellpadding="3" cellspacing="0">						
 						<tr style="font-weight:bold">
@@ -142,28 +145,42 @@
 				text-align:left;
 				}
 		</style>
-		<div>
+
+
+
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
 			<form action="<?php $_SERVER['PHP_SELF']?>" method="post" >
-				<table border="0" style="background:#ccc">
-					<tr>
-						<td class="align">Choose Study Programme:</td>
-						<td nowrap>
-							<select name="prog" id="prog">
-							<?php
+
+
+                       <div class="form-group">
+       <label for="institution">Choose Study Programme:</label>
+      <select class="form-control" name="prog" id="prog">
+  <?php
 								while($degree = mysqli_fetch_array($query_degree)){
 									?>
 									<option value="<?php echo $degree['ProgrammeCode']?>"><?php echo $degree['ProgrammeName']?></option>								
 									<?php								
 									}								
 							?>
+
 							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="align">Choose Student Cohort:</td>
-						<td nowrap>
-							<select name="cohort" id="cohort">
-							<?php
+
+                                    </div>
+<div class="form-group">
+       <label for="institution">Choose Student Cohort:</label>
+      <select class="form-control"  name="cohort" id="cohort">
+      <?php
 								while($ayear = mysqli_fetch_assoc($query_ayear)){
 									?>
 									<option value="<?php echo $ayear['AYear']?>"><?php echo $ayear['AYear']?></option>								
@@ -171,13 +188,12 @@
 									}
 							?>
 							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="align">Choose Semester:</td>
-						<td nowrap>
-							<select name="semester" id="semester">
-							<?php
+	   </div>
+	   
+<div class="form-group">
+       <label for="institution">Choose Semester:</label>
+      <select class="form-control"  name="cohort" id="cohort">
+     <?php
 								while($sem = mysqli_fetch_assoc($query_sem)){
 									?>
 									<option value="<?php echo $sem['Semester']?>"><?php echo $sem['Semester']?></option>								
@@ -185,18 +201,14 @@
 									}
 							?>
 							</select>
-						</td>
-					</tr>
-					
-					<tr>
-						<td  colspan="2" style="text-align:center"><input type="submit" name="Generate" value="Generate" /></td>					
-					</tr>
-					<!--
-					<tr>
-						<td  class="align" style="padding-top:10px"><input type="checkbox" name="Overwrite" value="on" />Overwrite</td>
-						<td class="left" style="padding-top:10px"><input type="submit" name="Generate" value="Generate" /></td>					
-					</tr>-->
-				</table>
+						   </div>
+			<div style="text-align:center">
+			<div style="border-radius:5px">
+			<button colspan="2" type="submit" name="Generate">
+			Generate
+			</button>					
+                       </div>
+
 			</form>
 			<div>
 				<?php
@@ -206,15 +218,14 @@
 						}
 				?>
 			</div>
+			</div>
 			
-			<form method="post" action="<?php $_SERVER['PHP_SELF'];?>" style="background:#CCCCCC; margin-top:50px; width:315px;">
-				<table border="0">
-					<tr><td colspan="2"><b>Print Generated Examination Numbers</b></td></tr>
-					<tr>
-						<td class="align">Choose Study Programme:</td>
-						<td nowrap>
-							<select name="prog" id="prog">
-							<?php
+			<form method="post" action="<?php $_SERVER['PHP_SELF'];?>">
+<div class="conteiner">
+<div class="form-group">
+       <label for="institution"> Print Generated Examination Numbers:</label>
+      <select class="form-control" name="prog" id="prog">
+<?php
 								while($degree = mysqli_fetch_array($query_degree1)){
 									?>
 									<option value="<?php echo $degree['ProgrammeCode']?>"><?php echo $degree['ProgrammeName']?></option>								
@@ -222,16 +233,29 @@
 									}								
 							?>
 							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="align" nowrap>
-						Specify Cohort: 
-						Yes<input type="radio" name="button" value="Y"> 
-						<!--No<input type="radio" name="button" value="N">-->
-						</td>
-						<td nowrap>
-							<select name="cohort" id="cohort">
+						</div>
+
+<div class="form-group">
+
+       <label for="institution"> Choose Study Programme:</label>
+      <select class="form-control"  name="prog" id="prog">
+					<?php
+								while($degree = mysqli_fetch_array($query_degree)){
+									?>
+									<option value="<?php echo $degree['ProgrammeCode']?>"><?php echo $degree['ProgrammeName']?></option>								
+									<?php								
+									}								
+							?>
+
+							</select>
+							</div>
+
+<div class="form-group">
+<div class="form-inline">
+
+       <label for="institution"> Specify Cohort: </label>
+      				
+      <select class="form-control" name="cohort" id="cohort">
 							<?php
 								while($ayear = mysqli_fetch_assoc($query_ayear1)){
 									?>
@@ -240,13 +264,14 @@
 									}
 							?>
 							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="align">Choose Semester:</td>
-						<td nowrap>
-							<select name="semester" id="semester">
-							<?php
+  &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;
+       <label for="institution"> Specify Cohort: </label>
+      			 <label> Yes<input type="radio" name="button" value="Yes"> <label>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <label for="institution">Choose Semester:</label>
+      <select class="form-control" name="semester" id="semester">
+						<?php
 								while($sem = mysqli_fetch_assoc($query_sem2)){
 									?>
 									<option value="<?php echo $sem['Semester']?>"><?php echo $sem['Semester']?></option>								
@@ -254,16 +279,15 @@
 									}
 							?>
 							</select>
-						</td>
-					</tr>
-					<tr style="display:none; text-align:center">
-						<td colspan="2" nowrap>Layout:Landscape<input name="layout" type="radio" value="L" checked></td> 
-					</tr>
-					<tr style="text-align:center;">
-						<td colspan="2"><input type="submit" name="HTML" id="HTML" value="Print HTML"></td>
-						<!--<td><input type="submit" name="EXCEL" id="EXCEL" value="EXCEL Export"></td>-->
-					</tr>
-				</table>						
+  &nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       
+				<tr style="display:none; text-align:center">
+						<td colspan="2" nowrap>Layout:Landscape<input name="layout" type="radio" value="L" checked>
+						
+										<tr style="text-align:center;">
+	   </div>
+	<div style="text-align:center">
+						<button type="submit" name="HTML" id="HTML" value="">Print HTML</button>
+			</div>			
 			</form>
 			<div>
 				<?php

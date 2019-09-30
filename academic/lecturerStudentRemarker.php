@@ -325,16 +325,26 @@ do {
   				}
   }else{
   ?>
+  <head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+
   <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post" name="search" id="search">
 						<fieldset>
 						 <legend>Search Candidate </legend>
-						 <table width="200" border="0" align="right" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-			  <tr>
-				<td nowrap><div align="right"><strong>Enter RegNo:</strong></div></td>
-				<td><input name="candidate" type="text" id = "candidate" value="" size = "25" maxlength="20"></td>
-				<td><input type="submit" name="Submit" value="GO"></td>
-			  </tr>
-			</table>
+<div align="right">
+  <input  placeholder="Enter RegNo:" name="candidate" type="text" id = "candidate">
+      <button type="submit" name="Submit">Search</button>
+    
+			</fieldset>
+			</form>
 			</fieldset>
 			</form>
 			<?php }

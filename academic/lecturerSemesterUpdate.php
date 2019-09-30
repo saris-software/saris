@@ -4,7 +4,7 @@
     require_once('../Connections/zalongwa.php');
 	
 	# initialise globals
-  include('lecturerAdministration.php');
+  include('administration.php');
 
   // include('lecturerMenu.php');
 	
@@ -71,12 +71,26 @@ $result1 = mysqli_query($zalongwa,$qupdadateexamresult);
 }else{
 //openup a form
 ?>
+
+<head>
+  <title>update semester</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+
+
 <form name="form1" method="post" action="<?php echo $currentPage;?> ">
-  <table width="200" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-    <tr>
-      <th nowrap scope="row"><div align="right">Academic Year: </div></th>
-      <td><select name="ayear" id="ayear">
-	  <option value="">-----------------</option>
+  
+     <div class="form-group">
+      <label for="institution">Academic Year:</label>
+      <select class="form-control" name="ayear" id="ayear">
+    <option value="">-----------------</option>
 	   <?php
 do {  
 ?>
@@ -89,11 +103,11 @@ do {
 	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr>
-      <th scope="row"><div align="right">Semester:</div></th>
-      <td><select name="sem" id="sem">
+
+      </select>
+   <div class="form-group">
+      <label for="institution">Semester:</label>
+      <select class="form-control" name="sem" id="sem">
 	  <option value="">-----------------</option>
 	   <?php
 do {  
@@ -107,12 +121,12 @@ do {
 	  $row_sem = mysqli_fetch_assoc($sem);
   }
 ?>
-            </select></td>
-    </tr>
-    <tr>
-      <th scope="row"><div align="right">Course Code: </div></th>
-      <td><select name="course" id="select2">
-	  <option value="">-----------------</option>
+            </select>
+            
+               <div class="form-group">
+      <label for="institution">Course Code:</label>
+      <select class="form-control" name="course" id="select2">
+    <option value="">-----------------</option>
 	   <?php
 do {  
 ?>
@@ -125,15 +139,18 @@ do {
 	  $row_course = mysqli_fetch_assoc($course);
   }
 ?>
-            </select></td>
-    </tr>
-    
-    <tr>
-      <th scope="row">&nbsp;</th>
-      <td><input name="confirm" type="submit" id="confirm" value="Confirm"></td>
-    </tr>
-  </table>
+            </select>
+                <br>          
+                  <div class="form-group">
+                          
+      <div style="text-align:center" class="col-sm-offset-2 col-sm-10">
+        <button id="confirm" type="submit" name="confirm" class="btn btn-default">Confirm</button>
+      </div>
+    </div>
+  <input type="hidden" name="MM_update" value="frmInstEdit">
 </form>
+
+
 <?php
 }
 @mysqli_free_result (@$ExamOfficerGradeBook);
