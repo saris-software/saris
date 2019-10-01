@@ -16,6 +16,19 @@
 	$szTitle = 'Lecturer Course Allocation';
 	// include('lecturerheader.php');
 ?>
+
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
 <?php
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -169,11 +182,30 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_ExamOfficerGradeBook = sprintf("&totalRows_ExamOfficerGradeBook=%d%s", $totalRows_ExamOfficerGradeBook, $queryString_ExamOfficerGradeBook);
  
 ?>
+
+
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
+
+
 <form name="form1" method="POST" action="<?php echo $editFormAction; ?>">
-              <table width="54%"  border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-                <tr>
-                  <td width="17%" nowrap><div align="right">Academic Year: </div></td>
-                  <td width="16%"><select name="Ayear" id="Ayear">
+             
+              <h3>Course Allocation</h3>
+ 
+             <div class="form-group">
+      <label for="address">Academic Year:</label>
+              <select class="form-control" name="Ayear" id="Ayear">
                     <?php
 do {  
 ?>
@@ -186,9 +218,12 @@ do {
 	  $row_Ayear = mysqli_fetch_assoc($Ayear);
   }
 ?>
-                  </select></td>
-                  <td width="15%" nowrap><div align="right">Course Code: </div></td>
-                  <td width="52%"><select name="course" id="course">
+                  </select>
+</div>
+
+<div class="form-group">
+      <label for="address">Course Code:</label>
+              <select class="form-control" name="course" id="course">
                     <?php
 do {  
 ?>
@@ -201,11 +236,12 @@ do {
 	  $row_course = mysqli_fetch_assoc($course);
   }
 ?>
-                  </select></td>
-                </tr>
-                <tr>
-                  <td nowrap><div align="right">Semester:</div></td>
-                  <td><select name="semester" id="semester">
+                  </select>
+                  </div>
+
+<div class="form-group">
+      <label for="address">Semester:</label>
+              <select class="form-control" name="semester" id="semester">
                     <?php
 do {  
 ?>
@@ -218,11 +254,18 @@ do {
 	  $row_semester = mysqli_fetch_assoc($semester);
   }
 ?>
-                  </select></td>
-                  <td nowrap><div align="right">
-                    <input name="user" type="hidden" id="user" value="<?php echo $username;?>">
-                    Lecturer ID: </div></td>
-                  <td><select name="lecturer" id="lecturer">
+                  </select>
+             </div>
+        
+<div class="form-group">
+      <label for="address">Lecturer Name:</label>
+         <input class="btn btn-default" name="user" type="hidden" id="user" value="<?php echo $username;?>"> 
+      
+         </div>    
+                 
+<div class="form-group">
+      <label for="address">Lecturer ID:</label>
+              <select class="form-control" name="lecturer" id="lecturer">
                     <?php
 do {  
 ?>
@@ -235,41 +278,51 @@ do {
 	  $row_lecturer = mysqli_fetch_assoc($lecturer);
   }
 ?>
-                  </select></td>
-                </tr>
-                <tr>
+                  </select>
+                  </div>
+                  
+                  
                   <td colspan="4"><div align="center">
                       <input type="submit" name="Submit" value="Save Records">
-                  </div></td>
-                </tr>
-  </table>
+                  </div>
+                  
                 <p>
                   <input type="hidden" name="MM_insert" value="form1">
 </p>
+                
                 <p>LECTURER COURSE ALLOCATION                </p>
-                <table width="451" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-                  <tr>
-                    <td width="93" nowrap><strong>Full Name</strong></td>
-                    <td width="53"><strong>Position</strong></td>
-                    <td width="109" nowrap><strong>Academic Year</strong></td>
-                    <td width="86"><strong>Semester</strong></td>
-                    <td width="76"><strong>Course</strong></td>
-					<td width="76"><strong>Drop</strong></td>
-                  </tr>
-                  <?php do { ?>
+                
+                
+ <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Position</th>
+        <th>Academic Year</th>
+        <th>Semester</th>
+       <th>Course</th>
+        <th>Delete</th>
+      
+      </tr>
+    </thead>
+                
+                <?php do { ?>
                   <tr>
                     <td nowrap><?php $user=$row_courseallocation['UserName']; echo $row_courseallocation['FullName']; ?></td>
                     <td nowrap><?php echo $row_courseallocation['Position']; ?></td>
                     <td nowrap><?php $ayear=$row_courseallocation['AYear']; echo $row_courseallocation['AYear']; ?></td>
                     <td nowrap><?php echo $row_courseallocation['Semester']; ?></td>
                     <td nowrap><?php $key = $row_courseallocation['CourseCode']; echo $row_courseallocation['CourseCode']; ?></td>
-					 <td><?php print "<a href=\"lecturerexalresultdelete.php?RegNo=$user&ayear=$ayear&key=$key\">Drop</a>";?></td>
+	<td><button><?php print "<a href=\"lecturerexalresultdelete.php?RegNo=$user&ayear=$ayear&key=$key\">Drop</a>";?></button></td>
+					 
+    <td><button  type="submit" name="edit"  class="btn btn-default"><?php echo "<a href=\"admissionDepartment.php?edit=$id\" >Edit</a>"?></button><td>
 
                   </tr>
                   <?php } while ($row_courseallocation = mysqli_fetch_assoc($courseallocation)); ?>
   </table>
 </form>
-<a href="<?php printf("%s?pageNum_courseallocation=%d%s", $currentPage, max(0, $pageNum_courseallocation - 1), $queryString_courseallocation); ?>">Previous Page </a> Records: <?php echo min($startRow_courseallocation + $maxRows_courseallocation, $totalRows_courseallocation) ?>/<?php echo $totalRows_courseallocation ?> <a href="<?php printf("%s?pageNum_courseallocation=%d%s", $currentPage, min($totalPages_courseallocation, $pageNum_courseallocation + 1), $queryString_courseallocation); ?>">Next Page</a>
+<button><a href="<?php printf("%s?pageNum_courseallocation=%d%s", $currentPage, max(0, $pageNum_courseallocation - 1), $queryString_courseallocation); ?>">Previous Page </a></button> Records......... <?php echo min($startRow_courseallocation + $maxRows_courseallocation, $totalRows_courseallocation) ?>/<?php echo $totalRows_courseallocation ?> 
+<button><a href="<?php printf("%s?pageNum_courseallocation=%d%s", $currentPage, min($totalPages_courseallocation, $pageNum_courseallocation + 1), $queryString_courseallocation); ?>">Next Page</a></button>
 
 <?php
 

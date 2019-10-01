@@ -107,11 +107,13 @@ echo "Database Update Succeful!";
 
 
 <form name="form1" method="post" action="<?php echo $currentPage;?> ">
-  <table width="400" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-	  <tr><th colspan="2">PUBLISH EXAMRESULT PROGRAMME WISE</th></tr>
-    <tr>
-      <th nowrap scope="row"><div align="right">Academic Year: </div></th>
-      <td><select name="ayear" id="ayear">
+
+
+  <h3 style="text-align:centre">PUBLISH EXAM RESULT PROGRAMME WISE</h3>
+
+ <div class="form-group">
+      <label for="institution">Academic Year:</label>
+      <select class="form-control" name="ayear" id="ayear">
 	  <option value="">-----------------</option>
 	   <?php
 do {  
@@ -121,15 +123,17 @@ do {
 } while ($row_AYear = mysqli_fetch_assoc($AYear));
   $rows = mysqli_num_rows($AYear);
   if($rows > 0) {
+
       mysqli_data_seek($AYear, 0);
 	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr>
-      <th scope="row"><div align="right">Programmme:</div></th>
-      <td><select name="programme" id="programme">
+      </select> 
+      </div>
+
+<div class="form-group">
+      <label for="institution">Programme:</label>
+      <select class="form-control"  name="programme" id="programme">
 	  <option value="">-----------------</option>
 	   <?php
 do {  
@@ -143,11 +147,12 @@ do {
 	  $row_Hostel = mysqli_fetch_assoc($Hostel);
   }
 ?>
-            </select></td>
-    </tr>
-    <tr>
-      <th scope="row"><div align="right">Semester:</div></th>
-      <td><select name="sem" id="sem">
+            </select>
+</div>
+
+<div class="form-group">
+      <label for="institution">Semester:</label>
+      <select class="form-control" name="sem" id="sem">
 	  <option value="">-----------------</option>
 	   <?php
 do {  
@@ -161,47 +166,31 @@ do {
 	  $row_sem = mysqli_fetch_assoc($sem);
   }
 ?>
-            </select></td>
-    </tr>
-    <!--<tr>
-      <th scope="row"><div align="right">Course Code: </div></th>
-      <td><select name="course" id="select2">
-	  <option value="">-----------------</option>
-	   <?php
-do {  
-?>
-                        <option value="<?php echo $row_course['CourseCode']?>"><?php echo $row_course['CourseCode']?></option>
-                        <?php
-} while ($row_course = mysqli_fetch_assoc($course));
-  $rows = mysqli_num_rows($course);
-  if($rows > 0) {
-      mysqli_data_seek($course, 0);
-	  $row_course = mysqli_fetch_assoc($course);
-  }
-?>
-            </select></td>
-    </tr>-->
-    <tr>
-      <th nowrap scope="row"><div align="right">Choose Action:</div></th>
-      <td><select name="action" id="select3">
+            </select>
+	</div>
+
+
+<div class="form-group">
+      <label for="institution">Choose Action:</label>
+      <select class="form-control" name="action" id="select3">
 	  <option value="">-----------------</option>
         <option value="1">Publish</option>
         <option value="0">Unpublish</option>
-                        </select></td>
-    </tr>
-    <tr>
-      <th scope="row">&nbsp;</th>
-      <td><input name="confirm" type="submit" id="confirm" value="Confirm"></td>
-    </tr>
-  </table>
+                        </select>
+	</div>
+	<div class="form-group">
+      <button name="confirm" type="submit" id="confirm">Confirm</button>
+	</div>
 </form>
 <form name="form1" method="post" action="<?php echo $currentPage;?> ">
-  <table width="400" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-	  <tr><th colspan="2">PUBLISH EXAMRESULT SEMESTER WISE</th></tr>
-    <tr>
-      <th nowrap scope="row"><div align="right">Academic Year: </div></th>
-      <td><select name="ayear" id="ayear">
-	  <option value="">-----------------</option>
+  
+ <div class="container"> 
+  <h3 style="text-align:centre">PUBLISH EXAM RESULT SEMESTER WISE</h3>
+
+ <div class="form-group">
+      <label for="institution">Academic Year:</label>
+      <select class="form-control" name="ayear" id="ayear">
+<option value="">-----------------</option>
 	   <?php
 do {  
 ?>
@@ -214,12 +203,15 @@ do {
 	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
-      </select></td>
-    </tr>
-    <tr>
-      <th scope="row"><div align="right">Semester:</div></th>
-      <td><select name="sem" id="sem">
-	  <option value="">-----------------</option>
+      </select>
+  </div>
+  
+  
+
+<div class="form-group">
+      <label for="institution">Semester:</label>
+      <select class="form-control" name="sem" id="sem">
+  <option value="">-----------------</option>
 	   <?php
 do {  
 ?>
@@ -232,39 +224,21 @@ do {
 	  $row_sem = mysqli_fetch_assoc($sem);
   }
 ?>
-            </select></td>
-    </tr>
-    <!--<tr>
-      <th scope="row"><div align="right">Course Code: </div></th>
-      <td><select name="course" id="select2">
-	  <option value="">-----------------</option>
-	   <?php
-do {  
-?>
-                        <option value="<?php echo $row_course['CourseCode']?>"><?php echo $row_course['CourseCode']?></option>
-                        <?php
-} while ($row_course = mysqli_fetch_assoc($course));
-  $rows = mysqli_num_rows($course);
-  if($rows > 0) {
-      mysqli_data_seek($course, 0);
-	  $row_course = mysqli_fetch_assoc($course);
-  }
-?>
-            </select></td>
-    </tr>-->
-    <tr>
-      <th nowrap scope="row"><div align="right">Choose Action:</div></th>
-      <td><select name="action" id="select3">
+            </select>
+
+<div class="form-group">
+      <label for="institution">Choose Action:</label>
+      <select class="form-control" name="action" id="select3">
 	  <option value="">-----------------</option>
         <option value="1">Publish</option>
         <option value="0">Unpublish</option>
-                        </select></td>
-    </tr>
-    <tr>
-      <th scope="row">&nbsp;</th>
-      <td><input name="confirm" type="submit" id="confirm" value="Confirm"></td>
-    </tr>
-  </table>
+                        </select>
+	</div>
+	<div class="form-group">
+      <button name="confirm" type="submit" id="confirm">Confirm</button>
+	</div>
+  
+  
 </form>
 
 <?php

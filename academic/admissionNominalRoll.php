@@ -755,6 +755,9 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 	if (mysqli_num_rows($query_std) > 0){
 		$degree = $pname;
 		?>
+		
+		
+	
 		<style type="text/css">
 		<!--
 		.style1 {color: #990000}
@@ -950,15 +953,27 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 }else{
 
 ?>
+		
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 
+
+<div class="container">
 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" name="studentclasslist" id="studentclasslist">
-            <table width="300" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-        <tr>
-          <td colspan="2" nowrap><div align="center">PRINTING STUDENTS CLASS LISTS </div></td>
-          </tr>
-		  <tr>
-			  <td rowspan="1" nowrap><div align="right">Programme:</div></td>
-			  <td colspan="1" bgcolor="#CCCCCC"><select name="programme" id="programme">
+            
+            
+     <p>   PRINTING STUDENTS CLASS LISTS </p>    
+     
+    <div class="form-group">
+      <label for="address">Programme:</label>
+              <select class="form-control" name="programme" id="programme">
 				   <option value="0">--------------------------------</option>
 			            <?php
 						do {  
@@ -972,11 +987,12 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 							  $row_Hostel = mysqli_fetch_assoc($Hostel);
 						  }
 						?>
-          			</select></td>
-		  </tr>
-  		  <tr>
-			  <td rowspan="1" nowrap><div align="right">Group Cohort:</div></td>
-					<td colspan="1" bgcolor="#CCCCCC"><select name="cohort" id="cohort">
+          			</select>
+    </div>
+<div class="form-group">
+      <label  for="Physical address">Group Cohort:</label>
+
+      <select class="form-control" name="cohort" id="cohort">
 					  <option value="0">--------------------------------</option>
 			            <?php
 					do {  
@@ -990,11 +1006,13 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 						  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 					  }
 					?>
-				   </select></td>
-		   </tr>     
-   		  <tr>
-			  <td rowspan="1" nowrap><div align="right">Audit Year:</div></td>
-				<td colspan="1" bgcolor="#CCCCCC"><select name="ayear" id="ayear">
+				   </select>
+
+    </div>
+    <div class="form-group">
+      <label for="telephone">Audit Year:</label>
+
+      <select class="form-control" name="ayear" id="ayear">
 					 <option value="0">--------------------------------</option>
 			            <?php
 				do {  
@@ -1008,11 +1026,15 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 					  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
 				  }
 				?>
-        	  </select></td>
-		   </tr>
- 		   <tr>
-          <td nowrap><div align="right">Class Stream:</div></td>
-          	<td colspan="1" bgcolor="#CCCCCC"><select name="stream" id="stream">
+        	  </select>
+
+    </div>
+       
+            
+    <div class="form-group">
+      <label for="telephone">Class Stream:</label>
+
+      <select class="form-control" name="stream" id="stream">
 		       <option value="0">--------------------------------</option>
 				<?php
 					$query_class = "SELECT name FROM classstream ORDER BY name ASC";
@@ -1022,26 +1044,33 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 					 echo"<option  value='$show[name]'>$show[name]</option>";      	    
 					}
 					?>
-	      </select></td>
-	     </tr>
-	     <tr>
-           <td nowrap><div align="right">Reg. Status:</div></td>
-          	<td colspan="1" bgcolor="#CCCCCC"><select name="status" id="status">
+	      </select>
+            </div>
+            
+    <div class="form-group">
+      <label for="telephone">Reg. Status:</label>
+
+      <select class="form-control" name="status" id="status">
 		       <option value="0">--------------------------------</option>
 			      <?php  
 					$query_studentStatus = "SELECT StatusID,Status FROM studentstatus ORDER BY StatusID";
 					$nm=mysqli_query($zalongwa, $query_studentStatus);
 					while($show = mysqli_fetch_array($nm) )
+
 					{  										 
 						echo"<option  value='$show[StatusID]'>$show[Status]</option>";      
 					      
 					}
 				 ?>
-	      </select></td>
-	     </tr>
-  		 <tr>
-          <td nowrap><div align="right">  Sponsorship:</div></td>
-            <td colspan="1" bgcolor="#CCCCCC"><select name="sponsor" id="sponsor">
+	      </select>
+            
+    </div>        
+            
+            
+    <div class="form-group">
+      <label for="telephone">Sponsorship:</label>
+
+      <select class="form-control" name="sponsor" id="sponsor">
              <option value="0">--------------------------------</option>
 		       <?php
 				if($sponsor)
@@ -1055,23 +1084,22 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 				   echo"<option  value='$show[Name]'>$show[Name]</option>";      	    
 				}
 				?>
-     		</select></td>
-     	  </tr>
-          <tr>
-		    <td nowrap><div align="right">  Show Billing:</div></td> 
-		    <td colspan="1" bgcolor="#CCCCCC">
-		    <input name="checkbill" type="checkbox" id="checkbill" value="on" >Yes
-		    </td>
-         </tr>
-        <tr>
-         <td bgcolor="#CCCCCC">&nbsp;</td>
-          <td bgcolor="#CCCCCC">
-		    <div align="center">
-		      <input name="print" type="submit" id="print" value="PreView">
-              <input name="printPDF" type="submit" id="printPDF" value="Print PDF">
-            </div></td>
-	        </tr>
-	      </table>
+     		</select>
+            
+          </div>  
+       
+            <div align="center">
+		    
+    <div class="form-group">
+      <label for="telephone">Show Billing:</label>
+
+      	    <input name="checkbill" type="checkbox" id="checkbill" value="on" >Yes
+	</div>
+	 <div class="form-group">
+   
+		   <button name="print" type="submit" id="print" value="">PreView</button>
+              <button name="printPDF" type="submit" id="printPDF" value="">Print PDF</button>
+            </div>
         </form>
 <?php
 }
