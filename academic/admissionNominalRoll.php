@@ -757,18 +757,6 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 		?>
 		
 		
-	
-		<style type="text/css">
-		<!--
-		.style1 {color: #990000}
-		.style2 {font-size: 14px}
-		.style3 {
-			font-size: 14;
-			font-weight: bold;
-		}
-		.style4 {color: #000000}
-		-->
-		</style>
 		
 		<table width="100%"  border="0">
           <tr>
@@ -955,7 +943,7 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 ?>
 		
 <head>
-  <title>policy setup</title>
+  <title>SARIS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -964,8 +952,8 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
 </head>
 <body>
 
-
-<div class="container">
+<div align select="center">
+<div class="container" style="width:50%">
 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" name="studentclasslist" id="studentclasslist">
             
             
@@ -1089,18 +1077,19 @@ if (isset($_POST['print']) && ($_POST['print'] == "PreView")) {
           </div>  
        
             <div align="center">
-		    
-    <div class="form-group">
+
+  <div class="form-group">
       <label for="telephone">Show Billing:</label>
 
       	    <input name="checkbill" type="checkbox" id="checkbill" value="on" >Yes
 	</div>
-	 <div class="form-group">
+	 <div class="form-inline">
    
 		   <button name="print" type="submit" id="print" value="">PreView</button>
               <button name="printPDF" type="submit" id="printPDF" value="">Print PDF</button>
             </div>
         </form>
+        </div> 
 <?php
 }
 mysqli_free_result($AcademicYear);

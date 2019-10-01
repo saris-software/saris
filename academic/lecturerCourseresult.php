@@ -325,6 +325,19 @@ $total_rows = mysqli_num_rows($dbregno);
 	#initialise the table
 	?>
 
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
 
 <?php
 	//close if total statement
@@ -393,19 +406,30 @@ $total_rows = mysqli_num_rows($dbregno);
 
 ?>
 
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
+
+
        <form action="<?php echo $_SERVER['PHP_SELF']?>" method="POST" name="courseresult" id="housingvacantRoom">
-            <fieldset bgcolor="#CCCCCC">
+
+
+            <fieldset>
 				<legend>Search Course Results</legend>
-			<table width="255" border="0" bgcolor="#CCCCCC">
-        <tr>
-          <td width="113" nowrap><div align="right"></div></td>
-          <td width="132" colspan="2" bordercolor="#ECE9D8" bgcolor="#CCCCCC"><span class="style67">
-          </span></td>
-        </tr>
-        <tr>
-          <td nowrap><div align="right">Academic Year: </div></td>
-          <td colspan="2" bgcolor="#CCCCCC"><select name="ayear" id="select2">
-		  <option value="0">SelectAcademicYear</option>
+<div class="form-group">
+<label for="institution">Academic Year:</label>
+      <select class="form-control" name="ayear" id="select2">
+		  <option value="0">Select Academic Year</option>
             <?php
 do {  
 ?>
@@ -418,11 +442,12 @@ do {
 	  $row_AcademicYear = mysqli_fetch_assoc($AcademicYear);
   }
 ?>
-          </select></td>
-        </tr>
-        <tr>
-          <td nowrap><div align="right"> Course Code:</div></td>
-          <td colspan="2" bgcolor="#CCCCCC"><select name="Hall" id="select">
+          </select>
+      </div>
+      
+      <div class="form-group">
+      <label for="institution">Course Code:</label>
+      <select class="form-control" name="Hall" id="select">
 		  <option value="0">Select Course Code</option>
             <?php
 do {  
@@ -436,13 +461,11 @@ do {
 	  $row_Hostel = mysqli_fetch_assoc($Hostel);
   }
 ?>
-          </select></td>
-        </tr>
-                <tr>
-                  <td nowrap><div align="left">Study Programme:</div></td>
-                  <td>
-                    <div align="left">
-                      <select name="degree" id="degree">
+          </select>
+      </div>
+      <div class="form-group">
+      <label for="institution">Study Programme:</label>
+      <select class="form-control" name="degree" id="degree">
                         <option value="0">Select All Candidate</option>
                         <?php
 do {  
@@ -457,40 +480,39 @@ do {
   }
 ?>
                       </select>
-                    </div></td></tr>
-					
-                <tr>
-                  <td rowspan="3" nowrap><div align="right">Report Details:</div>                    <div align="right"></div></td>
-                  <td>
-                    <input name="layout" type="radio" value="S" >	
-					CA & Exam in Summary
-				</div></td>
-				</tr>
-                <tr>
-                  <td> <input name="layout" type="radio" value="D">	
-					CA & Exam in Detailed
-                   </div></td>
-				</tr>
-				<tr>
-                  <td> <input name="layout" type="radio" value="O" checked>	
-					CA Only in Detailed
-                   </div></td>
-				</tr>
-                <tr>
-                  <td> Show Names:<br>
+      </div>
+      
+      <h4>Report Details:</h4>
+
+
+<label>      	CA & Exam in Summary
+
+                          <input name="layout" type="radio" value="S" >	
+	</label>			
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               
+              	<label>	CA & Exam in Detailed
+                  <input name="layout" type="radio" value="D">	
+			</label>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		
+		<label>			CA Only in Detailed
+                   <input name="layout" type="radio" value="O" checked>	
+		</label>
+	
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		<label>Show Names:
 					Yes 
                     <input name="show" type="radio" value="Y" checked>	
 					No
-					<input name="show" type="radio" value="N">                   </td>
-				</tr>
-
-        <tr>
-          <td nowrap><div align="right"></div></td>
-          <td colspan="2" nowrap><div align="center">
-            <input type="submit" name="PDF"  id="PDF" value="Print PDF">
-          </div></td>
-          </tr>
-      </table>
+					<input name="show" type="radio" value="N">            
+		</label>
+		
+        <div align="center">
+            <button type="submit" name="PDF"  id="PDF" value="">Print PDF</button>
+          </div>
 	  </fieldset>
                     <input type="hidden" name="MM_search" value="room">
 </form>

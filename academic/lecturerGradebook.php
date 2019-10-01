@@ -144,6 +144,21 @@ $query_coursecode = "
 $coursecode = mysqli_query($zalongwa, $query_coursecode) or die(mysqli_error($zalongwa));
 
 ?>
+
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
+
  <fieldset bgcolor="#999999">
 	<legend>Select Appropriate Entries</legend>
 	<?php 
@@ -214,13 +229,29 @@ $coursecode = mysqli_query($zalongwa, $query_coursecode) or die(mysqli_error($za
 #display the form when refresh is zero
 if ($refresh == 0) {
 ?> 
+
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:50%">
+
+
+
  <fieldset>
-				<legend>Select Appropriate Academic Year and Faculty</legend>
+				<legend><p>Select Appropriate Academic Year and Faculty</p></legend>
 <form action="<?php echo $editFormAction ?>" method="post" enctype="multipart/form-data" name="form1">
-              <table width="200" border="0" cellpadding="0" cellspacing="1">
-                <tr>
-                  <td nowrap><div align="right">Academic Year: </div></td>
-                  <td><select name="ayear" id="ayear">
+              
+                 <div class="form-group">
+      <label for="institution">Academic Year:</label>
+      <select class="form-control" name="ayear" id="ayear">
                       <?php
 do {  
 ?>
@@ -233,11 +264,12 @@ do {
 	  $row_AYear = mysqli_fetch_assoc($AYear);
   }
 ?>
-                  </select></td>
-                </tr>
-                <tr>
-                  <td nowrap><div align="right">Semester: </div></td>
-                  <td><select name="sem" id="sem">
+                  </select>
+              </div>
+              
+               <div class="form-group">
+      <label for="institution"> Semester:</label>
+      <select class="form-control" name="sem" id="sem">
 						<option value="choice">Choose Semester</option>
                         <?php
 mysqli_select_db($zalongwa, $database_zalongwa);
@@ -257,12 +289,11 @@ do {
   }
 ?>
                     </select>
-                  </td>
-                </tr>
-			<?php if ($privilege =='2') { ?>
-                <tr>
-                  <td nowrap><div align="right">Faculty:</div></td>
-                  <td><select name="faculty" id="faculty">
+              </div>
+              <?php if ($privilege =='2') { ?>
+               <div class="form-group">
+      <label for="institution">Faculty:</label>
+      <select class="form-control" name="faculty" id="faculty">
                       <?php
 do {  
 ?>
@@ -275,14 +306,13 @@ do {
 	  $row_dept = mysqli_fetch_assoc($dept);
   }
 ?>
-                  </select></td>
-                </tr>
+                  </select>
+                </div>
 				<?php } ?>
-                <tr>
+                <div align="center">
                   <td><input name="frmSubmit" type="hidden" id="frmSubmit" value="yes"></td>
-                  <td><input type="submit" name="action" value="View Courses"></td>
-                </tr>
-  </table>
+                  <td><input  type="submit" name="action" value="View Courses"></td>
+           </div>
 </form>
 </fieldset>
 <?php

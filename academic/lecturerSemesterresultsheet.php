@@ -351,19 +351,33 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 	}
 	}else{
 	?>
+
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
+
+
+
 	
 	<form name="form1" method="post" action="<?php echo $editFormAction ?>">
-	            <div align="center">
-				<table width="200" border="0" bgcolor="#CCCCCC">
-	            <tr>
-	                  <td colspan="3"><span class="style61">if you want to filter the results by  criteria <span class="style34">Tick the corresponding check box first</span> then select appropriately </span></td>
-	                </tr>
-	                <tr>
-	                  <td nowrap><input name="checkdegree" type="checkbox" id="checkdegree" value="on" checked></td>
-	                  <td nowrap><div align="left">Degree Programme:</div></td>
-	                  <td>
-	                      <div align="left">
-	                        <select name="degree" id="degree">
+
+                <label><p>if you want to filter the results by  criteria <span class="style34">Tick the corresponding check box first</span> then select appropriately </span></p></label>
+
+<div class="form-group">
+<input name="checkdegree" type="checkbox" id="checkdegree" value="on" checked>
+      <label for="institution">Degree Programme:</label>
+      <select class="form-control" name="degree" id="degree">
 	                          <?php
 	do {  
 	?>
@@ -377,12 +391,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 	  }
 	?>
 	                        </select>
-	                    </div></td></tr>
-	                <tr>
-	                  <td><input name="checkcohot" type="checkbox" id="checkcohot" value="on" checked></td>
-	                  <td nowrap><div align="left">Cohort of the  Year: </div></td>
-	                  <td><div align="left">
-	                    <select name="cohot" id="cohot">
+	                    </div>
+   
+   <div class="form-group">
+ <input name="checkcohot" type="checkbox" id="checkcohot" value="on" checked>
+      <label for="institution">Cohort of the  Year:</label>
+      <select class="form-control" name="cohot" id="cohot">
 	                        <?php
 	do {  
 	?>
@@ -396,13 +410,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 	  }
 	?>
 	                    </select>
-	                  </div></td>
-	                </tr>
-	            	<tr>
-	                  <td><input name="checkyear" type="checkbox" id="checkyear" value="on" checked></td>
-	                  <td nowrap><div align="left">Results of the  Year: </div></td>
-	                  <td><div align="left">
-	                    <select name="ayear" id="ayear">
+	                  </div>
+   
+   <div class="form-group">
+   <input name="checkyear" type="checkbox" id="checkyear" value="on" checked>
+      <label for="institution">Results of the  Year:</label>
+      <select class="form-control" name="ayear" id="ayear">
 	                        <?php
 	do {  
 	?>
@@ -416,13 +429,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 	  }
 	?>
 	                    </select>
-	                  </div></td>
-	                </tr>
-	            	<tr>
-	                  <td><input name="checksem" type="checkbox" id="checksem" value="on" checked></td>
-	                  <td nowrap><div align="left">Semester: </div></td>
-	                  <td><div align="left">
-	                    <select name="sem" id="sem">
+	                  </div>
+   
+   <div class="form-group">
+     <input name="checksem" type="checkbox" id="checksem" value="on" checked>
+      <label for="institution">Semester:</label>
+      <select class="form-control" name="sem" id="sem">
 	                        <?php
 	do {  
 	?>
@@ -436,21 +448,20 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 	  }
 	?>
 	                    </select>
-	                  </div></td>
-	                </tr>
-                    <tr>
-                        <td><input name="checkorderby" type="checkbox" id="checkorderby" value="on" checked></td>
-                        <td nowrap><div align="left">Order By: </div></td>
-                        <td>
-                            <div align="left">
-                                <select name="orderby" id="orderby">
+	                  </div>
+   
+   <div class="form-group">
+       <td><input name="checkorderby" type="checkbox" id="checkorderby" value="on" checked></td>
+      <label for="institution">Order By:</label>
+      <select class="form-control" name="orderby" id="orderby">
                                     <option value="regno">Reg. Number</option>
                                     <option value="gender">Gender</option>
                                     <option value="name">Name</option>
                                 </select>
                             </div>
-                        </td>
-                    </tr>
+
+
+
 	                <?php 
 	                //check if paid
 				if($userFaculty==31){
@@ -459,15 +470,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 		?>
 		          <tr>
 	                  <td colspan="2"><div align="center">
-	                    <input type="submit" name="PDF"  id="PDF" value="Print PDF">
-	                  </div></td>
-	                  <td colspan="1"><div align="right">
-	                    <input type="submit" name="Excel"  id="Excel" value="Print Excel">
-	                  </div></td>	                  
-	              </tr>
-	              </table>
-	              <input name="MM_update" type="hidden" id="MM_update" value="form1">       
-	  </div>
+	                    <button type="submit" name="PDF"  id="PDF" value="">Print PDF</button>
+	                 
+	                    <button type="submit" name="Excel"  id="Excel" value="">Print Excel</button>
+	                 </div>
+	                 	              <input name="MM_update" type="hidden" id="MM_update" value="form1">       
+	  
 	</form>
 	<?php
 	if(isset($_GET['error'])){

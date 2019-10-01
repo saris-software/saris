@@ -331,19 +331,30 @@
 
 	
 	?>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
+
 	
 	<form name="form1" method="post" action="<?php echo $editFormAction ?>">
-	            <div align="center">
-				<table width="200" border="0" cellpadding="3" bgcolor="#CCCCCC">
-	            <tr>
-	                  <td colspan="3"><span class="style61">if you want to filter the results by  criteria <span class="style34">Tick the corresponding check box first</span> then select appropriately </span></td>
-	                </tr>
-	                <tr>
-	                  <td nowrap><input name="checkdegree" type="checkbox" id="checkdegree" value="on" checked></td>
-	                  <td nowrap><div align="left">Degree Programme:</div></td>
-	                  <td>
-	                      <div align="left">
-	                        <select name="degree" id="degree">
+
+<label><p>if you want to filter the results by  criteria <span class="style34">Tick the corresponding check box first</span> then select appropriately </span></p></label>
+
+<div class="form-group">
+<input name="checkdegree" type="checkbox" id="checkdegree" value="on" checked>
+      <label for="institution">Degree Programme:</label>
+      <select class="form-control" name="degree" id="degree">
 	                          <?php
 	do {  
 	?>
@@ -357,12 +368,11 @@
 	  }
 	?>
 	                        </select>
-	                    </div></td></tr>
-	                <tr>
-	                  <td><input name="checkcohot" type="checkbox" id="checkcohot" value="on" checked></td>
-	                  <td nowrap><div align="left">Cohort of the  Year: </div></td>
-	                  <td><div align="left">
-	                    <select name="cohot" id="cohot">
+   </div>
+   <div class="form-group">
+ <input name="checkcohot" type="checkbox" id="checkcohot" value="on" checked>
+      <label for="institution">Cohort of the  Year:</label>
+      <select class="form-control" name="cohot" id="cohot">
 	                        <?php
 	do {  
 	?>
@@ -376,13 +386,12 @@
 	  }
 	?>
 	                    </select>
-	                  </div></td>
-	                </tr>
-	            	<tr>
-	                  <td><input name="checkyear" type="checkbox" id="checkyear" value="on" checked></td>
-	                  <td nowrap><div align="left">Results of the  Year: </div></td>
-	                  <td><div align="left">
-	                    <select name="ayear" id="ayear">
+	                  </div>
+   
+   <div class="form-group">
+   <input name="checkyear" type="checkbox" id="checkyear" value="on" checked>
+      <label for="institution">Results of the  Year:</label>
+      <select class="form-control" name="ayear" id="ayear">
 	                        <?php
 	do {  
 	?>
@@ -396,8 +405,8 @@
 	  }
 	?>
 	                    </select>
-	                  </div></td>
-	                </tr>
+	                  </div>
+   
   <?php 
 
 	                //check if paid
@@ -411,20 +420,12 @@
 		?>          	                                   
 	                <tr>
 	                  <td colspan="3"><div align="center">
-	                    <input type="submit" name="PDF"  id="PDF" value="Print PDF">
-	                  </div>
-	                  </td>
-	                  </tr>
-	                  <tr>
-			   <td colspan="3"><div align="center">
-	                    <input type="submit" name="Excel"  id="Excel" value="Print Excel">
-	                  </div>
-	                  </td>
+	                    <button type="submit" name="PDF"  id="PDF" >Print PDF</button>
 	                  
-	              </tr>
-	              </table>
-	              <input name="MM_update" type="hidden" id="MM_update" value="form1">       
-	  </div>
+			    <button type="submit" name="Excel"  id="Excel"> Print Excel</button>
+	                  </div>
+	                  	              <input name="MM_update" type="hidden" id="MM_update" value="form1">       
+	  
 	</form>
 	<?php
 
