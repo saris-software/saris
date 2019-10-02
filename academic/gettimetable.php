@@ -61,75 +61,57 @@ if (!isset($_GET['create'])) {
             display:none;
         }
     </style>
+
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
+
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-        <table class="resView">
-            <tr>
-                <td class="resViewhd">Academic Year:</td>
-                <td class="resViewtd">
-                    <select name="ayear">
+       
+       
+       
+       
+<div class="form-group">
+<label for="institution">Academic Year:</label>
+      <select class="form-control" name="ayear">
                         <?php
                         while ($row = mysqli_fetch_array($result_ayear)) {
                             echo '<option value="' . $row['AYear'] . '">' . $row['AYear'] . '</option>';
                         }
                         ?>
                     </select>
-                </td>
-
-            </tr>
-            <tr><td class="resViewhd"><!--Filter By--></td>
-                <td class="resViewtd">
-                <!--<select name="fby" id="filter">
-                <option value="1">Programme</option>
-                <option value="2">Faculty</option>
-                <option value="3" selected="selected">Lecturer</option>
-                </select>-->
-                    <input type="hidden" name="fby" value="3"/>
-                </td>
-            </tr>
-            <!--<tr id="pr"><td class="resViewhd">Programme:</td>
-            <td class="resViewtd">
-            <select name="programme">
-            
-            /*while($row = mysql_fetch_array($result_programme)){
-                    echo '<option value="'.$row['ProgrammeCode'].'">'.$row['ProgrammeName'].'</option>';
-            }*/
-            
-            </select>
-            </td>
-            </tr>-->
-
-    <!--<tr class="hide" id="fc"><td class="resViewhd">Fuculty:</td>
-    <td class="resViewtd">
-    <select name="faculty">
-     
-    while($row = mysql_fetch_array($fuculty_result)){
-            echo '<option value="'.$row['FacultyID'].'">'.$row['FacultyName'].'</option>';
-    }
-    </select>
-    </td>
-    </tr>-->
-
-            <tr><td class="resViewhd"></td>
-                <td class="resViewtd">
-                    <input type="hidden" name="lecturer" value="<?php echo $username; ?>"/>
-                </td>
-            </tr>
-
-            <tr><td class="resViewhd">Time table Category:</td>
-                <td class="resViewtd">
-                    <select name="tcategory">
+       </div>
+       
+       
+<div class="form-group">
+<label for="institution">Timetable Category:</label>
+      <select class="form-control" name="tcategory">
                         <?php
                         while ($row = mysqli_fetch_array($result_timetablecategory)) {
                             echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
                         }
                         ?>
                     </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="resViewhd" colspan="2" align="center"><input type="submit" name="load" value="Load Timetable"/></td>
-            </tr>
-        </table>
+                    
+</div>
+       
+       
+<div class="form-group">
+       
+                <div align="center"><input type="submit" name="load" value="Load Timetable"/></div>
+           
+</div>           
     </form>
     <br/>
     <br/>
@@ -259,87 +241,25 @@ if (!isset($_GET['create'])) {
         //print_r($timetable);
         //echo '</pre>';
         ?>
-        <style type="text/css">
-            #content span{
-                color:black;
-                font-weight:normal;
-                font-size:12px;
-            }
-            .view_timetable{
-                table-layout:fixed;
-                width:900px;
-                padding:0px;
-                margin:0px;
-                position:relative;
-                border:1px solid #CCCCCC;
-                color:#000000;
-            }
+  
+  
+  
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-            .view_timetable tr td{
-                border-bottom:1px solid #CCCCCC;
-                border-right:1px solid #CCCCCC;
-                position:relative;
-            }
-            .one{
-                display:block;
-                background-color:#DFD7CF;
-                border:1px solid blue;
-                text-align:center;
-                padding:0px 0px 0px 0px;
-                height:80px;
-                overflow:hidden;
-                margin:5px 0px 5px 0px;
-            }
-            .wiz{
-                display:block;
-                margin:7px 0px 0px 0px;
-                padding:5px 0px 0px 0px;
-            }
+<div align select="center">
+<div class="container" style="width:55%">
 
-            .one span{
-                display:block;
-                color:black;
-            }
 
-            .two{
-                display:block;
-                background-color: #DFD7CF;
-                border:1px solid blue;
-                z-index:100;
-                position:relative;
-                text-align:center;
-                padding:0px 0px 0px 0px;
-                height:80px;
-                overflow:hidden;
-                margin:5px 0px 5px 0px;
-            }
 
-            .two span{
-                display:block;
-                color:#000000;
-            }
-
-            .two-clas{
-                width:130px;
-            }
-
-            .three{
-                display:block;
-                background-color:#DFD7CF;
-                border:1px solid blue;
-                text-align:center;
-                height:80px;
-                overflow:hidden;
-                padding:0px 0px 0px 0px;
-                margin:5px 0px 5px 0px;
-            }
-
-            .three span{
-                display:block;
-                color:#000000;
-            }
-
-        </style>
+  
         <div id="hello">
             <div style="text-indent:20px; padding:10px 0px 0px 0px; width:900px;">
         <?php

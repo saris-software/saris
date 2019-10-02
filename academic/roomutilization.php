@@ -12,6 +12,20 @@ include('timetable.php');
 	//include("lecturerheader.php");
 ?>
 
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
+
 <?php
 mysqli_select_db($zalongwa_database,$zalongwa);
 //select all academic year
@@ -36,39 +50,34 @@ if(isset($_POST['load'])){
 
 if(!isset($_GET['create'])){
 ?>
-<style type="text/css">
-.hide{
-display:none;
-}
-</style>
 <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
-<table class="resView">
-<tr>
-<td class="resViewhd">Academic Year:</td>
-<td class="resViewtd">
-<select name="ayear">
+    <div class="form-group">
+      <label for="institution">Academic Year:</label>
+      <select class="form-control"  name="ayear">
 <?php 
 while($row = mysqli_fetch_array($result_ayear)){
 	echo '<option value="'.$row['AYear'].'">'.$row['AYear'].'</option>';
 }
 ?>
 </select>
-</td>
-<tr><td class="resViewhd">Time table Category:</td>
-<td class="resViewtd">
-<select name="tcategory">
+ </div>
+ 
+ 
+     <div class="form-group">
+      <label for="institution">
+      Time table category:</label>
+      <select class="form-control" name="tcategory">
 <?php 
 while($row = mysqli_fetch_array($result_timetablecategory)){
 	echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 }
 ?>
 </select>
-</td>
-</tr>
-<tr>
+</div>
+
+
 <td class="resViewhd" colspan="2" align="center"><input type="submit" name="load" value="Load Timetable"/></td>
-</tr>
-</table>
+
 </form>
 <br/>
 <br/>

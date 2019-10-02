@@ -16,6 +16,21 @@
 //	include('lecturerheader.php');
 ?>
 
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
+
+
 <?php
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -103,20 +118,34 @@ $result_all_data = mysqli_query($zalongwa, $get_data);
 
 
 ?>
+
+
+
+
+
+
+
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<fieldset style="width:600px;"><legend>Filter your Timetable Search  </legend>
-             <table class="resView"> 
-            
-<tr>
-<td class="resViewhd"><div align='right'> Username</div></td>
-<td class="resViewtd"><input name="name" type="text" id="course" ></td>
-<td class="resViewhd"><div align='right'> Course</div></td>
-<td class="resViewtd"><input name="course" type="text" id="course" maxlength="15"></td>
-</tr>
-<tr>
-<td class="resViewhd"><div align='right'> Day</div></td>
-<td class="resViewtd">
-<select name="day" id="day">
+
+<fieldset >
+<legend>Filter your Timetable Search  </legend>
+    
+    
+    
+<div class="form-group">
+      <label for="address">Username:</label>
+        <input class="form-control" name="name" type="text" id="course" placeholder="Enter Username" >
+
+    </div>
+<div class="form-group">
+      <label for="head">Course:</label>
+        <input class="form-control" name="course" type="text" id="course" placeholder="Enter Course">
+
+    </div>
+
+    <div class="form-group">
+      <label for="address">Day:</label>
+<select class="form-control" name="day" id="day">
      <option value="">Select Day</option>
      <?php 
      while ($rows = mysqli_fetch_array($result_day)) {
@@ -124,10 +153,14 @@ $result_all_data = mysqli_query($zalongwa, $get_data);
      	<option value="<?php echo $rows['id'];?>"><?php echo $rows['name'];?></option>
      	<?php      }      ?>       		
      </select>
-            		</td>
-        
-        <td class="resViewhd"><div align='right'> Time</div></td>
-        <td class="resViewtd"><select name="time" id="time">
+
+
+    </div>
+    
+    
+    <div class="form-group">
+      <label for="address">Time:</label>
+<select class="form-control" name="time" id="time">
                     <option value="">Select Period Start Time</option>
 			<option value="7">7:00</option>
 			<option value="8">8:00</option>
@@ -143,14 +176,19 @@ $result_all_data = mysqli_query($zalongwa, $get_data);
 			<option value="18">18:00</option>
 			<option value="19">19:00</option>
 			
-           </select></td>
-                  </tr>
-<tr>
+           </select>
+    </div>
+    
+<div class="form-group">
+      <label  for="Physical address">Room:</label>
 
-<td class="resViewhd"><div align='right'> Room</div></td>
-<td class="resViewtd"><input name="room" type="text" id="room"></td>
-<td class="resViewhd"><div align='right'> Category</div></td>
-<td class="resViewtd"><select name="semester" id="semester">
+        <input class="form-control"  name="room" type="text" id="room" placeholder="Enter Room" >
+
+    </div>
+    
+    <div class="form-group">
+      <label for="address">Category:</label>
+<select class="form-control" name="semester" id="semester">
 <option value="">Select Category</option>
                         <?php
 do {
@@ -165,29 +203,25 @@ do {
   }
 ?>
                     </select>
-                  </td></tr>
-                  
-                  
-                  
-                  
-                  
-                  <tr>
- 
-             <td class="resViewhd"><div align='right'> Year</div></td>
-<td class="resViewtd">
-<select name="ayear" id="ayear">
+    
+    </div>
+    
+
+    <div class="form-group">
+      <label for="address">Category:</label>
+<select class="form-control" name="ayear" id="ayear">
      <?php 
      while ($rows = mysqli_fetch_array($result_acc)) {
      	?>
      	<option value="<?php echo $rows['AYear'];?>"><?php echo $rows['AYear'];?></option>
      	<?php      }      ?>       		
      </select>
-            		</td>
+        </div>
    
-             
-<td class="resViewhd" colspan='2'>
-              <input type="submit" name="search" value="Search" onmouseover="this.style.background='#DEFEDE'"
-onmouseout="this.style.background='lightblue'" style='background-color:lightblue; width:100px; padding:5px 0px 5px 0px;    color:black;font-size:9pt;font-weight:bold'  title="Click to Search the List"></td>
+   
+   
+              <button type="submit" name="search" value="" onmouseover="this.style.background='#DEFEDE'"
+onmouseout="this.style.background='lightblue'" style='background-color:lightblue; width:100px; padding:5px 0px 5px 0px;    color:black;font-size:9pt;font-weight:bold'  title="Click to Search the List">Search</button>
 </tr></table> 
 
 </fieldset>
@@ -200,20 +234,26 @@ if(isset($_GET['succ'])){
 	echo  '<div style="color:red;">'.$_GET['succ'].'</div>';
 }
 
-?>
-<table  class="resView" style="width:900px;">
-<tr>
-<td class="resViewhd">Full Name</td>
-<td class="resViewhd">UserName</td>
-<td class="resViewhd">Day</td>
-<td class="resViewhd">Year</td>
-<td class="resViewhd">Category</td>
-<td class="resViewhd">Course</td>
-<td class="resViewhd">Venue</td>
-<td class="resViewhd">Time</td>
-<td class="resViewhd">Edit</td>
-<td class="resViewhd">Delete</td>
-</tr>
+?> 
+
+
+
+<table class="table table-striped">
+    <thead>
+    
+      <tr>
+        <th>Full Name</th>
+        <th>UserName</th>
+        <th>Day</th>
+        <th>Year</th>
+       <th>Category</th>
+        <th>Course</th>
+        <th>Venue</th>
+        <th>Time</th>
+        <th>Edit</th>
+        <th>Delete</th>
+       </tr>
+    </thead>
 
 <?php 
 while ($data = mysqli_fetch_array($result_all_data)) {

@@ -14,23 +14,22 @@ include('timetable.php');
 ?>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="drag.js"></script>
-<style>
-select{
-  width:200px;
-  padding:3px;
-}
-
-#table_timetable tr td{
-padding:5px 0px 0px 0px;
-}
 
 
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-.drop{
- width:100px;
- 
-}
-</style>
+<div align select="center">
+<div class="container" style="width:55%">
+
+
 <?php
 mysqli_select_db($zalongwa_database);
 //select all academic year
@@ -61,43 +60,47 @@ if(isset($_POST['load'])){
 if(!isset($_GET['create'])){
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
-<table class="resView">
-<tr>
-<td class="resViewhd">Academic Year:</td>
-<td class="resViewtd">
-<select name="ayear">
+
+
+
+       
+<div class="form-group">
+<label for="institution">Academic Year:</label>
+      <select class="form-control" name="ayear">
 <?php 
 while($row = mysqli_fetch_array($result_ayear)){
 	echo '<option value="'.$row['AYear'].'">'.$row['AYear'].'</option>';
 }
 ?>
 </select>
-</td>
+       </div>
+       
 
-</tr>
-<tr><td class="resViewhd">Programme:</td>
-<td class="resViewtd">
-<select name="programme">
+
+<div class="form-group">
+<label for="institution">Programme:</label>
+      <select class="form-control" name="programme">
 <?php 
 while($row = mysqli_fetch_array($result_programme)){
 	echo '<option value="'.$row['ProgrammeCode'].'">'.$row['ProgrammeName'].'</option>';
 }
 ?>
 </select>
-</td>
-</tr>
 
-<tr><td class="resViewhd">Time table Category:</td>
-<td class="resViewtd">
-<select name="tcategory">
+
+       
+<div class="form-group">
+<label for="institution">Timetable Category:</label>
+      <select class="form-control" name="tcategory">
 <?php 
 while($row = mysqli_fetch_array($result_timetablecategory)){
 	echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 }
 ?>
 </select>
-</td>
-</tr>
+</div>
+
+
 <tr>
 <td class="resViewhd" colspan="2" align="center"><input type="submit" name="load" value="Load"/></td>
 </tr>
