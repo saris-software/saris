@@ -893,41 +893,27 @@ if(isset($_POST['programme'])){
 
     $prgcomb=$_POST['degree'];
     ?>
+
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
+
     <fieldset>
         <table class='resView' width="200">
             <form name="form2" method="post" action="<?php echo $editFormAction ?>">
 
-
-                <tr>
-                    <td class='resViewhd' nowrap><div align="left">Degree Programme:</div></td>
-                    <td class='resViewtd'>
-                        <div align="left">
-                            <select name="degree" id="degree">
-                                <?php
-                                do {
-                                    ?>
-                                    <option value="<?php echo $row_degree['ProgrammeCode']?>"><?php echo $row_degree['ProgrammeName']?></option>
-                                    <?php
-                                } while ($row_degree = mysqli_fetch_assoc($degree));
-                                $rows = mysqli_num_rows($degree);
-                                if($rows > 0) {
-                                    mysqli_data_seek($degree, 0);
-                                    $row_degree = mysqli_fetch_assoc($degree);
-                                }
-                                ?>
-                            </select>
-                    </td>
-
-
-
-                    <td class='resViewhd' nowrap><input type="submit" name="programme"  id="programme" value="GO"onmouseover="this.style.background='#DEFEDE'"
-                                                        onmouseout="this.style.background='lightblue'" style='background-color:lightblue;color:black;font-size:9pt;font-weight:bold' title="Click to Continue Create a PDF File"></td>
-                </tr>
-
-                <input name="MM_updatep" type="hidden" id="MM_update" value="form2">
-            </form>
-        </table>
-        <?php
+  <?php
         $qprogn= "SELECT ProgrammeCode, Title FROM programme WHERE ProgrammeCode='$prgcomb'";
         $dbprogn = mysqli_query($zalongwa, $qprogn);
         $row_progn = mysqli_fetch_array($dbprogn);
@@ -952,6 +938,8 @@ if(isset($_POST['programme'])){
                     $row_combin = mysqli_fetch_assoc($combin);
                     $totalRows_combin = mysqli_num_rows($combin);
                     ?>
+                    
+                    
                     <tr>
 
                         <td class='resViewhd' nowrap><div align="left">Combination:</div></td>
@@ -977,47 +965,53 @@ if(isset($_POST['programme'])){
                 ?>
                 <tr>
 
-                    <td class='resViewhd' nowrap><div align="left">Cohort of the  Year: </div></td>
-                    <td class='resViewtd'><div align="left">
-                            <select name="cohot" id="cohot">
-                                <?php
-                                do {
-                                    ?>
-                                    <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
-                                    <?php
-                                } while ($row_ayear = mysqli_fetch_assoc($ayear));
-                                $rows = mysqli_num_rows($ayear);
-                                if($rows > 0) {
-                                    mysqli_data_seek($ayear, 0);
-                                    $row_ayear = mysqli_fetch_assoc($ayear);
-                                }
-                                ?>
-                            </select>
-                        </div></td>
-                </tr>
-                <tr><td class='resViewhd' nowrap><div align="left">Graduating Year: </div></td>
-                    <td class='resViewtd'><div align="left">
-                            <select name="ayear" id="ayear">
-                                <?php
-                                do {
-                                    ?>
-                                    <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
-                                    <?php
-                                } while ($row_ayear = mysqli_fetch_assoc($ayear));
-                                $rows = mysqli_num_rows($ayear);
-                                if($rows > 0) {
-                                    mysqli_data_seek($ayear, 0);
-                                    $row_ayear = mysqli_fetch_assoc($ayear);
-                                }
-                                ?>
-                            </select>
-                        </div></td>
-                </tr>
+<div class="form-group">
 
+ <label for="institution">Cohort of the  Year:</label>
+      <select class="form-control"  name="cohot" id="cohot">
+                                <?php
+                                do {
+                                    ?>
+                                    <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
+                                    <?php
+                                } while ($row_ayear = mysqli_fetch_assoc($ayear));
+                                $rows = mysqli_num_rows($ayear);
+                                if($rows > 0) {
+                                    mysqli_data_seek($ayear, 0);
+                                    $row_ayear = mysqli_fetch_assoc($ayear);
+                                }
+
+                                ?>
+                            </select>
+
+                        </div>
+                        
+                        
+                        
+                        
+<div class="form-group">
+
+ <label for="institution">Graduates Year:</label>
+      <select class="form-control"  name="ayear" id="ayear">
+                                <?php
+                                do {
+                                    ?>
+
+                                    <option value="<?php echo $row_ayear['AYear']?>"><?php echo $row_ayear['AYear']?></option>
+                                    <?php
+                                } while ($row_ayear = mysqli_fetch_assoc($ayear));
+                                $rows = mysqli_num_rows($ayear);
+                                if($rows > 0) {
+                                    mysqli_data_seek($ayear, 0);
+                                    $row_ayear = mysqli_fetch_assoc($ayear);
+                                }
+                                ?>
+                            </select>
+                        </div>
                 <tr>
 
-                    <td class='resViewhd' nowrap colspan='2'><input type="submit" name="PDF"  id="PDF" value="Print PDF"onmouseover="this.style.background='#DEFEDE'"
-                                                                    onmouseout="this.style.background='lightblue'" style='background-color:lightblue;color:black;font-size:9pt;font-weight:bold' title="Click to Create a PDF File"></td>
+                    <td class='resViewhd' nowrap colspan='2'><button class="btn btn-outline-dark" type="submit" name="PDF"  id="PDF" value=""onmouseover="this.style.background='#DEFEDE'"
+                                                                    onmouseout="this.style.background='lightblue'" style='background-color:lightblue;color:black;font-size:9pt;font-weight:bold' title="Click to Create a PDF File">Print PDF</button></td>
                 </tr>
             </table>
             <input name="checkyear" type="hidden" id="checkyear" value="on" checked>
@@ -1034,17 +1028,32 @@ if(isset($_POST['programme'])){
 else{
 
     ?>
+    
+    
+    
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
     <fieldset>
         <legend>Select a Degree Programme </legend>
 
         <form name="form2" method="post" action="<?php echo $editFormAction ?>">
-            <table class='resView' width="200">
 
-                <tr>
-                    <td class='resViewhd' nowrap><div align="left">Degree Programme:</div></td>
-                    <td class='resViewtd'>
-                        <div align="left">
-                            <select name="degree" id="degree">
+
+
+<div class="form-group">
+ <label for="institution">Degree Programme:</label>
+      <select class="form-control" name="degree" id="degree">
                                 <?php
                                 do {
                                     ?>
@@ -1058,13 +1067,14 @@ else{
                                 }
                                 ?>
                             </select>
-                    </td>
+                            </div>
+<div class="form-group">
 
-
-                    <td class='resViewhd' nowrap><input type="submit" name="programme"  id="programme" value="GO"onmouseover="this.style.background='#DEFEDE'"
-                                                        onmouseout="this.style.background='lightblue'" style='background-color:lightblue;color:black;font-size:9pt;font-weight:bold' title="Click to Continue Create a PDF File"></td>
-                </tr>
-            </table>
+<button class="btn btn-outline-dark" type="submit" name="programme"  id="programme" value=""onmouseover="this.style.background='#DEFEDE'"
+                                                        onmouseout="this.style.background='lightblue'" style='background-color:lightblue;color:black;font-size:9pt;font-weight:bold' title="Click to Continue Create a PDF File">Go</button>
+                                                        
+</div>                                                        
+                                                        
             <input name="MM_updatep" type="hidden" id="MM_update" value="form2">
         </form>
     </fieldset>

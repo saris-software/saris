@@ -560,23 +560,19 @@ include 'includes/showexamresults.php';
 <div class="container" style="width:55%">
 
 
-<a href="lecturerTranscriptcount.php">Transcript Report</a>
+<div class="form-group">
 
-
-
+<button><a href="lecturerTranscriptcount.php">Transcript Report</a></button>
+</div>
 
 
 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" name="studentRoomApplication" id="studentRoomApplication">
-<table width="500" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-        <tr>
-          <td colspan="10" nowrap><div align="left"></div></td>
-        </tr>
-        <tr>
-          <td nowrap><div align="right"><strong>Award:
-            </strong></div>            <div align="center"></div></td>
-          <td colspan="3" nowrap><div align="left">
-          <input type="hidden" value="1" id="temp" name="temp">
-            <select name="award" id="award">
+
+
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="temp">
+              <label for="institution">Award:</label>
+      <select class="form-control" name="award" id="award">
               <option value="1" selected>NTA Level 8</option>
               <option value="6">NTA Level 7</option>
               <option value="2">NTA Level 6 </option>
@@ -587,66 +583,95 @@ include 'includes/showexamresults.php';
               <option value="8">Adv. Diploma</option>
               <option value="9">Short Course</option>
             </select>
-            </div>            <div align="right"></div>            <div align="right"></div></td>
-            <td nowrap><div align="right"><strong>2012/2013:</td>
-            </strong></div></td><td>Yes</td><td nowrap colspan="2"><input type="radio" name="compareyear" value="yes" id="lessthan"/></td><td>No</td><td nowrap colspan="1"><input type="radio" name="compareyear" value="no" id="greaterthan" checked="checked"/></td></tr>
-        </tr>
-        <tr><td><div align="right"><strong>By Year:
-            </strong></div></td><td>Yes</td><td nowrap colspan="3"><input type="radio" name="fbyyear" value="yes" id="fby1"/></td><td>No</td><td nowrap colspan="3"><input type="radio" name="fbyyear" value="no" id="fby2" checked="checked"/></td></tr>
-        <tr>
-         <tr id="transyear">
-          <td align="right" nowrap><strong>Study Year:</strong></td>
-          <td colspan="8" bordercolor="#ECE9D8" bgcolor="#CCCCCC"><span class="style67">
-          <select name='studyYear' id="ayearsel">
+            </div>  
+
+
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="temp">
+              <label for="institution">Year:</label>
+      <select class="form-control" name="year" id="year">
+      <option value="1" selected>2012/2013</option>
+              <option value="6">2013/2014</option>
+              <option value="2">2014/2015 </option>
+              <option value="3">2015/2016</option>
+              <option value="4">2016/2017</option>
+              <option value="5">2017/2018</option>
+              <option value="7">2018/2019</option>
+              <option value="8">2019/2020</option>
+            </select>
+            </div>
+      
+      
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="">
+              <label for="institution">:</label>
+  <label>Yes<input type="radio" name="compareyear" value="yes" id="lessthan"/>No<input type="radio" name="compareyear" value="no" id="greaterthan" checked="checked"/></label>
+        </div>
+       
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="">
+              <label for="institution">
+              By Year:</label>
+      <select class="form-control" name="fbyyear" id="fbyyear">
+      <option value="yes" selected>Yes</option>
+              <option value="no">No</option>
+      </div>     
+              
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="">
+              <label for="institution">
+              Study Year:</label>
+          <select class="form-control" name='studyYear' id="ayearsel">
               <option value="1">First Year</option>
 			  <option value="2">Second Year</option>
 			  <option value="3">Third Year</option>
 			  <option value="4">Fourth Year</option>
           </select>
-          </span></td>
-        </tr>
-        <tr>
-          <td align="right" nowrap><strong> RegNo:</strong></td>
-          <td colspan="8" bordercolor="#ECE9D8" bgcolor="#CCCCCC"><span class="style67">
-          <input name="key" type="text" id="key" size="40" maxlength="40">
-          </span></td>
-        </tr>
-		<tr> 
-			<td align="right" nowrap><strong>Table:</strong></td> 
-			<td width="35"><div align="center">11<input type="radio" value="11" id="sex" name="sex"></div></td> 
-			<td width="35"><div align="center">12<input type="radio" value="12" id="sex" name="sex" checked></div></td> 
-			<td width="35"><div align="center">13<input type="radio" value="13" id="sex" name="sex" ></div></td> 
-			<td width="35"><div align="center">14<input type="radio" value="14" id="sex" name="sex" ></div></td> 
-			<td width="35"><div align="center">15<input type="radio" value="15" id="sex" name="sex" ></div></td> 
-			<td width="35"><div align="center">16<input type="radio" value="16" id="sex" name="sex" ></div></td> 
-			<td width="35"><div align="center">-</div></td> 
-			<td><div align="left">17<input type="radio" value="17" id="sex" name="sex" ></div></td>
-		</tr>
-        <tr>
-          <td nowrap><div align="right"><strong>Confirmed:
-            </strong></div>            
-            <div align="center"></div></td>
-          <td colspan="3" nowrap><div align="right">No</div></td>
-          <td nowrap><input type="radio" value="1" id="real" name="real" checked></td>
-          <td colspan="2" nowrap><div align="right"></div></td>
-          <td nowrap><div align="right">Yes</div></td>
-          <td nowrap><div align="left">
-            <input type="radio" value="2" id="real" name="real" >
-          </div></td>
-        </tr>
-        <tr>
-          <td nowrap><div align="right"> </div></td>
-          <td colspan="4" bgcolor="#CCCCCC">
-            <div align="left">
-              <input type="submit" name="search" value="PreView">
-            </div>            <div align="right">
-            </div></td>
-          <td colspan="4" nowrap bgcolor="#CCCCCC">
-            <div align="right">
-              <input name="PrintPDF" type="submit" id="PrintPDF" value="Print PDF">
-            </div></td>
-        </tr>
-  </table>
+         </div>
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="">
+              <label for="institution">Reg No:</label>
+          <input  class="form-control" name="key" type="text" id="key" size="40" maxlength="40">
+</div>
+
+
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="temp">
+              <label for="institution">Table:</label>
+      <select class="form-control" name="sex" id="sex">
+      <option value="11" selected>11</option>
+              <option value="12">12</option>
+              <option value="13">13 </option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option>-</option>
+              <option value="17">17</option>
+            </select>
+            </div>
+      
+
+          <!--  <td nowrap><div align="right"><strong>2012/2013:</td>
+            </strong></div></td><td>Yes</td><td nowrap colspan="2"><input type="radio" name="compareyear" value="yes" id="lessthan"/></td><td>No</td><td nowrap colspan="1"><input type="radio" name="compareyear" value="no" id="greaterthan" checked="checked"/></td></tr>
+        </tr>-->
+  
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="">
+              <label for="institution">
+              Confirmed:</label>
+      <select class="form-control" name="real" id="real">
+      <option value="1" selected>Yes</option>
+              <option value="2">No</option>
+     </select>
+      </div>     
+        
+            <div style="text-align:center">
+            
+<div class="form-group" s>
+  
+            <label>  <input  type="submit" name="search" value="PreView"> </label>
+             <label> <input   name="PrintPDF" type="submit" id="PrintPDF" value="Print PDF"> </label>
+            </div></div>
 </form>
 <p>&nbsp;</p>
 <?php

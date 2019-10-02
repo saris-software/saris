@@ -375,100 +375,118 @@ if (isset($_POST['search']) && ($_POST['search'] == "PreView")) {
 }else{
 
     ?>
+    
+    
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div align select="center">
+<div class="container" style="width:55%">
+
 
     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" name="studentRoomApplication" id="studentRoomApplication">
-        <table width="284" border="1" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-            <tr>
-                <td colspan="9" nowrap><div align="center"></div>
-                </td>
-            </tr>
-            <tr>
-                <td width="110"><div align="right"><strong></strong></div></td>
-                <td colspan="8" bordercolor="#ECE9D8" bgcolor="#CCCCCC"><span class="style67">
-            <input name="cmbInst" type="hidden" id="cmbInst" value="<?php echo $row_campus['FacultyName']?>">
-          </span></td>
-            </tr>
-            <tr>
-                <td nowrap><div align="right"><strong>Programme:
-                        </strong></div>            <div align="center"></div></td>
-                <td colspan="2" nowrap><div align="right">Degree</div></td>
-                <td width="31" nowrap><input type="radio" value="1" id="award1" name="award" checked></td>
-                <td colspan="2" nowrap><div align="right">Diploma</div></td>
-                <td width="31" nowrap><input type="radio" value="2" id="award2" name="award" ></td>
-                <td width="89" nowrap><div align="right">Certificate</div></td>
-                <td width="30" nowrap><input type="radio" value="3" id="award2" name="award" ></td>
-            </tr>
-            <tr>
-                <td align="right"><strong>Category:</strong></td>
-                <td colspan="4">Finalist:
-                    <input type="radio" value="1" id="cat" name="cat" >  </td>
-                <td colspan="4">Continuing:
-                    <input type="radio" value="2" id="cat" name="cat" checked>
-                </td>
-            </tr>
-            <tr>
-            <tr>
-                <td nowrap><div align="right"><strong>Award:
-                        </strong></div>            <div align="center"></div></td>
-                <td colspan="8" nowrap><div align="left">
-                        <input type="hidden" value="1" id="temp" name="temp">
-                        <select name="award" id="award">
-                            <option value="1" selected>NTA Level 8</option>
-                            <option value="6">NTA Level 7</option>
-                            <option value="2">NTA Level 6 </option>
-                            <option value="3">NTA Level 5</option>
-                            <option value="4">NTA Level 4</option>
-                            <option value="5">Certificate</option>
-                            <option value="7">Diploma</option>
-                            <option value="8">Adv. Diploma</option>
-                            <option value="9">Short Course</option>
-                        </select>
-                    </div>            <div align="right"></div>            <div align="right"></div></td>
-            </tr>
-            <tr><td><div align="right"><strong>By Year:
-                        </strong></div></td><td>Yes</td><td nowrap colspan="3"><input type="radio" name="fbyyear" value="yes" id="fby1"/></td><td>No</td><td nowrap colspan="3"><input type="radio" name="fbyyear" value="no" id="fby2" checked="checked"/></td></tr>
-            <tr>
-            <tr id="transyear">
-                <td align="right" nowrap><strong>Study Year:</strong></td>
-                <td colspan="8" bordercolor="#ECE9D8" bgcolor="#CCCCCC"><span class="style67">
-          <select name='studyYear' id="ayearsel">
+        
+        
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="temp">
+              <label for="institution">Programme:</label>
+      <select class="form-control" name="award" >
+              <option value="1" id="award1">Degree</option>
+              <option value="2" id="award2">Diploma</option>
+              <option value="3" id="award3">Certificate </option>
+            </select>
+            </div>  
+
+
+
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="temp">
+              <label for="institution">Categories:</label>
+      <select class="form-control" name="cat" id="cat">
+              <option value="1">Finalist</option>
+              <option value="2">Continuing</option>
+            </select>
+            </div>  
+
+        
+        
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="temp">
+              <label for="institution">Award:</label>
+      <select class="form-control" name="award" id="award">
+              <option value="1" selected>NTA Level 8</option>
+              <option value="6">NTA Level 7</option>
+              <option value="2">NTA Level 6 </option>
+              <option value="3">NTA Level 5</option>
+              <option value="4">NTA Level 4</option>
+              <option value="5">Certificate</option>
+              <option value="7">Diploma</option>
+              <option value="8">Adv. Diploma</option>
+              <option value="9">Short Course</option>
+            </select>
+            </div>  
+
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="">
+              <label for="institution">
+              By Year:</label>
+      <select class="form-control" name="fbyyear" id="fbyyear">
+      <option value="yes" selected>Yes</option>
+              <option value="no">No</option>
+     </select> </div>     
+              
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="">
+              <label for="institution">
+              Study Year:</label>
+          <select class="form-control" name='studyYear' id="ayearsel">
               <option value="1">First Year</option>
 			  <option value="2">Second Year</option>
 			  <option value="3">Third Year</option>
 			  <option value="4">Fourth Year</option>
           </select>
-          </span></td>
-            </tr>
+         </div>
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="">
+              <label for="institution">Reg No:</label>
+          <input  class="form-control" name="key" type="text" id="key" size="40" maxlength="40">
+</div>
 
-            <td><div align="right"><strong><span class="style67">RegNo:</span></strong></div></td>
-            <td colspan="8" bordercolor="#ECE9D8" bgcolor="#CCCCCC"><span class="style67">
-          <input name="key" type="text" id="key" size="40" maxlength="40">
-          </span></td>
-            </tr>
-            <tr>
-                <td align="right" nowrap><strong>Table:</strong></td>
-                <td width="35"><div align="center">11<input type="radio" value="11" id="sex" name="sex"></div></td>
-                <td width="35"><div align="center">12<input type="radio" value="12" id="sex" name="sex" checked></div></td>
-                <td width="35"><div align="center">13<input type="radio" value="13" id="sex" name="sex" ></div></td>
-                <td width="35"><div align="center">14<input type="radio" value="14" id="sex" name="sex" ></div></td>
-                <td width="35"><div align="center">15<input type="radio" value="15" id="sex" name="sex" ></div></td>
-                <td width="35"><div align="center">16<input type="radio" value="16" id="sex" name="sex" ></div></td>
-                <td width="35"> <div align="center">-</div></td>
-                <td><div align="left">17
-                        <input type="radio" value="17" id="sex" name="sex" >
-                    </div></td>
-            </tr>
-            <tr>
-                <td nowrap><div align="right"><strong> </strong></div></td>
-                <td bgcolor="#CCCCCC" colspan="4">
-                    <div align="left">
+
+<div class="form-group">
+  <input type="hidden" value="1" id="temp" name="temp">
+              <label for="institution">Table:</label>
+      <select class="form-control" name="sex" id="sex">
+      <option value="11" selected>11</option>
+              <option value="12">12</option>
+              <option value="13">13 </option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option>-</option>
+              <option value="17">17</option>
+            </select>
+            </div>
+      
+      
+
+<div class="form-inline">
+  
+              <div align="left">
                         <input type="submit" name="search" value="PreView">
-                    </div></td>
+                    </div>
                 <td bgcolor="#CCCCCC" colspan="4"><div align="right">
                         <input name="PrintPDF" type="submit" id="PrintPDF" value="Print PDF">
-                    </div></td>
-            </tr>
-        </table>
+                    </div>
+                    </div>
     </form>
     <?php
 }

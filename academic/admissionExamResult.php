@@ -266,23 +266,38 @@ $sn=0;
 }else{
 
 ?>
-                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" name="studentRoomApplication" id="studentRoomApplication">
-            <table width="284" border="0">
-        <tr>
-          <td colspan="2" nowrap><div align="center"></div>
-          </td>
-        </tr>
-        <tr>
-          <td width="111" nowrap><div align="right"><span class="style67"> RegNo:</span></div></td>
-          <td width="157" bordercolor="#ECE9D8" bgcolor="#CCCCCC"><span class="style67">
-          <input name="key" type="text" id="key" size="40" maxlength="40">
-          </span></td>
-        </tr>
-        <tr>
-          <td nowrap><div align="right"></div></td>
-          <td bgcolor="#CCCCCC"><input type="submit" name="search" value="Search"></td>
-        </tr>
-      </table>
+  
+
+<head>
+  <title>policy setup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div align select="center">
+<div class="container" style="width:30%">
+
+
+
+
+              <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" name="studentRoomApplication" id="studentRoomApplication">
+  
+          
+<div class="form-group">
+      <label for="address">Reg No:</label>
+        <input class="form-control" name="key" type="text" id="key" placeholder="Enter Registration no" size="40" maxlength="40">
+    </div>
+         <button class="btn btn-outline-dark" type="submit" name="search" value="">Search</td>
+
+     </button>
+     </form>
+  
+  
 </form>
 <?php
 }
