@@ -96,28 +96,34 @@ $suggestionbox = mysqli_query($zalongwa, $query_suggestionbox) or die(mysqli_err
 $row_suggestionbox = mysqli_fetch_assoc($suggestionbox);
 $totalRows_suggestionbox = mysqli_num_rows($suggestionbox);
 ?>
-<style type="text/css">
-<!--
-.style1 {color: #FFFFFF}
--->
-</style>
+
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:55%">
+
+
+
 <?php
 if(isset($_GET['error'])){
 echo $_GET['error'];
 }
 ?>
  <form action="<?php echo $editFormAction; ?>" method="POST" name="frmsuggestion" id="frmsuggestion">
-            <table width="529" border="0">
-              <tr>
-                <td width="95" height="21"><div align="right"><strong>Send To:</strong></div></td>
-<input name="regno" type="hidden" id="regno" value="<?php echo $RegNo; ?>">
-             <!--
-				<td width="424" nowrap>System Administrator 
-                  <input name="regno" type="hidden" id="regno" value="<?php echo $RegNo; ?>">
-                  <input name="toid" type="hidden" id="toid" value="admin">
-                  <input name="received" type="hidden" id="received" value="<?php $today = date("F j, Y"); echo $RegNo; ?>"></td>
-              -->			
-				<td><select name="toid" id="toid">
+           
+       <div class="form-group">
+      <label for="institution">Send To:</label>
+      <input name="regno" type="hidden" id="regno" value="<?php echo $RegNo; ?>">
+      <select class="form-control" name="toid" id="toid">
             		<?php
 if(isset($_GET['from'])){
 $reg=$_GET['from'];
@@ -152,21 +158,31 @@ echo '<option value="'.$reg.'" selected="selected">'.$reg.'</option>';
 	  $row_lecturer = mysqli_fetch_assoc($lecturer);
   }
 ?>
-                </select></td>
-			  </tr>
-              <tr>
-                <td height="136"><div align="right"><strong>Message:</strong></div></td>
-                <td><textarea name="message" cols="50" rows="7" class="normaltext" id="message"></textarea></td>
+                </select>
+  </div>         
+     
+     
+           
+            <table width="529" border="0">
+  
+       <div class="form-group">
+              
+                <label><strong>Message:</label>
+                <textarea class="form-control" name="message" cols="50" rows="7" id="message"></textarea></td>
               </tr>
-			  <tr>
-                <td height="28" nowrap><div align="right"><strong>Post Message:</strong></div></td>
-                <td nowrap>
-                  <div align="left">
-                    <input name="Send" type="submit" value="Post Message">
+		           </table>
+      
+      
+          <div class="form-group">
+      <label for="institution">Post Massage:</label>
+   <div align="left">
+                    <button class="btn btn-outline-dark" name="Send" type="submit" value="">Post Message</button>
                     <span class="style64 style1">............................</span>
-                    <input type="reset" name="Reset" value="Clear Message">
-                  </div></td></tr>
-            </table>
+                    <button class="btn btn-outline-dark" type="reset" name="Reset" value="">Clear Message
+                  </div>
+     
+     </div>
+      
               <input type="hidden" name="MM_insert" value="frmsuggestion">
 </form>
 <?php

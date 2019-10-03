@@ -10,7 +10,7 @@
 
 	# initialise globals
 
-	include('lecturerMenu.php');
+	include('communication.php');
 
 	
 
@@ -24,7 +24,7 @@
 
 	$szTitle = 'Institute News & Events';
 
-	include('lecturerheader.php');
+//	include('lecturerheader.php');
 
 
 
@@ -162,6 +162,18 @@ $regnos = $RegNo;
 $RegNo = $_GET['from'];
 
  ?>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div align select="center">
+<div class="container" style="width:60%">
 
 <?php
 function viewers()
@@ -177,19 +189,16 @@ echo"</select>";
 ?>
 
 	<form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" name="usersearch" id="usersearch">
-		<table width="284" border="0">
-			<tr>
-				<td colspan="2" nowrap><div align="center"></div></td>
-			</tr>
-			<tr>
-				<td nowrap>Name or ID(Registration) Number:				
-					<span class="style67" border="#ECE9D8" bgcolor="#CCCCCC"><input name="key" type="text" id="key" size="20" maxlength="20"></span>
-				</td>
-				<td >
-					<div align="center"><input type="submit" name="search" value="Search"></div>
-				</td>
-			</tr>			
-      </table>
+
+
+  
+<div class="form-group">
+      <label for="address">Name or ID(Registration) Number::</label>
+        <input class="form-control"  name="key" type="text" id="key">
+					</div>
+<div align="center"><button class="btn btn-outline-dark" type="submit" name="search" value="">Search</button></div>
+    
+
     </form>
     
     <?php
@@ -232,41 +241,30 @@ echo"</select>";
 
 <form action="<?php echo $editFormAction; ?>" method="POST" name="frmsuggestion" id="frmsuggestion">
 
-            <table width="529" border="0" style="padding-top:20px">
-			  
-			  <tr>
-				<td class='formfield' nowrap><input type="checkbox" name="specific" value="S"><b>Specify Username</b></td>
-                <td><input name="key" type="text" id="key" size="20" maxlength="20"></td>
-              </tr>
-              
-			  <tr>
 
-              <tr>
-                <td width="95" height="189"><div align="right"><strong>Message:</strong></div></td>
-                <td width="424"><textarea name="message" cols="75" rows="13" class="normaltext" id="message"></textarea></td>
+
+<div class="form-group">
+<input type="checkbox" name="specific" value="S">
+      <label for="address">Specify Username:</label>
+      			<input name="key" type="text" id="key" value="" class="form-control">
+					</div>
+
+<div class="form-group">
+ <label for="address">Message:</label>
+ 
+          <textarea class="form-control" name="message" cols="75" rows="13" class="normaltext" id="message"></textarea>
 				<input name="regno" type="hidden" id="regno" value="<?php echo $regnos?>">
-              </tr>
-              
-              <tr>
-				<td class='formfield' nowrap>Recepients(Viewers) Group</td>
-                <td><?php viewers();?> 
-				  <span class="style64 style1">............</span>
-				  <input name="Send" type="submit" value="Post Message">
-                  <span class="style64 style1">........</span>
-                  <input type="reset" name="Reset" value="Clear Message"></td></tr>
-			  <tr>
-			<!--
-			  <tr>
-                <td height="28" nowrap><div align="right"><strong>Post Message:</strong></div></td>
-                <td nowrap><div align="center">
-                  <input name="Send" type="submit" value="Post Message">
-                  <span class="style64 style1">................................................</span>
-                  <input type="reset" name="Reset" value="Clear Message">
-                </div></td>
-              </tr>
-			-->
+			</div>
 
-            </table>            
+<div class="form-group">
+      <label for="institution">Recepients(Viewers) Group:</label>
+      <?php viewers();?> 
+				  </div>
+			<div align="center">
+				  <button class="btn btn-outline-dark" name="Send" type="submit" value="">Post Message</button>
+                  <span class="style64 style1">........</span>
+                  <button class="btn btn-outline-dark" type="reset" name="Reset" value="">Clear Message</button>
+	</div>
               <input type="hidden" name="MM_insert" value="frmsuggestion">
 </form>
 

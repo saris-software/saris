@@ -113,31 +113,41 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
 
 ?>
 
-<style type="text/css">
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-    <!--
+<div align select="center">
+<div class="container" style="width:55%">
 
-    .style1 {color: #FFFFFF}
-
-    -->
-
-</style>To Add News, Click:
-
-<a href="admissionPostNews.php">Publish News and or Events</a><hr><table width="721" border="1" cellpadding="0" cellspacing="0">
-
+To Add News, Click:
+<button class="btn btn-outline-dark">
+<a href="admissionPostNews.php">Publish News and or Events</a></button>
     <?php do { ?>
 
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width:10%">Date</th>
+        <th style="width:70%">From</th>
+        <th style="width:20%">Message</th>
+
+      </tr>
+    </thead>
+
         <tr>
 
-            <td width="61"><div align="right">Date:</div></td>
 
-            <td width="703"><?php echo $row_studentsuggestion['received']; ?> - From: <?php echo $row_studentsuggestion['fromid']; ?></td>
 
-        </tr>
-
-        <tr>
-
-            <td valign="top"><div align="right">Message:</div></td>
+                         <td width="593"><?php echo $row_studentsuggestion['received']; ?></td>
+ 
+            <td ><?php echo $row_studentsuggestion['received']; ?> - From: <?php echo $row_studentsuggestion['fromid']; ?></td>
 
             <td><?php echo $row_studentsuggestion['message']; ?></td>
 
@@ -147,8 +157,9 @@ $queryString_studentsuggestion = sprintf("&totalRows_studentsuggestion=%d%s", $t
 
 </table>
 
-<p><a href="<?php printf("%s?pageNum_studentsuggestion=%d%s", $currentPage, max(0, $pageNum_studentsuggestion - 1), $queryString_studentsuggestion); ?>">Previous</a> Message: <?php echo min($startRow_studentsuggestion + $maxRows_studentsuggestion, $totalRows_studentsuggestion) ?> of <?php echo $totalRows_studentsuggestion ?> <span class="style64">...</span><a href="<?php printf("%s?pageNum_studentsuggestion=%d%s", $currentPage, min($totalPages_studentsuggestion, $pageNum_studentsuggestion + 1), $queryString_studentsuggestion); ?>">Next</a> </p>
-
+<button class="btn btn-outline-dark"><a href="<?php printf("%s?pageNum_studentsuggestion=%d%s", $currentPage, max(0, $pageNum_studentsuggestion - 1), $queryString_studentsuggestion); ?>">Previous</a></button>
+ Message: <?php echo min($startRow_studentsuggestion + $maxRows_studentsuggestion, $totalRows_studentsuggestion) ?> of <?php echo $totalRows_studentsuggestion ?> <span class="style64">...</span>
+ <button class="btn btn-outline-dark"><a href="<?php printf("%s?pageNum_studentsuggestion=%d%s", $currentPage, min($totalPages_studentsuggestion, $pageNum_studentsuggestion + 1), $queryString_studentsuggestion); ?>">Next</a></button>
 <?php
 
 
